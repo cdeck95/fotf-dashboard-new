@@ -1,13 +1,36 @@
 import { useTheme, useMediaQuery } from "@mui/material";
-import { ConnectWallet } from "@thirdweb-dev/react";
+import { ConnectWallet, ThirdwebNftMedia, useNFT, useNFTs, useOwnedNFTs } from "@thirdweb-dev/react";
 import { useTitle } from "./hooks/useTitle";
 import "./styles/Home.css";
+import { useContractRead, useContract, Web3Button, useContractWrite, useAddress } from "@thirdweb-dev/react";
+import Backdrop from '@mui/material/Backdrop';
+import CircularProgress from '@mui/material/CircularProgress';
+import Button from '@mui/material/Button';
+import { useEffect, useState } from "react";
+
+
 
 function Home() {
   useTitle("FOTF | Staking");
   const theme = useTheme();
   const isMobile = !useMediaQuery(theme.breakpoints.up("md"));
+  const { data: contract } = useContract(process.env.REACT_APP_NFT_CONTRACT);
+  const address = useAddress()
+  const { data, isLoading, error } = useNFTs(contract, {
+    // For example, to only return the first 50 NFTs in the collection
+    count: 50,
+    start: 0,
+  })
+  //const { data: ownedNFTs, isLoading, error } = useOwnedNFTs(contract, address);
 
+  const [open, setOpen] = useState(isLoading);
+  const handleClose = () => {
+    setOpen(false);
+  };
+  const handleToggle = () => {
+    setOpen(!open);
+  };
+  
   return (
     <div className="container">
       <main className="main">
@@ -15,40 +38,36 @@ function Home() {
           Welcome to <a href="https://thirdweb.com/">thirdweb</a>!
         </h1>
 
-        <p className="description">
-          Get started by configuring your desired network in{" "}
-          <code className="code">src/index.tsx</code>, then modify the{" "}
-          <code className="code">src/App.tsx</code> file!
-        </p>
-
         <div className="connect">
           <ConnectWallet accentColor="#FED100" colorMode="dark"/>
         </div>
+    
+      {address
+      ? <div>
+          { error ? <div>NFT not found - error</div> 
+          : <div className="gallery">
+              {data?.map(e =>
+              // {ownedNFTs?.map(e =>
+                <div className="card">
+                  <ThirdwebNftMedia metadata={e.metadata} />
+                </div>
+              )}
+          </div>}
 
-        <div className="grid">
-          <a href="https://portal.thirdweb.com/" className="card">
-            <h2>Portal &rarr;</h2>
-            <p>
-              Guides, references and resources that will help you build with
-              thirdweb.
-            </p>
-          </a>
-
-          <a href="https://thirdweb.com/dashboard" className="card">
-            <h2>Dashboard &rarr;</h2>
-            <p>
-              Deploy, configure and manage your smart contracts from the
-              dashboard.
-            </p>
-          </a>
-
-          <a href="https://portal.thirdweb.com/templates" className="card">
-            <h2>Templates &rarr;</h2>
-            <p>
-              Discover and clone template projects showcasing thirdweb features.
-            </p>
-          </a>
+        <Backdrop
+          sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+          open={isLoading}
+          onClick={handleClose}
+        >
+          <CircularProgress color="inherit" />
+        </Backdrop>
         </div>
+      : <p>Connect your wallet</p>
+      }
+       
+      
+      
+
       </main>
     </div>
   );
