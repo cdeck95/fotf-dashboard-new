@@ -1,7 +1,13 @@
+import { useTheme, useMediaQuery } from "@mui/material";
 import { ConnectWallet } from "@thirdweb-dev/react";
+import { useTitle } from "./hooks/useTitle";
 import "./styles/Home.css";
 
-export default function Home() {
+function Home() {
+  useTitle("FOTF | Staking");
+  const theme = useTheme();
+  const isMobile = !useMediaQuery(theme.breakpoints.up("md"));
+
   return (
     <div className="container">
       <main className="main">
@@ -16,7 +22,7 @@ export default function Home() {
         </p>
 
         <div className="connect">
-          <ConnectWallet />
+          <ConnectWallet accentColor="#FED100" colorMode="dark"/>
         </div>
 
         <div className="grid">
@@ -47,3 +53,5 @@ export default function Home() {
     </div>
   );
 }
+
+export default Home;

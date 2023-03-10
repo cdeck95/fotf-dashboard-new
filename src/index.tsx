@@ -2,17 +2,45 @@ import React from "react";
 import { createRoot } from "react-dom/client";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
-import { ThirdwebProvider } from "@thirdweb-dev/react";
+import { ChainId, ThirdwebProvider } from "@thirdweb-dev/react";
 import "./styles/globals.css";
+import {
+  Box,
+  Button,
+  createMuiTheme,
+  createTheme,
+  Fab,
+  IconButton,
+  ImageList,
+  ImageListItem,
+  ImageListItemBar,
+  imageListItemBarClasses,
+  List,
+  ListItem,
+  ListItemButton,
+  ListItemIcon,
+  ListItemText,
+  styled,
+  ThemeProvider,
+  Typography,
+  useMediaQuery,
+  useTheme,
+} from "@mui/material";
+import { useTitle } from "./hooks/useTitle";
 
 // This is the chain your dApp will work on.
 // Change this to the chain your app is built for.
 // You can also import additional chains from `@thirdweb-dev/chains` and pass them directly.
-const activeChain = "ethereum";
+const activeChain = ChainId.Mainnet
 
 const container = document.getElementById("root");
 const root = createRoot(container!);
-root.render(
+
+useTitle("FOTF | Staking");
+const theme = useTheme();
+const isMobile = !useMediaQuery(theme.breakpoints.up("md"));
+
+  root.render(
   <React.StrictMode>
     <ThirdwebProvider activeChain={activeChain}>
       <App />
