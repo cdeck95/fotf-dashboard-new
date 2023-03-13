@@ -27,21 +27,16 @@ function App() {
   const [loading, setLoading] = useState(false);
   const [isError, setIsError] = useState<any>(false);
 
-  const ownedNFTs = useOwnedNFTs(contract, address).data;
+  const { data: ownedNFTs, error, isLoading }  = useOwnedNFTs(contract, address);
   console.log(ownedNFTs);
+ 
+ // const ownedNFTs = ownedNFTsIn;
 
-  // const LoadTokens = () => {    
-  //   console.log("loading NFTs..."); 
-  //   const tokens = useOwnedNFTs(contract, address).data;
-  //   setNFTs(tokens);
-  // }
 
   const LoadContract = async () => {
     setLoading(true);
     console.log("loading contract..."); 
     try{
-      console.log(contract);
-      console.log(process.env.FOTF_CONTRACT);
       const contractIn = await sdk?.getContractFromAbi("0x06bdc702fb8af5af8067534546e0c54ea4243ea9", tedABI);
       console.log(`contract loaded...`); 
       console.log(contractIn);
@@ -55,31 +50,24 @@ function App() {
   }
 
   useEffect(() => {
-    if (!contract) {
-      LoadContract();
+    try {
+      if (!contract) {
+        LoadContract();
+      }
+      if(ownedNFTs){
+        ownedNFTs.forEach(token => {
+          token.metadata.uri = token.metadata.uri.replace(' ', '%20');
+        });
+        setNFTs(ownedNFTs);
+      //  console.log(ownedNFTs);
+      // console.log(NFTs);
+      }
+    } catch (e) {
+      console.log(e);
+      console.log("Error!");
     }
-  }, []);
-
-  // useEffect(() => {
-  //   setLoading(true);
-  //   try {
-  //     if (address && contract) {
-  //       LoadTokens();
-  //    }
-  //   } catch (e) {
-  //     console.log(e);
-  //     setIsError(true);
-  //   }
-  //   setLoading(false);
-  // }, [address]);
-
- // function GetNFTs(){
-   // const { data: ownedNFTs, isLoading, error } = useOwnedNFTs(contract, address);
     
-
-    //setNFTs(ownedNFTs);
-    //setIsError(false);
- // }
+  }, [ownedNFTs, contract]);
 
   const [open, setOpen] = useState(false);
   const handleClose = () => {
@@ -105,15 +93,16 @@ function App() {
       ? <div>
           { isError ? <div><p>NFT not found - error</p></div> 
           : <div className="gallery">
-              {ownedNFTs? 
+              {ownedNFTs?
               <div>
-              {/* {data?.map(e => */}
-              {ownedNFTs?.map(e =>
-                <div className="card">
-                  <ThirdwebNftMedia metadata={e.metadata} />
-                  <MediaRenderer 
-                    src="ipfs://QmV4HC9fNrPJQeYpbW55NLLuSBMyzE11zS1L4HmL6Lbk7X" 
-                  />
+              {NFTs?.map(e =>
+              // {ownedNFTs?.map(e =>
+                <div key={e.metadata.id} className="card">
+                  <p>{e.metadata.id}</p>
+                  <img src={e.metadata.image!}/>
+                  <p>{e.metadata.description}</p>
+                  
+                    <ThirdwebNftMedia metadata={e.metadata} />
                 </div>
               )}
               </div>
