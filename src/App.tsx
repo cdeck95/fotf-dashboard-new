@@ -1,4 +1,4 @@
-import { useTheme, useMediaQuery } from "@mui/material";
+import { useTheme, useMediaQuery, Box, ImageList } from "@mui/material";
 import { ConnectWallet, MediaRenderer, ThirdwebNftMedia, useNFT, useNFTs, useOwnedNFTs } from "@thirdweb-dev/react";
 import { useTitle } from "./hooks/useTitle";
 import "./styles/Home.css";
@@ -12,14 +12,19 @@ import teddyABI from "./ABIs/teddyABI.json";
 import tedABI from "./ABIs/tedABI.json";
 import stakingABI from "./ABIs/stakingABI.json";
 import honeyABI from "./ABIs/honeyABI.json";
+import aiABI from "./ABIs/aiABI.json";
 import { NFT, SmartContract } from "@thirdweb-dev/sdk";
 import { BaseContract } from "ethers";
+import ControlPointIcon from '@mui/icons-material/ControlPoint';
+import StarBorderIcon from '@mui/icons-material/StarBorder';
+import StarIcon from '@mui/icons-material/Star';
 
 
 const FOTF_CONTRACT="0x06bdc702fb8af5af8067534546e0c54ea4243ea9";
 const TEDDY_CONTRACT="0x4aB1337970E889Cf5E425A7267c51db183028cf4";
 const STAKING_CONTRACT="0x15829C851C3117f662C5A9E369bC3A4dBbeaFEBF";
 const REWARD_TOKEN="0x6ca0269dca415313256cfecD818F32c5AfF0A518";
+const AI_MINT="0x1C6d280280f7f8d139659E314d738bdD466741Ba";
 
 function App() {
   useTitle("FOTF | Staking");
@@ -31,6 +36,8 @@ function App() {
   const [contract_TEDDY, setContractTeddy] = useState<SmartContract<BaseContract>>();
   const [contract_STAKING, setContractStaking] = useState<SmartContract<BaseContract>>();
   const [contract_REWARDS, setContractRewards] = useState<SmartContract<BaseContract>>();
+  const [contract_AI, setContractAI] = useState<SmartContract<BaseContract>>();
+ 
   const [NFTs, setNFTs] = useState<NFT[]>();
 
 
@@ -42,6 +49,9 @@ function App() {
   console.log(ownedNFTs3);
   const ownedNFTs4  = useOwnedNFTs(contract_REWARDS, address).data;
   console.log(ownedNFTs4);
+
+  const ownedNFTs5  = useOwnedNFTs(contract_AI, address).data;
+  console.log(ownedNFTs5);
 
  
   let allOwnedNFTs: NFT[] = []; 
@@ -58,6 +68,10 @@ function App() {
     allOwnedNFTs?.push(token);
   });
   ownedNFTs4?.forEach(token => {
+    console.log(token);
+    allOwnedNFTs?.push(token);
+  });
+  ownedNFTs5?.forEach(token => {
     console.log(token);
     allOwnedNFTs?.push(token);
   });
@@ -98,6 +112,15 @@ function App() {
     }
   }
 
+  const LoadContractAI = async () => {
+    try{
+      const contractIn = await sdk?.getContractFromAbi(AI_MINT, aiABI);
+      setContractAI(contractIn);
+    } catch (e) {
+      console.log(e); 
+    }
+  }
+
   useEffect(() => {
     try {
       if (!contract_FOTF) {
@@ -112,6 +135,9 @@ function App() {
       if (!contract_REWARDS) {
         LoadContractRewards();
       }
+      if (!contract_AI) {
+        LoadContractAI();
+      }
       if (allOwnedNFTs){
         setNFTs(allOwnedNFTs);
       }
@@ -120,7 +146,7 @@ function App() {
       console.log("Error!");
     }
     
-  }, [ownedNFTs, contract_FOTF, contract_TEDDY, contract_STAKING, contract_REWARDS]);
+  }, [ownedNFTs, contract_FOTF, contract_TEDDY, contract_STAKING, contract_REWARDS, contract_AI]);
 
   const [open, setOpen] = useState(false);
   const handleClose = () => {
@@ -130,17 +156,24 @@ function App() {
     setOpen(!open);
   };
 
+  const add = () => {
+    console.log("adding...");
+  }
+
+  const star = () => {
+    console.log("staring...");
+  }
+
   
   return (
     <div className="container">
-      <main className="main">
-        <h1 className="title">
-          Welcome to <a href="https://thirdweb.com/">thirdweb</a>!
-        </h1>
+      
+      <Box className="connect">
+        <ConnectWallet accentColor="#000000" colorMode="dark"/>
+      </Box>
 
-        <div className="connect">
-          <ConnectWallet accentColor="#FED100" colorMode="dark"/>
-        </div>
+      <main className="main">
+        
     
       {address
       ? <div>
@@ -148,16 +181,33 @@ function App() {
           : <div className="gallery">
               {ownedNFTs?
               <div>
-             {/* {allOwnedNFTs?.map(e => */}
-               {NFTs?.map(e =>
+                <ImageList cols={3}>
+                {allOwnedNFTs?.map(e =>
+              //  {NFTs?.map(e =>
                 <div key={e.metadata.id} className="card">
-                  <ThirdwebNftMedia metadata={e.metadata} />
+                  <StarBorderIcon onClick={star} sx={{ position: "absolute", top: "15px", right: "15px", zIndex: "100 !important'" }}/>
+                  <ThirdwebNftMedia metadata={e.metadata} 
+                  style={{ borderRadius: "10px" }}/>
+                  <Box className="column-container">
+                    <div className="large-left-column">
+                      <h3 className="metadata-title">{e.metadata.name}</h3>
+                      <h4 className="metadata">Last Transfer: 03/11/2023</h4>
+                      {/* <ControlPointIcon onClick={add}/> */}
+
+                    </div>
+                    <div className="small-right-column">
+                      <ControlPointIcon onClick={add}/>
+                    </div>
+                  </Box>
+                  
+                  
                 </div>
               )}
+              </ImageList>
               </div>
               : <p>Loading...</p> }
-              
-          </div>}
+             </div>
+            }
 
         <Backdrop
           sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
