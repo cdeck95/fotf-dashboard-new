@@ -13,61 +13,87 @@ import tedABI from "./ABIs/tedABI.json";
 import { NFT, SmartContract } from "@thirdweb-dev/sdk";
 import { BaseContract } from "ethers";
 
- 
+
+const FOTF_CONTRACT="0x06bdc702fb8af5af8067534546e0c54ea4243ea9";
+const TEDDY_CONTRACT="0x4aB1337970E889Cf5E425A7267c51db183028cf4";
+const STAKING_CONTRACT="0x15829C851C3117f662C5A9E369bC3A4dBbeaFEBF";
+const REWARD_TOKEN="0x6ca0269dca415313256cfecD818F32c5AfF0A518";
+
 function App() {
   useTitle("FOTF | Staking");
   const theme = useTheme();
   const isMobile = !useMediaQuery(theme.breakpoints.up("md"));
   const sdk = useSDK();
   const address = useAddress();
-  const [contract, setContract] = useState<SmartContract<BaseContract>>();
-  //const { data: contract } = useContract(process.env.FOTF_CONTRACT);
-  //const { data: contract } = useContract(process.env.NFT_CONTRACT);
-  const [NFTs, setNFTs] = useState<NFT[]>();
-  const [loading, setLoading] = useState(false);
-  const [isError, setIsError] = useState<any>(false);
-
-  const { data: ownedNFTs, error, isLoading }  = useOwnedNFTs(contract, address);
-  console.log(ownedNFTs);
- 
- // const ownedNFTs = ownedNFTsIn;
+  const [contract_FOTF, setContractFOTF] = useState<SmartContract<BaseContract>>();
+  const [contract_TEDDY, setContractTeddy] = useState<SmartContract<BaseContract>>();
+  const [contract_STAKING, setContractStaking] = useState<SmartContract<BaseContract>>();
+  const [contract_REWARDS, setContractRewards] = useState<SmartContract<BaseContract>>();
 
 
-  const LoadContract = async () => {
-    setLoading(true);
-    console.log("loading contract..."); 
+  const { data: ownedNFTs, error, isLoading }  = useOwnedNFTs(contract_FOTF, address);
+  //const { data: ownedNFTs, error, isLoading }  = useOwnedNFTs(contract_TEDDY, address);
+  //const { data: ownedNFTs, error, isLoading }  = useOwnedNFTs(contract_STAKING, address);
+  //const { data: ownedNFTs, error, isLoading }  = useOwnedNFTs(contract_REWARDS, address);
+
+
+
+  const LoadContractFOTF = async () => {
     try{
-      const contractIn = await sdk?.getContractFromAbi("0x06bdc702fb8af5af8067534546e0c54ea4243ea9", tedABI);
-      console.log(`contract loaded...`); 
-      console.log(contractIn);
-      setContract(contractIn);
-      setIsError(false);
+      const contractIn = await sdk?.getContractFromAbi(FOTF_CONTRACT, tedABI);
+      setContractFOTF(contractIn);
     } catch (e) {
       console.log(e); 
-      setIsError(true)
     }
-    setLoading(false);
+  }
+
+  const LoadContractTeddy = async () => {
+    try{
+      const contractIn = await sdk?.getContractFromAbi(TEDDY_CONTRACT, tedABI);
+      setContractTeddy(contractIn);
+    } catch (e) {
+      console.log(e); 
+    }
+  }
+
+  const LoadContractStaking = async () => {
+    try{
+      const contractIn = await sdk?.getContractFromAbi(STAKING_CONTRACT, tedABI);
+      setContractStaking(contractIn);
+    } catch (e) {
+      console.log(e); 
+    }
+  }
+
+  const LoadContractRewards = async () => {
+    try{
+      const contractIn = await sdk?.getContractFromAbi(REWARD_TOKEN, tedABI);
+      setContractRewards(contractIn);
+    } catch (e) {
+      console.log(e); 
+    }
   }
 
   useEffect(() => {
     try {
-      if (!contract) {
-        LoadContract();
+      if (!contract_FOTF) {
+        LoadContractTeddy();
       }
-      if(ownedNFTs){
-        ownedNFTs.forEach(token => {
-          token.metadata.uri = token.metadata.uri.replace(' ', '%20');
-        });
-        setNFTs(ownedNFTs);
-      //  console.log(ownedNFTs);
-      // console.log(NFTs);
+      if (!contract_TEDDY) {
+        LoadContractFOTF();
+      }
+      if (!contract_STAKING) {
+        LoadContractStaking();
+      }
+      if (!contract_REWARDS) {
+        LoadContractRewards();
       }
     } catch (e) {
       console.log(e);
       console.log("Error!");
     }
     
-  }, [ownedNFTs, contract]);
+  }, [ownedNFTs, contract_FOTF, contract_TEDDY, contract_STAKING, contract_REWARDS]);
 
   const [open, setOpen] = useState(false);
   const handleClose = () => {
@@ -91,32 +117,28 @@ function App() {
     
       {address
       ? <div>
-          { isError ? <div><p>NFT not found - error</p></div> 
+          { error ? <div><p>NFT not found - error</p></div> 
           : <div className="gallery">
               {ownedNFTs?
               <div>
-              {NFTs?.map(e =>
-              // {ownedNFTs?.map(e =>
+             
+              {ownedNFTs?.map(e =>
                 <div key={e.metadata.id} className="card">
-                  <p>{e.metadata.id}</p>
-                  <img src={e.metadata.image!}/>
-                  <p>{e.metadata.description}</p>
-                  
-                    <ThirdwebNftMedia metadata={e.metadata} />
+                  <ThirdwebNftMedia metadata={e.metadata} />
                 </div>
               )}
               </div>
-              : <p>Error loading NFTs</p> }
+              : <p>Loading...</p> }
               
           </div>}
 
-        {/* <Backdrop
+        <Backdrop
           sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
           open={isLoading}
           onClick={handleClose}
         >
           <CircularProgress color="inherit" />
-        </Backdrop> */}
+        </Backdrop>
         </div>
       : <div><p>Connect your wallet</p> </div> 
       }
