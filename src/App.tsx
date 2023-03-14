@@ -47,8 +47,9 @@ function App() {
   console.log(ownedNFTs2);
   const ownedNFTs3  = useOwnedNFTs(contract_STAKING, address).data;
   console.log(ownedNFTs3);
-  const ownedNFTs4  = useOwnedNFTs(contract_REWARDS, address).data;
-  console.log(ownedNFTs4);
+
+  const honey  = useOwnedNFTs(contract_REWARDS, address).data;
+  console.log(honey);
 
   const ownedNFTs5  = useOwnedNFTs(contract_AI, address).data;
   console.log(ownedNFTs5);
@@ -67,10 +68,7 @@ function App() {
     console.log(token);
     allOwnedNFTs?.push(token);
   });
-  ownedNFTs4?.forEach(token => {
-    console.log(token);
-    allOwnedNFTs?.push(token);
-  });
+  
   ownedNFTs5?.forEach(token => {
     console.log(token);
     allOwnedNFTs?.push(token);
@@ -121,6 +119,15 @@ function App() {
     }
   }
 
+  const LoadHoney = async () => {
+    try{
+      const honeyBalance = await sdk?.wallet.balance(REWARD_TOKEN);
+      console.log(honeyBalance);
+    } catch (e) {
+      console.log(e); 
+    }
+  }
+
   useEffect(() => {
     try {
       if (!contract_FOTF) {
@@ -140,6 +147,9 @@ function App() {
       }
       if (allOwnedNFTs){
         setNFTs(allOwnedNFTs);
+      }
+      if (contract_REWARDS){
+        LoadHoney();
       }
     } catch (e) {
       console.log(e);
@@ -177,20 +187,18 @@ function App() {
           : <div className="gallery">
               {ownedNFTs?
               <div>
-                <ImageList cols={3}>
+                <ImageList cols={3} gap={20}>
                 {allOwnedNFTs?.map(e =>
               //  {NFTs?.map(e =>
                 <div key={e.metadata.id} className="card">
                   <StarBorderIcon onClick={star} sx={{ position: "absolute", top: "15px", right: "15px", zIndex: "100 !important'" }}/>
                   <ThirdwebNftMedia metadata={e.metadata} style={{ 
-                    borderRadius: "10px", objectFit: "fill"
+                    borderRadius: "10px", objectFit: "fill", marginBottom: "10px"
                      }}/>
-                   {/* <img src={e.metadata.image!} className="nft-image" /> */}
                   <Box className="column-container">
                     <div className="large-left-column">
                       <h3 className="metadata-title">{e.metadata.name}</h3>
                       <h4 className="metadata">Last Transfer: 03/11/2023</h4>
-                      {/* <ControlPointIcon onClick={add}/> */}
 
                     </div>
                     <div className="small-right-column">
@@ -217,6 +225,10 @@ function App() {
         </div>
       : <div><p>Connect your wallet</p> </div> 
       }
+
+      <Box sx={{ position: "fixed", bottom: "0px", left: "50%"}}>
+        <p>honey</p>
+      </Box>
        
       
       
