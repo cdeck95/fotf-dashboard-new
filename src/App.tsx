@@ -31,6 +31,7 @@ function App() {
   const theme = useTheme();
   const isMobile = !useMediaQuery(theme.breakpoints.up("md"));
   const sdk = useSDK();
+  const provider = sdk?.getProvider();
   const address = useAddress();
   const [contract_FOTF, setContractFOTF] = useState<SmartContract<BaseContract>>();
   const [contract_TEDDY, setContractTeddy] = useState<SmartContract<BaseContract>>();
@@ -39,7 +40,6 @@ function App() {
   const [contract_AI, setContractAI] = useState<SmartContract<BaseContract>>();
  
   const [NFTs, setNFTs] = useState<NFT[]>();
-
 
   const { data: ownedNFTs, error, isLoading }  = useOwnedNFTs(contract_FOTF, address);
 
@@ -167,14 +167,10 @@ function App() {
   
   return (
     <div className="container">
-      
       <Box className="connect">
         <ConnectWallet accentColor="#000000" colorMode="dark"/>
       </Box>
-
       <main className="main">
-        
-    
       {address
       ? <div>
           { error ? <div><p>NFT not found - error</p></div> 
@@ -186,8 +182,10 @@ function App() {
               //  {NFTs?.map(e =>
                 <div key={e.metadata.id} className="card">
                   <StarBorderIcon onClick={star} sx={{ position: "absolute", top: "15px", right: "15px", zIndex: "100 !important'" }}/>
-                  <ThirdwebNftMedia metadata={e.metadata} 
-                  style={{ borderRadius: "10px" }}/>
+                  <ThirdwebNftMedia metadata={e.metadata} style={{ 
+                    borderRadius: "10px", objectFit: "fill"
+                     }}/>
+                   {/* <img src={e.metadata.image!} className="nft-image" /> */}
                   <Box className="column-container">
                     <div className="large-left-column">
                       <h3 className="metadata-title">{e.metadata.name}</h3>
