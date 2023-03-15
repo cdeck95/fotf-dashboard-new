@@ -1,5 +1,5 @@
 import { useTheme, useMediaQuery, Box, ImageList } from "@mui/material";
-import { ConnectWallet, MediaRenderer, ThirdwebNftMedia, useNFT, useNFTs, useOwnedNFTs } from "@thirdweb-dev/react";
+import { ConnectWallet, ThirdwebNftMedia, useNFT, useNFTs, useOwnedNFTs } from "@thirdweb-dev/react";
 import { useTitle } from "./hooks/useTitle";
 import "./styles/Home.css";
 import { useContractRead, useContract, Web3Button, useContractWrite, useAddress } from "@thirdweb-dev/react";
@@ -14,10 +14,11 @@ import stakingABI from "./ABIs/stakingABI.json";
 import honeyABI from "./ABIs/honeyABI.json";
 import aiABI from "./ABIs/aiABI.json";
 import { NFT, SmartContract } from "@thirdweb-dev/sdk";
-import { BaseContract } from "ethers";
+import { BaseContract, BigNumber, ethers } from "ethers";
 import ControlPointIcon from '@mui/icons-material/ControlPoint';
 import StarBorderIcon from '@mui/icons-material/StarBorder';
 import StarIcon from '@mui/icons-material/Star';
+import { NumericFormat } from 'react-number-format';
 
 
 const FOTF_CONTRACT="0x06bdc702fb8af5af8067534546e0c54ea4243ea9";
@@ -28,8 +29,8 @@ const AI_MINT="0x1C6d280280f7f8d139659E314d738bdD466741Ba";
 
 function App() {
   useTitle("FOTF | Staking");
-  const theme = useTheme();
-  const isMobile = !useMediaQuery(theme.breakpoints.up("md"));
+  //const theme = useTheme();
+  //const isMobile = !useMediaQuery(theme.breakpoints.up("md"));
   const sdk = useSDK();
   const provider = sdk?.getProvider();
   const address = useAddress();
@@ -38,21 +39,19 @@ function App() {
   const [contract_STAKING, setContractStaking] = useState<SmartContract<BaseContract>>();
   const [contract_REWARDS, setContractRewards] = useState<SmartContract<BaseContract>>();
   const [contract_AI, setContractAI] = useState<SmartContract<BaseContract>>();
+  const [honey, setHoney] = useState<string>();
+
  
   const [NFTs, setNFTs] = useState<NFT[]>();
 
   const { data: ownedNFTs, error, isLoading }  = useOwnedNFTs(contract_FOTF, address);
 
-  const ownedNFTs2  = useOwnedNFTs(contract_TEDDY, address).data;
-  console.log(ownedNFTs2);
-  const ownedNFTs3  = useOwnedNFTs(contract_STAKING, address).data;
-  console.log(ownedNFTs3);
-
-  const honey  = useOwnedNFTs(contract_REWARDS, address).data;
-  console.log(honey);
-
-  const ownedNFTs5  = useOwnedNFTs(contract_AI, address).data;
-  console.log(ownedNFTs5);
+  const ownedTeddyNFTs  = useOwnedNFTs(contract_TEDDY, address).data;
+  console.log(ownedTeddyNFTs);
+  const stakedTeddyNFTs  = useOwnedNFTs(contract_STAKING, address).data;
+  console.log(stakedTeddyNFTs);
+  const ownedAINFTs  = useOwnedNFTs(contract_AI, address).data;
+  console.log(ownedAINFTs);
 
  
   let allOwnedNFTs: NFT[] = []; 
@@ -60,16 +59,15 @@ function App() {
     console.log(token);
     allOwnedNFTs?.push(token);
   });
-  ownedNFTs2?.forEach(token => {
+  ownedTeddyNFTs?.forEach(token => {
     console.log(token);
     allOwnedNFTs?.push(token);
   });
-  ownedNFTs3?.forEach(token => {
+  stakedTeddyNFTs?.forEach(token => {
     console.log(token);
     allOwnedNFTs?.push(token);
   });
-  
-  ownedNFTs5?.forEach(token => {
+  ownedAINFTs?.forEach(token => {
     console.log(token);
     allOwnedNFTs?.push(token);
   });
@@ -121,8 +119,13 @@ function App() {
 
   const LoadHoney = async () => {
     try{
-      const honeyBalance = await sdk?.wallet.balance(REWARD_TOKEN);
-      console.log(honeyBalance);
+      const data:BigNumber = await contract_REWARDS?.call(
+        "balanceOf", // Name of your function as it is on the smart contract
+        // Arguments to your function, in the same order they are on your smart contract
+       address
+      );
+      const honeyTMP = parseFloat(ethers.utils.formatEther(data)).toFixed(3);
+      setHoney(honeyTMP.toString());
     } catch (e) {
       console.log(e); 
     }
@@ -193,7 +196,7 @@ function App() {
                 <div key={e.metadata.id} className="card">
                   <StarBorderIcon onClick={star} sx={{ position: "absolute", top: "15px", right: "15px", zIndex: "100 !important'" }}/>
                   <ThirdwebNftMedia metadata={e.metadata} style={{ 
-                    borderRadius: "10px", objectFit: "fill", marginBottom: "10px"
+                    borderRadius: "10px", objectFit: "cover", marginBottom: "10px"
                      }}/>
                   <Box className="column-container">
                     <div className="large-left-column">
@@ -226,13 +229,15 @@ function App() {
       : <div><p>Connect your wallet</p> </div> 
       }
 
-      <Box sx={{ position: "fixed", bottom: "0px", left: "50%"}}>
-        <p>honey</p>
+      <Box sx={{ position: "fixed", bottom: "0px", textAlign: "center", marginLeft: "auto", marginRight: "auto", width: "80%", height: "70px", backgroundColor: "#FED100"}}>
+        <div className="row">
+          <NumericFormat value={honey} displayType={'text'} thousandSeparator={true} prefix={'$'} suffix={' HNY'} />
+          <p className="stats">{ownedNFTs?.length} Fury Teds</p>
+          <p className="stats">{ownedTeddyNFTs?.length} Teddys</p>
+          <p className="stats">{stakedTeddyNFTs?.length} Staked Teddys</p>
+          <p className="stats">{ownedAINFTs?.length} AI Teds</p>
+        </div>
       </Box>
-       
-      
-      
-
       </main>
     </div>
   );
