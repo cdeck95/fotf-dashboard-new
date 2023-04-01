@@ -5,6 +5,7 @@ import reportWebVitals from "./reportWebVitals";
 import { ChainId, ThirdwebProvider } from "@thirdweb-dev/react";
 import { Ethereum} from "@thirdweb-dev/chains";
 import "./styles/globals.css";
+import ReactDOM from 'react-dom';
 
 // You can also import additional chains from `@thirdweb-dev/chains` and pass them directly.
 //const activeChain = Ethereum;
@@ -12,7 +13,14 @@ const activeChain = ChainId.Mainnet;
 
 const container = document.getElementById("root");
 const root = createRoot(container!);
-
+// ReactDOM.render(
+//   <React.StrictMode>
+//     <ThirdwebProvider activeChain={activeChain}>
+//       <App />
+//     </ThirdwebProvider>
+//   </React.StrictMode>,
+//  document.getElementById('root')
+// );
   root.render(
   <React.StrictMode>
     <ThirdwebProvider activeChain={activeChain}>

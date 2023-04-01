@@ -148,6 +148,19 @@
   display: flex;
 }
 
+.row {
+  flex-direction: row;
+  display: flex;
+}
+
+.stats {
+  color: black;
+  font-size: large;
+  margin-left: 20px;
+  margin-top: 0%;
+  margin-bottom: 0%;
+}
+
 .large-left-column {
   width: 90%;
   text-align: left;
