@@ -1,11 +1,10 @@
-import { useTheme, useMediaQuery, Box, ImageList } from "@mui/material";
-import { ConnectWallet, ThirdwebNftMedia, useNFT, useNFTs, useOwnedNFTs } from "@thirdweb-dev/react";
+import {  Box, ImageList } from "@mui/material";
+import { ConnectWallet, ThirdwebNftMedia, useOwnedNFTs } from "@thirdweb-dev/react";
 import { useTitle } from "./hooks/useTitle";
 import "./styles/Home.css";
-import { useContractRead, useContract, Web3Button, useContractWrite, useAddress } from "@thirdweb-dev/react";
+import { useAddress } from "@thirdweb-dev/react";
 import Backdrop from '@mui/material/Backdrop';
 import CircularProgress from '@mui/material/CircularProgress';
-import Button from '@mui/material/Button';
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { useSDK } from "@thirdweb-dev/react";
 import teddyABI from "./ABIs/teddyABI.json";
