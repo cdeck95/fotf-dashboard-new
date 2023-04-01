@@ -6,7 +6,7 @@ import { useContractRead, useContract, Web3Button, useContractWrite, useAddress 
 import Backdrop from '@mui/material/Backdrop';
 import CircularProgress from '@mui/material/CircularProgress';
 import Button from '@mui/material/Button';
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { useSDK } from "@thirdweb-dev/react";
 import teddyABI from "./ABIs/teddyABI.json";
 import tedABI from "./ABIs/tedABI.json";
@@ -38,88 +38,92 @@ function App() {
   const [contract_STAKING, setContractStaking] = useState<SmartContract<BaseContract>>();
   const [contract_REWARDS, setContractRewards] = useState<SmartContract<BaseContract>>();
   const [contract_AI, setContractAI] = useState<SmartContract<BaseContract>>();
- 
-  const [NFTs, setNFTs] = useState<NFT[]>();
 
-  const { data: ownedNFTs, error, isLoading }  = useOwnedNFTs(contract_FOTF, address);
+  const { data: tedNFTs, error, isLoading }  = useOwnedNFTs(contract_FOTF, address);
 
-  const ownedNFTs2  = useOwnedNFTs(contract_TEDDY, address).data;
-  console.log(ownedNFTs2);
-  const ownedNFTs3  = useOwnedNFTs(contract_STAKING, address).data;
-  console.log(ownedNFTs3);
-  const ownedNFTs4  = useOwnedNFTs(contract_REWARDS, address).data;
-  console.log(ownedNFTs4);
+  const teddyNFTs  = useOwnedNFTs(contract_TEDDY, address).data;
+  console.log(teddyNFTs);
 
-  const ownedNFTs5  = useOwnedNFTs(contract_AI, address).data;
-  console.log(ownedNFTs5);
+  const stakedTeddies  = useOwnedNFTs(contract_STAKING, address).data;
+  console.log(stakedTeddies);
 
- 
-  let allOwnedNFTs: NFT[] = []; 
-  ownedNFTs?.forEach(token => {
-    console.log(token);
-    allOwnedNFTs?.push(token);
-  });
-  ownedNFTs2?.forEach(token => {
-    console.log(token);
-    allOwnedNFTs?.push(token);
-  });
-  ownedNFTs3?.forEach(token => {
-    console.log(token);
-    allOwnedNFTs?.push(token);
-  });
-  ownedNFTs4?.forEach(token => {
-    console.log(token);
-    allOwnedNFTs?.push(token);
-  });
-  ownedNFTs5?.forEach(token => {
-    console.log(token);
-    allOwnedNFTs?.push(token);
-  });
+  const honeyTokens  = useOwnedNFTs(contract_REWARDS, address).data;
+  console.log(honeyTokens);
 
-  const LoadContractFOTF = async () => {
+  const aiNFTs  = useOwnedNFTs(contract_AI, address).data;
+  console.log(aiNFTs);
+
+  const allOwnedNFTs: NFT[] = useMemo(() => {
+    const returnNFTs: NFT[] = [];
+    tedNFTs?.forEach(token => {
+      console.log(token);
+      returnNFTs?.push(token);
+    });
+    teddyNFTs?.forEach(token => {
+      console.log(token);
+      returnNFTs?.push(token);
+    });
+    stakedTeddies?.forEach(token => {
+      console.log(token);
+      returnNFTs?.push(token);
+    });
+    honeyTokens?.forEach(token => {
+      console.log(token);
+      returnNFTs?.push(token);
+    });
+    aiNFTs?.forEach(token => {
+      console.log(token);
+      returnNFTs?.push(token);
+    });
+    
+    return returnNFTs;
+  }, [tedNFTs, teddyNFTs, stakedTeddies, honeyTokens, aiNFTs]); 
+  
+
+  const LoadContractFOTF = useCallback(async () => {
     try{
       const contractIn = await sdk?.getContractFromAbi(FOTF_CONTRACT, tedABI);
       setContractFOTF(contractIn);
     } catch (e) {
       console.log(e); 
     }
-  }
+  }, [sdk]);
 
-  const LoadContractTeddy = async () => {
+  const LoadContractTeddy = useCallback(async () => {
     try{
       const contractIn = await sdk?.getContractFromAbi(TEDDY_CONTRACT, teddyABI);
       setContractTeddy(contractIn);
     } catch (e) {
       console.log(e); 
     }
-  }
+  }, [sdk]);
 
-  const LoadContractStaking = async () => {
+  const LoadContractStaking = useCallback(async () => {
     try{
       const contractIn = await sdk?.getContractFromAbi(STAKING_CONTRACT, stakingABI);
       setContractStaking(contractIn);
     } catch (e) {
       console.log(e); 
     }
-  }
+  }, [sdk]);
 
-  const LoadContractRewards = async () => {
+  const LoadContractRewards = useCallback(async () => {
     try{
       const contractIn = await sdk?.getContractFromAbi(REWARD_TOKEN, honeyABI);
       setContractRewards(contractIn);
     } catch (e) {
       console.log(e); 
     }
-  }
+  }, [sdk]);
 
-  const LoadContractAI = async () => {
+  const LoadContractAI = useCallback(async () => {
     try{
       const contractIn = await sdk?.getContractFromAbi(AI_MINT, aiABI);
       setContractAI(contractIn);
     } catch (e) {
       console.log(e); 
     }
-  }
+  }, [sdk]);
 
   useEffect(() => {
     try {
@@ -138,15 +142,12 @@ function App() {
       if (!contract_AI) {
         LoadContractAI();
       }
-      if (allOwnedNFTs){
-        setNFTs(allOwnedNFTs);
-      }
     } catch (e) {
       console.log(e);
       console.log("Error!");
     }
     
-  }, [ownedNFTs, contract_FOTF, contract_TEDDY, contract_STAKING, contract_REWARDS, contract_AI]);
+  }, [contract_FOTF, contract_TEDDY, contract_STAKING, contract_REWARDS, contract_AI, LoadContractTeddy, LoadContractFOTF, LoadContractStaking, LoadContractRewards, LoadContractAI]);
 
   const [open, setOpen] = useState(false);
   const handleClose = () => {
@@ -175,11 +176,10 @@ function App() {
       ? <div>
           { error ? <div><p>NFT not found - error</p></div> 
           : <div className="gallery">
-              {ownedNFTs?
+              {allOwnedNFTs?
               <div>
                 <ImageList cols={3}>
                 {allOwnedNFTs?.map(e =>
-              //  {NFTs?.map(e =>
                 <div key={e.metadata.id} className="card">
                   <StarBorderIcon onClick={star} sx={{ position: "absolute", top: "15px", right: "15px", zIndex: "100 !important'" }}/>
                   <ThirdwebNftMedia metadata={e.metadata} style={{ 
