@@ -1,5 +1,5 @@
 import {  Box, ImageList } from "@mui/material";
-import { ConnectWallet, ThirdwebNftMedia, useContract, useOwnedNFTs } from "@thirdweb-dev/react";
+import { ConnectWallet, ThirdwebNftMedia, useContract, useNFT, useOwnedNFTs } from "@thirdweb-dev/react";
 import { useTitle } from "./hooks/useTitle";
 import "./styles/Home.css";
 import { useAddress } from "@thirdweb-dev/react";
@@ -26,6 +26,31 @@ const STAKING_CONTRACT="0x15829C851C3117f662C5A9E369bC3A4dBbeaFEBF";
 const REWARD_TOKEN="0x6ca0269dca415313256cfecD818F32c5AfF0A518";
 const AI_MINT="0x1C6d280280f7f8d139659E314d738bdD466741Ba";
 
+interface StakedTokens {
+  address: string;
+  tokenId: BigNumber;
+}
+
+async function AddStakedTokens(contract_TEDDY: SmartContract, tokenIDs: string[]) {
+  //const { data: stakedTeddy, isLoading: isLoadingStakedTeddy, error: errorStakedTeddy } = await useNFT(contract_STAKING, BigNumber.from(tokenID));
+  const {data: allStakedNFTs, error: errorStaked, isLoading: isLoadingStaked} = useOwnedNFTs(contract_TEDDY, STAKING_CONTRACT);
+  console.log(allStakedNFTs);
+  console.log(errorStaked);
+  console.log(isLoadingStaked);
+
+  console.log("adding staked tokens")
+  console.log(allStakedNFTs);
+  const tokens: NFT[] = [];
+  allStakedNFTs?.map(token => {
+    console.log(token.owner);
+    if(tokenIDs.includes(token.owner)){
+      console.log(`${token.metadata.id} is staked}`)
+      tokens.push(token);
+    }
+  });
+  return tokens;   
+}
+
 function App() {
   useTitle("FOTF | Staking");
   //const theme = useTheme();
@@ -34,35 +59,29 @@ function App() {
   const provider = sdk?.getProvider();
   const address = useAddress();
   const [contract_FOTF, setContractFOTF] = useState<SmartContract<BaseContract>>();
-  // const [contract_TEDDY, setContractTeddy] = useState<SmartContract<BaseContract>>();
-  // const [contract_STAKING, setContractStaking] = useState<SmartContract<BaseContract>>();
+  const [contract_STAKING, setContractStaking] = useState<SmartContract<BaseContract>>();
   const [contract_REWARDS, setContractRewards] = useState<SmartContract<BaseContract>>();
   const [contract_AI, setContractAI] = useState<SmartContract<BaseContract>>();
   const [honey, setHoney] = useState<string>();
+  const [stakedNFTs, setStakedNFTs] = useState<NFT[]>();
   
   const { data: tedNFTs, error, isLoading }  = useOwnedNFTs(contract_FOTF, address);
 
   const { contract: contract_TEDDY } = useContract(TEDDY_CONTRACT);
+  
  
   const {data: teddyNFTs, error: errorTeddy, isLoading: isLoadingTeddy} = useOwnedNFTs(contract_TEDDY, address);
   console.log(teddyNFTs);
   console.log(errorTeddy);
   console.log(isLoadingTeddy);
 
-  //const { contract: contract_STAKING } = useContract(STAKING_CONTRACT);
-  //console.log(contract_STAKING);
+  // const { contract: contract_STAKING } = useContract(STAKING_CONTRACT);
 
-  //use teddy contract? because same contract, but just in a different wallet?
-  const {data: stakedTeddies, error: errorStakedTeddy, isLoading: isLoadingStakedTeddy}  = useOwnedNFTs(contract_TEDDY, STAKING_CONTRACT);
-  console.log(stakedTeddies);
-  console.log(errorStakedTeddy);
-  console.log(isLoadingStakedTeddy);
-  
   const {data: aiNFTs, error: errorAI, isLoading: isLoadingAI}  = useOwnedNFTs(contract_AI, address);
   console.log(aiNFTs);
   console.log(errorAI);
   console.log(isLoadingAI);
-
+  
   const allOwnedNFTs: NFT[] = useMemo(() => {
     const returnNFTs: NFT[] = [];
     tedNFTs?.forEach(token => {
@@ -73,7 +92,7 @@ function App() {
       console.log(token);
       returnNFTs?.push(token);
     });
-    stakedTeddies?.forEach(token => {
+    stakedNFTs?.forEach(token => {
       console.log(token);
       returnNFTs?.push(token);
     });
@@ -83,13 +102,47 @@ function App() {
     });
     
     return returnNFTs;
-  }, [tedNFTs, teddyNFTs, stakedTeddies, aiNFTs]); 
+  }, [tedNFTs, teddyNFTs, aiNFTs, stakedNFTs]); 
+  
+
+  const LoadStakedTokens = useCallback(async () => {
+    let tokensToReturn: NFT[] = [];
+    try{
+      const data: StakedTokens[] = await contract_STAKING?.call(
+        "getStakedTokens", // Name of your function as it is on the smart contract
+        // Arguments to your function, in the same order they are on your smart contract
+       address
+      );
+      console.log(data);
+      const tokenIDs: string[] = [];
+      data.forEach(token => {
+        tokenIDs.push(token.tokenId.toString());
+      });
+      
+      tokensToReturn = await AddStakedTokens(contract_TEDDY!, tokenIDs);
+      console.log(tokensToReturn);
+      setStakedNFTs(tokensToReturn);
+    } catch (e) {
+      console.log(e); 
+    }
+  }, [address, contract_STAKING, contract_TEDDY]);
+
   
 
   const LoadContractFOTF = useCallback(async () => {
     try{
       const contractIn = await sdk?.getContractFromAbi(FOTF_CONTRACT, tedABI);
       setContractFOTF(contractIn);
+    } catch (e) {
+      console.log(e); 
+    }
+  }, [sdk]);
+
+  const LoadContractStaking = useCallback(async () => {
+    try{
+      const contractIn = await sdk?.getContractFromAbi(STAKING_CONTRACT, stakingABI);
+      console.log(contractIn);
+      setContractStaking(contractIn);
     } catch (e) {
       console.log(e); 
     }
@@ -129,7 +182,7 @@ function App() {
 
   useEffect(() => {
     try {
-      if (!contract_TEDDY) {
+      if (!contract_FOTF) {
         LoadContractFOTF();
       }
       if (!contract_REWARDS) {
@@ -137,6 +190,15 @@ function App() {
       }
       if (!contract_AI) {
         LoadContractAI();
+      }
+      if (!contract_STAKING) {
+        LoadContractStaking();
+      }
+      // else {
+      //   LoadStakedTokens();
+      // }
+      if(contract_TEDDY) {
+        LoadStakedTokens();
       }
       if (contract_REWARDS){
         LoadHoney();
@@ -146,7 +208,7 @@ function App() {
       console.log("Error!");
     }
     
-  }, [contract_FOTF, contract_REWARDS, contract_AI, LoadContractFOTF, LoadContractRewards, LoadContractAI, LoadHoney]);
+  }, [sdk, address]);
 
   const [open, setOpen] = useState(false);
   const handleClose = () => {
@@ -220,7 +282,7 @@ function App() {
           <NumericFormat value={honey} displayType={'text'} thousandSeparator={true} prefix={'$'} suffix={' HNY'} />
           <p className="stats">{tedNFTs?.length} Fury Teds</p>
           <p className="stats">{teddyNFTs?.length} Teddys</p>
-          <p className="stats">{stakedTeddies?.length} Staked Teddys</p>
+          {/* <p className="stats">{stakedTeddies?.length} Staked Teddys</p> */}
           <p className="stats">{aiNFTs?.length} AI Teds</p>
         </div>
       </Box>
