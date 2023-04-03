@@ -39,16 +39,23 @@ function App() {
   const [contract_REWARDS, setContractRewards] = useState<SmartContract<BaseContract>>();
   const [contract_AI, setContractAI] = useState<SmartContract<BaseContract>>();
   const [honey, setHoney] = useState<string>();
+  
   const { data: tedNFTs, error, isLoading }  = useOwnedNFTs(contract_FOTF, address);
 
-  const teddyNFTs  = useOwnedNFTs(contract_TEDDY, address).data;
+  const {data: teddyNFTs, error: errorTeddy, isLoading: isLoadingTeddy}   = useOwnedNFTs(contract_TEDDY, address);
   console.log(teddyNFTs);
-  const stakedTeddies  = useOwnedNFTs(contract_STAKING, address).data;
+  console.log(errorTeddy);
+  console.log(isLoadingTeddy);
+
+  const {data: stakedTeddies, error: errorStakedTeddy, isLoading: isLoadingStakedTeddy}  = useOwnedNFTs(contract_STAKING, address);
   console.log(stakedTeddies);
-  const honeyTokens  = useOwnedNFTs(contract_REWARDS, address).data;
-  console.log(honeyTokens);
-  const aiNFTs  = useOwnedNFTs(contract_AI, address).data;
+  console.log(errorStakedTeddy);
+  console.log(isLoadingStakedTeddy);
+  
+  const {data: aiNFTs, error: errorAI, isLoading: isLoadingAI}  = useOwnedNFTs(contract_AI, address);
   console.log(aiNFTs);
+  console.log(errorAI);
+  console.log(isLoadingAI);
 
   const allOwnedNFTs: NFT[] = useMemo(() => {
     const returnNFTs: NFT[] = [];
@@ -64,17 +71,13 @@ function App() {
       console.log(token);
       returnNFTs?.push(token);
     });
-    honeyTokens?.forEach(token => {
-      console.log(token);
-      returnNFTs?.push(token);
-    });
     aiNFTs?.forEach(token => {
       console.log(token);
       returnNFTs?.push(token);
     });
     
     return returnNFTs;
-  }, [tedNFTs, teddyNFTs, stakedTeddies, honeyTokens, aiNFTs]); 
+  }, [tedNFTs, teddyNFTs, stakedTeddies, aiNFTs]); 
   
 
   const LoadContractFOTF = useCallback(async () => {
@@ -89,6 +92,7 @@ function App() {
   const LoadContractTeddy = useCallback(async () => {
     try{
       const contractIn = await sdk?.getContractFromAbi(TEDDY_CONTRACT, teddyABI);
+      console.log(contractIn);
       setContractTeddy(contractIn);
     } catch (e) {
       console.log(e); 
@@ -98,6 +102,7 @@ function App() {
   const LoadContractStaking = useCallback(async () => {
     try{
       const contractIn = await sdk?.getContractFromAbi(STAKING_CONTRACT, stakingABI);
+      console.log(contractIn);
       setContractStaking(contractIn);
     } catch (e) {
       console.log(e); 
