@@ -1,5 +1,5 @@
 import {  Box, ImageList } from "@mui/material";
-import { ConnectWallet, ThirdwebNftMedia, useOwnedNFTs } from "@thirdweb-dev/react";
+import { ConnectWallet, ThirdwebNftMedia, useContract, useOwnedNFTs } from "@thirdweb-dev/react";
 import { useTitle } from "./hooks/useTitle";
 import "./styles/Home.css";
 import { useAddress } from "@thirdweb-dev/react";
@@ -34,20 +34,26 @@ function App() {
   const provider = sdk?.getProvider();
   const address = useAddress();
   const [contract_FOTF, setContractFOTF] = useState<SmartContract<BaseContract>>();
-  const [contract_TEDDY, setContractTeddy] = useState<SmartContract<BaseContract>>();
-  const [contract_STAKING, setContractStaking] = useState<SmartContract<BaseContract>>();
+  // const [contract_TEDDY, setContractTeddy] = useState<SmartContract<BaseContract>>();
+  // const [contract_STAKING, setContractStaking] = useState<SmartContract<BaseContract>>();
   const [contract_REWARDS, setContractRewards] = useState<SmartContract<BaseContract>>();
   const [contract_AI, setContractAI] = useState<SmartContract<BaseContract>>();
   const [honey, setHoney] = useState<string>();
   
   const { data: tedNFTs, error, isLoading }  = useOwnedNFTs(contract_FOTF, address);
 
-  const {data: teddyNFTs, error: errorTeddy, isLoading: isLoadingTeddy}   = useOwnedNFTs(contract_TEDDY, address);
+  const { contract: contract_TEDDY } = useContract(TEDDY_CONTRACT);
+ 
+  const {data: teddyNFTs, error: errorTeddy, isLoading: isLoadingTeddy} = useOwnedNFTs(contract_TEDDY, address);
   console.log(teddyNFTs);
   console.log(errorTeddy);
   console.log(isLoadingTeddy);
 
-  const {data: stakedTeddies, error: errorStakedTeddy, isLoading: isLoadingStakedTeddy}  = useOwnedNFTs(contract_STAKING, address);
+  //const { contract: contract_STAKING } = useContract(STAKING_CONTRACT);
+  //console.log(contract_STAKING);
+
+  //use teddy contract? because same contract, but just in a different wallet?
+  const {data: stakedTeddies, error: errorStakedTeddy, isLoading: isLoadingStakedTeddy}  = useOwnedNFTs(contract_TEDDY, STAKING_CONTRACT);
   console.log(stakedTeddies);
   console.log(errorStakedTeddy);
   console.log(isLoadingStakedTeddy);
@@ -89,26 +95,6 @@ function App() {
     }
   }, [sdk]);
 
-  const LoadContractTeddy = useCallback(async () => {
-    try{
-      const contractIn = await sdk?.getContractFromAbi(TEDDY_CONTRACT, teddyABI);
-      console.log(contractIn);
-      setContractTeddy(contractIn);
-    } catch (e) {
-      console.log(e); 
-    }
-  }, [sdk]);
-
-  const LoadContractStaking = useCallback(async () => {
-    try{
-      const contractIn = await sdk?.getContractFromAbi(STAKING_CONTRACT, stakingABI);
-      console.log(contractIn);
-      setContractStaking(contractIn);
-    } catch (e) {
-      console.log(e); 
-    }
-  }, [sdk]);
-
   const LoadContractRewards = useCallback(async () => {
     try{
       const contractIn = await sdk?.getContractFromAbi(REWARD_TOKEN, honeyABI);
@@ -143,14 +129,8 @@ function App() {
 
   useEffect(() => {
     try {
-      if (!contract_FOTF) {
-        LoadContractTeddy();
-      }
       if (!contract_TEDDY) {
         LoadContractFOTF();
-      }
-      if (!contract_STAKING) {
-        LoadContractStaking();
       }
       if (!contract_REWARDS) {
         LoadContractRewards();
@@ -166,7 +146,7 @@ function App() {
       console.log("Error!");
     }
     
-  }, [contract_FOTF, contract_TEDDY, contract_STAKING, contract_REWARDS, contract_AI, LoadContractTeddy, LoadContractFOTF, LoadContractStaking, LoadContractRewards, LoadContractAI, LoadHoney]);
+  }, [contract_FOTF, contract_REWARDS, contract_AI, LoadContractFOTF, LoadContractRewards, LoadContractAI, LoadHoney]);
 
   const [open, setOpen] = useState(false);
   const handleClose = () => {
