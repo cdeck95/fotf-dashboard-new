@@ -15,63 +15,105 @@ import InboxIcon from '@mui/icons-material/MoveToInbox';
 import MailIcon from '@mui/icons-material/Mail';
 import "../styles/globals.css";
 import GlobalStyles from '@mui/material/GlobalStyles';
+import furyLogo from "../assets/fury_logo.jpg";
+import teddyLogo from "../assets/teddiesLogo.png";
+import teddies from "../assets/teddies.png";
+import { useNavigate } from "react-router-dom";
+import { ThemeProvider, createTheme } from '@mui/material';
+import GridViewIcon from '@mui/icons-material/GridView';
+import DescriptionIcon from '@mui/icons-material/Description';
+import FileDownloadIcon from '@mui/icons-material/FileDownload';
+import ShopIcon from '@mui/icons-material/Shop';
 
-const drawerWidth = 240;
+function LeftDrawer() {
+  const drawerWidth = 240;
+  const navigate = useNavigate();
+  
+  const loadPage = (page: string) => {
+    switch(page) {
+      case "Dashboard":
+        navigate("/");
+        break;
+      case "Documents":
+        navigate("/Documents");
+        break;
+      case "Downloads":
+        navigate("/Downloads");
+        break;
+      case "Shop":
+        navigate("/Shop");
+        break;
+      case "Factory":
+        navigate("/Factory");
+        break;
+      
+      default:
+        navigate("/");
+        break;
+    }
+  }
 
-const primaryColor = getComputedStyle(document.documentElement).getPropertyValue('--primary-color');
-const secondaryColor = getComputedStyle(document.documentElement).getPropertyValue('--secondary-color');
-const backgroundColorGlobal = getComputedStyle(document.documentElement).getPropertyValue('--background-color');
-const accentColor = getComputedStyle(document.documentElement).getPropertyValue('--accent-color');
 
+  
 
-export default function LeftDrawer() {
   return (
     
     <Box sx={{ display: 'flex' }}>
-    <GlobalStyles styles={{ Drawer: { backgroundColor: backgroundColorGlobal }, Toolbar: { backgroundColor: backgroundColorGlobal },
-    List: { backgroundColor: backgroundColorGlobal }
-
-}} />
       <CssBaseline />
-      <AppBar
-        position="fixed"
-        sx={{ width: `calc(100% - ${drawerWidth}px)`, ml: `${drawerWidth}px`}}
-      >
-        {/* <Toolbar>
-          <Typography variant="h6" noWrap component="div">
-            Permanent drawer
-          </Typography>
-        </Toolbar> */}
-      </AppBar>
       <Drawer
         sx={{
           width: drawerWidth,
+          
           flexShrink: 0,
           '& .MuiDrawer-paper': {
             width: drawerWidth,
             boxSizing: 'border-box',
-          }, backgroundColor: backgroundColorGlobal
+          }, 
         }}
         variant="permanent"
-        anchor="left"
-        
-      >
-        <Toolbar sx={{ backgroundColor: backgroundColorGlobal}} />
-        <Divider />
-        <List sx={{ backgroundColor: backgroundColorGlobal}}>
-          {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
-            <ListItem key={text} disablePadding>
-              <ListItemButton>
-                <ListItemIcon>
-                  {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-                </ListItemIcon>
-                <ListItemText primary={text} />
-              </ListItemButton>
-            </ListItem>
-          ))}
+        anchor="left">
+        <Toolbar>
+          <img src={teddyLogo} alt="FOTF Logo" onClick={() => loadPage("Dashboard")} className="mainLogo"/>  
+        </Toolbar>
+       <List>
+          <ListItem key={"Dashboard"} disablePadding onClick={() => loadPage("Dashboard")}>
+            <ListItemButton>
+              <ListItemIcon>
+                <GridViewIcon/>
+              </ListItemIcon>
+              <ListItemText primary={"Dashboard"} />
+            </ListItemButton>
+          </ListItem>
+          <ListItem key={"Documents"} disablePadding onClick={() => loadPage("Documents")}>
+            <ListItemButton>
+              <ListItemIcon>
+                <DescriptionIcon/>
+              </ListItemIcon>
+              <ListItemText primary={"Documents"} />
+            </ListItemButton>
+          </ListItem>
+          <ListItem key={"Downloads"} disablePadding onClick={() => loadPage("Downloads")}>
+            <ListItemButton>
+              <ListItemIcon>
+                <FileDownloadIcon/>
+              </ListItemIcon>
+              <ListItemText primary={"Downloads"} />
+            </ListItemButton>
+          </ListItem>
+          <ListItem key={"Shop"} disablePadding onClick={() => loadPage("Shop")}>
+            <ListItemButton>
+              <ListItemIcon>
+                <ShopIcon/>
+              </ListItemIcon>
+              <ListItemText primary={"Shop"} />
+            </ListItemButton>
+          </ListItem>
         </List>
         <Divider />
-        <List sx={{ backgroundColor: backgroundColorGlobal}}>
+        <h3>
+          Economy
+        </h3>
+        <List>
           {['All mail', 'Trash', 'Spam'].map((text, index) => (
             <ListItem key={text} disablePadding>
               <ListItemButton>
@@ -87,3 +129,5 @@ export default function LeftDrawer() {
     </Box>
   );
 }
+
+export default LeftDrawer;

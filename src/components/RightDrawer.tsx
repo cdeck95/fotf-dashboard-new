@@ -14,30 +14,26 @@ import ListItemText from '@mui/material/ListItemText';
 import InboxIcon from '@mui/icons-material/MoveToInbox';
 import MailIcon from '@mui/icons-material/Mail';
 import { ConnectWallet } from '@thirdweb-dev/react';
+import { GlobalStyles, ThemeProvider, createTheme } from '@mui/material';
 
-const drawerWidth = 240;
 
-export default function PermanentDrawerRight() {
+
+function PermanentDrawerRight() {
+  const primaryColor = getComputedStyle(document.documentElement).getPropertyValue('--primary-color');
+  const secondaryColor = getComputedStyle(document.documentElement).getPropertyValue('--secondary-color');
+  const backgroundColorGlobal = getComputedStyle(document.documentElement).getPropertyValue('--background-color');
+  console.log(backgroundColorGlobal);
+  const accentColor = getComputedStyle(document.documentElement).getPropertyValue('--accent-color');
+  const drawerWidth = 240;
+
+  
+
   return (
     <Box sx={{ display: 'flex' }}>
       <CssBaseline />
-      <AppBar
-        position="fixed"
-        sx={{ width: `calc(100% - ${drawerWidth}px)`, mr: `${drawerWidth}px` }}
-      >
-        {/* <Toolbar>
-          <Typography variant="h6" noWrap component="div">
-            Permanent drawer
-          </Typography>
-        </Toolbar> */}
-      </AppBar>
       <Box
         component="main"
-        sx={{ flexGrow: 1, bgcolor: 'background.default', p: 3 }}
-      >
-        {/* <Toolbar>
-            
-        </Toolbar> */}
+        sx={{ flexGrow: 1, bgcolor: 'background.default', p: 3 }}>       
       </Box>
       <Drawer
         sx={{
@@ -52,12 +48,10 @@ export default function PermanentDrawerRight() {
         anchor="right"
       >
         <Toolbar>
-            
             <div className="connect">
                 <ConnectWallet accentColor="#000000" colorMode="dark"/>
             </div>
         </Toolbar>
-        <Divider />
         <List>
           {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
             <ListItem key={text} disablePadding>
@@ -73,6 +67,9 @@ export default function PermanentDrawerRight() {
         <Divider />
         
       </Drawer>
+      {/* </ThemeProvider> */}
     </Box>
   );
 }
+
+export default PermanentDrawerRight;
