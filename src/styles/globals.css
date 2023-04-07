@@ -49,4 +49,11 @@ body {
   cursor: pointer;
 }
 
+.hubLogo {
+  width: 40%;
+  height: 100%;
+  margin-right: 20px;
+  object-fit: contain;
+  cursor: pointer;
+}
 

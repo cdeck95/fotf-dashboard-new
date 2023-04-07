@@ -24,10 +24,23 @@ import GridViewIcon from '@mui/icons-material/GridView';
 import DescriptionIcon from '@mui/icons-material/Description';
 import FileDownloadIcon from '@mui/icons-material/FileDownload';
 import ShopIcon from '@mui/icons-material/Shop';
+import CurrencyExchangeIcon from '@mui/icons-material/CurrencyExchange';
+import SwapHorizIcon from '@mui/icons-material/SwapHoriz';
+import RequestQuoteIcon from '@mui/icons-material/RequestQuote';
+import ConstructionIcon from '@mui/icons-material/Construction';
+import EditIcon from '@mui/icons-material/Edit';
+import ImageIcon from '@mui/icons-material/Image';
+import PrecisionManufacturingIcon from '@mui/icons-material/PrecisionManufacturing';
 
 function LeftDrawer() {
   const drawerWidth = 240;
   const navigate = useNavigate();
+
+  const primaryColor = getComputedStyle(document.documentElement).getPropertyValue('--primary-color');
+  const secondaryColor = getComputedStyle(document.documentElement).getPropertyValue('--secondary-color');
+  const backgroundColorGlobal = getComputedStyle(document.documentElement).getPropertyValue('--background-color');
+  const accentColor = getComputedStyle(document.documentElement).getPropertyValue('--accent-color');
+
   
   const loadPage = (page: string) => {
     switch(page) {
@@ -46,7 +59,6 @@ function LeftDrawer() {
       case "Factory":
         navigate("/Factory");
         break;
-      
       default:
         navigate("/");
         break;
@@ -110,21 +122,83 @@ function LeftDrawer() {
           </ListItem>
         </List>
         <Divider />
-        <h3>
+        <Typography sx={{ marginTop: "10px", paddingLeft: "18px"}}>
           Economy
-        </h3>
+        </Typography>
         <List>
-          {['All mail', 'Trash', 'Spam'].map((text, index) => (
-            <ListItem key={text} disablePadding>
-              <ListItemButton>
-                <ListItemIcon>
-                  {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-                </ListItemIcon>
-                <ListItemText primary={text} />
-              </ListItemButton>
-            </ListItem>
-          ))}
+          <ListItem key={"HNYExchange"} disablePadding onClick={() => loadPage("HNYExchange")}>
+            <ListItemButton>
+              <ListItemIcon>
+                <CurrencyExchangeIcon/>
+              </ListItemIcon>
+              <ListItemText primary={"$HNY Exchange"} />
+            </ListItemButton>
+          </ListItem>
+          <ListItem key={"TeddyStaking"} disablePadding onClick={() => loadPage("TeddyStaking")}>
+            <ListItemButton>
+              <ListItemIcon>
+                <SwapHorizIcon/>
+              </ListItemIcon>
+              <ListItemText primary={"Teddy Staking"} />
+            </ListItemButton>
+          </ListItem>
+          <ListItem key={"TedClaims"} disablePadding onClick={() => loadPage("TedClaims")}>
+            <ListItemButton>
+              <ListItemIcon>
+                 <RequestQuoteIcon/>
+              </ListItemIcon>
+              <ListItemText primary={"Ted Claims"} />
+            </ListItemButton>
+          </ListItem>
         </List>
+        <Typography sx={{ marginTop: "10px", paddingLeft: "18px"}}>
+          Utility
+        </Typography>
+        <List>
+          <ListItem key={"BuildATeddy"} disablePadding onClick={() => loadPage("BuildATeddy")}>
+            <ListItemButton>
+              <ListItemIcon>
+                <ConstructionIcon/>
+              </ListItemIcon>
+              <ListItemText primary={"Build A Teddy"} />
+            </ListItemButton>
+          </ListItem>
+          <ListItem key={"TraitSwapTeds"} disablePadding onClick={() => loadPage("TraitSwapTeds")}>
+            <ListItemButton>
+              <ListItemIcon>
+                <EditIcon/>
+              </ListItemIcon>
+              <ListItemText primary={"Trait Swap Teds"} />
+            </ListItemButton>
+          </ListItem>
+          <ListItem key={"GraphicTemplates"} disablePadding onClick={() => loadPage("GraphicTemplates")}>
+            <ListItemButton>
+              <ListItemIcon>
+                <ImageIcon/>
+              </ListItemIcon>
+              <ListItemText primary={"Graphic Templates"} />
+            </ListItemButton>
+          </ListItem>
+          <ListItem key={"TheFactory"} disablePadding onClick={() => loadPage("Factory")}>
+            <ListItemButton>
+              <ListItemIcon>
+                <PrecisionManufacturingIcon/>
+              </ListItemIcon>
+              <ListItemText primary={"The Factory"} />
+            </ListItemButton>
+          </ListItem>
+        </List>
+        <Box sx={{ border: "solid", marginTop: "25px", borderRadius: "10px", backgroundColor: "#000", alignItems: "center", marginLeft: "auto",  marginRight: "auto", width: "200px", height: "100px", display: "flex"}}>
+          <img src={teddies} alt="Visit The Hub" onClick={() => loadPage("Hub")} className="hubLogo"/>
+          <Box sx={{ flexDirection: "column"}}>
+            <Typography sx={{ color: accentColor, fontSize: "20px"}}>
+              Visit The Hub
+            </Typography>
+            <Typography sx={{ color: accentColor, fontSize: "14px", textAlign: "end"}}>
+              All things FOTF
+            </Typography>
+          </Box>
+        </Box>
       </Drawer>
     </Box>
   );

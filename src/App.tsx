@@ -72,8 +72,8 @@ function App() {
     <div className="container">
       <ThemeProvider theme={theme}>
         <Box sx={{
-          marginLeft: "260px",
-          marginRight: "260px",
+          marginLeft: "240px",
+          marginRight: "240px",
           paddingTop: "20px",
           paddingBottom: "20px",
           backgroundColor: "white",

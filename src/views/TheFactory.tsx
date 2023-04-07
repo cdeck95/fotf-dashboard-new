@@ -229,7 +229,6 @@ function TheFactory() {
   
   return (
     <div className="container">
-      <main className="main">
       {address
       ? <div>
           { error ? <div><p>NFT not found - error</p></div> 
@@ -274,7 +273,7 @@ function TheFactory() {
       : <div><p>Connect your wallet</p> </div> 
       }
 
-      <Box sx={{ position: "fixed", bottom: "0px", textAlign: "center", marginLeft: "auto", marginRight: "auto", width: "80%", height: "70px", backgroundColor: "#FED100"}}>
+      <Box sx={{width: "100%", position: "fixed", bottom: "0px", height: "70px", backgroundColor: "#FED100"}}>
         <div className="row">
           <NumericFormat value={honey} displayType={'text'} thousandSeparator={true} prefix={'$'} suffix={' HNY'} />
           <p className="stats">{tedNFTs?.length} Fury Teds</p>
@@ -283,7 +282,6 @@ function TheFactory() {
           <p className="stats">{aiNFTs?.length} AI Teds</p>
         </div>
       </Box>
-      </main>
     </div>
   );
 }
