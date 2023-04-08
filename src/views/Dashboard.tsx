@@ -13,7 +13,7 @@ import { Home } from "@mui/icons-material";
 import { Routes, Route } from "react-router-dom";
 
 
-function TheFactory() {
+function Dashboard() {
   useTitle("FOTF | Dashboard");
   //const theme = useTheme();
   //const isMobile = !useMediaQuery(theme.breakpoints.up("md"));
@@ -22,17 +22,13 @@ function TheFactory() {
   const address = useAddress();
 
   return (
-    <div className="container">
+    <Box sx={{ margin: 5}}>
       {address
-      ? 
-          <Box >
-            <p>Home</p>
-          </Box>
-        
-       : <div><p>Connect your wallet</p> </div> 
+      ?  <p>Dashboard</p>  
+      : <div><p>Connect your wallet</p> </div> 
       }
-    </div>
+    </Box>
   );
 }
 
-export default TheFactory;
+export default Dashboard;

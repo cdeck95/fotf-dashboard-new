@@ -9,7 +9,7 @@ import { useCallback, useEffect, useMemo, useState } from "react";
 import { useSDK } from "@thirdweb-dev/react";
 import { Routes, Route, Navigate } from "react-router-dom";
 import TheFactory from "./views/TheFactory";
-import Home  from "./views/Home";
+import Dashboard from "./views/Dashboard";
 
 import NotFound from "./views/NotFound";
 import LeftDrawer from "./components/LeftDrawer";
@@ -64,7 +64,18 @@ function App() {
             padding: 15
           }
         }
-      }, 
+      }, MuiButton: {
+        styleOverrides: {
+          root: {
+            backgroundColor: primaryColor,
+            color: accentColor,
+            "&:hover": {
+              backgroundColor: accentColor,
+              color: primaryColor,
+            }
+          }
+        }
+      },
     },
   });
 
@@ -73,13 +84,13 @@ function App() {
       <ThemeProvider theme={theme}>
         <Box sx={{
           marginLeft: "240px",
-          marginRight: "240px",
+          marginRight: "280px",
           paddingTop: "20px",
           paddingBottom: "20px",
           backgroundColor: "white",
         }}>
           <Routes>
-            <Route path="/" element={<Home/>}/>
+            <Route path="/" element={<Dashboard/>}/>
             <Route path="/Factory" element={<TheFactory/>}/>
             <Route path="*" element={<NotFound/>}/> 
           </Routes>
