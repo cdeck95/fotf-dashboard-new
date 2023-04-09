@@ -1,7 +1,6 @@
 import {  Box, ImageList } from "@mui/material";
 import { ConnectWallet, ThirdwebNftMedia, useContract, useNFT, useOwnedNFTs } from "@thirdweb-dev/react";
 import { useTitle } from "../hooks/useTitle";
-import "../styles/Home.css";
 import { useAddress } from "@thirdweb-dev/react";
 import Backdrop from '@mui/material/Backdrop';
 import CircularProgress from '@mui/material/CircularProgress';

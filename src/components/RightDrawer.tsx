@@ -23,6 +23,9 @@ import LightbulbIcon from '@mui/icons-material/Lightbulb';
 import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import LaunchIcon from '@mui/icons-material/Launch';
+import Carousel from 'react-material-ui-carousel'
+import enctrLogo from '../assets/teddies.png';
+import PartnerItem from './PartnerItem';
 
 function PermanentDrawerRight() {
   const primaryColor = getComputedStyle(document.documentElement).getPropertyValue('--primary-color');
@@ -30,17 +33,69 @@ function PermanentDrawerRight() {
   const backgroundColorGlobal = getComputedStyle(document.documentElement).getPropertyValue('--background-color');
   console.log(backgroundColorGlobal);
   const accentColor = getComputedStyle(document.documentElement).getPropertyValue('--accent-color');
-  const drawerWidth = 280;
+  const drawerWidth = 300;
 
   const [isDarkMode, setIsDarkMode] = React.useState(false);
+
+  var partnersList = [
+    {
+      name: "Enctr",
+      description: "The next generation of deFi",
+      image: enctrLogo,
+      partnerLink: "https://enctr.gg/"
+    },
+    {
+      name: "NFT Supply",
+      description: "Placeholder Text",
+      image: enctrLogo,
+      partnerLink: "https://enctr.gg/"
+    },
+    {
+      name: "OnlyBurns",
+      description: "Placeholder Text",
+      image: enctrLogo,
+      partnerLink: "https://enctr.gg/"
+    },
+    {
+      name: "Polygon Labs",
+      description: "Placeholder Text",
+      image: enctrLogo,
+      partnerLink: "https://enctr.gg/"
+    }, 
+    {
+      name: "ThirdWeb",
+      description: "Placeholder Text",
+      image: enctrLogo,
+      partnerLink: "https://enctr.gg/"
+    },
+    {
+      name: "A.C.C NFTs",
+      description: "Placeholder Text",
+      image: enctrLogo,
+      partnerLink: "https://enctr.gg/"
+    }
+]
+
+  const toggleDarkMode = () => {
+    setIsDarkMode(!isDarkMode);
+    console.log(isDarkMode);
+  };
+
+  const openNotifications = () => {
+    console.log("open notifications");
+  };
+
+  const openCurrencyExchange = () => {
+    console.log("open currency exchange");
+  };
   
 
   return (
-    <Box sx={{ display: 'flex' }}>
+    <Box sx={{ display: 'flex', justifyContent: "space-between" }}>
       <CssBaseline />
       <Box
         component="main"
-        sx={{ flexGrow: 1, bgcolor: 'background.default', p: 3 }}>       
+        sx={{ flexGrow: 1, bgcolor: 'background.default', p: 3, display: 'flex', justifyContent: "space-between"}}>       
       </Box>
       <Drawer
         sx={{
@@ -54,14 +109,18 @@ function PermanentDrawerRight() {
         variant="permanent"
         anchor="right"
       >
-        <Toolbar>
-          <div className="col">
-            <ConnectWallet accentColor="#000000" colorMode="dark"/>
-            <div className="optionsRow">
-              <CurrencyExchangeIcon/>
-              {isDarkMode? <DarkModeIcon/> : <LightModeIcon/>}
-              <NotificationsIcon/>     
+        <Toolbar sx={{ marginLeft: "0px !important", marginRight: "0px !important", paddingLeft: "7px !important", paddingRight: "7px !important"}}>
+          <div className="optionsRow">
+            <div onClick={openCurrencyExchange} className="center-flexbox">
+              <CurrencyExchangeIcon fontSize='small' className="pointer-icon"/>
             </div>
+            <div onClick={toggleDarkMode} className="center-flexbox">
+              {isDarkMode? <DarkModeIcon fontSize='small' className="pointer-icon"/> : <LightModeIcon fontSize='small' className="pointer-icon"/>}
+            </div>
+            <div onClick={openNotifications} className="center-flexbox">
+              <NotificationsIcon fontSize='small' className="pointer-icon"/>  
+            </div>
+            <ConnectWallet accentColor="#000000" colorMode="dark" className="connectWalletOverride"/>
           </div>
         </Toolbar>
         <Box className="info-card">
@@ -80,18 +139,11 @@ function PermanentDrawerRight() {
         </Box>
         <Box className="info-card">
           <div className="info-card__title">Our Partners</div>
-          <List>
-          {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
-            <ListItem key={text} disablePadding>
-              <ListItemButton>
-                <ListItemIcon>
-                  {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-                </ListItemIcon>
-                <ListItemText primary={text} />
-              </ListItemButton>
-            </ListItem>
-          ))}
-        </List>
+          <Carousel autoPlay>
+            {
+                partnersList.map( (item, i) => <PartnerItem key={i} item={item} /> )
+            }
+          </Carousel>
           <Box className="footer-card">
             <Button variant="contained" color="primary" 
             href="https://docs.furyofthefur.com" className="button-with-icon">
