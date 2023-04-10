@@ -26,7 +26,10 @@ function PartnerItem(props: PartnerItemProps)
                 width: "100%",
                 marginBottom: "0px",
                 marginTop: "0px",
-                padding: "0px",
+                paddingTop: "0px",
+                paddingBottom: "0px",
+                paddingRight: "0px",
+                paddingLeft: "0px",
                 // Promote the list into its own layer in Chrome. This costs memory, but helps keeping high FPS.
                 transform: 'translateZ(0)',
             }}

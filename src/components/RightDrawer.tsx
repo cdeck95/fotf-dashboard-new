@@ -15,14 +15,10 @@ import InboxIcon from '@mui/icons-material/MoveToInbox';
 import MailIcon from '@mui/icons-material/Mail';
 import { ConnectWallet } from '@thirdweb-dev/react';
 import { Button, GlobalStyles, ThemeProvider, createTheme } from '@mui/material';
-import LightModeIcon from '@mui/icons-material/LightMode';
-import DarkModeIcon from '@mui/icons-material/DarkMode';
-import NotificationsIcon from '@mui/icons-material/Notifications';
-import CurrencyExchangeIcon from '@mui/icons-material/CurrencyExchange';
-import LightbulbIcon from '@mui/icons-material/Lightbulb';
-import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
-import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
-import LaunchIcon from '@mui/icons-material/Launch';
+import LightModeOutlinedIcon from '@mui/icons-material/LightModeOutlined';
+import DarkModeOutlinedIcon from '@mui/icons-material/DarkModeOutlined';
+import NotificationsOutlinedIcon from '@mui/icons-material/NotificationsOutlined';
+import CurrencyExchangeOutlinedIcon from '@mui/icons-material/CurrencyExchangeOutlined';
 import Carousel from 'react-material-ui-carousel'
 import enctrLogo from '../assets/ENCTR_Symbol_Dark.svg';
 import onlyBurnsLogo from '../assets/OnlyBurns_Title_in_8K.svg';
@@ -116,13 +112,13 @@ function PermanentDrawerRight() {
         <Toolbar sx={{ marginLeft: "0px !important", marginRight: "0px !important", paddingLeft: "7px !important", paddingRight: "7px !important"}}>
           <div className="optionsRow">
             <div onClick={openCurrencyExchange} className="center-flexbox">
-              <CurrencyExchangeIcon fontSize='small' className="pointer-icon"/>
+              <CurrencyExchangeOutlinedIcon fontSize='small' className="pointer-icon"/>
             </div>
             <div onClick={toggleDarkMode} className="center-flexbox">
-              {isDarkMode? <DarkModeIcon fontSize='small' className="pointer-icon"/> : <LightModeIcon fontSize='small' className="pointer-icon"/>}
+              {isDarkMode? <DarkModeOutlinedIcon fontSize='small' className="pointer-icon"/> : <LightModeOutlinedIcon fontSize='small' className="pointer-icon"/>}
             </div>
             <div onClick={openNotifications} className="center-flexbox">
-              <NotificationsIcon fontSize='small' className="pointer-icon"/>  
+              <NotificationsOutlinedIcon fontSize='small' className="pointer-icon"/>  
             </div>
             <ConnectWallet accentColor="#000000" colorMode="dark" className="connectWalletOverride"/>
           </div>
@@ -137,15 +133,8 @@ function PermanentDrawerRight() {
           </Box>
           <div className="info-card__description">Fury of the Fur is a story-driven collection run by Sneaky Bird Labs. Abandoned by the founders, like the teddy bears of our youth, FOTF has risen back up. Full 4k resolution, Merchandise, Storyboards, Comics and more are available with your Ted.<br></br>
           <br></br>
-          But Tedy's aren't just a PFP. They are a communicty representing the best parts of Web3 and NFTs. Left behind by their founders, the FOTF community rallied and saved the project.
+          But Tedy's aren't just a PFP. They are a community representing the best parts of Web3 and NFTs. Left behind by their founders, the FOTF community rallied and saved the project.
           </div>
-          {/* <Box className="footer-card">
-            <Button variant="contained" color="primary" 
-            href="https://docs.furyofthefur.com" className="button-with-icon">
-              Learn More &gt;
-            </Button>
-          </Box> */}
-          
         </Box>
         <Box className="info-card">
           <Box className="row-even">
@@ -160,15 +149,7 @@ function PermanentDrawerRight() {
                 partnersList.map( (item, i) => <PartnerItem key={i} item={item} /> )
             }
           </Carousel>
-          {/* <Box className="footer-card">
-            <Button variant="contained" color="primary" 
-            href="https://docs.furyofthefur.com" className="button-with-icon">
-              View Full Benefits &gt;
-            </Button>
-          </Box> */}
-          
         </Box>
-                
       </Drawer>
     </Box>
   );

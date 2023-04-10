@@ -20,17 +20,17 @@ import teddyLogo from "../assets/teddiesLogo.png";
 import teddies from "../assets/teddies.png";
 import { useNavigate } from "react-router-dom";
 import { ThemeProvider, createTheme } from '@mui/material';
-import GridViewIcon from '@mui/icons-material/GridView';
-import DescriptionIcon from '@mui/icons-material/Description';
-import FileDownloadIcon from '@mui/icons-material/FileDownload';
-import ShopIcon from '@mui/icons-material/Shop';
-import CurrencyExchangeIcon from '@mui/icons-material/CurrencyExchange';
-import SwapHorizIcon from '@mui/icons-material/SwapHoriz';
-import RequestQuoteIcon from '@mui/icons-material/RequestQuote';
-import ConstructionIcon from '@mui/icons-material/Construction';
-import EditIcon from '@mui/icons-material/Edit';
-import ImageIcon from '@mui/icons-material/Image';
-import PrecisionManufacturingIcon from '@mui/icons-material/PrecisionManufacturing';
+import GridViewOutlinedIcon from '@mui/icons-material/GridViewOutlined';
+import DescriptionOutlinedIcon from '@mui/icons-material/DescriptionOutlined';
+import FileDownloadOutlinedIcon from '@mui/icons-material/FileDownloadOutlined';
+import ShopOutlinedIcon from '@mui/icons-material/ShopOutlined';
+import CurrencyExchangeOutlinedIcon from '@mui/icons-material/CurrencyExchangeOutlined';
+import SwapHorizOutlinedIcon from '@mui/icons-material/SwapHorizOutlined';
+import RequestQuoteOutlinedIcon from '@mui/icons-material/RequestQuoteOutlined';
+import ConstructionOutlinedIcon from '@mui/icons-material/ConstructionOutlined';
+import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
+import ImageOutlinedIcon from '@mui/icons-material/ImageOutlined';
+import PrecisionManufacturingOutlinedIcon from '@mui/icons-material/PrecisionManufacturingOutlined';
 
 function LeftDrawer() {
   const drawerWidth = 240;
@@ -48,13 +48,13 @@ function LeftDrawer() {
         navigate("/");
         break;
       case "Documents":
-        navigate("/Documents");
+        window.open("https://docs.furyofthefur.com");
         break;
-      case "Downloads":
-        navigate("/Downloads");
+      case "Downloads": 
+        window.open("https://drive.google.com/drive/folders/1_FHhUhooWOXxfJoNaS1YBKgvMLMjsCPN?usp=sharing");
         break;
       case "Shop":
-        navigate("/Shop");
+        window.open("https://shopfotf.com");
         break;
       case "Factory":
         navigate("/Factory");
@@ -68,9 +68,6 @@ function LeftDrawer() {
     }
   }
 
-
-  
-
   return (
     
     <Box sx={{ display: 'flex' }}>
@@ -78,7 +75,6 @@ function LeftDrawer() {
       <Drawer
         sx={{
           width: drawerWidth,
-          
           flexShrink: 0,
           '& .MuiDrawer-paper': {
             width: drawerWidth,
@@ -94,7 +90,7 @@ function LeftDrawer() {
           <ListItem key={"Dashboard"} disablePadding onClick={() => loadPage("Dashboard")}>
             <ListItemButton>
               <ListItemIcon>
-                <GridViewIcon/>
+                <GridViewOutlinedIcon/>
               </ListItemIcon>
               <ListItemText primary={"Dashboard"} />
             </ListItemButton>
@@ -102,7 +98,7 @@ function LeftDrawer() {
           <ListItem key={"Documents"} disablePadding onClick={() => loadPage("Documents")}>
             <ListItemButton>
               <ListItemIcon>
-                <DescriptionIcon/>
+                <DescriptionOutlinedIcon/>
               </ListItemIcon>
               <ListItemText primary={"Documents"} />
             </ListItemButton>
@@ -110,7 +106,7 @@ function LeftDrawer() {
           <ListItem key={"Downloads"} disablePadding onClick={() => loadPage("Downloads")}>
             <ListItemButton>
               <ListItemIcon>
-                <FileDownloadIcon/>
+                <FileDownloadOutlinedIcon/>
               </ListItemIcon>
               <ListItemText primary={"Downloads"} />
             </ListItemButton>
@@ -118,7 +114,7 @@ function LeftDrawer() {
           <ListItem key={"Shop"} disablePadding onClick={() => loadPage("Shop")}>
             <ListItemButton>
               <ListItemIcon>
-                <ShopIcon/>
+                <ShopOutlinedIcon/>
               </ListItemIcon>
               <ListItemText primary={"Shop"} />
             </ListItemButton>
@@ -132,7 +128,7 @@ function LeftDrawer() {
           <ListItem key={"HNYExchange"} disablePadding onClick={() => loadPage("HNYExchange")}>
             <ListItemButton>
               <ListItemIcon>
-                <CurrencyExchangeIcon/>
+                <CurrencyExchangeOutlinedIcon/>
               </ListItemIcon>
               <ListItemText primary={"$HNY Exchange"} />
             </ListItemButton>
@@ -140,7 +136,7 @@ function LeftDrawer() {
           <ListItem key={"TeddyStaking"} disablePadding onClick={() => loadPage("TeddyStaking")}>
             <ListItemButton>
               <ListItemIcon>
-                <SwapHorizIcon/>
+                <SwapHorizOutlinedIcon/>
               </ListItemIcon>
               <ListItemText primary={"Teddy Staking"} />
             </ListItemButton>
@@ -148,7 +144,7 @@ function LeftDrawer() {
           <ListItem key={"TedClaims"} disablePadding onClick={() => loadPage("TedClaims")}>
             <ListItemButton>
               <ListItemIcon>
-                 <RequestQuoteIcon/>
+                 <RequestQuoteOutlinedIcon/>
               </ListItemIcon>
               <ListItemText primary={"Ted Claims"} />
             </ListItemButton>
@@ -161,7 +157,7 @@ function LeftDrawer() {
           <ListItem key={"BuildATeddy"} disablePadding onClick={() => loadPage("BuildATeddy")}>
             <ListItemButton>
               <ListItemIcon>
-                <ConstructionIcon/>
+                <ConstructionOutlinedIcon/>
               </ListItemIcon>
               <ListItemText primary={"Build A Teddy"} />
             </ListItemButton>
@@ -169,7 +165,7 @@ function LeftDrawer() {
           <ListItem key={"TraitSwapTeds"} disablePadding onClick={() => loadPage("TraitSwapTeds")}>
             <ListItemButton>
               <ListItemIcon>
-                <EditIcon/>
+                <EditOutlinedIcon/>
               </ListItemIcon>
               <ListItemText primary={"Trait Swap Teds"} />
             </ListItemButton>
@@ -177,7 +173,7 @@ function LeftDrawer() {
           <ListItem key={"GraphicTemplates"} disablePadding onClick={() => loadPage("GraphicTemplates")}>
             <ListItemButton>
               <ListItemIcon>
-                <ImageIcon/>
+                <ImageOutlinedIcon/>
               </ListItemIcon>
               <ListItemText primary={"Graphic Templates"} />
             </ListItemButton>
@@ -185,7 +181,7 @@ function LeftDrawer() {
           <ListItem key={"TheFactory"} disablePadding onClick={() => loadPage("Factory")}>
             <ListItemButton>
               <ListItemIcon>
-                <PrecisionManufacturingIcon/>
+                <PrecisionManufacturingOutlinedIcon/>
               </ListItemIcon>
               <ListItemText primary={"The Factory"} />
             </ListItemButton>
