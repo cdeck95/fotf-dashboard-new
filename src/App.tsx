@@ -14,6 +14,12 @@ import Dashboard from "./views/Dashboard";
 import NotFound from "./views/NotFound";
 import LeftDrawer from "./components/LeftDrawer";
 import RightDrawer from "./components/RightDrawer";
+import BuildATeddy from "./views/BuildATeddy";
+import TraitSwapTeds from "./views/TraitSwapTeds";
+import HoneyExchange from "./views/HoneyExchange";
+import TedClaims from "./views/TedClaims";
+import TeddyStaking from "./views/TeddyStaking";
+
 
 
 function App() {
@@ -91,7 +97,12 @@ function App() {
         }}>
           <Routes>
             <Route path="/" element={<Dashboard/>}/>
+            <Route path="/HoneyExchange" element={<HoneyExchange/>}/>
+            <Route path="/TeddyStaking" element={<TeddyStaking/>}/> 
+            <Route path="/TedClaims" element={<TedClaims/>}/> 
             <Route path="/Factory" element={<TheFactory/>}/>
+            <Route path="/BuildATeddy" element={<BuildATeddy/>}/> 
+            <Route path="/TraitSwapTeds" element={<TraitSwapTeds/>}/> 
             <Route path="*" element={<NotFound/>}/> 
           </Routes>
           <LeftDrawer/>

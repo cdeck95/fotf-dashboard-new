@@ -33,7 +33,7 @@ function PermanentDrawerRight() {
   const backgroundColorGlobal = getComputedStyle(document.documentElement).getPropertyValue('--background-color');
   console.log(backgroundColorGlobal);
   const accentColor = getComputedStyle(document.documentElement).getPropertyValue('--accent-color');
-  const drawerWidth = 300;
+  const drawerWidth = 320;
 
   const [isDarkMode, setIsDarkMode] = React.useState(false);
 
@@ -112,7 +112,13 @@ function PermanentDrawerRight() {
         <Toolbar sx={{ marginLeft: "0px !important", marginRight: "0px !important", paddingLeft: "7px !important", paddingRight: "7px !important"}}>
           <div className="optionsRow">
             <div onClick={openCurrencyExchange} className="center-flexbox">
-              <CurrencyExchangeOutlinedIcon fontSize='small' className="pointer-icon"/>
+            {/* <ListItem key={"GraphicTemplates"} sx={{ padding: 0, margin: 0}} disablePadding onClick={() => openCurrencyExchange}>
+              <ListItemButton sx={{ padding: 0, margin: 0}}>
+                <ListItemIcon sx={{ padding: 0, margin: 0}}> */}
+                  <CurrencyExchangeOutlinedIcon fontSize='small' className="pointer-icon"/>
+                {/* </ListItemIcon>
+              </ListItemButton>
+            </ListItem> */}
             </div>
             <div onClick={toggleDarkMode} className="center-flexbox">
               {isDarkMode? <DarkModeOutlinedIcon fontSize='small' className="pointer-icon"/> : <LightModeOutlinedIcon fontSize='small' className="pointer-icon"/>}

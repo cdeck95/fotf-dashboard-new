@@ -7,7 +7,7 @@ import RightDrawer from "../components/RightDrawer";
 
 
 function App() {
-  useTitle("FOTF | 404 Error");
+  useTitle("FOTF | Not Found");
 
   return (
       <p>404 Error</p>

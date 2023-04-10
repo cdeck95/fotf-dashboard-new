@@ -99,6 +99,11 @@ body {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  background-color: #fff;
+  border-radius: 15px;
+  margin: 0px;
+  padding: 4px;
+  opacity: .67;
 }
 
 .connectWalletOverride {
