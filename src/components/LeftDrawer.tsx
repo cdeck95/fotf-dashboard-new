@@ -19,7 +19,7 @@ import furyLogo from "../assets/fury_logo.jpg";
 import teddyLogo from "../assets/teddiesLogo.png";
 import teddies from "../assets/teddies.png";
 import { useNavigate } from "react-router-dom";
-import { ThemeProvider, createTheme } from '@mui/material';
+import { IconButton, ThemeProvider, createTheme, useMediaQuery, useTheme } from '@mui/material';
 import GridViewOutlinedIcon from '@mui/icons-material/GridViewOutlined';
 import DescriptionOutlinedIcon from '@mui/icons-material/DescriptionOutlined';
 import FileDownloadOutlinedIcon from '@mui/icons-material/FileDownloadOutlined';
@@ -31,10 +31,31 @@ import ConstructionOutlinedIcon from '@mui/icons-material/ConstructionOutlined';
 import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
 import ImageOutlinedIcon from '@mui/icons-material/ImageOutlined';
 import PrecisionManufacturingOutlinedIcon from '@mui/icons-material/PrecisionManufacturingOutlined';
+import MenuIcon from '@mui/icons-material/Menu';
+import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 
-function LeftDrawer() {
+type NavProps = {
+  setNavOpen: Function;
+  navOpen: boolean;
+};
+
+
+function LeftDrawer(props: NavProps) {
   const drawerWidth = 240;
   const navigate = useNavigate();
+  const { navOpen, setNavOpen } = props;
+  const themeMui = useTheme();
+  const isMobile = !useMediaQuery(themeMui.breakpoints.up("md"));
+
+  const handleOpen = (): void => {
+    setNavOpen(true);
+    console.log(navOpen);
+    console.log("setNavOpen is true")
+  };
+
+  const handleClose = (): void => {
+    setNavOpen(false);
+  };
 
   const primaryColor = getComputedStyle(document.documentElement).getPropertyValue('--primary-color');
   const secondaryColor = getComputedStyle(document.documentElement).getPropertyValue('--secondary-color');
@@ -97,17 +118,36 @@ function LeftDrawer() {
       <CssBaseline />
       <Drawer
         sx={{
-          width: drawerWidth,
+          width: navOpen ? drawerWidth : 0,
           flexShrink: 0,
-          '& .MuiDrawer-paper': {
+          whiteSpace: "nowrap",
+          "& .MuiDrawer-paper": {
             width: drawerWidth,
-            boxSizing: 'border-box',
+            overflowY: "hidden",
+            overflowX: "hidden",
+            border: "none",
+            flexShrink: 0,
+            '& .MuiDrawer-paper': {
+              width: drawerWidth,
+              boxSizing: 'border-box',
           }, 
+        },
         }}
+        open={navOpen}
         variant="permanent"
         anchor="left">
         <Toolbar>
-          <img src={teddyLogo} alt="FOTF Logo" onClick={() => loadPage("Dashboard")} className="mainLogo"/>  
+        <Box sx={{paddingTop: "10px", position: "relative"}}>
+            <Box sx={{display: "flex", flexDirection: "row", alignItems: "center", justifyContent: "space-around"}}>
+              <img src={teddyLogo} alt="FOTF Logo" onClick={() => loadPage("Dashboard")} className={isMobile? "mainLogo-Mobile": "mainLogo"}/>  
+              {isMobile
+                ?<IconButton onClick={() => setNavOpen(false)} size="large">
+                    <ChevronLeftIcon style={{ fill: "black" }} />
+                  </IconButton>
+                : <div></div>
+              }
+            </Box>
+          </Box>
         </Toolbar>
        <List>
           <ListItem key={"Dashboard"} disablePadding onClick={() => loadPage("Dashboard")}>

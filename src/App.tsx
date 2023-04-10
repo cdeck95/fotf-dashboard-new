@@ -1,4 +1,4 @@
-import {  Box, ImageList, ThemeProvider, createTheme } from "@mui/material";
+import {  Box, IconButton, ImageList, ThemeProvider, createTheme, useMediaQuery, useTheme } from "@mui/material";
 import { ConnectWallet, ThirdwebNftMedia, useContract, useNFT, useOwnedNFTs } from "@thirdweb-dev/react";
 import { useTitle } from "./hooks/useTitle";
 import "./styles/Dashboard.css";
@@ -19,13 +19,13 @@ import TraitSwapTeds from "./views/TraitSwapTeds";
 import HoneyExchange from "./views/HoneyExchange";
 import TedClaims from "./views/TedClaims";
 import TeddyStaking from "./views/TeddyStaking";
-
+import MenuIcon from '@mui/icons-material/Menu';
 
 
 function App() {
   useTitle("FOTF | Dashboard");
-  //const theme = useTheme();
-  //const isMobile = !useMediaQuery(theme.breakpoints.up("md"));
+  const themeMui = useTheme();
+  const isMobile = !useMediaQuery(themeMui.breakpoints.up("md"));
   const sdk = useSDK();
   const provider = sdk?.getProvider();
   const address = useAddress();
@@ -34,6 +34,25 @@ function App() {
   const backgroundColorGlobal = getComputedStyle(document.documentElement).getPropertyValue('--background-color');
   const accentColor = getComputedStyle(document.documentElement).getPropertyValue('--accent-color');
 
+  const [navOpen, setNavOpen] = useState(true);
+  const [rightNavOpen, setRightNavOpen] = useState(true);
+
+  const handleOpen = (): void => {
+    setNavOpen(true);
+    console.log(navOpen);
+    console.log("setNavOpen is true")
+  };
+
+  const handleRightNavOpen = (): void => {
+    setRightNavOpen(true);
+    console.log(rightNavOpen);
+    console.log("setRightNavOpen is true")
+  };
+
+  useEffect(() => {
+    setNavOpen(!isMobile);
+    setRightNavOpen(!isMobile);
+  }, [isMobile]);
 
   const theme = createTheme({
     typography: {
@@ -90,11 +109,12 @@ function App() {
     <div className="container">
       <ThemeProvider theme={theme}>
         <Box sx={{
-          marginLeft: "240px",
-          marginRight: "280px",
+          marginLeft: navOpen ? "240px" : "20px",
+          marginRight: rightNavOpen ? "340px" : "20px",
           paddingTop: "20px",
           paddingBottom: "20px",
           backgroundColor: "white",
+          height: "100%",
         }}>
           <Routes>
             <Route path="/" element={<Dashboard/>}/>
@@ -106,8 +126,21 @@ function App() {
             <Route path="/TraitSwapTeds" element={<TraitSwapTeds/>}/> 
             <Route path="*" element={<NotFound/>}/> 
           </Routes>
-          <LeftDrawer/>
-          <RightDrawer/>   
+          {navOpen
+          ? <LeftDrawer navOpen={navOpen} setNavOpen={setNavOpen}/>
+          : <Box sx={{position: "fixed", top: 5, left: 5}}>
+              <IconButton color="inherit" aria-label="open drawer" onClick={() => handleOpen()} size="large"> <MenuIcon /> </IconButton>
+            </Box>
+          }
+          {rightNavOpen
+          ? <RightDrawer navOpen={rightNavOpen} setNavOpen={setRightNavOpen} /> 
+          : <Box sx={{position: "fixed", top: 5, right: 5, backgroundColor: "transparent"}}>
+              <IconButton color="inherit" aria-label="open right drawer" onClick={() => handleRightNavOpen()} size="large"> 
+                <MenuIcon /> 
+              </IconButton>
+            </Box>
+          }
+           
         </Box>
       </ThemeProvider>
     </div>

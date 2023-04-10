@@ -14,7 +14,7 @@ import ListItemText from '@mui/material/ListItemText';
 import InboxIcon from '@mui/icons-material/MoveToInbox';
 import MailIcon from '@mui/icons-material/Mail';
 import { ConnectWallet } from '@thirdweb-dev/react';
-import { Button, GlobalStyles, ThemeProvider, createTheme } from '@mui/material';
+import { Button, GlobalStyles, IconButton, ThemeProvider, createTheme, useMediaQuery, useTheme } from '@mui/material';
 import LightModeOutlinedIcon from '@mui/icons-material/LightModeOutlined';
 import DarkModeOutlinedIcon from '@mui/icons-material/DarkModeOutlined';
 import NotificationsOutlinedIcon from '@mui/icons-material/NotificationsOutlined';
@@ -26,16 +26,27 @@ import polygonLogo from '../assets/polygon-logo.png';
 import thirdWebLogo from '../assets/thirdweb.png';
 import accLogo from '../assets/accLogo.jpg';
 import PartnerItem from './PartnerItem';
+import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 
-function PermanentDrawerRight() {
+
+type NavProps = {
+  setNavOpen: Function;
+  navOpen: boolean;
+};
+
+function PermanentDrawerRight(props: NavProps) {
   const primaryColor = getComputedStyle(document.documentElement).getPropertyValue('--primary-color');
   const secondaryColor = getComputedStyle(document.documentElement).getPropertyValue('--secondary-color');
   const backgroundColorGlobal = getComputedStyle(document.documentElement).getPropertyValue('--background-color');
   console.log(backgroundColorGlobal);
+  const themeMui = useTheme();
+  const isMobile = !useMediaQuery(themeMui.breakpoints.up("md"));
   const accentColor = getComputedStyle(document.documentElement).getPropertyValue('--accent-color');
-  const drawerWidth = 340;
-
+  
+  const drawerWidth = isMobile ? 280 : 340;
+  const { navOpen, setNavOpen } = props;
   const [isDarkMode, setIsDarkMode] = React.useState(false);
+  
 
   var partnersList = [
     {
@@ -99,26 +110,36 @@ function PermanentDrawerRight() {
       </Box>
       <Drawer
         sx={{
-          width: drawerWidth,
+          width: navOpen ? drawerWidth : 0,
           flexShrink: 0,
-          '& .MuiDrawer-paper': {
+          whiteSpace: "nowrap",
+          "& .MuiDrawer-paper": {
             width: drawerWidth,
-            boxSizing: 'border-box',
-          },
+            overflowY: "hidden",
+            overflowX: "hidden",
+            border: "none",
+            flexShrink: 0,
+            '& .MuiDrawer-paper': {
+              width: drawerWidth,
+              boxSizing: 'border-box',
+          }, 
+        },
         }}
+        open={navOpen}
         variant="permanent"
         anchor="right"
       >
         <Toolbar sx={{ marginLeft: "0px !important", marginRight: "0px !important", paddingLeft: "7px !important", paddingRight: "7px !important"}}>
           <div className="optionsRow">
+            {/* this might need to be two rows for mobile */}
+            {isMobile
+              ?<IconButton onClick={() => setNavOpen(false)} size="small" sx={{margin: 0, padding: 0}}>
+                  <ChevronLeftIcon style={{ fill: "black" }} />
+                </IconButton>
+              : <div></div>
+            }
             <div onClick={openCurrencyExchange} className="center-flexbox">
-            {/* <ListItem key={"GraphicTemplates"} sx={{ padding: 0, margin: 0}} disablePadding onClick={() => openCurrencyExchange}>
-              <ListItemButton sx={{ padding: 0, margin: 0}}>
-                <ListItemIcon sx={{ padding: 0, margin: 0}}> */}
-                  <CurrencyExchangeOutlinedIcon fontSize='small' className="pointer-icon"/>
-                {/* </ListItemIcon>
-              </ListItemButton>
-            </ListItem> */}
+              <CurrencyExchangeOutlinedIcon fontSize='small' className="pointer-icon"/>
             </div>
             <div onClick={toggleDarkMode} className="center-flexbox">
               {isDarkMode? <DarkModeOutlinedIcon fontSize='small' className="pointer-icon"/> : <LightModeOutlinedIcon fontSize='small' className="pointer-icon"/>}
@@ -126,7 +147,7 @@ function PermanentDrawerRight() {
             <div onClick={openNotifications} className="center-flexbox">
               <NotificationsOutlinedIcon fontSize='small' className="pointer-icon"/>  
             </div>
-            <ConnectWallet accentColor="#000000" colorMode="dark" className="connectWalletOverride"/>
+            <ConnectWallet accentColor="#000000" colorMode="dark" className={isMobile? "connectWalletOverride-Mobile" : "connectWalletOverride"}/>
           </div>
         </Toolbar>
         <Box className="info-card">

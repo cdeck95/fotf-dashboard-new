@@ -227,18 +227,19 @@ function TheFactory() {
 
   
   return (
-    <Box className="inner-container">
+    <Box className="container">
+      <Box className="inner-container">
       {address
       ? <div>
           { error ? <div><p>NFT not found - error</p></div> 
           : <div className="gallery">
               {allOwnedNFTs?
               <div>
-                <ImageList cols={3} gap={20}>
+                <ImageList cols={4} gap={20}>
                 {allOwnedNFTs?.map(e =>
                 <div key={e.metadata.id} className="card">
                   <StarBorderIcon onClick={star} sx={{ position: "absolute", top: "15px", right: "15px", zIndex: "100 !important'" }}/>
-                  <ThirdwebNftMedia metadata={e.metadata} style={{ 
+                  <ThirdwebNftMedia metadata={e.metadata} style={{ maxHeight: "250px", maxWidth: "250px",
                     borderRadius: "10px", objectFit: "cover", marginBottom: "10px"
                      }}/>
                   <Box className="column-container">
@@ -271,6 +272,7 @@ function TheFactory() {
         </div>
       : <div><p>Connect your wallet</p> </div> 
       }
+      </Box>
 
       <Box sx={{width: "100%", position: "fixed", bottom: "0px", height: "70px", backgroundColor: "#FED100"}}>
         <div className="row">
