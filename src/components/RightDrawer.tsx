@@ -33,7 +33,7 @@ function PermanentDrawerRight() {
   const backgroundColorGlobal = getComputedStyle(document.documentElement).getPropertyValue('--background-color');
   console.log(backgroundColorGlobal);
   const accentColor = getComputedStyle(document.documentElement).getPropertyValue('--accent-color');
-  const drawerWidth = 320;
+  const drawerWidth = 340;
 
   const [isDarkMode, setIsDarkMode] = React.useState(false);
 

@@ -41,11 +41,13 @@ function LeftDrawer() {
   const backgroundColorGlobal = getComputedStyle(document.documentElement).getPropertyValue('--background-color');
   const accentColor = getComputedStyle(document.documentElement).getPropertyValue('--accent-color');
 
+  const [activePage, setActivePage] = React.useState("Dashboard");
   
   const loadPage = (page: string) => {
     switch(page) {
       case "Dashboard":
         navigate("/");
+        setActivePage("Dashboard");
         break;
       case "Documents":
         window.open("https://docs.furyofthefur.com");
@@ -58,21 +60,27 @@ function LeftDrawer() {
         break;
       case "HoneyExchange":
         navigate("/HoneyExchange");
+        setActivePage("HoneyExchange");
         break;
       case "TedClaims":
         navigate("/TedClaims");
+        setActivePage("TedClaims");
         break;
       case "TeddyStaking":
         navigate("/TeddyStaking");
+        setActivePage("TeddyStaking");
         break;
       case "BuildATeddy":
         navigate("/BuildATeddy");
+        setActivePage("BuildATeddy");
         break;
       case "TraitSwapTeds":
         navigate("/TraitSwapTeds");
+        setActivePage("TraitSwapTeds");
         break;
-      case "Factory":
-        navigate("/Factory");
+      case "TheFactory":
+        navigate("/TheFactory");
+        setActivePage("TheFactory");
         break;
       case "Hub":
         navigate("/");
@@ -103,7 +111,7 @@ function LeftDrawer() {
         </Toolbar>
        <List>
           <ListItem key={"Dashboard"} disablePadding onClick={() => loadPage("Dashboard")}>
-            <ListItemButton>
+            <ListItemButton selected={activePage==="Dashboard"}>
               <ListItemIcon>
                 <GridViewOutlinedIcon fontSize='small'/>
               </ListItemIcon>
@@ -111,7 +119,7 @@ function LeftDrawer() {
             </ListItemButton>
           </ListItem>
           <ListItem key={"Documents"} disablePadding onClick={() => loadPage("Documents")}>
-            <ListItemButton>
+            <ListItemButton selected={activePage==="Documents"}>
               <ListItemIcon>
                 <DescriptionOutlinedIcon fontSize='small'/>
               </ListItemIcon>
@@ -119,7 +127,7 @@ function LeftDrawer() {
             </ListItemButton>
           </ListItem>
           <ListItem key={"Downloads"} disablePadding onClick={() => loadPage("Downloads")}>
-            <ListItemButton>
+            <ListItemButton selected={activePage==="Downloads"}>
               <ListItemIcon>
                 <FileDownloadOutlinedIcon fontSize='small'/>
               </ListItemIcon>
@@ -127,7 +135,7 @@ function LeftDrawer() {
             </ListItemButton>
           </ListItem>
           <ListItem key={"Shop"} disablePadding onClick={() => loadPage("Shop")}>
-            <ListItemButton>
+            <ListItemButton selected={activePage==="Shop"}>
               <ListItemIcon>
                 <ShopOutlinedIcon fontSize='small'/>
               </ListItemIcon>
@@ -140,8 +148,8 @@ function LeftDrawer() {
           Economy
         </Typography>
         <List>
-          <ListItem key={"HNYExchange"} disablePadding onClick={() => loadPage("HoneyExchange")}>
-            <ListItemButton>
+          <ListItem key={"HoneyExchange"} disablePadding onClick={() => loadPage("HoneyExchange")}>
+            <ListItemButton selected={activePage==="HoneyExchange"}>
               <ListItemIcon>
                 <CurrencyExchangeOutlinedIcon fontSize='small'/>
               </ListItemIcon>
@@ -149,7 +157,7 @@ function LeftDrawer() {
             </ListItemButton>
           </ListItem>
           <ListItem key={"TeddyStaking"} disablePadding onClick={() => loadPage("TeddyStaking")}>
-            <ListItemButton>
+            <ListItemButton selected={activePage==="TeddyStaking"}>
               <ListItemIcon>
                 <SwapHorizOutlinedIcon fontSize='small'/>
               </ListItemIcon>
@@ -157,7 +165,7 @@ function LeftDrawer() {
             </ListItemButton>
           </ListItem>
           <ListItem key={"TedClaims"} disablePadding onClick={() => loadPage("TedClaims")}>
-            <ListItemButton>
+            <ListItemButton selected={activePage==="TedClaims"}>
               <ListItemIcon>
                  <RequestQuoteOutlinedIcon fontSize='small'/>
               </ListItemIcon>
@@ -170,7 +178,7 @@ function LeftDrawer() {
         </Typography>
         <List>
           <ListItem key={"BuildATeddy"} disablePadding onClick={() => loadPage("BuildATeddy")}>
-            <ListItemButton>
+            <ListItemButton selected={activePage==="BuildATeddy"}>
               <ListItemIcon>
                 <ConstructionOutlinedIcon fontSize='small'/>
               </ListItemIcon>
@@ -178,7 +186,7 @@ function LeftDrawer() {
             </ListItemButton>
           </ListItem>
           <ListItem key={"TraitSwapTeds"} disablePadding onClick={() => loadPage("TraitSwapTeds")}>
-            <ListItemButton>
+            <ListItemButton selected={activePage==="TraitSwapTeds"}>
               <ListItemIcon>
                 <EditOutlinedIcon fontSize='small'/>
               </ListItemIcon>
@@ -186,15 +194,15 @@ function LeftDrawer() {
             </ListItemButton>
           </ListItem>
           <ListItem key={"GraphicTemplates"} disablePadding onClick={() => loadPage("GraphicTemplates")}>
-            <ListItemButton>
+            <ListItemButton selected={activePage==="GraphicTemplates"}>
               <ListItemIcon>
                 <ImageOutlinedIcon fontSize='small'/>
               </ListItemIcon>
               <ListItemText primary={"Graphic Templates"} />
             </ListItemButton>
           </ListItem>
-          <ListItem key={"TheFactory"} disablePadding onClick={() => loadPage("Factory")}>
-            <ListItemButton>
+          <ListItem key={"TheFactory"} disablePadding onClick={() => loadPage("TheFactory")}>
+            <ListItemButton selected={activePage==="TheFactory"}>
               <ListItemIcon>
                 <PrecisionManufacturingOutlinedIcon fontSize='small'/>
               </ListItemIcon>

@@ -56,7 +56,8 @@ function App() {
           },
           
         }
-      }, MuiDivider: {
+      },     
+      MuiDivider: {
         styleOverrides: {
           root: {
             marginLeft: "20px", 
@@ -100,7 +101,7 @@ function App() {
             <Route path="/HoneyExchange" element={<HoneyExchange/>}/>
             <Route path="/TeddyStaking" element={<TeddyStaking/>}/> 
             <Route path="/TedClaims" element={<TedClaims/>}/> 
-            <Route path="/Factory" element={<TheFactory/>}/>
+            <Route path="/TheFactory" element={<TheFactory/>}/>
             <Route path="/BuildATeddy" element={<BuildATeddy/>}/> 
             <Route path="/TraitSwapTeds" element={<TraitSwapTeds/>}/> 
             <Route path="*" element={<NotFound/>}/> 
