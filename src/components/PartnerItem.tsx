@@ -24,7 +24,7 @@ function PartnerItem(props: PartnerItemProps)
             sx={{
                 height: 250,
                 width: "100%",
-                marginBottom: "10px",
+                marginBottom: "0px",
                 marginTop: "0px",
                 padding: "0px",
                 // Promote the list into its own layer in Chrome. This costs memory, but helps keeping high FPS.

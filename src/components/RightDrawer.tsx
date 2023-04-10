@@ -24,7 +24,11 @@ import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import LaunchIcon from '@mui/icons-material/Launch';
 import Carousel from 'react-material-ui-carousel'
-import enctrLogo from '../assets/teddies.png';
+import enctrLogo from '../assets/ENCTR_Symbol_Dark.svg';
+import onlyBurnsLogo from '../assets/OnlyBurns_Title_in_8K.svg';
+import polygonLogo from '../assets/polygon-logo.png';
+import thirdWebLogo from '../assets/thirdweb.png';
+import accLogo from '../assets/accLogo.jpg';
 import PartnerItem from './PartnerItem';
 
 function PermanentDrawerRight() {
@@ -53,26 +57,26 @@ function PermanentDrawerRight() {
     {
       name: "OnlyBurns",
       description: "Placeholder Text",
-      image: enctrLogo,
-      partnerLink: "https://enctr.gg/"
+      image: onlyBurnsLogo,
+      partnerLink: "https://onlyburns.com/"
     },
     {
       name: "Polygon Labs",
       description: "Placeholder Text",
-      image: enctrLogo,
-      partnerLink: "https://enctr.gg/"
+      image: polygonLogo,
+      partnerLink: "https://polygon.technology"
     }, 
     {
       name: "ThirdWeb",
       description: "Placeholder Text",
-      image: enctrLogo,
-      partnerLink: "https://enctr.gg/"
+      image: thirdWebLogo,
+      partnerLink: "https://thirdweb.com/"
     },
     {
       name: "A.C.C NFTs",
       description: "Placeholder Text",
-      image: enctrLogo,
-      partnerLink: "https://enctr.gg/"
+      image: accLogo,
+      partnerLink: "https://www.oaccnft.com/"
     }
 ]
 
