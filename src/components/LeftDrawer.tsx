@@ -59,6 +59,9 @@ function LeftDrawer() {
       case "Factory":
         navigate("/Factory");
         break;
+      case "Hub":
+        navigate("/");
+        break;
       default:
         navigate("/");
         break;
@@ -188,8 +191,12 @@ function LeftDrawer() {
             </ListItemButton>
           </ListItem>
         </List>
-        <Box sx={{ border: "solid", marginTop: "25px", borderRadius: "10px", backgroundColor: "#000", alignItems: "center", marginLeft: "auto",  marginRight: "auto", width: "200px", height: "100px", display: "flex"}}>
-          <img src={teddies} alt="Visit The Hub" onClick={() => loadPage("Hub")} className="hubLogo"/>
+        <Box sx={{ cursor: "pointer", border: "solid", marginTop: "25px", 
+            borderRadius: "10px", backgroundColor: "#000", alignItems: "center", 
+            marginLeft: "auto",  marginRight: "auto", width: "200px", 
+            height: "100px", display: "flex"}}  
+            onClick={() => loadPage("Hub")}>
+          <img src={teddies} alt="Visit The Hub" className="hubLogo"/>
           <Box sx={{ flexDirection: "column"}}>
             <Typography sx={{ color: accentColor, fontSize: "20px"}}>
               Visit The Hub

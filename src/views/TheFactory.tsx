@@ -227,7 +227,7 @@ function TheFactory() {
 
   
   return (
-    <div className="container">
+    <Box className="inner-container">
       {address
       ? <div>
           { error ? <div><p>NFT not found - error</p></div> 
@@ -281,7 +281,7 @@ function TheFactory() {
           <p className="stats">{aiNFTs?.length} AI Teds</p>
         </div>
       </Box>
-    </div>
+    </Box>
   );
 }
 

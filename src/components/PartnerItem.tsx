@@ -35,7 +35,8 @@ function PartnerItem(props: PartnerItemProps)
             cols={1} >
             <ImageListItem >
                 <img src={props.item.image} alt="Partner Logo" loading="lazy" className="partnerImage" />
-                <ImageListItemBar title={props.item.name} subtitle={props.item.description}
+                <ImageListItemBar title={props.item.name} 
+                subtitle={props.item.description}
                 actionIcon={
                     // <IconButton
                     //   sx={{ color: 'white' }}
@@ -43,7 +44,7 @@ function PartnerItem(props: PartnerItemProps)
                     // >
                     //   <StarBorderIcon />
                     // </IconButton>
-                    <Button onClick={() => openLink(props.item.partnerLink)}>
+                    <Button onClick={() => openLink(props.item.partnerLink)} sx={{marginRight: "5px"}}>
                         Check them out!
                     </Button>
                 }

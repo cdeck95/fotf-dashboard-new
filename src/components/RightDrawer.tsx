@@ -68,7 +68,7 @@ function PermanentDrawerRight() {
     }, 
     {
       name: "ThirdWeb",
-      description: "Placeholder Text",
+      description: "The complete web3 sdk.",
       image: thirdWebLogo,
       partnerLink: "https://thirdweb.com/"
     },
@@ -128,32 +128,44 @@ function PermanentDrawerRight() {
           </div>
         </Toolbar>
         <Box className="info-card">
-          <div className="info-card__title">What is Fury of the Fur?</div>
+          <Box className="row-even">
+            <div className="info-card__title">What is Fury of the Fur?</div>
+            <Button 
+            href="https://docs.furyofthefur.com" className="learnMoreBtn">
+              Learn More
+            </Button>
+          </Box>
           <div className="info-card__description">Fury of the Fur is a story-driven collection run by Sneaky Bird Labs. Abandoned by the founders, like the teddy bears of our youth, FOTF has risen back up. Full 4k resolution, Merchandise, Storyboards, Comics and more are available with your Ted.<br></br>
           <br></br>
           But Tedy's aren't just a PFP. They are a communicty representing the best parts of Web3 and NFTs. Left behind by their founders, the FOTF community rallied and saved the project.
           </div>
-          <Box className="footer-card">
+          {/* <Box className="footer-card">
             <Button variant="contained" color="primary" 
             href="https://docs.furyofthefur.com" className="button-with-icon">
               Learn More &gt;
             </Button>
-          </Box>
+          </Box> */}
           
         </Box>
         <Box className="info-card">
-          <div className="info-card__title">Our Partners</div>
+          <Box className="row-even">
+            <div className="info-card__title">Our Partners</div>
+            <Button 
+              href="https://docs.furyofthefur.com" className="learnMoreBtn">
+                View Full Benefits
+              </Button>
+          </Box>
           <Carousel autoPlay>
             {
                 partnersList.map( (item, i) => <PartnerItem key={i} item={item} /> )
             }
           </Carousel>
-          <Box className="footer-card">
+          {/* <Box className="footer-card">
             <Button variant="contained" color="primary" 
             href="https://docs.furyofthefur.com" className="button-with-icon">
               View Full Benefits &gt;
             </Button>
-          </Box>
+          </Box> */}
           
         </Box>
                 
