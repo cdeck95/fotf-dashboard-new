@@ -2,7 +2,6 @@ import * as React from 'react';
 import Box from '@mui/material/Box';
 import Drawer from '@mui/material/Drawer';
 import CssBaseline from '@mui/material/CssBaseline';
-import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import List from '@mui/material/List';
 import Typography from '@mui/material/Typography';
@@ -11,15 +10,11 @@ import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
-import InboxIcon from '@mui/icons-material/MoveToInbox';
-import MailIcon from '@mui/icons-material/Mail';
 import "../styles/globals.css";
-import GlobalStyles from '@mui/material/GlobalStyles';
-import furyLogo from "../assets/fury_logo.jpg";
 import teddyLogo from "../assets/teddiesLogo.png";
 import teddies from "../assets/teddies.png";
 import { useNavigate } from "react-router-dom";
-import { IconButton, ThemeProvider, createTheme, useMediaQuery, useTheme } from '@mui/material';
+import { IconButton, useMediaQuery, useTheme } from '@mui/material';
 import GridViewOutlinedIcon from '@mui/icons-material/GridViewOutlined';
 import DescriptionOutlinedIcon from '@mui/icons-material/DescriptionOutlined';
 import FileDownloadOutlinedIcon from '@mui/icons-material/FileDownloadOutlined';
@@ -31,7 +26,6 @@ import ConstructionOutlinedIcon from '@mui/icons-material/ConstructionOutlined';
 import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
 import ImageOutlinedIcon from '@mui/icons-material/ImageOutlined';
 import PrecisionManufacturingOutlinedIcon from '@mui/icons-material/PrecisionManufacturingOutlined';
-import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 
 type NavProps = {
@@ -39,29 +33,17 @@ type NavProps = {
   navOpen: boolean;
 };
 
+const primaryColor = getComputedStyle(document.documentElement).getPropertyValue('--primary-color');
+const secondaryColor = getComputedStyle(document.documentElement).getPropertyValue('--secondary-color');
+const backgroundColorGlobal = getComputedStyle(document.documentElement).getPropertyValue('--background-color');
+const accentColor = getComputedStyle(document.documentElement).getPropertyValue('--accent-color');
+const drawerWidth = 240;
 
 function LeftDrawer(props: NavProps) {
-  const drawerWidth = 240;
-  const navigate = useNavigate();
   const { navOpen, setNavOpen } = props;
+  const navigate = useNavigate();
   const themeMui = useTheme();
   const isMobile = !useMediaQuery(themeMui.breakpoints.up("md"));
-
-  const handleOpen = (): void => {
-    setNavOpen(true);
-    console.log(navOpen);
-    console.log("setNavOpen is true")
-  };
-
-  const handleClose = (): void => {
-    setNavOpen(false);
-  };
-
-  const primaryColor = getComputedStyle(document.documentElement).getPropertyValue('--primary-color');
-  const secondaryColor = getComputedStyle(document.documentElement).getPropertyValue('--secondary-color');
-  const backgroundColorGlobal = getComputedStyle(document.documentElement).getPropertyValue('--background-color');
-  const accentColor = getComputedStyle(document.documentElement).getPropertyValue('--accent-color');
-
   const [activePage, setActivePage] = React.useState("Dashboard");
   
   const loadPage = (page: string) => {

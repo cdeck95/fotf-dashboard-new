@@ -4,9 +4,10 @@
   --primary-color: #000000;
   --secondary-color: #FFFFFF;
   --accent-color: #FED100;
-  /* --background-color: #FFFFFF; */
-
-  --background-color: #e7e8e8;
+  --background-color: #FFFFFF;
+  --sidebar-background-color: #e7e8e8;
+/* 
+  --background-color: #e7e8e8; */
   /* ... add more variables as needed ... */
 }
 
@@ -98,6 +99,22 @@ body {
 
 .pointer-icon {
   cursor: pointer;
+  opacity: .67;
+}
+
+.notifications {
+  /* cursor: pointer; */
+  margin-top: 5px;
+  padding: 1px;
+  justify-content: center;
+  align-items: center;
+  width: auto !important;
+  height: auto !important; 
+}
+
+.icon {
+  /* cursor: pointer; */
+  opacity: .6;
 }
 
 .center-flexbox {
@@ -105,11 +122,22 @@ body {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  background-color: #fff;
+  /* background-color: #fff; */
   border-radius: 15px;
   margin: 0px;
   padding: 4px;
-  opacity: .67;
+  
+}
+
+.container {
+  opacity: 1 !important;
+  font-weight: 300;
+  max-width: 250px !important;
+}
+
+.header-title {
+  font-weight: 300 !important;
+  font-size: 14px;
 }
 
 .connectWalletOverride {

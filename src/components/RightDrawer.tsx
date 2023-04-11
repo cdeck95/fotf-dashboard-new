@@ -2,19 +2,9 @@ import * as React from 'react';
 import Box from '@mui/material/Box';
 import Drawer from '@mui/material/Drawer';
 import CssBaseline from '@mui/material/CssBaseline';
-import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
-import List from '@mui/material/List';
-import Typography from '@mui/material/Typography';
-import Divider from '@mui/material/Divider';
-import ListItem from '@mui/material/ListItem';
-import ListItemButton from '@mui/material/ListItemButton';
-import ListItemIcon from '@mui/material/ListItemIcon';
-import ListItemText from '@mui/material/ListItemText';
-import InboxIcon from '@mui/icons-material/MoveToInbox';
-import MailIcon from '@mui/icons-material/Mail';
 import { ConnectWallet } from '@thirdweb-dev/react';
-import { Button, GlobalStyles, IconButton, ThemeProvider, createTheme, useMediaQuery, useTheme } from '@mui/material';
+import { Button, IconButton, useMediaQuery, useTheme } from '@mui/material';
 import LightModeOutlinedIcon from '@mui/icons-material/LightModeOutlined';
 import DarkModeOutlinedIcon from '@mui/icons-material/DarkModeOutlined';
 import NotificationsOutlinedIcon from '@mui/icons-material/NotificationsOutlined';
@@ -27,6 +17,9 @@ import thirdWebLogo from '../assets/thirdweb.png';
 import accLogo from '../assets/accLogo.jpg';
 import PartnerItem from './PartnerItem';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
+import { useNavigate } from 'react-router-dom';
+import Notifications from "react-notifications-menu";
+import { useState } from 'react';
 
 
 type NavProps = {
@@ -34,20 +27,30 @@ type NavProps = {
   navOpen: boolean;
 };
 
+const primaryColor = getComputedStyle(document.documentElement).getPropertyValue('--primary-color');
+const secondaryColor = getComputedStyle(document.documentElement).getPropertyValue('--secondary-color');
+const backgroundColorGlobal = getComputedStyle(document.documentElement).getPropertyValue('--background-color');
+const accentColor = getComputedStyle(document.documentElement).getPropertyValue('--accent-color');
+
+const DEFAULT_NOTIFICATION = {
+  image:
+    "https://cutshort-data.s3.amazonaws.com/cloudfront/public/companies/5809d1d8af3059ed5b346ed1/logo-1615367026425-logo-v6.png",
+  message: "Notification one.",
+  detailPage: "/events",
+  receivedTime: "12h ago"
+};
+
 function PermanentDrawerRight(props: NavProps) {
-  const primaryColor = getComputedStyle(document.documentElement).getPropertyValue('--primary-color');
-  const secondaryColor = getComputedStyle(document.documentElement).getPropertyValue('--secondary-color');
-  const backgroundColorGlobal = getComputedStyle(document.documentElement).getPropertyValue('--background-color');
-  console.log(backgroundColorGlobal);
   const themeMui = useTheme();
   const isMobile = !useMediaQuery(themeMui.breakpoints.up("md"));
-  const accentColor = getComputedStyle(document.documentElement).getPropertyValue('--accent-color');
-  
   const drawerWidth = isMobile ? 280 : 340;
   const { navOpen, setNavOpen } = props;
+  const navigate = useNavigate();
   const [isDarkMode, setIsDarkMode] = React.useState(false);
+  const [data, setData] = useState([DEFAULT_NOTIFICATION]);
+  const [message, setMessage] = useState("");
+  const [showNotification, setShowNotification] = useState(false);
   
-
   var partnersList = [
     {
       name: "Enctr",
@@ -94,10 +97,11 @@ function PermanentDrawerRight(props: NavProps) {
 
   const openNotifications = () => {
     console.log("open notifications");
+    setShowNotification(true);
   };
 
   const openCurrencyExchange = () => {
-    console.log("open currency exchange");
+    navigate("/HoneyExchange");
   };
   
 
@@ -145,7 +149,17 @@ function PermanentDrawerRight(props: NavProps) {
               {isDarkMode? <DarkModeOutlinedIcon fontSize='small' className="pointer-icon"/> : <LightModeOutlinedIcon fontSize='small' className="pointer-icon"/>}
             </div>
             <div onClick={openNotifications} className="center-flexbox">
-              <NotificationsOutlinedIcon fontSize='small' className="pointer-icon"/>  
+              {/* <NotificationsOutlinedIcon fontSize='small' className="pointer-icon"/>   */}
+              <Notifications
+                data={data}
+                header={{
+                  title: "Notifications",
+                  option: { text: "View All", onClick: () => console.log("Clicked") }
+                }}
+                markAsRead={(data: any) => {
+                  console.log(data);
+                }}
+              />
             </div>
             <ConnectWallet accentColor="#000000" colorMode="dark" className={isMobile? "connectWalletOverride-Mobile" : "connectWalletOverride"}/>
           </div>
@@ -178,6 +192,7 @@ function PermanentDrawerRight(props: NavProps) {
           </Carousel>
         </Box>
       </Drawer>
+      
     </Box>
   );
 }

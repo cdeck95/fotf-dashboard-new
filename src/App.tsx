@@ -31,7 +31,7 @@ function App() {
   const address = useAddress();
   const primaryColor = getComputedStyle(document.documentElement).getPropertyValue('--primary-color');
   const secondaryColor = getComputedStyle(document.documentElement).getPropertyValue('--secondary-color');
-  const backgroundColorGlobal = getComputedStyle(document.documentElement).getPropertyValue('--background-color');
+  const sidebarBackgroundColor = getComputedStyle(document.documentElement).getPropertyValue('--sidebar-background-color');
   const accentColor = getComputedStyle(document.documentElement).getPropertyValue('--accent-color');
 
   const [navOpen, setNavOpen] = useState(true);
@@ -70,8 +70,7 @@ function App() {
       MuiPaper: {
         styleOverrides: {
           root: {
-            backgroundColor: backgroundColorGlobal,
-            
+            backgroundColor: sidebarBackgroundColor,
           },
           
         }

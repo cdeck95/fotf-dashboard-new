@@ -2,3 +2,4 @@
 
 declare module "react-number-format";
 declare module ".png";
+declare module "react-notifications-menu";
