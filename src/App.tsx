@@ -105,13 +105,11 @@ function App() {
   });
 
   return (
-    <div className="container">
+    <Box className="app-container">
       <ThemeProvider theme={theme}>
         <Box sx={{
           marginLeft: navOpen ? "240px" : "20px",
           marginRight: rightNavOpen ? "340px" : "20px",
-          paddingTop: "20px",
-          paddingBottom: "20px",
           backgroundColor: "white",
           height: "100%",
         }}>
@@ -142,7 +140,7 @@ function App() {
            
         </Box>
       </ThemeProvider>
-    </div>
+    </Box>
   );
 }
 

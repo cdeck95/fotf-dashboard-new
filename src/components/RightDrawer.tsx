@@ -4,7 +4,7 @@ import Drawer from '@mui/material/Drawer';
 import CssBaseline from '@mui/material/CssBaseline';
 import Toolbar from '@mui/material/Toolbar';
 import { ConnectWallet } from '@thirdweb-dev/react';
-import { Button, IconButton, useMediaQuery, useTheme } from '@mui/material';
+import { Button, IconButton, Typography, useMediaQuery, useTheme } from '@mui/material';
 import LightModeOutlinedIcon from '@mui/icons-material/LightModeOutlined';
 import DarkModeOutlinedIcon from '@mui/icons-material/DarkModeOutlined';
 import NotificationsOutlinedIcon from '@mui/icons-material/NotificationsOutlined';
@@ -20,7 +20,8 @@ import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import { useNavigate } from 'react-router-dom';
 import Notifications from "react-notifications-menu";
 import { useState } from 'react';
-
+import notificationIcon from '../assets/icons8-notification-100.png';
+import NotificationsNoneOutlinedIcon from '@mui/icons-material/NotificationsNoneOutlined';
 
 type NavProps = {
   setNavOpen: Function;
@@ -152,6 +153,7 @@ function PermanentDrawerRight(props: NavProps) {
               {/* <NotificationsOutlinedIcon fontSize='small' className="pointer-icon"/>   */}
               <Notifications
                 data={data}
+                icon={notificationIcon}
                 header={{
                   title: "Notifications",
                   option: { text: "View All", onClick: () => console.log("Clicked") }
@@ -172,10 +174,14 @@ function PermanentDrawerRight(props: NavProps) {
               Learn More
             </Button>
           </Box>
-          <div className="info-card__description">Fury of the Fur is a story-driven collection run by Sneaky Bird Labs. Abandoned by the founders, like the teddy bears of our youth, FOTF has risen back up. Full 4k resolution, Merchandise, Storyboards, Comics and more are available with your Ted.<br></br>
-          <br></br>
-          But Tedy's aren't just a PFP. They are a community representing the best parts of Web3 and NFTs. Left behind by their founders, the FOTF community rallied and saved the project.
-          </div>
+          <Box className="row-even">
+            <p className="info-card__description">
+              Fury of the Fur is a story-driven collection run by Sneaky Bird Labs. Abandoned by the founders, like the teddy bears of our youth, FOTF has risen back up. Full 4k resolution, Merchandise, Storyboards, Comics and more are available with your Ted.<br></br>
+              <br></br>
+              But Tedy's aren't just a PFP. They are a community representing the best parts of Web3 and NFTs. Left behind by their founders, the FOTF community rallied and saved the project.
+              </p>
+          </Box>
+         
         </Box>
         <Box className="info-card">
           <Box className="row-even">

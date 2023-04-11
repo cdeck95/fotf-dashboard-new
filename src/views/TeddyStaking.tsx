@@ -4,6 +4,7 @@ import { useTitle } from "../hooks/useTitle";
 import "../styles/Dashboard.css";
 import { useAddress } from "@thirdweb-dev/react";
 import { useSDK } from "@thirdweb-dev/react";
+import ComingSoon from "./ComingSoon";
 
 
 function TeddyStaking() {
@@ -15,9 +16,7 @@ function TeddyStaking() {
   const address = useAddress();
 
   return (
-    <Box sx={{ margin: 5}}>
-      <h1>Coming Soon</h1>
-    </Box>
+    <ComingSoon/>
   );
 }
 

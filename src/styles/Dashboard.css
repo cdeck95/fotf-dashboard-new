@@ -6,9 +6,9 @@
 
 }  */
 
-  .container {
+  .app-container {
     width: 100%;
-    height: 100%;
+    height: 100% !important;
   }
 
   .inner-container {
@@ -16,6 +16,14 @@
     height: 100%;
     padding-left: 10px;
     padding-right: 10px;
+  }
+
+  .comingSoon {
+    background-image: linear-gradient(var(--primary-color), var(--accent-color));
+    /* display: flex;
+    align-items: center;
+    justify-content: center; */
+    text-align: center;
   }
   
   .main {
