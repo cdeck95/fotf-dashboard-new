@@ -4,17 +4,17 @@ import Drawer from '@mui/material/Drawer';
 import CssBaseline from '@mui/material/CssBaseline';
 import Toolbar from '@mui/material/Toolbar';
 import { ConnectWallet } from '@thirdweb-dev/react';
-import { Button, IconButton, ImageList, ImageListItem, Typography, useMediaQuery, useTheme } from '@mui/material';
+import { Button, IconButton, ImageList, ImageListItem, ImageListItemBar, Typography, useMediaQuery, useTheme } from '@mui/material';
 import LightModeOutlinedIcon from '@mui/icons-material/LightModeOutlined';
 import DarkModeOutlinedIcon from '@mui/icons-material/DarkModeOutlined';
 import NotificationsOutlinedIcon from '@mui/icons-material/NotificationsOutlined';
 import CurrencyExchangeOutlinedIcon from '@mui/icons-material/CurrencyExchangeOutlined';
 import Carousel from 'react-material-ui-carousel'
 import enctrLogo from '../assets/enctrlogo.jpg';
-import onlyBurnsLogo from '../assets/OnlyBurns_Title_in_8K.svg';
+import onlyBurnsLogo from '../assets/onlyburnsapplogo.jpg';
 import nftSupply from '../assets/nftsupplycologo.jpg';
-import polygonLogo from '../assets/polygon-logo.png';
-import thirdWebLogo from '../assets/thirdweb.png';
+import polygonLogo from '../assets/polygonlogo.jpg';
+import thirdWebLogo from '../assets/thirdweblogo.jpg';
 import accLogo from '../assets/oacclogo.jpg';
 import PartnerItem from './PartnerItem';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
@@ -203,14 +203,19 @@ function PermanentDrawerRight(props: NavProps) {
             }
           </Carousel> */}
 
-          <ImageList sx={{ width: 500, height: 450 }} cols={3} rowHeight={164}>
+          <ImageList sx={{ width: 320, height: 300, paddingLeft: "10px", paddingRight: "10px" }} cols={3} gap={30} rowHeight={110}>
                 {partnersList.map((item) => (
-                  <ImageListItem key={item.id}>
+                  <ImageListItem key={item.id} >
                     <img
-                      src={`${item.image}?w=164&h=164&fit=crop&auto=format`}
-                      srcSet={`${item.image}?w=164&h=164&fit=crop&auto=format&dpr=2 2x`}
+                      src={item.image}
+                      srcSet={item.image}
                       alt={item.name}
+                      className="partnerLogo"
                       loading="lazy"
+                    />
+                    <ImageListItemBar
+                      title={item.name}
+                      position="below"
                     />
                   </ImageListItem>
                 ))}

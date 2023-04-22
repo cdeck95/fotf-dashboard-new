@@ -249,13 +249,22 @@ body {
 }
 
 .hubLogo {
-  width: 20%;
+  width: 30%;
   height: 100%;
   padding-left: 5%;
   margin-right: 0px;
   object-fit: contain;
   aspect-ratio: 1/1;
   cursor: pointer;
+}
+
+.partnerLogo {
+  margin: 0px;
+  padding: 0%;
+  object-fit: contain;
+  cursor: pointer;
+  width: 79px;
+  height: 79px;
 }
 
 .connect {

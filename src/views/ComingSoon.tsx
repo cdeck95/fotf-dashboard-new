@@ -9,9 +9,9 @@ function ComingSoon() {
   useTitle("FOTF | Coming Soon");
 
   return (
-    <Box className="comingSoon" sx={{ height: "100%", display: "flex", 
-    justifyContent: "center", alignItems: "center"}}>
-      <h1>Coming Soon</h1>
+    <Box  sx={{ height: "100%", display: "flex", 
+    justifyContent: "center", alignItems: "center", width:"100%"}}>
+    <h1 className="comingSoon"><span className="comingSoonBlack">Coming</span> Soon</h1>
     </Box>
   );
 }
