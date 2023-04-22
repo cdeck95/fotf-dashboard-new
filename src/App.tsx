@@ -71,6 +71,14 @@ function App() {
         styleOverrides: {
           root: {
             backgroundColor: sidebarBackgroundColor,
+            overflowX: 'hidden',
+            overflowY: 'hidden',
+            '&:hover': {
+              overflowY: 'auto',
+            },
+            '&::-webkit-scrollbar': {
+              display: 'none',
+            },
           },
           
         }
@@ -111,7 +119,7 @@ function App() {
           marginLeft: navOpen ? "240px" : "20px",
           marginRight: rightNavOpen ? "340px" : "20px",
           backgroundColor: "white",
-          height: "100%",
+          height: "100%"
         }}>
           <Routes>
             <Route path="/" element={<Dashboard/>}/>

@@ -1,4 +1,3 @@
-
 import {  Box } from "@mui/material";
 import { useTitle } from "../hooks/useTitle";
 import "../styles/Dashboard.css";
@@ -16,5 +15,7 @@ function ComingSoon() {
     </Box>
   );
 }
+
+export default ComingSoon;
 
 export default ComingSoon;

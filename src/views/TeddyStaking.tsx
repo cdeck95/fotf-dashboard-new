@@ -16,7 +16,9 @@ function TeddyStaking() {
   const address = useAddress();
 
   return (
-    <ComingSoon/>
+    <Box className="inner-container">
+      <ComingSoon/>
+    </Box>
   );
 }
 

@@ -11,6 +11,10 @@
   /* ... add more variables as needed ... */
 }
 
+html, body, #root, .wrapper {
+  height:100%;
+}
+
 html,
 body {
   padding: 0;
@@ -45,6 +49,16 @@ html {
 body {
   color: var(--primary-color);
   background-color: var(--background-color);
+}
+
+.main {
+  min-height: 100vh;
+  padding: 4rem 0;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 .row{
@@ -135,10 +149,24 @@ body {
   
 }
 
+.app-container {
+  width: 100%;
+  height: 100% !important;
+}
+
 .container {
   opacity: 1 !important;
   font-weight: 300;
   max-width: 250px !important;
+}
+
+.inner-container {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding-bottom: 0;
+  padding-left: 10px;
+  padding-right: 10px;
 }
 
 .header-title {
@@ -221,10 +249,12 @@ body {
 }
 
 .hubLogo {
-  width: 40%;
+  width: 20%;
   height: 100%;
-  margin-right: 20px;
+  padding-left: 5%;
+  margin-right: 0px;
   object-fit: contain;
+  aspect-ratio: 1/1;
   cursor: pointer;
 }
 

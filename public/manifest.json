@@ -1,6 +1,6 @@
 {
-  "short_name": "react-typescript-starter",
-  "name": "thirdweb starter project with React & TypeScript",
+  "short_name": "FOTF Dashboard",
+  "name": "FOTF Dashboard App",
   "icons": [
     {
       "src": "favicon.ico",

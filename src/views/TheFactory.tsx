@@ -227,7 +227,7 @@ function TheFactory() {
 
   
   return (
-    <Box className="container">
+    <Box className="app-container">
       <Box className="inner-container">
       {address
       ? <div>
