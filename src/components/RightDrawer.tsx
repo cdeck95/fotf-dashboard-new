@@ -4,7 +4,7 @@ import Drawer from '@mui/material/Drawer';
 import CssBaseline from '@mui/material/CssBaseline';
 import Toolbar from '@mui/material/Toolbar';
 import { ConnectWallet } from '@thirdweb-dev/react';
-import { Button, IconButton, Typography, useMediaQuery, useTheme } from '@mui/material';
+import { Button, IconButton, ImageList, ImageListItem, Typography, useMediaQuery, useTheme } from '@mui/material';
 import LightModeOutlinedIcon from '@mui/icons-material/LightModeOutlined';
 import DarkModeOutlinedIcon from '@mui/icons-material/DarkModeOutlined';
 import NotificationsOutlinedIcon from '@mui/icons-material/NotificationsOutlined';
@@ -55,36 +55,42 @@ function PermanentDrawerRight(props: NavProps) {
   
   var partnersList = [
     {
+      id: 0,
       name: "Enctr",
       description: "The next generation of deFi",
       image: enctrLogo,
       partnerLink: "https://enctr.gg/"
     },
     {
+      id: 1,
       name: "NFT Supply",
       description: "Placeholder Text",
       image: nftSupply,
       partnerLink: "https://enctr.gg/"
     },
     {
+      id: 2,
       name: "OnlyBurns",
       description: "Placeholder Text",
       image: onlyBurnsLogo,
       partnerLink: "https://onlyburns.com/"
     },
     {
+      id: 3,
       name: "Polygon Labs",
       description: "Placeholder Text",
       image: polygonLogo,
       partnerLink: "https://polygon.technology"
     }, 
     {
+      id: 4,
       name: "ThirdWeb",
       description: "The complete web3 sdk.",
       image: thirdWebLogo,
       partnerLink: "https://thirdweb.com/"
     },
     {
+      id: 5,
       name: "A.C.C NFTs",
       description: "Placeholder Text",
       image: accLogo,
@@ -191,11 +197,24 @@ function PermanentDrawerRight(props: NavProps) {
                 View Full Benefits
               </Button>
           </Box>
-          <Carousel autoPlay sx={{height: "200px"}}>
+          {/* <Carousel autoPlay sx={{height: "200px"}}>
             {
                 partnersList.map( (item, i) => <PartnerItem key={i} item={item} /> )
             }
-          </Carousel>
+          </Carousel> */}
+
+          <ImageList sx={{ width: 500, height: 450 }} cols={3} rowHeight={164}>
+                {partnersList.map((item) => (
+                  <ImageListItem key={item.id}>
+                    <img
+                      src={`${item.image}?w=164&h=164&fit=crop&auto=format`}
+                      srcSet={`${item.image}?w=164&h=164&fit=crop&auto=format&dpr=2 2x`}
+                      alt={item.name}
+                      loading="lazy"
+                    />
+                  </ImageListItem>
+                ))}
+          </ImageList>
         </Box>
       </Drawer>
       
