@@ -71,6 +71,14 @@ function App() {
         styleOverrides: {
           root: {
             backgroundColor: sidebarBackgroundColor,
+            overflowX: 'hidden',
+            overflowY: 'hidden',
+            '&:hover': {
+              overflowY: 'auto',
+            },
+            '&::-webkit-scrollbar': {
+              display: 'none',
+            },
           },
           
         }
@@ -105,7 +113,7 @@ function App() {
   });
 
   return (
-    <div className="container">
+    <div className="app-container">
       <ThemeProvider theme={theme}>
         <Box sx={{
           marginLeft: navOpen ? "240px" : "20px",
@@ -113,7 +121,7 @@ function App() {
           paddingTop: "20px",
           paddingBottom: "20px",
           backgroundColor: "white",
-          height: "100%",
+          height: "100%"
         }}>
           <Routes>
             <Route path="/" element={<Dashboard/>}/>

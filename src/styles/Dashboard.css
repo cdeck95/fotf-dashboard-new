@@ -11,12 +11,21 @@
     height: 100%;
   }
 
-  .inner-container {
-    width: 100%;
-    height: 100%;
-    padding-left: 10px;
-    padding-right: 10px;
+  .comingSoon {
+    color: var(--accent-color);
+    font-size: 8rem;
+    font: 'Bebas Neue';
+    text-align: center;
   }
+
+  .comingSoonBlack {
+    color: #000000;
+    font-size: 8rem;
+    font: 'Bebas Neue';
+    text-align: center;
+  }
+
+  
   
   .main {
     min-height: 100vh;

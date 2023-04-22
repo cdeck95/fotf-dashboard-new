@@ -22,7 +22,7 @@ function PartnerItem(props: PartnerItemProps)
     return (
         <ImageList
             sx={{
-                height: 250,
+                height: 200,
                 width: "100%",
                 marginBottom: "0px",
                 marginTop: "0px",
@@ -33,7 +33,7 @@ function PartnerItem(props: PartnerItemProps)
                 // Promote the list into its own layer in Chrome. This costs memory, but helps keeping high FPS.
                 transform: 'translateZ(0)',
             }}
-            rowHeight={250}
+            rowHeight={200}
             gap={1}
             cols={1} >
             <ImageListItem >

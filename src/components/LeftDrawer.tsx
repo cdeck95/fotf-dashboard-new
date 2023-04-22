@@ -11,8 +11,8 @@ import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import "../styles/globals.css";
-import teddyLogo from "../assets/teddiesLogo.png";
-import teddies from "../assets/teddies.png";
+import fotfAppLogo from "../assets/FOTF_App.png";
+import theHubLogo from "../assets/hub_icon.png";
 import { useNavigate } from "react-router-dom";
 import { IconButton, useMediaQuery, useTheme } from '@mui/material';
 import GridViewOutlinedIcon from '@mui/icons-material/GridViewOutlined';
@@ -121,7 +121,7 @@ function LeftDrawer(props: NavProps) {
         <Toolbar>
         <Box sx={{paddingTop: "10px", position: "relative"}}>
             <Box sx={{display: "flex", flexDirection: "row", alignItems: "center", justifyContent: "space-around"}}>
-              <img src={teddyLogo} alt="FOTF Logo" onClick={() => loadPage("Dashboard")} className={isMobile? "mainLogo-Mobile": "mainLogo"}/>  
+              <img src={fotfAppLogo} alt="FOTF Logo" onClick={() => loadPage("Dashboard")} className={isMobile? "mainLogo-Mobile": "mainLogo"}/>  
               {isMobile
                 ?<IconButton onClick={() => setNavOpen(false)} size="large">
                     <ChevronLeftIcon style={{ fill: "black" }} />
@@ -234,15 +234,15 @@ function LeftDrawer(props: NavProps) {
         </List>
         <Box sx={{ cursor: "pointer", border: "solid", marginTop: "25px", 
             borderRadius: "10px", backgroundColor: "#000", alignItems: "center", 
-            marginLeft: "auto",  marginRight: "auto", width: "200px", 
-            height: "100px", display: "flex"}}  
+            marginLeft: "auto",  marginRight: "auto", marginBottom: "25px", width: "200px", 
+            height: "200px !important", display: "flex", justifyContent: "space-between"}}  
             onClick={() => loadPage("Hub")}>
-          <img src={teddies} alt="Visit The Hub" className="hubLogo"/>
-          <Box sx={{ flexDirection: "column"}}>
-            <Typography sx={{ color: accentColor, fontSize: "20px"}}>
+          <img src={theHubLogo} alt="Visit The Hub" className="hubLogo"/>
+          <Box sx={{ flexDirection: "column", display: "flex", justifyContent: "space-between", borderRadius: "10px", paddingRight: "10%"}}>
+            <Typography sx={{ color: accentColor, fontSize: "1.75rem", paddingLeft: "5px", justifyContent: "end", alignSelf: "flex-end", marginTop: "10px"}}>
               Visit The Hub
             </Typography>
-            <Typography sx={{ color: accentColor, fontSize: "14px", textAlign: "end"}}>
+            <Typography sx={{ color: accentColor, fontSize: "1rem", justifyContent: "end", alignSelf: "flex-end", marginBottom: "10px"}}>
               All things FOTF
             </Typography>
           </Box>

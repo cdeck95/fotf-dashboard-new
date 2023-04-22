@@ -10,11 +10,12 @@ import DarkModeOutlinedIcon from '@mui/icons-material/DarkModeOutlined';
 import NotificationsOutlinedIcon from '@mui/icons-material/NotificationsOutlined';
 import CurrencyExchangeOutlinedIcon from '@mui/icons-material/CurrencyExchangeOutlined';
 import Carousel from 'react-material-ui-carousel'
-import enctrLogo from '../assets/ENCTR_Symbol_Dark.svg';
+import enctrLogo from '../assets/enctrlogo.jpg';
 import onlyBurnsLogo from '../assets/OnlyBurns_Title_in_8K.svg';
+import nftSupply from '../assets/nftsupplycologo.jpg';
 import polygonLogo from '../assets/polygon-logo.png';
 import thirdWebLogo from '../assets/thirdweb.png';
-import accLogo from '../assets/accLogo.jpg';
+import accLogo from '../assets/oacclogo.jpg';
 import PartnerItem from './PartnerItem';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import { useNavigate } from 'react-router-dom';
@@ -61,7 +62,7 @@ function PermanentDrawerRight(props: NavProps) {
     {
       name: "NFT Supply",
       description: "Placeholder Text",
-      image: enctrLogo,
+      image: nftSupply,
       partnerLink: "https://enctr.gg/"
     },
     {
@@ -116,7 +117,6 @@ function PermanentDrawerRight(props: NavProps) {
         sx={{
           width: navOpen ? drawerWidth : 0,
           flexShrink: 0,
-          whiteSpace: "nowrap",
           "& .MuiDrawer-paper": {
             width: drawerWidth,
             overflowY: "hidden",
@@ -185,7 +185,7 @@ function PermanentDrawerRight(props: NavProps) {
                 View Full Benefits
               </Button>
           </Box>
-          <Carousel autoPlay>
+          <Carousel autoPlay sx={{height: "200px"}}>
             {
                 partnersList.map( (item, i) => <PartnerItem key={i} item={item} /> )
             }
