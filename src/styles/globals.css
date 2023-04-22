@@ -23,6 +23,10 @@ body {
     Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
 }
 
+html, body, #root, .wrapper {
+  height:100%;
+}
+
 a {
   color: #FED100;
   text-decoration: none;
@@ -69,6 +73,8 @@ body {
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
+  flex-wrap: wrap;
+  overflow-wrap: break-word;
 }
 
 .col{
@@ -187,7 +193,6 @@ body {
   margin-top: 5px;
   margin-bottom: 5px;
   padding-top: 5px;
-  overflow-wrap: break-word;
 }
 
 .info-card__title {
@@ -204,13 +209,13 @@ body {
   font-size: .7rem;
   font-family: 'Roboto', sans-serif;
   font-weight: 300;
-  letter-spacing: normal;
   margin: 0;
   padding-top: 5px;
   padding-left: 10px;
   padding-right: 10px;
   padding-bottom: 5px;
-  overflow-wrap: break-word;
+  width: 100%;
+  white-space: pre-wrap;
 }
 
 .footer-card {
@@ -244,13 +249,22 @@ body {
 }
 
 .hubLogo {
-  width: 20%;
+  width: 30%;
   height: 100%;
   padding-left: 5%;
   margin-right: 0px;
   object-fit: contain;
   aspect-ratio: 1/1;
   cursor: pointer;
+}
+
+.partnerLogo {
+  margin: 0px;
+  padding: 0%;
+  object-fit: contain;
+  cursor: pointer;
+  width: 79px;
+  height: 79px;
 }
 
 .connect {

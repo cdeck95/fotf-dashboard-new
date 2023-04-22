@@ -4,24 +4,25 @@ import Drawer from '@mui/material/Drawer';
 import CssBaseline from '@mui/material/CssBaseline';
 import Toolbar from '@mui/material/Toolbar';
 import { ConnectWallet } from '@thirdweb-dev/react';
-import { Button, IconButton, useMediaQuery, useTheme } from '@mui/material';
+import { Button, IconButton, ImageList, ImageListItem, ImageListItemBar, Typography, useMediaQuery, useTheme } from '@mui/material';
 import LightModeOutlinedIcon from '@mui/icons-material/LightModeOutlined';
 import DarkModeOutlinedIcon from '@mui/icons-material/DarkModeOutlined';
 import NotificationsOutlinedIcon from '@mui/icons-material/NotificationsOutlined';
 import CurrencyExchangeOutlinedIcon from '@mui/icons-material/CurrencyExchangeOutlined';
 import Carousel from 'react-material-ui-carousel'
 import enctrLogo from '../assets/enctrlogo.jpg';
-import onlyBurnsLogo from '../assets/OnlyBurns_Title_in_8K.svg';
+import onlyBurnsLogo from '../assets/onlyburnsapplogo.jpg';
 import nftSupply from '../assets/nftsupplycologo.jpg';
-import polygonLogo from '../assets/polygon-logo.png';
-import thirdWebLogo from '../assets/thirdweb.png';
+import polygonLogo from '../assets/polygonlogo.jpg';
+import thirdWebLogo from '../assets/thirdweblogo.jpg';
 import accLogo from '../assets/oacclogo.jpg';
 import PartnerItem from './PartnerItem';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import { useNavigate } from 'react-router-dom';
 import Notifications from "react-notifications-menu";
 import { useState } from 'react';
-
+import notificationIcon from '../assets/icons8-notification-100.png';
+import NotificationsNoneOutlinedIcon from '@mui/icons-material/NotificationsNoneOutlined';
 
 type NavProps = {
   setNavOpen: Function;
@@ -54,36 +55,42 @@ function PermanentDrawerRight(props: NavProps) {
   
   var partnersList = [
     {
+      id: 0,
       name: "Enctr",
       description: "The next generation of deFi",
       image: enctrLogo,
       partnerLink: "https://enctr.gg/"
     },
     {
+      id: 1,
       name: "NFT Supply",
       description: "Placeholder Text",
       image: nftSupply,
       partnerLink: "https://enctr.gg/"
     },
     {
+      id: 2,
       name: "OnlyBurns",
       description: "Placeholder Text",
       image: onlyBurnsLogo,
       partnerLink: "https://onlyburns.com/"
     },
     {
+      id: 3,
       name: "Polygon Labs",
       description: "Placeholder Text",
       image: polygonLogo,
       partnerLink: "https://polygon.technology"
     }, 
     {
+      id: 4,
       name: "ThirdWeb",
       description: "The complete web3 sdk.",
       image: thirdWebLogo,
       partnerLink: "https://thirdweb.com/"
     },
     {
+      id: 5,
       name: "A.C.C NFTs",
       description: "Placeholder Text",
       image: accLogo,
@@ -152,6 +159,7 @@ function PermanentDrawerRight(props: NavProps) {
               {/* <NotificationsOutlinedIcon fontSize='small' className="pointer-icon"/>   */}
               <Notifications
                 data={data}
+                icon={notificationIcon}
                 header={{
                   title: "Notifications",
                   option: { text: "View All", onClick: () => console.log("Clicked") }
@@ -172,10 +180,14 @@ function PermanentDrawerRight(props: NavProps) {
               Learn More
             </Button>
           </Box>
-          <div className="info-card__description">Fury of the Fur is a story-driven collection run by Sneaky Bird Labs. Abandoned by the founders, like the teddy bears of our youth, FOTF has risen back up. Full 4k resolution, Merchandise, Storyboards, Comics and more are available with your Ted.<br></br>
-          <br></br>
-          But Tedy's aren't just a PFP. They are a community representing the best parts of Web3 and NFTs. Left behind by their founders, the FOTF community rallied and saved the project.
-          </div>
+          <Box className="row-even">
+            <p className="info-card__description">
+              Fury of the Fur is a story-driven collection run by Sneaky Bird Labs. Abandoned by the founders, like the teddy bears of our youth, FOTF has risen back up. Full 4k resolution, Merchandise, Storyboards, Comics and more are available with your Ted.<br></br>
+              <br></br>
+              But Tedy's aren't just a PFP. They are a community representing the best parts of Web3 and NFTs. Left behind by their founders, the FOTF community rallied and saved the project.
+              </p>
+          </Box>
+         
         </Box>
         <Box className="info-card">
           <Box className="row-even">
@@ -185,11 +197,29 @@ function PermanentDrawerRight(props: NavProps) {
                 View Full Benefits
               </Button>
           </Box>
-          <Carousel autoPlay sx={{height: "200px"}}>
+          {/* <Carousel autoPlay sx={{height: "200px"}}>
             {
                 partnersList.map( (item, i) => <PartnerItem key={i} item={item} /> )
             }
-          </Carousel>
+          </Carousel> */}
+
+          <ImageList sx={{ width: 320, height: 300, paddingLeft: "10px", paddingRight: "10px" }} cols={3} gap={30} rowHeight={110}>
+                {partnersList.map((item) => (
+                  <ImageListItem key={item.id} >
+                    <img
+                      src={item.image}
+                      srcSet={item.image}
+                      alt={item.name}
+                      className="partnerLogo"
+                      loading="lazy"
+                    />
+                    <ImageListItemBar
+                      title={item.name}
+                      position="below"
+                    />
+                  </ImageListItem>
+                ))}
+          </ImageList>
         </Box>
       </Drawer>
       

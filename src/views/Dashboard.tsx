@@ -22,10 +22,13 @@ function Dashboard() {
   const address = useAddress();
 
   return (
-    <Box sx={{ margin: 5}}>
+    <Box className="inner-container">
       {address
       ?  <p>Dashboard</p>  
-      : <div><p>Connect your wallet</p> </div> 
+      : <Box  sx={{ height: "100%", display: "flex", 
+      justifyContent: "center", alignItems: "center", width:"100%"}}>
+      <h1 className="comingSoon"><span className="comingSoonBlack">Connect Your</span> Wallet</h1>
+      </Box>
       }
     </Box>
   );
