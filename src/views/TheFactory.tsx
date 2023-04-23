@@ -15,7 +15,7 @@ import { NFT, SmartContract } from "@thirdweb-dev/sdk";
 import { BaseContract, BigNumber, ethers } from "ethers";
 import { NumericFormat } from 'react-number-format';
 import NFTList from "../components/NFTList";
-
+import "../styles/Dashboard.css";
 
 const FOTF_CONTRACT="0x06bdc702fb8af5af8067534546e0c54ea4243ea9";
 const TEDDY_CONTRACT="0x4aB1337970E889Cf5E425A7267c51db183028cf4";
@@ -219,6 +219,10 @@ function TheFactory() {
 
   //////////// Header ///////////////////////////
 
+  interface IDictionary {
+    [index:string]: string;
+  }
+
   const [searchInput, setSearchInput] = useState("");
 
   const handleSearch = (e: { preventDefault: () => void; target: { value: SetStateAction<string>; }; }) => {
@@ -227,21 +231,28 @@ function TheFactory() {
   };
   
   if (searchInput.length > 0) {
-    allOwnedNFTs.filter((token: NFT) => {
-      console.log(token.metadata.id.match(searchInput));
-      return token.metadata.id.match(searchInput);
-  });
+    if(searchInput.match("[0-9]+")) {
+      allOwnedNFTs.filter((token: NFT) => {
+        console.log(token.metadata.id.match(searchInput));
+        return token.metadata.id.match(searchInput);
+    });
+    } else {
+      //filter on attributes
+      
+    }
+    
   }
 
   //////////////////////////////////////////////
 
   return (
-    <Box className="inner-container">
+    <Box className="factory-inner-container">
       <Box className="header">
-        <Box className="row">
+        <Box className="header-row">
           <h3>The Factory</h3>
           <input
             type="text"
+            className="factory-search"
             placeholder="Search for Ted, Teddy or AI Token ID"
             onChange={handleSearch}
             value={searchInput} />
@@ -250,11 +261,11 @@ function TheFactory() {
       {address
       ? <div>
           { error ? <div><p>NFT not found - error</p></div> 
-          : <div className="gallery">
+          : <Box className="gallery" sx={{ paddingLeft: "10px", backgroundColor: "white", paddingRight: "10px" }}>
               {allOwnedNFTs
               ? <NFTList tokens={allOwnedNFTs} searchText={searchInput} />
               : <p>Loading...</p> }
-             </div>
+             </Box>
             }
 
         <Backdrop

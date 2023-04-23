@@ -5,6 +5,7 @@ import StarBorderIcon from '@mui/icons-material/StarBorder';
 import StarIcon from '@mui/icons-material/Star';
 import ControlPointIcon from '@mui/icons-material/ControlPoint';
 import { ThirdwebNftMedia } from '@thirdweb-dev/react';
+import "../styles/Dashboard.css";
 
 interface NFTListProps {
     tokens: NFT[];
@@ -25,12 +26,14 @@ function NFTList(props: NFTListProps) {
     }
 
     const filteredNFTs = props.tokens?.filter(e => e.metadata.id!.includes(props.searchText));
-
+    console.log(filteredNFTs)
+    
     return (
-        <ImageList sx={{ width: "100%", height: "100%", overflowX: "hidden", overflowY: "auto", padding: 0, margin: 0, backgroundColor: "white" }} cols={4} gap={25} rowHeight={250}>
+        <ImageList sx={{ width: "100%", height: "100%", overflowX: "hidden", 
+        overflowY: "auto", padding: 0, margin: 0, backgroundColor: "white" }} cols={4} gap={25} rowHeight={250}>
                 {filteredNFTs.map(e =>
-                <Box key={e.metadata.id} className="card" sx={{ margin: 0, padding: 0, background: "none"}}>
-                  <StarBorderIcon onClick={star} sx={{ position: "absolute", top: "15px", right: "15px", zIndex: "100 !important'" }}/>
+                <Box key={e.metadata.id} className="card" sx={{ margin: 0, padding: 0, background: "none", maxHeight: "350px", maxWidth: "250px"}}>
+                  <StarBorderIcon onClick={star} sx={{ position: "absolute", top: "5px", right: "5px", zIndex: "100 !important'" }}/>
                   <ThirdwebNftMedia metadata={e.metadata} style={{ maxHeight: "250px", maxWidth: "250px",
                     borderRadius: "10px", objectFit: "cover"
                      }}/>
