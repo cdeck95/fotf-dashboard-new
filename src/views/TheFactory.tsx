@@ -4,7 +4,7 @@ import { useTitle } from "../hooks/useTitle";
 import { useAddress } from "@thirdweb-dev/react";
 import Backdrop from '@mui/material/Backdrop';
 import CircularProgress from '@mui/material/CircularProgress';
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { SetStateAction, useCallback, useEffect, useMemo, useState } from "react";
 import { useSDK } from "@thirdweb-dev/react";
 import teddyABI from "../ABIs/teddyABI.json";
 import tedABI from "../ABIs/tedABI.json";
@@ -13,10 +13,8 @@ import honeyABI from "../ABIs/honeyABI.json";
 import aiABI from "../ABIs/aiABI.json";
 import { NFT, SmartContract } from "@thirdweb-dev/sdk";
 import { BaseContract, BigNumber, ethers } from "ethers";
-import ControlPointIcon from '@mui/icons-material/ControlPoint';
-import StarBorderIcon from '@mui/icons-material/StarBorder';
-import StarIcon from '@mui/icons-material/Star';
 import { NumericFormat } from 'react-number-format';
+import NFTList from "../components/NFTList";
 
 
 const FOTF_CONTRACT="0x06bdc702fb8af5af8067534546e0c54ea4243ea9";
@@ -217,47 +215,44 @@ function TheFactory() {
     setOpen(!open);
   };
 
-  const add = () => {
-    console.log("adding...");
-  }
-
-  const star = () => {
-    console.log("staring...");
-  }
-
   
+
+  //////////// Header ///////////////////////////
+
+  const [searchInput, setSearchInput] = useState("");
+
+  const handleSearch = (e: { preventDefault: () => void; target: { value: SetStateAction<string>; }; }) => {
+    e.preventDefault();
+    setSearchInput(e.target.value);
+  };
+  
+  if (searchInput.length > 0) {
+    allOwnedNFTs.filter((token: NFT) => {
+      console.log(token.metadata.id.match(searchInput));
+      return token.metadata.id.match(searchInput);
+  });
+  }
+
+  //////////////////////////////////////////////
+
   return (
-    <Box className="app-container">
-      <Box className="inner-container">
+    <Box className="inner-container">
+      <Box className="header">
+        <Box className="row">
+          <h3>The Factory</h3>
+          <input
+            type="text"
+            placeholder="Search for Ted, Teddy or AI Token ID"
+            onChange={handleSearch}
+            value={searchInput} />
+        </Box>
+      </Box>
       {address
       ? <div>
           { error ? <div><p>NFT not found - error</p></div> 
           : <div className="gallery">
-              {allOwnedNFTs?
-              <div>
-                <ImageList cols={4} gap={20}>
-                {allOwnedNFTs?.map(e =>
-                <div key={e.metadata.id} className="card">
-                  <StarBorderIcon onClick={star} sx={{ position: "absolute", top: "15px", right: "15px", zIndex: "100 !important'" }}/>
-                  <ThirdwebNftMedia metadata={e.metadata} style={{ maxHeight: "250px", maxWidth: "250px",
-                    borderRadius: "10px", objectFit: "cover", marginBottom: "10px"
-                     }}/>
-                  <Box className="column-container">
-                    <div className="large-left-column">
-                      <h3 className="metadata-title">{e.metadata.name}</h3>
-                      <h4 className="metadata">Last Transfer: 03/11/2023</h4>
-
-                    </div>
-                    <div className="small-right-column">
-                      <ControlPointIcon onClick={add}/>
-                    </div>
-                  </Box>
-                  
-                  
-                </div>
-              )}
-              </ImageList>
-              </div>
+              {allOwnedNFTs
+              ? <NFTList tokens={allOwnedNFTs} searchText={searchInput} />
               : <p>Loading...</p> }
              </div>
             }
@@ -272,8 +267,6 @@ function TheFactory() {
         </div>
       : <div><p>Connect your wallet</p> </div> 
       }
-      </Box>
-
       <Box sx={{width: "100%", position: "fixed", bottom: "0px", height: "70px", backgroundColor: "#FED100"}}>
         <div className="row">
           <NumericFormat value={honey} displayType={'text'} thousandSeparator={true} prefix={'$'} suffix={' HNY'} />
@@ -283,7 +276,7 @@ function TheFactory() {
           <p className="stats">{aiNFTs?.length} AI Teds</p>
         </div>
       </Box>
-    </Box>
+    </Box>  
   );
 }
 
