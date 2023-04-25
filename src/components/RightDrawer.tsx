@@ -23,6 +23,7 @@ import Notifications from "react-notifications-menu";
 import { useState } from 'react';
 import notificationIcon from '../assets/icons8-notification-100.png';
 import NotificationsNoneOutlinedIcon from '@mui/icons-material/NotificationsNoneOutlined';
+import AssetOverview from './AssetOverview';
 
 type NavProps = {
   setNavOpen: Function;
@@ -52,6 +53,22 @@ function PermanentDrawerRight(props: NavProps) {
   const [data, setData] = useState([DEFAULT_NOTIFICATION]);
   const [message, setMessage] = useState("");
   const [showNotification, setShowNotification] = useState(false);
+  var showAssetOverview = false;
+
+  console.log(window.location.pathname);
+  
+  switch (window.location.pathname) {
+    case "/":
+      showAssetOverview = false;
+      break;
+    case "/TheFactory":
+      showAssetOverview = true;
+      break;
+    default:
+      showAssetOverview = false;      
+      break;
+  }
+
   
   var partnersList = [
     {
@@ -189,6 +206,17 @@ function PermanentDrawerRight(props: NavProps) {
           </Box>
          
         </Box>
+        {showAssetOverview && 
+        <Box className="info-card">
+          <Box className="row-even">
+            <div className="info-card__title">Asset Overview</div>
+            <Typography 
+              className="learnMoreBtn">
+              Est Value. 6 ETH
+              </Typography>
+          </Box>
+        </Box>
+        }
         <Box className="info-card">
           <Box className="row-even">
             <div className="info-card__title">Our Partners</div>
