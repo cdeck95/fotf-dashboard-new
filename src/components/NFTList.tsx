@@ -27,15 +27,15 @@ function NFTList(props: NFTListProps) {
 
 
 
-  const [columns, setColumns] = React.useState(4);
+  const [columns, setColumns] = React.useState(3);
 
   React.useEffect(() => {
     if (isMobile) {
-      setColumns(2);
+      setColumns(1);
     } else if (isLarge) {
-      setColumns(3);
+      setColumns(2);
     } else {
-      setColumns(4);
+      setColumns(3);
     }
   }, [isMobile, isLarge]);
 
@@ -52,11 +52,11 @@ function NFTList(props: NFTListProps) {
     
     return (
         <ImageList sx={{ width: "100%", height: "100%", overflowX: "hidden", 
-        overflowY: "auto", backgroundColor: "white" }} cols={columns} gap={25} rowHeight={250}>
+        overflowY: "auto", backgroundColor: "white" }} cols={columns} gap={20} rowHeight={300}>
                 {filteredNFTs.map(e =>
                 <Box key={e.metadata.id} className="card" sx={{ background: "none", maxHeight: "350px", maxWidth: "250px"}}>
                   <StarBorderIcon onClick={star} sx={{ position: "absolute", top: "5px", right: "5px", zIndex: "100 !important'" }}/>
-                  <ThirdwebNftMedia metadata={e.metadata} style={{ maxHeight: "250px", maxWidth: "250px",
+                  <ThirdwebNftMedia metadata={e.metadata} style={{ maxHeight: "300px", maxWidth: "300px",
                     borderRadius: "10px", objectFit: "cover", width: "100%", height: "100%"
                      }}/>
                   <Box className="column-container">
