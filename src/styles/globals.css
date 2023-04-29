@@ -34,7 +34,7 @@ a {
 
 p {
   font-size: 1.2rem;
-  line-height: 1.5;
+  /* line-height: 1.5; */
   margin: 1rem 0;
   font-family: 'Bebas Neue';
 }
@@ -96,6 +96,92 @@ body {
   overflow-wrap: break-word;
 }
 
+.row-around{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+  text-align: center;
+  flex-wrap: wrap;
+  overflow-wrap: break-word;
+}
+
+.row-center-margin{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  flex-wrap: wrap;
+  overflow-wrap: break-word;
+  margin-top: 15px;
+  margin-bottom: 7.5px;
+  width: 100%;
+
+}
+
+.asset-numbers {
+  font-family: 'Bebas Neue' !important;
+  font-size: 4rem !important;
+  font-weight: 500 !important;
+  color: var(--accent-color);
+  margin: 0%;
+  padding: 0%;
+  display: flex;
+  text-align: center !important;
+  justify-content: center !important;
+  margin-top: auto;
+}
+
+.asset-type {
+  overflow-wrap: normal;
+  font-family: 'Bebas Neue' !important;
+  font-size: 2rem !important;
+  font-weight: 400 !important;
+  color: var(--primary-color);
+  margin: 0%;
+  padding: 0%;
+  display: flex;
+  text-align: center !important;
+  justify-content: center !important;
+  margin-top: auto;
+  margin-bottom: auto;
+}
+
+.honeyBalanceBlack {
+  color: var(--primary-color) !important;
+  font-family: 'Bebas Neue' !important;
+  font-size: 2rem !important;
+  font-weight: 500 !important;
+  margin: 0%;
+  padding: 0%;
+  display: flex;
+  text-align: right !important;
+  justify-content: end !important;
+}
+
+.honeyBalance {
+  color: var(--accent-color) !important;
+  font-family: 'Bebas Neue' !important;
+  font-size: 2rem !important;
+  font-weight: 500 !important;
+  margin: 0%;
+  padding: 0%;
+  padding-left: 5px;
+  display: flex;
+  text-align: left !important;
+  justify-content: start !important;
+}
+
+.col-no-space {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  margin: 0%;
+  padding: 0%;
+  height: 100%;
+}
+
 .col{
   display: flex;
   flex-direction: column;
@@ -117,6 +203,17 @@ body {
   margin: 0;
   padding: 0;
   cursor: pointer;
+}
+
+.learnMore {
+  background: none !important;
+  border: none !important;
+  color: #000000 !important;
+  opacity: .5;
+  text-align: center;
+  font-size: 12px;
+  margin: 0;
+  padding: 0;
 }
 
 .button-with-icon {
