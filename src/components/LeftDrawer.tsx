@@ -85,8 +85,12 @@ function LeftDrawer(props: NavProps) {
         navigate("/TheFactory");
         setActivePage("TheFactory");
         break;
+      case "GraphicTemplates":
+        navigate("/GraphicTemplates");
+        setActivePage("GraphicTemplates");
+        break;
       case "Hub":
-        navigate("/");
+        window.open("https://furyofthefur.com");
         break;
       default:
         navigate("/");

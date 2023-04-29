@@ -16,53 +16,26 @@ import { BaseContract, BigNumber, ethers } from "ethers";
 import { NumericFormat } from 'react-number-format';
 import NFTList from "../components/NFTList";
 import "../styles/Dashboard.css";
-import { loadAllAccountDetails } from "../account/loadAllAccountDetails";
+import { LoadAllAccountDetails, allOwnedNFTs } from "../account/loadAllAccountDetails";
 
-const FOTF_CONTRACT="0x06bdc702fb8af5af8067534546e0c54ea4243ea9";
-const TEDDY_CONTRACT="0x4aB1337970E889Cf5E425A7267c51db183028cf4";
-const STAKING_CONTRACT="0x15829C851C3117f662C5A9E369bC3A4dBbeaFEBF";
-const REWARD_TOKEN="0x6ca0269dca415313256cfecD818F32c5AfF0A518";
-const AI_MINT="0x1C6d280280f7f8d139659E314d738bdD466741Ba";
-
-interface StakedTokens {
-  address: string;
-  tokenId: BigNumber;
+interface TheFactoryProps {
+  allOwnedNFTs: allOwnedNFTs;
 }
 
-async function AddStakedTokens(contract_TEDDY: SmartContract, tokenIDs: string[]) {
-  //const { data: stakedTeddy, isLoading: isLoadingStakedTeddy, error: errorStakedTeddy } = await useNFT(contract_STAKING, BigNumber.from(tokenID));
-  const {data: allStakedNFTs, error: errorStaked, isLoading: isLoadingStaked} = useOwnedNFTs(contract_TEDDY, STAKING_CONTRACT);
-  console.log(allStakedNFTs);
-  console.log(errorStaked);
-  console.log(isLoadingStaked);
-
-  console.log("adding staked tokens")
-  console.log(allStakedNFTs);
-  const tokens: NFT[] = [];
-  allStakedNFTs?.map(token => {
-    console.log(token.owner);
-    if(tokenIDs.includes(token.owner)){
-      console.log(`${token.metadata.id} is staked}`)
-      tokens.push(token);
-    }
-  });
-  return tokens;   
-}
-
-function TheFactory() {
+function TheFactory(props: TheFactoryProps) {
   useTitle("FOTF | The Factory");
-  const { tokens, isLoading, error, honeyBalance } = loadAllAccountDetails();
+  // const { tokens, isLoading, error, honeyBalance } = LoadAllAccountDetails();
+  const allOwnedNFTs = props.allOwnedNFTs;
+  const {tokens, isLoading, error, honeyBalance } = allOwnedNFTs;
   console.log(tokens);
   console.log(isLoading);
   console.log(error);
   console.log(honeyBalance);
 
-  const allOwnedNFTs = tokens.AllTokens.tokens;
+  const AllTokens = tokens.AllTokens.tokens;
   const tedNFTs = tokens.Teds.tokens;
   const teddyNFTs = tokens.Teddies.tokens;
   const aiTedNFTs = tokens.AITeds.tokens;
-
-
 
   // const theme = useTheme();
   // const isMobile = !useMediaQuery(theme.breakpoints.up("md"));
@@ -245,7 +218,7 @@ function TheFactory() {
   
   if (searchInput.length > 0) {
     if(searchInput.match("[0-9]+")) {
-      allOwnedNFTs.filter((token: NFT) => {
+      AllTokens.filter((token: NFT) => {
         console.log(token.metadata.id.match(searchInput));
         return token.metadata.id.match(searchInput);
     });
@@ -276,7 +249,7 @@ function TheFactory() {
           { error ? <div><p>NFT not found - error</p></div> 
           : <Box className="gallery" sx={{ paddingLeft: "10px", paddingBottom: "75px", backgroundColor: "white", paddingRight: "10px" }}>
               {allOwnedNFTs
-              ? <NFTList tokens={allOwnedNFTs} searchText={searchInput} />
+              ? <NFTList tokens={AllTokens} searchText={searchInput} />
               : <p>Loading...</p> }
              </Box>
             }

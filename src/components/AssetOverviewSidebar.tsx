@@ -3,12 +3,12 @@ import { useTitle } from "../hooks/useTitle";
 import "../styles/Dashboard.css";
 import { useAddress } from "@thirdweb-dev/react";
 import { useSDK } from "@thirdweb-dev/react";
-import { loadAllAccountDetails } from "../account/loadAllAccountDetails";
+import { LoadAllAccountDetails } from "../account/loadAllAccountDetails";
 
 
 function AssetOverview() {
 
-  const { tokens, isLoading, error, honeyBalance } = loadAllAccountDetails();
+  const { tokens, isLoading, error, honeyBalance } = LoadAllAccountDetails();
   console.log(tokens);
   console.log(isLoading);
   console.log(error);
@@ -27,7 +27,9 @@ function AssetOverview() {
   return (
     <Box className="info-card">
     <Box className="row-even">
-      <div className="info-card__title">Asset Overview</div>
+      <Box className="info-card__title">
+        Asset Overview
+      </Box>
       <Typography 
         className="learnMore">
         Est Value. 6 ETH

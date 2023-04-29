@@ -24,7 +24,10 @@ function Dashboard() {
   return (
     <Box className="inner-container">
       {address
-      ?  <p>Dashboard</p>  
+      ?  <Box  sx={{ height: "100%", display: "flex", 
+      justifyContent: "center", alignItems: "center", width:"100%"}}>
+      <h1 className="comingSoon">Dashboard</h1>
+      </Box>
       : <Box  sx={{ height: "100%", display: "flex", 
       justifyContent: "center", alignItems: "center", width:"100%"}}>
       <h1 className="comingSoon"><span className="comingSoonBlack">Connect Your</span> Wallet</h1>

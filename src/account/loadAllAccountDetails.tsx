@@ -44,7 +44,7 @@ interface StakedTokens {
     }
   }
 
-  interface allOwnedNFTs {
+  export interface allOwnedNFTs {
     tokens: tokens;
     isLoading: boolean;
     error: boolean;
@@ -117,7 +117,7 @@ async function AddStakedTokens(contract_TEDDY: SmartContract, tokenIDs: string[]
      
 /////////////// Load All NFTs ///////////////////////
 
-export function loadAllAccountDetails() : allOwnedNFTs  {
+export function LoadAllAccountDetails() : allOwnedNFTs  {
 // export const loadAllAccountDetails = () => {
     const allOwnedNFTs: allOwnedNFTs = initialState; 
     allOwnedNFTs.isLoading = true;

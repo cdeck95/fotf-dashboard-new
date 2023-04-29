@@ -20,7 +20,8 @@ import HoneyExchange from "./views/HoneyExchange";
 import TedClaims from "./views/TedClaims";
 import TeddyStaking from "./views/TeddyStaking";
 import MenuIcon from '@mui/icons-material/Menu';
-import { loadAllAccountDetails } from "./account/loadAllAccountDetails";
+import { LoadAllAccountDetails } from "./account/loadAllAccountDetails";
+import GraphicTemplates from "./views/GraphicTemplates";
 
 
 function App() {
@@ -38,7 +39,10 @@ function App() {
   const [navOpen, setNavOpen] = useState(true);
   const [rightNavOpen, setRightNavOpen] = useState(true);
 
-  const { tokens, isLoading, error, honeyBalance } = loadAllAccountDetails();
+  // const { tokens, isLoading, error, honeyBalance } = LoadAllAccountDetails();
+  const allOwnedNFTs = LoadAllAccountDetails();
+  const { tokens, isLoading, error, honeyBalance } = allOwnedNFTs;
+
   console.log(tokens);
   console.log(isLoading);
   console.log(error);
@@ -133,9 +137,11 @@ function App() {
             <Route path="/HoneyExchange" element={<HoneyExchange/>}/>
             <Route path="/TeddyStaking" element={<TeddyStaking/>}/> 
             <Route path="/TedClaims" element={<TedClaims/>}/> 
-            <Route path="/TheFactory" element={<TheFactory/>}/>
+            <Route path="/TheFactory" element={<TheFactory allOwnedNFTs={allOwnedNFTs}/>}/>
             <Route path="/BuildATeddy" element={<BuildATeddy/>}/> 
             <Route path="/TraitSwapTeds" element={<TraitSwapTeds/>}/> 
+            <Route path="/GraphicTemplates" element={<GraphicTemplates/>}/> 
+
             <Route path="*" element={<NotFound/>}/> 
           </Routes>
           {navOpen
