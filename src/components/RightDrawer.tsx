@@ -24,6 +24,7 @@ import { useState } from 'react';
 import notificationIcon from '../assets/icons8-notification-100.png';
 import NotificationsNoneOutlinedIcon from '@mui/icons-material/NotificationsNoneOutlined';
 import AssetOverview from './AssetOverview';
+import AssetOverviewSidebar from './AssetOverviewSidebar';
 
 type NavProps = {
   setNavOpen: Function;
@@ -206,16 +207,7 @@ function PermanentDrawerRight(props: NavProps) {
           </Box>
          
         </Box>
-        {showAssetOverview && 
-        <Box className="info-card">
-          <Box className="row-even">
-            <div className="info-card__title">Asset Overview</div>
-            <Typography 
-              className="learnMoreBtn">
-              Est Value. 6 ETH
-              </Typography>
-          </Box>
-        </Box>
+        {showAssetOverview && <AssetOverviewSidebar/>
         }
         <Box className="info-card">
           <Box className="row-even">
@@ -231,7 +223,7 @@ function PermanentDrawerRight(props: NavProps) {
             }
           </Carousel> */}
 
-          <ImageList sx={{ width: 320, height: 300, paddingLeft: "10px", paddingRight: "10px" }} cols={3} gap={30} rowHeight={110}>
+          <ImageList sx={{ width: 320, height: 300, paddingLeft: "10px", paddingRight: "10px", textAlign: "center"  }} cols={3} gap={30} rowHeight={110}>
                 {partnersList.map((item) => (
                   <ImageListItem key={item.id} >
                     <img

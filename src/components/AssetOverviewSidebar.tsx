@@ -1,4 +1,4 @@
-import {  Box } from "@mui/material";
+import {  Box, Typography } from "@mui/material";
 import { useTitle } from "../hooks/useTitle";
 import "../styles/Dashboard.css";
 import { useAddress } from "@thirdweb-dev/react";
@@ -20,10 +20,15 @@ function AssetOverview() {
   const aiTedNFTs = tokens.AITeds.tokens;
 
   return (
-    <Box  sx={{ display: "flex", 
-    justifyContent: "center", alignItems: "center" }}>
-      <h1 className="comingSoon"><span className="comingSoonBlack">Coming</span> Soon</h1>
+    <Box className="info-card">
+    <Box className="row-even">
+      <div className="info-card__title">Asset Overview</div>
+      <Typography 
+        className="learnMoreBtn">
+        Est Value. 6 ETH
+        </Typography>
     </Box>
+  </Box>
   );
   
 }

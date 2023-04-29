@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Box, ImageList } from "@mui/material";
+import { Box, ImageList, useMediaQuery, useTheme } from "@mui/material";
 import { NFT } from '@thirdweb-dev/sdk';
 import StarBorderIcon from '@mui/icons-material/StarBorder';
 import StarIcon from '@mui/icons-material/Star';
@@ -17,6 +17,28 @@ interface NFTListProps {
   
 function NFTList(props: NFTListProps) {
 
+  const theme = useTheme();
+  const isMobile = !useMediaQuery(theme.breakpoints.up("md"));
+  const isLarge = !useMediaQuery(theme.breakpoints.up("lg"));
+  const isXL = !useMediaQuery(theme.breakpoints.up("xl"));
+  console.log(isMobile);
+  console.log(isLarge);
+  console.log(isXL);
+
+
+
+  const [columns, setColumns] = React.useState(4);
+
+  React.useEffect(() => {
+    if (isMobile) {
+      setColumns(2);
+    } else if (isLarge) {
+      setColumns(3);
+    } else {
+      setColumns(4);
+    }
+  }, [isMobile, isLarge]);
+
     const add = () => {
         console.log("adding...");
     }
@@ -30,12 +52,12 @@ function NFTList(props: NFTListProps) {
     
     return (
         <ImageList sx={{ width: "100%", height: "100%", overflowX: "hidden", 
-        overflowY: "auto", padding: 0, margin: 0, backgroundColor: "white" }} cols={4} gap={25} rowHeight={250}>
+        overflowY: "auto", backgroundColor: "white" }} cols={columns} gap={25} rowHeight={250}>
                 {filteredNFTs.map(e =>
-                <Box key={e.metadata.id} className="card" sx={{ margin: 0, padding: 0, background: "none", maxHeight: "350px", maxWidth: "250px"}}>
+                <Box key={e.metadata.id} className="card" sx={{ background: "none", maxHeight: "350px", maxWidth: "250px"}}>
                   <StarBorderIcon onClick={star} sx={{ position: "absolute", top: "5px", right: "5px", zIndex: "100 !important'" }}/>
                   <ThirdwebNftMedia metadata={e.metadata} style={{ maxHeight: "250px", maxWidth: "250px",
-                    borderRadius: "10px", objectFit: "cover"
+                    borderRadius: "10px", objectFit: "cover", width: "100%", height: "100%"
                      }}/>
                   <Box className="column-container">
                     <div className="large-left-column">

@@ -20,6 +20,7 @@ import HoneyExchange from "./views/HoneyExchange";
 import TedClaims from "./views/TedClaims";
 import TeddyStaking from "./views/TeddyStaking";
 import MenuIcon from '@mui/icons-material/Menu';
+import { loadAllAccountDetails } from "./account/loadAllAccountDetails";
 
 
 function App() {
@@ -36,6 +37,12 @@ function App() {
 
   const [navOpen, setNavOpen] = useState(true);
   const [rightNavOpen, setRightNavOpen] = useState(true);
+
+  const { tokens, isLoading, error, honeyBalance } = loadAllAccountDetails();
+  console.log(tokens);
+  console.log(isLoading);
+  console.log(error);
+  console.log(honeyBalance);
 
   const handleOpen = (): void => {
     setNavOpen(true);
