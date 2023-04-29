@@ -56,6 +56,9 @@ function PermanentDrawerRight(props: NavProps) {
   const [showNotification, setShowNotification] = useState(false);
   var showAssetOverview = false;
 
+  var blogTitle = "What is Fury of the Fur?";
+  var blogContent = <p className="info-card__description">Fury of the Fur is a story-driven collection run by Sneaky Bird Labs. Abandoned by the founders, like the teddy bears of our youth, FOTF has risen back up. Full 4k resolution, Merchandise, Storyboards, Comics and more are available with your Ted.<br></br><br></br>But Tedy's aren't just a PFP. They are a community representing the best parts of Web3 and NFTs. Left behind by their founders, the FOTF community rallied and saved the project.</p>
+
   console.log(window.location.pathname);
   
   switch (window.location.pathname) {
@@ -64,6 +67,8 @@ function PermanentDrawerRight(props: NavProps) {
       break;
     case "/TheFactory":
       showAssetOverview = true;
+      blogTitle = "What is The Factory!?";
+      blogContent = <p className="info-card__description">Only the most involved members of the Fury of the Fur community have access to The Factory. In order to get in, you must hold one of every base asset in the ecosystem.<br/><br/>The Factory allows our Holders to burn their Fury Ted, Teddies by FOTF, or AI Teds in exchange for $HNY. OR you are able to burn any combination of the three (min 1 of each) together with a determined amount of $HNY in exchange for an exclusively designed 1 of 1. </p>
       break;
     default:
       showAssetOverview = false;      
@@ -192,18 +197,14 @@ function PermanentDrawerRight(props: NavProps) {
         </Toolbar>
         <Box className="info-card">
           <Box className="row-even">
-            <div className="info-card__title">What is Fury of the Fur?</div>
+            <div className="info-card__title">{blogTitle}</div>
             <Button 
             href="https://docs.furyofthefur.com" className="learnMoreBtn">
               Learn More
             </Button>
           </Box>
           <Box className="row-even">
-            <p className="info-card__description">
-              Fury of the Fur is a story-driven collection run by Sneaky Bird Labs. Abandoned by the founders, like the teddy bears of our youth, FOTF has risen back up. Full 4k resolution, Merchandise, Storyboards, Comics and more are available with your Ted.<br></br>
-              <br></br>
-              But Tedy's aren't just a PFP. They are a community representing the best parts of Web3 and NFTs. Left behind by their founders, the FOTF community rallied and saved the project.
-              </p>
+            {blogContent}
           </Box>
          
         </Box>
