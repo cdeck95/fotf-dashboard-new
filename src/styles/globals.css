@@ -81,10 +81,28 @@ body {
   justify-content: center;
   align-items: center;
   background-color: transparent;
+  border: #000000 1px solid;
+  height: 35px;
+  width: 250px;
+  border-radius: 15px;
+  font-size: 1rem;
+  font-family: 'Bebas Neue';
+  color: #000000;
+  padding-left: 10px;
+}
+.factory-search:active{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: transparent;
   border: #FED100 1px solid;
   height: 35px;
   width: 250px;
   border-radius: 15px;
+  font-size: 1rem;
+  font-family: 'Bebas Neue';
+  color: #000000;
+  padding-left: 10px;
 }
 
 .row-even{

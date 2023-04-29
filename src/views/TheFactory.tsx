@@ -216,7 +216,8 @@ function TheFactory(props: TheFactoryProps) {
     setSearchInput(e.target.value);
   };
   
-  if (searchInput.length > 0) {
+  try {
+    if (searchInput.length > 0) {
     if(searchInput.match("[0-9]+")) {
       AllTokens.filter((token: NFT) => {
         console.log(token.metadata.id.match(searchInput));
@@ -226,7 +227,10 @@ function TheFactory(props: TheFactoryProps) {
       //filter on attributes
       
     }
-    
+  }
+  } catch (error) {
+    console.log(error);
+    setSearchInput("");
   }
 
   //////////////////////////////////////////////
@@ -265,6 +269,7 @@ function TheFactory(props: TheFactoryProps) {
       : <div><p>Connect your wallet</p> </div> 
       }
       <Box sx={{width: "100%", position: "fixed", bottom: "0px", left: "0px", height: "70px", backgroundColor: "#FED100"}}>
+        <p className="stats">Not working yet</p>
         <div className="row">
           <NumericFormat value={honeyBalance} displayType={'text'} thousandSeparator={true} prefix={'$'} suffix={' HNY'} />
           <p className="stats">{tedNFTs?.length} Fury Teds</p>
