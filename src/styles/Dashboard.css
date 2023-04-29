@@ -62,6 +62,7 @@
   .metadata {
     color: #000000;
     margin: 0%;
+    padding-left: 3%;
     text-align: left;
     opacity: .5;
   }
@@ -69,18 +70,19 @@
   .metadata-title {
     color: #000000;
     margin: 0%;
+    padding-left: 3%;
     text-align: left;
     font-weight: 400;
-    font-size: 32px;
+    font-size: 1.5rem;
     font-family: 'Bebas Neue';
   }
   
   
   .description {
-    margin-top: 3rem;
-    margin-bottom: 2rem;
+    margin-top: 2rem;
+    margin-bottom: 1rem;
     line-height: 1.5;
-    font-size: 1.5rem;
+    font-size: 1.15rem;
   }
   
   .code {
@@ -101,33 +103,39 @@
   }
   
   .card {
-    background-color: transparent;
-    margin: .1rem;
-    padding: .5rem;
+    /* box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px, rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset; */
+    /* box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px; */
+    /* background-color: white;*/
+    border: none;
+    margin: 0%;
+    padding: 0%;
     text-align: left;
-    color: inherit;
-    text-decoration: none;
-    border-radius: 10px;
+    border-radius: 10px; 
     transition: color 0.15s ease, border-color 0.15s ease;
-    max-width: 350px;
+    max-width: 250px;
     position: relative;
+    display: flex;
+    flex-direction: column;  
+    border-bottom: none;
   }
   
   .card img {
     display: block;
+    padding: 0%;
+    margin: 0%;
   }
   
   
   .card:hover,
   .card:focus,
   .card:active {
-    background-color: transparent;
+    background-color: white !important;
     color: #FED100;
     border: 2px solid transparent;
     border-color: #FED100;
   }
   
-  .card h2 {
+  /* .card h2 {
     margin: 0 0 1rem 0;
     font-size: 1.5rem;
   }
@@ -136,7 +144,7 @@
     margin: 0;
     font-size: 1.25rem;
     line-height: 1.5;
-  }
+  } */
   
   .logo {
     height: 1em;
@@ -150,10 +158,10 @@
     }
   }
   
-  .card,
+  /* .card,
   .footer {
     border-color: #222;
-  }
+  } */
   .code {
     background: #111;
   }
@@ -180,18 +188,24 @@
   }
   
   .large-left-column {
-    width: 90%;
+    width: 85%;
     text-align: left;
     flex-direction: column;
     display: flex;
+    background-color: white;
   }
   
   .small-right-column {
-    width: 10%;
+    width: 15%;
     text-align: right;
     display: flex;
     margin: auto;
     vertical-align: middle;
+    background-color: white;
+    padding-right: auto;
+    padding-left: auto;
+    justify-content: center;
+    align-items: center;
   }
   
   .gallery {

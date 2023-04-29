@@ -23,6 +23,8 @@ import Notifications from "react-notifications-menu";
 import { useState } from 'react';
 import notificationIcon from '../assets/icons8-notification-100.png';
 import NotificationsNoneOutlinedIcon from '@mui/icons-material/NotificationsNoneOutlined';
+import AssetOverview from './AssetOverview';
+import AssetOverviewSidebar from './AssetOverviewSidebar';
 
 type NavProps = {
   setNavOpen: Function;
@@ -52,6 +54,22 @@ function PermanentDrawerRight(props: NavProps) {
   const [data, setData] = useState([DEFAULT_NOTIFICATION]);
   const [message, setMessage] = useState("");
   const [showNotification, setShowNotification] = useState(false);
+  var showAssetOverview = false;
+
+  console.log(window.location.pathname);
+  
+  switch (window.location.pathname) {
+    case "/":
+      showAssetOverview = false;
+      break;
+    case "/TheFactory":
+      showAssetOverview = true;
+      break;
+    default:
+      showAssetOverview = false;      
+      break;
+  }
+
   
   var partnersList = [
     {
@@ -141,7 +159,7 @@ function PermanentDrawerRight(props: NavProps) {
         anchor="right"
       >
         <Toolbar sx={{ marginLeft: "0px !important", marginRight: "0px !important", paddingLeft: "7px !important", paddingRight: "7px !important"}}>
-          <div className="optionsRow">
+          <Box className="optionsRow">
             {/* this might need to be two rows for mobile */}
             {isMobile
               ?<IconButton onClick={() => setNavOpen(false)} size="small" sx={{margin: 0, padding: 0}}>
@@ -152,11 +170,11 @@ function PermanentDrawerRight(props: NavProps) {
             <div onClick={openCurrencyExchange} className="center-flexbox">
               <CurrencyExchangeOutlinedIcon fontSize='small' className="pointer-icon"/>
             </div>
-            <div onClick={toggleDarkMode} className="center-flexbox">
+            {/* <div onClick={toggleDarkMode} className="center-flexbox">
               {isDarkMode? <DarkModeOutlinedIcon fontSize='small' className="pointer-icon"/> : <LightModeOutlinedIcon fontSize='small' className="pointer-icon"/>}
             </div>
             <div onClick={openNotifications} className="center-flexbox">
-              {/* <NotificationsOutlinedIcon fontSize='small' className="pointer-icon"/>   */}
+              <NotificationsOutlinedIcon fontSize='small' className="pointer-icon"/>  
               <Notifications
                 data={data}
                 icon={notificationIcon}
@@ -168,9 +186,9 @@ function PermanentDrawerRight(props: NavProps) {
                   console.log(data);
                 }}
               />
-            </div>
+            </div> */}
             <ConnectWallet accentColor="#000000" colorMode="dark" className={isMobile? "connectWalletOverride-Mobile" : "connectWalletOverride"}/>
-          </div>
+          </Box>
         </Toolbar>
         <Box className="info-card">
           <Box className="row-even">
@@ -189,6 +207,8 @@ function PermanentDrawerRight(props: NavProps) {
           </Box>
          
         </Box>
+        {showAssetOverview && <AssetOverviewSidebar/>
+        }
         <Box className="info-card">
           <Box className="row-even">
             <div className="info-card__title">Our Partners</div>
@@ -203,7 +223,7 @@ function PermanentDrawerRight(props: NavProps) {
             }
           </Carousel> */}
 
-          <ImageList sx={{ width: 320, height: 300, paddingLeft: "10px", paddingRight: "10px" }} cols={3} gap={30} rowHeight={110}>
+          <ImageList sx={{ width: 320, height: 300, paddingLeft: "10px", paddingRight: "10px", textAlign: "center"  }} cols={3} gap={30} rowHeight={110}>
                 {partnersList.map((item) => (
                   <ImageListItem key={item.id} >
                     <img
