@@ -45,55 +45,75 @@ function LeftDrawer(props: NavProps) {
   const themeMui = useTheme();
   const isMobile = !useMediaQuery(themeMui.breakpoints.up("md"));
   const [activePage, setActivePage] = React.useState("Dashboard");
+
+  const handleMobileClick = () => {
+    if(isMobile) {
+      setNavOpen(false);
+    }
+  }
+
   
   const loadPage = (page: string) => {
     switch(page) {
       case "Dashboard":
         navigate("/");
         setActivePage("Dashboard");
+        handleMobileClick();
         break;
       case "Documents":
         window.open("https://docs.furyofthefur.com");
+        handleMobileClick();
         break;
       case "Downloads": 
         window.open("https://drive.google.com/drive/folders/1_FHhUhooWOXxfJoNaS1YBKgvMLMjsCPN?usp=sharing");
+        handleMobileClick();
         break;
       case "Shop":
         window.open("https://shopfotf.com");
+        handleMobileClick();
         break;
       case "HoneyExchange":
         navigate("/HoneyExchange");
-        setActivePage("HoneyExchange");
+        setActivePage("HoneyExchange"); 
+        handleMobileClick();
         break;
       case "TedClaims":
         navigate("/TedClaims");
         setActivePage("TedClaims");
+        handleMobileClick();
         break;
       case "TeddyStaking":
         navigate("/TeddyStaking");
         setActivePage("TeddyStaking");
+        handleMobileClick();
         break;
       case "BuildATeddy":
         navigate("/BuildATeddy");
         setActivePage("BuildATeddy");
+        handleMobileClick();
         break;
       case "TraitSwapTeds":
         navigate("/TraitSwapTeds");
         setActivePage("TraitSwapTeds");
+        handleMobileClick();
         break;
       case "TheFactory":
         navigate("/TheFactory");
         setActivePage("TheFactory");
+        handleMobileClick();
         break;
       case "GraphicTemplates":
         navigate("/GraphicTemplates");
         setActivePage("GraphicTemplates");
+        handleMobileClick();
         break;
       case "Hub":
         window.open("https://furyofthefur.com");
+        handleMobileClick();
         break;
       default:
         navigate("/");
+        handleMobileClick();
         break;
     }
   }

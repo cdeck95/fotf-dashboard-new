@@ -20,7 +20,7 @@ import PartnerItem from './PartnerItem';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import { useNavigate } from 'react-router-dom';
 import Notifications from "react-notifications-menu";
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import notificationIcon from '../assets/icons8-notification-100.png';
 import NotificationsNoneOutlinedIcon from '@mui/icons-material/NotificationsNoneOutlined';
 import AssetOverview from './AssetOverview';
@@ -47,7 +47,7 @@ const DEFAULT_NOTIFICATION = {
 function PermanentDrawerRight(props: NavProps) {
   const themeMui = useTheme();
   const isMobile = !useMediaQuery(themeMui.breakpoints.up("md"));
-  const drawerWidth = isMobile ? 280 : 340;
+  const drawerWidth = isMobile ? "100%" : 340;
   const { navOpen, setNavOpen } = props;
   const navigate = useNavigate();
   const [isDarkMode, setIsDarkMode] = React.useState(false);
@@ -56,10 +56,16 @@ function PermanentDrawerRight(props: NavProps) {
   const [showNotification, setShowNotification] = useState(false);
   var showAssetOverview = false;
 
+  // setNavOpen(true);
+
   var blogTitle = "What is Fury of the Fur?";
   var blogContent = <p className="info-card__description">Fury of the Fur is a story-driven collection run by Sneaky Bird Labs. Abandoned by the founders, like the teddy bears of our youth, FOTF has risen back up. Full 4k resolution, Merchandise, Storyboards, Comics and more are available with your Ted.<br></br><br></br>But Tedy's aren't just a PFP. They are a community representing the best parts of Web3 and NFTs. Left behind by their founders, the FOTF community rallied and saved the project.</p>
 
   console.log(window.location.pathname);
+
+  // useEffect(() => {
+  //   setNavOpen(!isMobile);
+  // }, [isMobile]);
   
   switch (window.location.pathname) {
     case "/":
@@ -133,11 +139,12 @@ function PermanentDrawerRight(props: NavProps) {
 
   const openCurrencyExchange = () => {
     navigate("/HoneyExchange");
+    setNavOpen(false);
   };
   
 
   return (
-    <Box sx={{ display: 'flex', justifyContent: "space-between" }}>
+    <Box sx={{ display: 'flex', justifyContent: "space-between", zIndex: "100"}}>
       <CssBaseline />
       <Box
         component="main"
@@ -147,6 +154,7 @@ function PermanentDrawerRight(props: NavProps) {
         sx={{
           width: navOpen ? drawerWidth : 0,
           flexShrink: 0,
+          whiteSpace: "nowrap",
           "& .MuiDrawer-paper": {
             width: drawerWidth,
             overflowY: "hidden",
@@ -167,7 +175,7 @@ function PermanentDrawerRight(props: NavProps) {
           <Box className="optionsRow">
             {/* this might need to be two rows for mobile */}
             {isMobile
-              ?<IconButton onClick={() => setNavOpen(false)} size="small" sx={{margin: 0, padding: 0}}>
+              ? <IconButton onClick={() => setNavOpen(false)} size="small" sx={{margin: 0, padding: 0}}>
                   <ChevronLeftIcon style={{ fill: "black" }} />
                 </IconButton>
               : <div></div>
@@ -198,7 +206,7 @@ function PermanentDrawerRight(props: NavProps) {
         <Box className="info-card">
           <Box className="row-even">
             <div className="info-card__title">{blogTitle}</div>
-            <Button 
+            <Button onClick={() => setNavOpen(false)}
             href="https://docs.furyofthefur.com" className="learnMoreBtn">
               Learn More
             </Button>
@@ -213,7 +221,7 @@ function PermanentDrawerRight(props: NavProps) {
         <Box className="info-card">
           <Box className="row-even">
             <div className="info-card__title">Our Partners</div>
-            <Button 
+            <Button onClick={() => setNavOpen(false)}
               href="https://docs.furyofthefur.com" className="learnMoreBtn">
                 View Full Benefits
               </Button>
@@ -224,9 +232,10 @@ function PermanentDrawerRight(props: NavProps) {
             }
           </Carousel> */}
 
-          <ImageList sx={{ width: 320, height: 300, paddingLeft: "10px", paddingRight: "10px", textAlign: "center"  }} cols={3} gap={30} rowHeight={110}>
+          <ImageList sx={{ width: drawerWidth, height: 300, paddingLeft: "10px", paddingRight: "10px", textAlign: "center"  }} cols={3} gap={isMobile ? 30 : 30} rowHeight={isMobile? 110 : 110}>
                 {partnersList.map((item) => (
-                  <ImageListItem key={item.id} >
+                  <ImageListItem key={item.id}
+                  onClick={() => window.open(item.partnerLink)} >
                     <img
                       src={item.image}
                       srcSet={item.image}

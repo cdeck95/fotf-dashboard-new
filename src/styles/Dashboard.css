@@ -18,9 +18,23 @@
     text-align: center;
   }
 
+  .comingSoon-Mobile {
+    color: var(--accent-color);
+    font-size: 4rem;
+    font: 'Bebas Neue';
+    text-align: center;
+  }
+
   .comingSoonBlack {
     color: #000000;
     font-size: 8rem;
+    font: 'Bebas Neue';
+    text-align: center;
+  }
+
+  .comingSoonBlack-Mobile {
+    color: #000000;
+    font-size: 4rem;
     font: 'Bebas Neue';
     text-align: center;
   }

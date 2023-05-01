@@ -37,161 +37,13 @@ function TheFactory(props: TheFactoryProps) {
   const teddyNFTs = tokens.Teddies.tokens;
   const aiTedNFTs = tokens.AITeds.tokens;
 
-  // const theme = useTheme();
-  // const isMobile = !useMediaQuery(theme.breakpoints.up("md"));
-  // const isLarge = !useMediaQuery(theme.breakpoints.up("lg"));
+  const theme = useTheme();
+  const isMobile = !useMediaQuery(theme.breakpoints.up("md"));
+  const isLarge = !useMediaQuery(theme.breakpoints.up("lg"));
   const sdk = useSDK();
   const provider = sdk?.getProvider();
   const address = useAddress();
-  // const [contract_FOTF, setContractFOTF] = useState<SmartContract<BaseContract>>();
-  // const [contract_STAKING, setContractStaking] = useState<SmartContract<BaseContract>>();
-  // const [contract_REWARDS, setContractRewards] = useState<SmartContract<BaseContract>>();
-  // const [contract_AI, setContractAI] = useState<SmartContract<BaseContract>>();
-  // const [honey, setHoney] = useState<string>();
-  // const [stakedNFTs, setStakedNFTs] = useState<NFT[]>();
-  
-  // const { data: tedNFTs, error, isLoading }  = useOwnedNFTs(contract_FOTF, address);
 
-  // const { contract: contract_TEDDY } = useContract(TEDDY_CONTRACT);
-  
- 
-  // const {data: teddyNFTs, error: errorTeddy, isLoading: isLoadingTeddy} = useOwnedNFTs(contract_TEDDY, address);
-  // console.log(teddyNFTs);
-  // console.log(errorTeddy);
-  // console.log(isLoadingTeddy);
-
-  // const {data: aiNFTs, error: errorAI, isLoading: isLoadingAI}  = useOwnedNFTs(contract_AI, address);
-  // console.log(aiNFTs);
-  // console.log(errorAI);
-  // console.log(isLoadingAI);
-  
-  // const allOwnedNFTs: NFT[] = useMemo(() => {
-  //   const returnNFTs: NFT[] = [];
-  //   tedNFTs?.forEach(token => {
-  //     console.log(token);
-  //     returnNFTs?.push(token);
-  //   });
-  //   teddyNFTs?.forEach(token => {
-  //     console.log(token);
-  //     returnNFTs?.push(token);
-  //   });
-  //   stakedNFTs?.forEach(token => {
-  //     console.log(token);
-  //     returnNFTs?.push(token);
-  //   });
-  //   aiNFTs?.forEach(token => {
-  //     console.log(token);
-  //     returnNFTs?.push(token);
-  //   });
-    
-  //   return returnNFTs;
-  // }, [tedNFTs, teddyNFTs, aiNFTs, stakedNFTs]); 
-  
-
-  // const LoadStakedTokens = useCallback(async () => {
-  //   let tokensToReturn: NFT[] = [];
-  //   try{
-  //     const data: StakedTokens[] = await contract_STAKING?.call(
-  //       "getStakedTokens", // Name of your function as it is on the smart contract
-  //       // Arguments to your function, in the same order they are on your smart contract
-  //      address
-  //     );
-  //     console.log(data);
-  //     const tokenIDs: string[] = [];
-  //     data.forEach(token => {
-  //       tokenIDs.push(token.tokenId.toString());
-  //     });
-      
-  //     tokensToReturn = await AddStakedTokens(contract_TEDDY!, tokenIDs);
-  //     console.log(tokensToReturn);
-  //     setStakedNFTs(tokensToReturn);
-  //   } catch (e) {
-  //     console.log(e); 
-  //   }
-  // }, [address, contract_STAKING, contract_TEDDY]);
-
-  
-
-  // const LoadContractFOTF = useCallback(async () => {
-  //   try{
-  //     const contractIn = await sdk?.getContractFromAbi(FOTF_CONTRACT, tedABI);
-  //     setContractFOTF(contractIn);
-  //   } catch (e) {
-  //     console.log(e); 
-  //   }
-  // }, [sdk]);
-
-  // const LoadContractStaking = useCallback(async () => {
-  //   try{
-  //     const contractIn = await sdk?.getContractFromAbi(STAKING_CONTRACT, stakingABI);
-  //     console.log(contractIn);
-  //     setContractStaking(contractIn);
-  //   } catch (e) {
-  //     console.log(e); 
-  //   }
-  // }, [sdk]);
-
-  // const LoadContractRewards = useCallback(async () => {
-  //   try{
-  //     const contractIn = await sdk?.getContractFromAbi(REWARD_TOKEN, honeyABI);
-  //     setContractRewards(contractIn);
-  //   } catch (e) {
-  //     console.log(e); 
-  //   }
-  // }, [sdk]);
-
-  // const LoadContractAI = useCallback(async () => {
-  //   try{
-  //     const contractIn = await sdk?.getContractFromAbi(AI_MINT, aiABI);
-  //     setContractAI(contractIn);
-  //   } catch (e) {
-  //     console.log(e); 
-  //   }
-  // }, [sdk]);
-
-  // const LoadHoney = useCallback(async () => {
-  //   try{
-  //     const data:BigNumber = await contract_REWARDS?.call(
-  //       "balanceOf", // Name of your function as it is on the smart contract
-  //       // Arguments to your function, in the same order they are on your smart contract
-  //      address
-  //     );
-  //     const honeyTMP = parseFloat(ethers.utils.formatEther(data)).toFixed(3);
-  //     setHoney(honeyTMP.toString());
-  //   } catch (e) {
-  //     console.log(e); 
-  //   }
-  // }, [address, contract_REWARDS]);
-
-  // useEffect(() => {
-  //   try {
-  //     if (!contract_FOTF) {
-  //       LoadContractFOTF();
-  //     }
-  //     if (!contract_REWARDS) {
-  //       LoadContractRewards();
-  //     }
-  //     if (!contract_AI) {
-  //       LoadContractAI();
-  //     }
-  //     if (!contract_STAKING) {
-  //       LoadContractStaking();
-  //     }
-  //     // else {
-  //     //   LoadStakedTokens();
-  //     // }
-  //     if(contract_TEDDY) {
-  //       LoadStakedTokens();
-  //     }
-  //     if (contract_REWARDS){
-  //       LoadHoney();
-  //     }
-  //   } catch (e) {
-  //     console.log(e);
-  //     console.log("Error!");
-  //   }
-    
-  // }, [sdk, address]);
 
   const [open, setOpen] = useState(false);
   const handleClose = () => {
@@ -236,7 +88,7 @@ function TheFactory(props: TheFactoryProps) {
   //////////////////////////////////////////////
 
   return (
-    <Box className="factory-inner-container">
+    <Box className={isMobile ? "factory-inner-container-mobile" :"factory-inner-container"}>
       <Box className="header">
         <Box className="header-row">
           <h3>The Factory</h3>
@@ -251,7 +103,7 @@ function TheFactory(props: TheFactoryProps) {
       {address
       ? <div>
           { error ? <div><p>NFT not found - error</p></div> 
-          : <Box className="gallery" sx={{ paddingLeft: "10px", paddingBottom: "75px", backgroundColor: "white", paddingRight: "10px" }}>
+          : <Box className="gallery" sx={{ zIndex: "0", paddingLeft: "10px", paddingBottom: "75px", backgroundColor: "white", paddingRight: "10px" }}>
               {allOwnedNFTs
               ? <NFTList tokens={AllTokens} searchText={searchInput} />
               : <p>Loading...</p> }

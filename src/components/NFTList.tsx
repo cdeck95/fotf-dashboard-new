@@ -49,14 +49,14 @@ function NFTList(props: NFTListProps) {
 
     const filteredNFTs = props.tokens?.filter(e => e.metadata.id!.includes(props.searchText));
     console.log(filteredNFTs)
-    
+  
     return (
-        <ImageList sx={{ width: "100%", height: "100%", overflowX: "hidden", 
-        overflowY: "auto", backgroundColor: "white" }} cols={columns} gap={20} rowHeight={300}>
+        <ImageList sx={{ zIndex:"0", width: "100%", height: "100%", overflowX: "hidden", 
+        overflowY: "auto", backgroundColor: "white" }} cols={columns} gap={20} rowHeight={350}>
                 {filteredNFTs.map(e =>
-                <Box key={e.metadata.id} className="card" sx={{ background: "none", maxHeight: "350px", maxWidth: "250px"}}>
-                  <StarBorderIcon onClick={star} sx={{ position: "absolute", top: "5px", right: "5px", zIndex: "100 !important'" }}/>
-                  <ThirdwebNftMedia metadata={e.metadata} style={{ maxHeight: "300px", maxWidth: "300px",
+                <Box key={e.metadata.id} className="card" sx={{ zIndex: "0", background: "none", maxHeight: "350px", maxWidth: "350px", margin: "10px"}}>
+                  <StarBorderIcon onClick={star} sx={{ position: "absolute", top: "5px", right: "5px", zIndex: "0 !important'" }}/>
+                  <ThirdwebNftMedia metadata={e.metadata} style={{ maxHeight: "350px", maxWidth: "350px",
                     borderRadius: "10px", objectFit: "cover", width: "100%", height: "100%"
                      }}/>
                   <Box className="column-container">
