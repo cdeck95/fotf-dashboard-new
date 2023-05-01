@@ -76,6 +76,26 @@ function PermanentDrawerRight(props: NavProps) {
       blogTitle = "What is The Factory!?";
       blogContent = <p className="info-card__description">Only the most involved members of the Fury of the Fur community have access to The Factory. In order to get in, you must hold one of every base asset in the ecosystem.<br/><br/>The Factory allows our Holders to burn their Fury Ted, Teddies by FOTF, or AI Teds in exchange for $HNY. OR you are able to burn any combination of the three (min 1 of each) together with a determined amount of $HNY in exchange for an exclusively designed 1 of 1. </p>
       break;
+    case "/HoneyExchange":
+      showAssetOverview = true;
+      blogTitle = "What is The $HNY Exchange?";
+      blogContent = <p className="info-card__description">The $HNY Exchange is your one stop shop for not only purchasing $HNY, at a declared exchange rate, but quickly accessing how much you're earning every day.<br/><br/>With so many different ways to earn $HNY, and so much being done with it, we created the Exchange as a way to keep it all in one, easy to access, area.<br/><br/>Please note: No physical items purchased with $HNY include shipping. Shipping must be paid via fiat through the link given to you after purchase.</p>
+      break;
+    case "/TeddyStaking":
+      showAssetOverview = true;
+      blogTitle = "Teddy Staking!?";
+      blogContent = <p className="info-card__description">Teddies earn $HNY via traditional staking methods. This means sending your Teddie out of your wallet, and into a smart contract that will maintain ownership and issue rewards for a pre-determined amount of time. In this case, there is no time-lock and Teddies can be withdrawn at any time.<br/><br/>Each Teddy will earn $100 HNY per day while being Staked and, although they are no longer in your wallet, you will still be able to interact with them via our application.</p>
+      break;
+    case "/TedClaims":
+      showAssetOverview = true;
+      blogTitle = "What are Ted Claims?";
+      blogContent = <p className="info-card__description">Fury Teds are the flagship digital collectible that launched Fury of the Fur into the world. As our Genesis Collection was created by the first team, that left the project, we did write the contract. This makes staking a pain in the butt, so we came up with on chain earning.<br/><br/>Each Fury Ted earns $50 HNY per day, on chain. The $HNY may only be claimed by the current wallet holder and the value resets upon each claim. If you're thinking of buying one, check the $HNY Balance first.</p>
+      break;
+    case "/TraitSwapTeds":
+      showAssetOverview = true;
+      blogTitle = "What is Trait Swapping?";
+      blogContent = <p className="info-card__description">Exactly as it sounds. Here at Fury of the Fur, we believe in fully customizing your ecosystem experience and that starts with your NFTs.<br/><br/>Though we do not allow for constant swapping of your DNA or Eyes, you are able to swap your Headgear, Clothing and Equipment at any time for one <span className="accent-text"><strong>Trait Swap Token</strong></span> per Trait. We have also integrated custom names for your NFTs because who doesn't like to name their Teddy Bear?</p>
+      break;
     default:
       showAssetOverview = false;      
       break;

@@ -487,3 +487,8 @@ body {
   margin: 0;
   padding: 0;
 }
+
+.accent-text {
+  /* color: var(--accent-color); */
+  font-weight: 500;
+}
