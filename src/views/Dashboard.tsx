@@ -1,4 +1,4 @@
-import {  Box, ImageList } from "@mui/material";
+import {  Box, ImageList, useMediaQuery, useTheme } from "@mui/material";
 import { ConnectWallet, ThirdwebNftMedia, useContract, useNFT, useOwnedNFTs } from "@thirdweb-dev/react";
 import { useTitle } from "../hooks/useTitle";
 import "../styles/Dashboard.css";
@@ -15,8 +15,8 @@ import { Routes, Route } from "react-router-dom";
 
 function Dashboard() {
   useTitle("FOTF | Dashboard");
-  //const theme = useTheme();
-  //const isMobile = !useMediaQuery(theme.breakpoints.up("md"));
+  const theme = useTheme();
+  const isMobile = !useMediaQuery(theme.breakpoints.up("md"));
   const sdk = useSDK();
   const provider = sdk?.getProvider();
   const address = useAddress();
@@ -25,13 +25,13 @@ function Dashboard() {
     <Box className="inner-container">
       {address
       ?  <Box  sx={{ height: "100%", display: "flex", 
-      justifyContent: "center", alignItems: "center", width:"100%"}}>
-      <h1 className="comingSoon">Dashboard</h1>
+        justifyContent: "center", alignItems: "center", width:"100%"}}>
+        <h1 className={isMobile? "comingSoon-Mobile": "comingSoon"}>Dashboard</h1>
       </Box>
       : <Box  sx={{ height: "100%", display: "flex", 
-      justifyContent: "center", alignItems: "center", width:"100%"}}>
-      <h1 className="comingSoon"><span className="comingSoonBlack">Connect Your</span> Wallet</h1>
-      </Box>
+          justifyContent: "center", alignItems: "center", width:"100%"}}>
+          <h1 className={isMobile? "comingSoon-Mobile": "comingSoon"}><span className={isMobile? "comingSoonBlack-Mobile": "comingSoonBlack"}>Connect Your</span> Wallet</h1>
+        </Box>
       }
     </Box>
   );

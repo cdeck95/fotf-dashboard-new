@@ -73,7 +73,46 @@ body {
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  padding: 5%;
+  padding: 0%;
+  margin-bottom: 0%;
+  padding-bottom: 0%;
+}
+
+.header-row-mobile{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0%;
+  margin-bottom: 0%;
+  padding-bottom: 0%;
+}
+
+.page-header{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 2.5rem;
+  font-family: 'Bebas Neue';
+  color: #000000;
+  margin-top: auto;
+  margin-left: auto;
+  margin-bottom: auto;
+  margin-right: auto;
+}
+
+.page-header-mobile{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  font-size: 1.75rem;
+  font-family: 'Bebas Neue';
+  color: #000000;
+  margin-top: auto;
+  margin-left: auto;
+  margin-bottom: auto;
+  margin-right: auto;
 }
 
 .factory-search{
@@ -88,8 +127,16 @@ body {
   font-size: 1rem;
   font-family: 'Bebas Neue';
   color: #000000;
+  margin-top: 0%;
+  margin-left: 0%;
+  margin-bottom: 0%;
+  margin-right: 20px;
+  padding-bottom: 0%;
+  padding-top: 0%;
+  padding-right: 0%;
   padding-left: 10px;
 }
+
 .factory-search:active{
   display: flex;
   justify-content: center;
@@ -102,6 +149,14 @@ body {
   font-size: 1rem;
   font-family: 'Bebas Neue';
   color: #000000;
+  padding-left: 10px;
+  margin-top: 0%;
+  margin-left: 0%;
+  margin-bottom: 0%;
+  margin-right: 20px;
+  padding-bottom: 0%;
+  padding-top: 0%;
+  padding-right: 0%;
   padding-left: 10px;
 }
 
@@ -313,6 +368,13 @@ body {
   padding-bottom: 0;
 }
 
+.factory-inner-container-mobile {
+  width: 100%;
+  height: 100%;
+  margin-top: 60px;
+  padding: 5px;
+}
+
 .header-title {
   font-weight: 300 !important;
   font-size: 14px;
@@ -323,8 +385,8 @@ body {
 }
 
 .connectWalletOverride-Mobile {
-  width: 150px !important;
-  min-width: 150px !important;
+  width: 225px !important;
+  min-width: 225px !important;
 }
 
 .info-card {
@@ -424,4 +486,9 @@ body {
   width: 100%;
   margin: 0;
   padding: 0;
+}
+
+.accent-text {
+  /* color: var(--accent-color); */
+  font-weight: 500;
 }

@@ -27,11 +27,11 @@ function NFTList(props: NFTListProps) {
 
 
 
-  const [columns, setColumns] = React.useState(4);
+  const [columns, setColumns] = React.useState(3);
 
   React.useEffect(() => {
     if (isMobile) {
-      setColumns(2);
+      setColumns(1);
     } else if (isLarge) {
       setColumns(3);
     } else {
@@ -49,24 +49,24 @@ function NFTList(props: NFTListProps) {
 
     const filteredNFTs = props.tokens?.filter(e => e.metadata.id!.includes(props.searchText));
     console.log(filteredNFTs)
-    
+  
     return (
-        <ImageList sx={{ width: "100%", height: "100%", overflowX: "hidden", 
-        overflowY: "auto", backgroundColor: "white" }} cols={columns} gap={25} rowHeight={250}>
+        <ImageList sx={{ justifyContent: "center", width: "100%", height: "100%", overflowX: "hidden", 
+        overflowY: "auto", backgroundColor: "white" }} cols={columns} gap={10} rowHeight={360}>
                 {filteredNFTs.map(e =>
-                <Box key={e.metadata.id} className="card" sx={{ background: "none", maxHeight: "350px", maxWidth: "250px"}}>
-                  <StarBorderIcon onClick={star} sx={{ position: "absolute", top: "5px", right: "5px", zIndex: "100 !important'" }}/>
-                  <ThirdwebNftMedia metadata={e.metadata} style={{ maxHeight: "250px", maxWidth: "250px",
-                    borderRadius: "10px", objectFit: "cover", width: "100%", height: "100%"
+                <Box key={e.metadata.id} className="card" sx={{ marginLeft: "auto", marginRight: "auto", background: "none", maxHeight: "450px", maxWidth: "350px"}}>
+                  <StarBorderIcon onClick={star} sx={{ position: "absolute", top: "5px", right: "5px" }}/>
+                  <ThirdwebNftMedia metadata={e.metadata} style={{ maxHeight: "280px", maxWidth: "280px",
+                    borderRadius: "10px", objectFit: "cover", width: "280px", height: "280px"
                      }}/>
-                  <Box className="column-container">
+                  <Box className="column-container" sx={{ marginBottom: "10px"}}>
                     <div className="large-left-column">
                       <h3 className="metadata-title">{e.metadata.name}</h3>
                       <h4 className="metadata">Last Transfer: 03/11/2023</h4>
 
                     </div>
                     <div className="small-right-column">
-                      <ControlPointIcon onClick={add}/>
+                      <ControlPointIcon onClick={add} fontSize='small'/>
                     </div>
                   </Box>
                   

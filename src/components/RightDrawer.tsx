@@ -20,7 +20,7 @@ import PartnerItem from './PartnerItem';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import { useNavigate } from 'react-router-dom';
 import Notifications from "react-notifications-menu";
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import notificationIcon from '../assets/icons8-notification-100.png';
 import NotificationsNoneOutlinedIcon from '@mui/icons-material/NotificationsNoneOutlined';
 import AssetOverview from './AssetOverview';
@@ -47,7 +47,7 @@ const DEFAULT_NOTIFICATION = {
 function PermanentDrawerRight(props: NavProps) {
   const themeMui = useTheme();
   const isMobile = !useMediaQuery(themeMui.breakpoints.up("md"));
-  const drawerWidth = isMobile ? 280 : 340;
+  const drawerWidth = isMobile ? "100%" : 340;
   const { navOpen, setNavOpen } = props;
   const navigate = useNavigate();
   const [isDarkMode, setIsDarkMode] = React.useState(false);
@@ -56,10 +56,16 @@ function PermanentDrawerRight(props: NavProps) {
   const [showNotification, setShowNotification] = useState(false);
   var showAssetOverview = false;
 
+  // setNavOpen(true);
+
   var blogTitle = "What is Fury of the Fur?";
   var blogContent = <p className="info-card__description">Fury of the Fur is a story-driven collection run by Sneaky Bird Labs. Abandoned by the founders, like the teddy bears of our youth, FOTF has risen back up. Full 4k resolution, Merchandise, Storyboards, Comics and more are available with your Ted.<br></br><br></br>But Tedy's aren't just a PFP. They are a community representing the best parts of Web3 and NFTs. Left behind by their founders, the FOTF community rallied and saved the project.</p>
 
   console.log(window.location.pathname);
+
+  // useEffect(() => {
+  //   setNavOpen(!isMobile);
+  // }, [isMobile]);
   
   switch (window.location.pathname) {
     case "/":
@@ -69,6 +75,26 @@ function PermanentDrawerRight(props: NavProps) {
       showAssetOverview = true;
       blogTitle = "What is The Factory!?";
       blogContent = <p className="info-card__description">Only the most involved members of the Fury of the Fur community have access to The Factory. In order to get in, you must hold one of every base asset in the ecosystem.<br/><br/>The Factory allows our Holders to burn their Fury Ted, Teddies by FOTF, or AI Teds in exchange for $HNY. OR you are able to burn any combination of the three (min 1 of each) together with a determined amount of $HNY in exchange for an exclusively designed 1 of 1. </p>
+      break;
+    case "/HoneyExchange":
+      showAssetOverview = true;
+      blogTitle = "What is The $HNY Exchange?";
+      blogContent = <p className="info-card__description">The $HNY Exchange is your one stop shop for not only purchasing $HNY, at a declared exchange rate, but quickly accessing how much you're earning every day.<br/><br/>With so many different ways to earn $HNY, and so much being done with it, we created the Exchange as a way to keep it all in one, easy to access, area.<br/><br/>Please note: No physical items purchased with $HNY include shipping. Shipping must be paid via fiat through the link given to you after purchase.</p>
+      break;
+    case "/TeddyStaking":
+      showAssetOverview = true;
+      blogTitle = "Teddy Staking!?";
+      blogContent = <p className="info-card__description">Teddies earn $HNY via traditional staking methods. This means sending your Teddie out of your wallet, and into a smart contract that will maintain ownership and issue rewards for a pre-determined amount of time. In this case, there is no time-lock and Teddies can be withdrawn at any time.<br/><br/>Each Teddy will earn $100 HNY per day while being Staked and, although they are no longer in your wallet, you will still be able to interact with them via our application.</p>
+      break;
+    case "/TedClaims":
+      showAssetOverview = true;
+      blogTitle = "What are Ted Claims?";
+      blogContent = <p className="info-card__description">Fury Teds are the flagship digital collectible that launched Fury of the Fur into the world. As our Genesis Collection was created by the first team, that left the project, we did write the contract. This makes staking a pain in the butt, so we came up with on chain earning.<br/><br/>Each Fury Ted earns $50 HNY per day, on chain. The $HNY may only be claimed by the current wallet holder and the value resets upon each claim. If you're thinking of buying one, check the $HNY Balance first.</p>
+      break;
+    case "/TraitSwapTeds":
+      showAssetOverview = true;
+      blogTitle = "What is Trait Swapping?";
+      blogContent = <p className="info-card__description">Exactly as it sounds. Here at Fury of the Fur, we believe in fully customizing your ecosystem experience and that starts with your NFTs.<br/><br/>Though we do not allow for constant swapping of your DNA or Eyes, you are able to swap your Headgear, Clothing and Equipment at any time for one <span className="accent-text"><strong>Trait Swap Token</strong></span> per Trait. We have also integrated custom names for your NFTs because who doesn't like to name their Teddy Bear?</p>
       break;
     default:
       showAssetOverview = false;      
@@ -133,11 +159,12 @@ function PermanentDrawerRight(props: NavProps) {
 
   const openCurrencyExchange = () => {
     navigate("/HoneyExchange");
+    setNavOpen(false);
   };
   
 
   return (
-    <Box sx={{ display: 'flex', justifyContent: "space-between" }}>
+    <Box sx={{ display: 'flex', justifyContent: "space-between", zIndex: "100"}}>
       <CssBaseline />
       <Box
         component="main"
@@ -147,6 +174,7 @@ function PermanentDrawerRight(props: NavProps) {
         sx={{
           width: navOpen ? drawerWidth : 0,
           flexShrink: 0,
+          whiteSpace: "nowrap",
           "& .MuiDrawer-paper": {
             width: drawerWidth,
             overflowY: "hidden",
@@ -167,7 +195,7 @@ function PermanentDrawerRight(props: NavProps) {
           <Box className="optionsRow">
             {/* this might need to be two rows for mobile */}
             {isMobile
-              ?<IconButton onClick={() => setNavOpen(false)} size="small" sx={{margin: 0, padding: 0}}>
+              ? <IconButton onClick={() => setNavOpen(false)} size="small" sx={{margin: 0, padding: 0}}>
                   <ChevronLeftIcon style={{ fill: "black" }} />
                 </IconButton>
               : <div></div>
@@ -198,7 +226,7 @@ function PermanentDrawerRight(props: NavProps) {
         <Box className="info-card">
           <Box className="row-even">
             <div className="info-card__title">{blogTitle}</div>
-            <Button 
+            <Button onClick={() => setNavOpen(false)}
             href="https://docs.furyofthefur.com" className="learnMoreBtn">
               Learn More
             </Button>
@@ -213,7 +241,7 @@ function PermanentDrawerRight(props: NavProps) {
         <Box className="info-card">
           <Box className="row-even">
             <div className="info-card__title">Our Partners</div>
-            <Button 
+            <Button onClick={() => setNavOpen(false)}
               href="https://docs.furyofthefur.com" className="learnMoreBtn">
                 View Full Benefits
               </Button>
@@ -224,9 +252,10 @@ function PermanentDrawerRight(props: NavProps) {
             }
           </Carousel> */}
 
-          <ImageList sx={{ width: 320, height: 300, paddingLeft: "10px", paddingRight: "10px", textAlign: "center"  }} cols={3} gap={30} rowHeight={110}>
+          <ImageList sx={{ width: drawerWidth, height: 300, paddingLeft: "10px", paddingRight: "10px", textAlign: "center"  }} cols={3} gap={isMobile ? 30 : 30} rowHeight={isMobile? 110 : 110}>
                 {partnersList.map((item) => (
-                  <ImageListItem key={item.id} >
+                  <ImageListItem key={item.id}
+                  onClick={() => window.open(item.partnerLink)} >
                     <img
                       src={item.image}
                       srcSet={item.image}
