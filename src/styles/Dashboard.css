@@ -76,6 +76,8 @@
   .metadata {
     color: #000000;
     margin: 0%;
+    margin-bottom: 5px;
+    padding: 0%;
     padding-left: 3%;
     text-align: left;
     opacity: .5;
@@ -84,13 +86,14 @@
   .metadata-title {
     color: #000000;
     margin: 0%;
+    margin-top: 5px;
+    padding: 0%;
     padding-left: 3%;
     text-align: left;
     font-weight: 400;
     font-size: 1.5rem;
     font-family: 'Bebas Neue';
   }
-  
   
   .description {
     margin-top: 2rem;
@@ -231,4 +234,13 @@
     width: 100%;
     height: 100%;
   }
+  
+
+.header {
+  padding-top: 10px;
+}
+
+.header-mobile {
+  padding-top: 10px;
+}
   

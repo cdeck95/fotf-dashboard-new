@@ -127,14 +127,15 @@ function App() {
     <Box className="app-container" sx={{position: "relative"}}>
       <ThemeProvider theme={theme}>
         {isMobile && 
-          <Box sx={{ position: "fixed", top: "0", backgroundColor: "Black", height: "60px", width: "100%", zIndex: "0"}}> 
+          <Box sx={{ position: "fixed", top: "0", backgroundColor: "Black", height: "60px", width: "100%", zIndex: "1 !important"}}> 
           </Box>
         }
 
        
         <Box sx={{
-          marginLeft: navOpen ? "240px" : "20px",
-          marginRight: rightNavOpen ? "340px" : "20px",
+          marginLeft: navOpen ? "240px" : "10px",
+          marginRight: rightNavOpen ? "340px" : "10px",
+          marginTop: isMobile ? "60px" : "0px",
           backgroundColor: "white",
           height: "100%"
         }}>
@@ -155,7 +156,7 @@ function App() {
 
           {navOpen
         ? <LeftDrawer navOpen={navOpen} setNavOpen={setNavOpen}/>
-        : <Box sx={{position: "fixed", top: "5px", left: "5px",  backgroundColor: "transparent"}}>
+        : <Box sx={{position: "fixed", top: "5px", left: "5px",  backgroundColor: "transparent", zIndex:"1 !important"}}>
             <IconButton color="inherit" aria-label="open drawer" onClick={() => handleOpen()} size="large">
                 <MenuIcon sx={{ color: "White" }} />
             </IconButton>
@@ -163,7 +164,7 @@ function App() {
         }
         {rightNavOpen
         ? <RightDrawer navOpen={rightNavOpen} setNavOpen={setRightNavOpen} /> 
-        : <Box sx={{position: "fixed", top: "5px", right: "5px", backgroundColor: "transparent"}}>
+        : <Box sx={{position: "fixed", top: "5px", right: "5px", backgroundColor: "transparent", zIndex:"1 !important"}}>
             <IconButton color="inherit" aria-label="open right drawer" onClick={() => handleRightNavOpen()} size="large" sx={{zIndex:"1"}}> 
               <MenuIcon sx={{ color: "White" }}/> 
             </IconButton>

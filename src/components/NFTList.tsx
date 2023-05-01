@@ -33,9 +33,9 @@ function NFTList(props: NFTListProps) {
     if (isMobile) {
       setColumns(1);
     } else if (isLarge) {
-      setColumns(2);
-    } else {
       setColumns(3);
+    } else {
+      setColumns(4);
     }
   }, [isMobile, isLarge]);
 
@@ -51,22 +51,22 @@ function NFTList(props: NFTListProps) {
     console.log(filteredNFTs)
   
     return (
-        <ImageList sx={{ zIndex:"0", width: "100%", height: "100%", overflowX: "hidden", 
-        overflowY: "auto", backgroundColor: "white" }} cols={columns} gap={20} rowHeight={350}>
+        <ImageList sx={{ justifyContent: "center", width: "100%", height: "100%", overflowX: "hidden", 
+        overflowY: "auto", backgroundColor: "white" }} cols={columns} gap={10} rowHeight={360}>
                 {filteredNFTs.map(e =>
-                <Box key={e.metadata.id} className="card" sx={{ zIndex: "0", background: "none", maxHeight: "350px", maxWidth: "350px", margin: "10px"}}>
-                  <StarBorderIcon onClick={star} sx={{ position: "absolute", top: "5px", right: "5px", zIndex: "0 !important'" }}/>
-                  <ThirdwebNftMedia metadata={e.metadata} style={{ maxHeight: "350px", maxWidth: "350px",
-                    borderRadius: "10px", objectFit: "cover", width: "100%", height: "100%"
+                <Box key={e.metadata.id} className="card" sx={{ marginLeft: "auto", marginRight: "auto", background: "none", maxHeight: "450px", maxWidth: "350px"}}>
+                  <StarBorderIcon onClick={star} sx={{ position: "absolute", top: "5px", right: "5px" }}/>
+                  <ThirdwebNftMedia metadata={e.metadata} style={{ maxHeight: "280px", maxWidth: "280px",
+                    borderRadius: "10px", objectFit: "cover", width: "280px", height: "280px"
                      }}/>
-                  <Box className="column-container">
+                  <Box className="column-container" sx={{ marginBottom: "10px"}}>
                     <div className="large-left-column">
                       <h3 className="metadata-title">{e.metadata.name}</h3>
                       <h4 className="metadata">Last Transfer: 03/11/2023</h4>
 
                     </div>
                     <div className="small-right-column">
-                      <ControlPointIcon onClick={add}/>
+                      <ControlPointIcon onClick={add} fontSize='small'/>
                     </div>
                   </Box>
                   

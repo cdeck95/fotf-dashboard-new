@@ -88,10 +88,10 @@ function TheFactory(props: TheFactoryProps) {
   //////////////////////////////////////////////
 
   return (
-    <Box className={isMobile ? "factory-inner-container-mobile" :"factory-inner-container"}>
-      <Box className="header">
-        <Box className="header-row">
-          <h3>The Factory</h3>
+    <Box className="factory-inner-container">
+      <Box className={isMobile? "header-mobile" : "header"}>
+        <Box className={isMobile? "header-row-mobile" : "header-row"}>
+          <h3 className={isMobile? "page-header-mobile" : "page-header"}>The Factory</h3>
           <input
             type="text"
             className="factory-search"
