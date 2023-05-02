@@ -14,7 +14,7 @@ import "../styles/globals.css";
 import fotfAppLogo from "../assets/FOTF_App.png";
 import theHubLogo from "../assets/hub_icon.png";
 import { useNavigate } from "react-router-dom";
-import { IconButton, useMediaQuery, useTheme } from '@mui/material';
+import { Backdrop, IconButton, useMediaQuery, useTheme } from '@mui/material';
 import GridViewOutlinedIcon from '@mui/icons-material/GridViewOutlined';
 import DescriptionOutlinedIcon from '@mui/icons-material/DescriptionOutlined';
 import FileDownloadOutlinedIcon from '@mui/icons-material/FileDownloadOutlined';
@@ -27,6 +27,8 @@ import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
 import ImageOutlinedIcon from '@mui/icons-material/ImageOutlined';
 import PrecisionManufacturingOutlinedIcon from '@mui/icons-material/PrecisionManufacturingOutlined';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
+import { useState } from 'react';
+import { useAddress, useSDK } from '@thirdweb-dev/react';
 
 type NavProps = {
   setNavOpen: Function;
@@ -37,7 +39,6 @@ const primaryColor = getComputedStyle(document.documentElement).getPropertyValue
 const secondaryColor = getComputedStyle(document.documentElement).getPropertyValue('--secondary-color');
 const backgroundColorGlobal = getComputedStyle(document.documentElement).getPropertyValue('--background-color');
 const accentColor = getComputedStyle(document.documentElement).getPropertyValue('--accent-color');
-const drawerWidth = 240;
 
 function LeftDrawer(props: NavProps) {
   const { navOpen, setNavOpen } = props;
@@ -45,6 +46,20 @@ function LeftDrawer(props: NavProps) {
   const themeMui = useTheme();
   const isMobile = !useMediaQuery(themeMui.breakpoints.up("md"));
   const [activePage, setActivePage] = React.useState("Dashboard");
+  const drawerWidth = navOpen? 240 : 0;
+
+
+  const sdk = useSDK();
+  const provider = sdk?.getProvider();
+  const address = useAddress();
+
+  const [open, setOpen] = useState(false);
+  const handleClose = () => {
+    setOpen(false);
+  };
+  const handleToggle = () => {
+    setOpen(!open);
+  };
 
   const handleMobileClick = () => {
     if(isMobile) {
@@ -124,7 +139,7 @@ function LeftDrawer(props: NavProps) {
       <CssBaseline />
       <Drawer
         sx={{
-          width: navOpen ? drawerWidth : 0,
+          width: drawerWidth,
           flexShrink: 0,
           whiteSpace: "nowrap",
           "& .MuiDrawer-paper": {
@@ -258,8 +273,8 @@ function LeftDrawer(props: NavProps) {
         </List>
         <Box sx={{ cursor: "pointer", border: "solid", marginTop: "25px", 
             borderRadius: "10px", backgroundColor: "#000", alignItems: "center", 
-            marginLeft: "auto",  marginRight: "auto", marginBottom: "25px", width: "200px", 
-            height: "200px !important", display: "flex", justifyContent: "space-between"}}  
+            marginLeft: "auto",  marginRight: "auto", marginBottom: "25px", maxWidth: "200px !important", width: "200px !important", 
+            height: "200px !important", maxHeight: "200px !important", display: "flex", justifyContent: "space-between"}}  
             onClick={() => loadPage("Hub")}>
           <img src={theHubLogo} alt="Visit The Hub" className="hubLogo"/>
           <Box sx={{ flexDirection: "column", display: "flex", justifyContent: "space-between", borderRadius: "10px", paddingRight: "10%"}}>
@@ -271,6 +286,14 @@ function LeftDrawer(props: NavProps) {
             </Typography>
           </Box>
         </Box>
+        <Backdrop
+          sx={{ color: '#fff', width: drawerWidth,
+          zIndex: (theme: { zIndex: { drawer: number; }; }) => theme.zIndex.drawer + 1 }}
+          open={!address}
+          onClick={handleClose}
+        >
+          {/* <CircularProgress color="inherit" /> */}
+        </Backdrop>
       </Drawer>
     </Box>
   );

@@ -33,11 +33,11 @@ function NFTList(props: NFTListProps) {
     if (isMobile) {
       setColumns(1);
     } else if (isLarge) {
+      setColumns(2);
+    } else if (isXL) {
       setColumns(3);
-    } else {
-      setColumns(4);
     }
-  }, [isMobile, isLarge]);
+  }, [isMobile, isLarge, isXL]);
 
     const add = () => {
         console.log("adding...");
@@ -51,7 +51,7 @@ function NFTList(props: NFTListProps) {
     console.log(filteredNFTs)
   
     return (
-        <ImageList sx={{ justifyContent: "center", width: "100%", height: "100%", overflowX: "hidden", 
+        <ImageList sx={{ justifyContent: "center", width: "100%", height: "100%", paddingLeft: "10px", paddingRight: "10px", overflowX: "hidden", 
         overflowY: "auto", backgroundColor: "white" }} cols={columns} gap={10} rowHeight={360}>
                 {filteredNFTs.map(e =>
                 <Box key={e.metadata.id} className="card" sx={{ marginLeft: "auto", marginRight: "auto", background: "none", maxHeight: "450px", maxWidth: "350px"}}>
