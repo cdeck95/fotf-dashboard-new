@@ -95,10 +95,10 @@ body {
   font-size: 2.5rem;
   font-family: 'Bebas Neue';
   color: #000000;
-  margin-top: auto;
-  margin-left: auto;
-  margin-bottom: auto;
-  margin-right: auto;
+  margin-top: 5px;
+  margin-left: 10px;
+  margin-bottom: 5px;
+  margin-right: 10px;
 }
 
 .page-header-mobile{
@@ -434,8 +434,8 @@ body {
 }
 
 .partnerImage {
-  width: 100%;
-  height: 100% !important;
+  width: 80px !important;
+  height: 80px !important;
   object-fit: contain !important;
   cursor: pointer;
 }

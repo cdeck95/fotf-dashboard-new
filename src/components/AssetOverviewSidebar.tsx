@@ -32,7 +32,7 @@ function AssetOverview() {
       </Box>
       <Typography 
         className="learnMore">
-        Est Value. 6 ETH
+        {allOwnedNFTs.length} total tokens
         </Typography>
     </Box>
     <Box className="row-around">
