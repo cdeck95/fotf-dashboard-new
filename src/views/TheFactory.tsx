@@ -1,4 +1,4 @@
-import {  Box, ImageList, useMediaQuery, useTheme } from "@mui/material";
+import {  Box, Button, ImageList, useMediaQuery, useTheme } from "@mui/material";
 import { ConnectWallet, ThirdwebNftMedia, useContract, useNFT, useOwnedNFTs } from "@thirdweb-dev/react";
 import { useTitle } from "../hooks/useTitle";
 import { useAddress } from "@thirdweb-dev/react";
@@ -99,6 +99,29 @@ function TheFactory(props: TheFactoryProps) {
             placeholder="Search for Ted, Teddy or AI Token ID"
             onChange={handleSearch}
             value={searchInput} />
+        </Box>
+        <Box className={isMobile? "filter-row-mobile" : "filter-row"}>
+          <Button className="position-aware-button">
+          <svg width="180px" height="60px" viewBox="0 0 180 60" className="border">
+            <polyline points="179,1 179,59 1,59 1,1 179,1" className="bg-line" />
+            <polyline points="179,1 179,59 1,59 1,1 179,1" className="hl-line" />
+          </svg>
+          <span>Active NFTs</span>
+          </Button>
+          <Button className="position-aware-button">
+          <svg width="180px" height="60px" viewBox="0 0 180 60" className="border">
+            <polyline points="179,1 179,59 1,59 1,1 179,1" className="bg-line" />
+            <polyline points="179,1 179,59 1,59 1,1 179,1" className="hl-line" />
+          </svg>
+          <span>Recently Transferred</span>
+          </Button>
+          <Button className="position-aware-button">
+          <svg width="180px" height="60px" viewBox="0 0 180 60" className="border">
+            <polyline points="179,1 179,59 1,59 1,1 179,1" className="bg-line" />
+            <polyline points="179,1 179,59 1,59 1,1 179,1" className="hl-line" />
+          </svg>
+          <span>Longest Held</span>
+          </Button>
         </Box>
       </Box>
       {address

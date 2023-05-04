@@ -6,6 +6,8 @@
 
 }  */
 
+@import url('https://fonts.googleapis.com/css?family=Lato:100&display=swap');
+
   .app-container {
     width: 100%;
     height: 100% !important;
@@ -234,13 +236,54 @@
     width: 100%;
     height: 100%;
   }
-  
 
-.header {
-  padding-top: 10px;
+.position-aware-button {
+  width: 180px;
+  height: 60px;
+  cursor: pointer;
+  color: #000 !important;
+  background-color: white !important;
+  border: 1px solid grey;
+  border-radius: 30px !important;
+  /* outline: none; */
+  transition: 1s ease-in-out;
 }
 
-.header-mobile {
-  padding-top: 10px;
+.position-aware-button-selected {
+  width: 180px;
+  height: 60px;
+  cursor: pointer;
+  color: #000 !important;
+  background-color: white !important;
+  border: 1px solid var(--accent-color);
+  border-radius: 30px !important;
+  /* outline: none; */
+  transition: 1s ease-in-out;
+}
+
+.position-aware-button svg {
+  position: absolute;
+  left: 0;
+  top: 0;
+  fill: none;
+  stroke: #fff;
+  stroke-dasharray: 150 480;
+  stroke-dashoffset: 150;
+  transition: 1s ease-in-out;
+}
+
+.position-aware-button:hover {
+  transition: 1s ease-in-out;
+  background: #4F95DA;
+}
+
+.position-aware-button:hover svg {
+  stroke-dashoffset: -480;
+}
+
+.position-aware-button span {
+  color: white;
+  font-size: 18px;
+  font-weight: 100;
 }
   

@@ -68,6 +68,14 @@ body {
   align-items: center;
 }
 
+.header {
+  padding-top: 10px;
+}
+
+.header-mobile {
+  padding-top: 10px;
+}
+
 .header-row{
   display: flex;
   flex-direction: row;
@@ -86,6 +94,24 @@ body {
   padding: 0%;
   margin-bottom: 0%;
   padding-bottom: 0%;
+}
+
+.filter-row {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+  padding-left: 5%;
+  padding-right: 5%;
+}
+
+.filter-row-mobile {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+  padding-left: 5%;
+  padding-right: 5%;
 }
 
 .page-header{
