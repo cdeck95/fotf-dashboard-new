@@ -157,17 +157,20 @@ function App() {
           {navOpen
         ? <LeftDrawer navOpen={navOpen} setNavOpen={setNavOpen}/>
         : <Box sx={{position: "fixed", top: "5px", left: "5px",  backgroundColor: "transparent", zIndex:"1 !important"}}>
-            <IconButton color="inherit" aria-label="open drawer" onClick={() => handleOpen()} size="large">
+            {address && <IconButton color="inherit" aria-label="open drawer" onClick={() => handleOpen()} size="large">
                 <MenuIcon sx={{ color: "White" }} />
             </IconButton>
+            }
           </Box>
         }
         {rightNavOpen
         ? <RightDrawer navOpen={rightNavOpen} setNavOpen={setRightNavOpen} /> 
-        : <Box sx={{position: "fixed", top: "5px", right: "5px", backgroundColor: "transparent", zIndex:"1 !important"}}>
+        :  <Box sx={{position: "fixed", top: "5px", right: "5px", backgroundColor: "transparent", zIndex:"1 !important"}}>
+            {!navOpen &&
             <IconButton color="inherit" aria-label="open right drawer" onClick={() => handleRightNavOpen()} size="large" sx={{zIndex:"1"}}> 
               <MenuIcon sx={{ color: "White" }}/> 
             </IconButton>
+            }
           </Box>
         } 
           
