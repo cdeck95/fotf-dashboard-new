@@ -45,6 +45,7 @@ function LeftDrawer(props: NavProps) {
   const navigate = useNavigate();
   const themeMui = useTheme();
   const isMobile = !useMediaQuery(themeMui.breakpoints.up("md"));
+  const isMediumLarge = useMediaQuery(themeMui.breakpoints.down("lg"));
   const [activePage, setActivePage] = React.useState("Dashboard");
   const drawerWidth = navOpen? 240 : 0;
 
@@ -161,7 +162,7 @@ function LeftDrawer(props: NavProps) {
         <Box sx={{paddingTop: "10px", position: "relative"}}>
             <Box sx={{display: "flex", flexDirection: "row", alignItems: "center", justifyContent: "space-around"}}>
               <img src={fotfAppLogo} alt="FOTF Logo" onClick={() => loadPage("Dashboard")} className={isMobile? "mainLogo-Mobile": "mainLogo"}/>  
-              {isMobile
+              {isMobile || isMediumLarge
                 ?<IconButton onClick={() => setNavOpen(false)} size="large">
                     <ChevronLeftIcon style={{ fill: "black" }} />
                   </IconButton>

@@ -68,24 +68,59 @@ body {
   align-items: center;
 }
 
+.row-space-between {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.header {
+  padding-top: 10px;
+}
+
+.header-mobile {
+  padding-top: 10px;
+  width: 100%;
+}
+
 .header-row{
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
   padding: 0%;
-  margin-bottom: 0%;
-  padding-bottom: 0%;
+  padding-left: 10px;
+  padding-right: 10px;
+  margin: 0%;
 }
 
 .header-row-mobile{
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
+  justify-content: space-evenly;
   align-items: center;
   padding: 0%;
-  margin-bottom: 0%;
-  padding-bottom: 0%;
+  margin: 0%;
+  width: 100%;
+}
+
+.filter-row {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  align-items: center;
+  padding-top: 10px;
+  width: 500px;
+}
+
+.filter-row-mobile {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  align-items: center;
+  padding-top: 15px;
+  width: 100dvw;
 }
 
 .page-header{
@@ -120,13 +155,13 @@ body {
   justify-content: center;
   align-items: center;
   background-color: transparent;
-  border: #000000 1px solid;
+  border: grey 1px solid;
   height: 35px;
   width: 250px;
   border-radius: 15px;
   font-size: 1rem;
   font-family: 'Bebas Neue';
-  color: #000000;
+  color: grey;
   margin-top: 0%;
   margin-left: 0%;
   margin-bottom: 0%;
@@ -491,4 +526,30 @@ body {
 .accent-text {
   /* color: var(--accent-color); */
   font-weight: 500;
+}
+
+.accessDeniedImage {
+  object-fit: contain;
+  max-width: 300px;
+  transform: rotateY(0deg) rotate(-20deg); /* needs Y at 0 deg to behave properly*/
+  transition: transform 2s;
+  position: absolute;
+  top: 50px;
+  left: 250px;
+  z-index: 0;
+}
+
+.accessDeniedImage-mobile {
+  object-fit: contain;
+  max-width: 300px;
+  transform: rotateY(0deg) rotate(-20deg); /* needs Y at 0 deg to behave properly*/
+  transition: transform 2s;
+  padding-top: 10px;
+  position: relative;
+  z-index: 100;
+
+}
+
+.addPadding {
+  padding-top: 100px;
 }

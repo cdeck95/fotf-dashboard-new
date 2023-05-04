@@ -15,9 +15,9 @@ function ConnectWalletPage() {
 
   return (
     <Box className="inner-container">
-        <Box  sx={{ height: "100%", display: "flex", flexDirection: "column",
-            justifyContent: "center", alignItems: "center", width:"100%"}}>
-            <img src={accessDeniedImage} alt="access denied" />
+        <img src={accessDeniedImage} alt="access denied" className={isMobile? "accessDeniedImage-mobile" : "accessDeniedImage"} />  
+        <Box  sx={{ height: "100%", display: "flex", zIndex:"1 !important",
+            justifyContent: "center", alignItems: "center", width:"100%"}} className={isMobile? "" : "add-padding"}>
             <h1 className={isMobile? "comingSoon-Mobile": "comingSoon"}><span className={isMobile? "comingSoonBlack-Mobile": "comingSoonBlack"}>Connect Your</span> Wallet</h1>
         </Box>
     </Box>

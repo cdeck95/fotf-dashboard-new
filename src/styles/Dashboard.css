@@ -6,6 +6,8 @@
 
 }  */
 
+@import url('https://fonts.googleapis.com/css?family=Lato:100&display=swap');
+
   .app-container {
     width: 100%;
     height: 100% !important;
@@ -13,30 +15,36 @@
 
   .comingSoon {
     color: var(--accent-color);
-    font-size: 8rem;
+    font-size: 7rem;
     font: 'Bebas Neue';
     text-align: center;
+    z-index: 1;
   }
 
   .comingSoon-Mobile {
     color: var(--accent-color);
-    font-size: 4rem;
+    font-size: 3.5rem;
     font: 'Bebas Neue';
     text-align: center;
+    z-index: 1;
+    margin-top: -250px;
+    height: fit-content;
   }
 
   .comingSoonBlack {
     color: #000000;
-    font-size: 8rem;
+    font-size: 7rem;
     font: 'Bebas Neue';
     text-align: center;
+    z-index: 1;
   }
 
   .comingSoonBlack-Mobile {
     color: #000000;
-    font-size: 4rem;
+    font-size: 3.5rem;
     font: 'Bebas Neue';
     text-align: center;
+    z-index: 1;
   }
 
   
@@ -234,13 +242,37 @@
     width: 100%;
     height: 100%;
   }
-  
 
-.header {
-  padding-top: 10px;
-}
+  .filter-button {
+    width: 125px;
+    height: 45px;
+    margin-left: 10px;
+    font-size: .9rem !important;
+    cursor: pointer;
+    color: grey !important;
+    background-color: white !important;
+    border: 1px solid grey !important;
+    border-radius: 30px !important;
+    outline: none;
+    transition: 1s ease-in-out;
+  }
 
-.header-mobile {
-  padding-top: 10px;
-}
-  
+  .filter-button:hover {
+    color: var(--accent-color) !important;
+    border: 1px solid var(--accent-color) !important;
+    border-radius: 30px !important;
+    transition: .5s ease-in-out;
+  }
+
+  .filter-button-selected {
+    width: 125px;
+    height: 45px;
+    font-size: .9rem !important;
+    margin-left: 10px;
+    cursor: pointer;
+    background-color: white !important;
+    outline: none;
+    color: var(--accent-color) !important;
+    border: 1px solid var(--accent-color) !important;
+    border-radius: 30px !important;
+  }

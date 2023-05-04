@@ -20,14 +20,18 @@ import HoneyExchange from "./views/HoneyExchange";
 import TedClaims from "./views/TedClaims";
 import TeddyStaking from "./views/TeddyStaking";
 import MenuIcon from '@mui/icons-material/Menu';
-import { LoadAllAccountDetails } from "./account/loadAllAccountDetails";
+import { LoadAllAccountDetails, allOwnedNFTs, initialState } from "./account/loadAllAccountDetails";
 import GraphicTemplates from "./views/GraphicTemplates";
+import ConnectWalletPage from "./components/ConnectWalletPage";
 
 
 function App() {
   useTitle("FOTF | Dashboard");
   const themeMui = useTheme();
   const isMobile = !useMediaQuery(themeMui.breakpoints.up("md"));
+  const isMediumLarge = useMediaQuery(themeMui.breakpoints.down("lg"));
+  const [isSmallScreen, setSmallScreen] = useState(false);
+
   const sdk = useSDK();
   const provider = sdk?.getProvider();
   const address = useAddress();
@@ -39,9 +43,10 @@ function App() {
   const [navOpen, setNavOpen] = useState(true);
   const [rightNavOpen, setRightNavOpen] = useState(true);
 
-  // const { tokens, isLoading, error, honeyBalance } = LoadAllAccountDetails();
-  const allOwnedNFTs = LoadAllAccountDetails();
-  const { tokens, isLoading, error, honeyBalance } = allOwnedNFTs;
+  const [allOwnedNFTsArray, setAllOwnedNFTsArray] = useState<any>([]);
+
+  
+  const { tokens, isLoading, error, honeyBalance } = allOwnedNFTsArray;
 
   console.log(tokens);
   console.log(isLoading);
@@ -60,10 +65,26 @@ function App() {
     console.log("setRightNavOpen is true")
   };
 
+  
+
   useEffect(() => {
-    setNavOpen(!isMobile);
-    setRightNavOpen(!isMobile);
-  }, [isMobile]);
+    // if(address) {
+    //   LoadAllAccountDetails();
+    //   //setAllOwnedNFTsArray(LoadAllAccountDetails());
+    // }
+  }, [address]);
+
+  useEffect(() => {
+    if(!isMobile && isMediumLarge){
+      setNavOpen(false);
+      setRightNavOpen(false);
+      setSmallScreen(true);
+    } else {
+      setNavOpen(!isMobile);
+      setRightNavOpen(!isMobile);
+      setSmallScreen(isMobile);
+    }
+  }, [isMobile, isMediumLarge]);
 
   const theme = createTheme({
     typography: {
@@ -126,7 +147,7 @@ function App() {
   return (
     <Box className="app-container" sx={{position: "relative"}}>
       <ThemeProvider theme={theme}>
-        {isMobile && 
+        {isSmallScreen && 
           <Box sx={{ position: "fixed", top: "0", backgroundColor: "Black", height: "60px", width: "100%", zIndex: "1 !important"}}> 
           </Box>
         }
@@ -135,25 +156,24 @@ function App() {
         <Box sx={{
           marginLeft: navOpen ? "240px" : "10px",
           marginRight: rightNavOpen ? "340px" : "10px",
-          marginTop: isMobile ? "60px" : "0px",
+          marginTop: isSmallScreen ? "60px" : "0px",
           backgroundColor: "white",
           height: "100%"
         }}>
-
-          
-          <Routes>
-            <Route path="/" element={<Dashboard/>}/>
-            <Route path="/HoneyExchange" element={<HoneyExchange/>}/>
-            <Route path="/TeddyStaking" element={<TeddyStaking/>}/> 
-            <Route path="/TedClaims" element={<TedClaims/>}/> 
-            <Route path="/TheFactory" element={<TheFactory allOwnedNFTs={allOwnedNFTs}/>}/>
-            <Route path="/BuildATeddy" element={<BuildATeddy/>}/> 
-            <Route path="/TraitSwapTeds" element={<TraitSwapTeds/>}/> 
-            <Route path="/GraphicTemplates" element={<GraphicTemplates/>}/> 
-
-            <Route path="*" element={<NotFound/>}/> 
-          </Routes>
-
+          {address
+            ? <Routes>
+                <Route path="/" element={<Dashboard/>}/>
+                <Route path="/HoneyExchange" element={<HoneyExchange/>}/>
+                <Route path="/TeddyStaking" element={<TeddyStaking/>}/> 
+                <Route path="/TedClaims" element={<TedClaims/>}/> <Route path="/TheFactory" element={<TheFactory allOwnedNFTs={allOwnedNFTsArray}/>}/>
+                <Route path="/BuildATeddy" element={<BuildATeddy/>}/> 
+                <Route path="/TraitSwapTeds" element={<TraitSwapTeds/>}/> 
+                <Route path="/GraphicTemplates" element={<GraphicTemplates/>}/> 
+                <Route path="*" element={<NotFound/>}/> 
+              </Routes>
+            : <ConnectWalletPage/>
+          }
+  
           {navOpen
         ? <LeftDrawer navOpen={navOpen} setNavOpen={setNavOpen}/>
         : <Box sx={{position: "fixed", top: "5px", left: "5px",  backgroundColor: "transparent", zIndex:"1 !important"}}>

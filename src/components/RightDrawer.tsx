@@ -47,6 +47,7 @@ const DEFAULT_NOTIFICATION = {
 function PermanentDrawerRight(props: NavProps) {
   const themeMui = useTheme();
   const isMobile = !useMediaQuery(themeMui.breakpoints.up("md"));
+  const isMediumLarge = useMediaQuery(themeMui.breakpoints.down("lg"));
   const drawerWidth = isMobile ? "100%" : 340;
   const { navOpen, setNavOpen } = props;
   const navigate = useNavigate();
@@ -194,7 +195,7 @@ function PermanentDrawerRight(props: NavProps) {
         <Toolbar sx={{ marginLeft: "0px !important", marginRight: "0px !important", paddingLeft: "7px !important", paddingRight: "7px !important"}}>
           <Box className="optionsRow">
             {/* this might need to be two rows for mobile */}
-            {isMobile
+            {isMobile || isMediumLarge
               ? <IconButton onClick={() => setNavOpen(false)} size="small" sx={{margin: 0, padding: 0}}>
                   <ChevronLeftIcon style={{ fill: "black" }} />
                 </IconButton>
@@ -251,10 +252,10 @@ function PermanentDrawerRight(props: NavProps) {
                 partnersList.map( (item, i) => <PartnerItem key={i} item={item} /> )
             }
           </Carousel> */}
-
-          <ImageList sx={{ width: drawerWidth, height: 240, justifyContent: "center", paddingLeft: "10px", paddingRight: "10px", textAlign: "center", margin: "0", paddingTop: "0px"  }} cols={3} gap={isMobile ? 10 : 10} rowHeight={isMobile? 120 : 120}>
+          <ImageList sx={{ height: 240, textAlign: "center", margin: "0", paddingTop: "0px"  }} cols={3} gap={isMobile ? 8 : 8} rowHeight={isMobile? 110: 110}>
+          {/* <ImageList sx={{ width: drawerWidth, height: 240, paddingLeft: "10px", paddingRight: "10px", textAlign: "center", margin: "0", paddingTop: "0px"  }} cols={3} gap={isMobile ? 8 : 8} rowHeight={isMobile? 110: 110}> */}
                 {partnersList.map((item) => (
-                  <ImageListItem key={item.id} sx={{ height: "80px", width: "80px"}}
+                  <ImageListItem key={item.id} sx={{ height: "75px", width: "75px", marginLeft: "auto", marginRight: "auto", justifyContent: "center"}}
                   onClick={() => window.open(item.partnerLink)} >
                     <img
                       src={item.image}
