@@ -45,6 +45,13 @@ function TheFactory(props: TheFactoryProps) {
   const provider = sdk?.getProvider();
   const address = useAddress();
 
+  const [isActiveFilter, setIsActiveFilter] = useState(false);
+  const [isTransferredFilter, setIsTransferredFilter] = useState(false);
+  const [isLongestHeldFilter, setIsLongestHeldFilter] = useState(false);
+
+  const [selectedTeds, setSelectedTeds] = useState<any>([]);
+  const [selectedTeddies, setSelectedTeddies] = useState<any>([]);
+  const [selectedAITeds, setSelectedAITeds] = useState<any>([]);
 
   const [open, setOpen] = useState(false);
   const handleClose = () => {
@@ -52,6 +59,31 @@ function TheFactory(props: TheFactoryProps) {
   };
   const handleToggle = () => {
     setOpen(!open);
+  };
+
+  const setFilter = (filterIn: string) => {
+    switch(filterIn) {
+      case "Active":
+        setIsActiveFilter(true);
+        setIsTransferredFilter(false);
+        setIsLongestHeldFilter(false);
+        break;
+      case "Recent":
+        setIsActiveFilter(false);
+        setIsTransferredFilter(true);
+        setIsLongestHeldFilter(false);
+        break;
+      case "Held":
+        setIsActiveFilter(false);
+        setIsTransferredFilter(false);
+        setIsLongestHeldFilter(true);
+        break;
+      default:
+        setIsActiveFilter(false);
+        setIsTransferredFilter(false);
+        setIsLongestHeldFilter(false);
+        break;
+    }
   };
 
   
@@ -90,7 +122,7 @@ function TheFactory(props: TheFactoryProps) {
 
   return (
     <Box className="factory-inner-container">
-      <Box className={isMobile? "header-mobile" : "header"}>
+      {address && <Box className={isMobile? "header-mobile" : "header"}>
         <Box className={isMobile? "header-row-mobile" : "header-row"}>
           <h3 className={isMobile? "page-header-mobile" : "page-header"}>The Factory</h3>
           <input
@@ -100,30 +132,20 @@ function TheFactory(props: TheFactoryProps) {
             onChange={handleSearch}
             value={searchInput} />
         </Box>
-        <Box className={isMobile? "filter-row-mobile" : "filter-row"}>
-          <Button className="position-aware-button">
-          <svg width="180px" height="60px" viewBox="0 0 180 60" className="border">
-            <polyline points="179,1 179,59 1,59 1,1 179,1" className="bg-line" />
-            <polyline points="179,1 179,59 1,59 1,1 179,1" className="hl-line" />
-          </svg>
-          <span>Active NFTs</span>
+         <Box className={isMobile? "filter-row-mobile" : "filter-row"}>
+          <Button disabled={!address} className={isActiveFilter ? "filter-button-selected" : "filter-button"}
+                  onClick={() => setFilter("Active")}>
+            Active NFTs
           </Button>
-          <Button className="position-aware-button">
-          <svg width="180px" height="60px" viewBox="0 0 180 60" className="border">
-            <polyline points="179,1 179,59 1,59 1,1 179,1" className="bg-line" />
-            <polyline points="179,1 179,59 1,59 1,1 179,1" className="hl-line" />
-          </svg>
-          <span>Recently Transferred</span>
+          <Button disabled={!address} className={isTransferredFilter ? "filter-button-selected" : "filter-button"} onClick={() => setFilter("Recent")}>
+            Recently Transferred
           </Button>
-          <Button className="position-aware-button">
-          <svg width="180px" height="60px" viewBox="0 0 180 60" className="border">
-            <polyline points="179,1 179,59 1,59 1,1 179,1" className="bg-line" />
-            <polyline points="179,1 179,59 1,59 1,1 179,1" className="hl-line" />
-          </svg>
-          <span>Longest Held</span>
+          <Button disabled={!address} className={isLongestHeldFilter ? "filter-button-selected" : "filter-button"} onClick={() => setFilter("Held")}>
+            Longest Held
           </Button>
         </Box>
       </Box>
+      }
       {address
       ? <div>
           { error ? <div><p>NFT not found - error</p></div> 
@@ -144,16 +166,21 @@ function TheFactory(props: TheFactoryProps) {
         </div>
       : <ConnectWalletPage/>
       }
-      <Box sx={{width: "100%", position: "fixed", bottom: "0px", left: "0px", height: "70px", backgroundColor: "#FED100"}}>
-        <p className="stats">Not working yet</p>
-        <div className="row">
-          <NumericFormat value={honeyBalance} displayType={'text'} thousandSeparator={true} prefix={'$'} suffix={' HNY'} />
-          <p className="stats">{tedNFTs?.length} Fury Teds</p>
-          <p className="stats">{teddyNFTs?.length} Teddys</p>
-          {/* <p className="stats">{stakedTeddies?.length} Staked Teddys</p> */}
-          <p className="stats">{aiTedNFTs?.length} AI Teds</p>
-        </div>
+      {address && <Box  sx={{ position: "fixed", bottom: "0px", height: "70px", width: "100%", backgroundColor: "#FED100"}}>
+          <Box className="row-space-between">
+            <Box className="selected-box" sx={{display: "flex", flexDirection:"row"}}>
+              <p className="stats">{selectedTeds?.length} Fury Teds</p>
+              <p className="stats">{selectedTeddies?.length} Teddys</p>
+              <p className="stats">{selectedAITeds?.length} AI Teds</p>
+            </Box>
+          {/* <NumericFormat value={honeyBalance} displayType={'text'} thousandSeparator={true} prefix={'$'} suffix={' HNY'} /> */}
+            <Box className="burn-box" sx={{display: "flex", flexDirection:"row"}}>
+              <Button>Burn</Button>
+              <Button>1 of 1</Button> 
+            </Box>
+          </Box>
       </Box>
+}
     </Box>  
   );
 }
