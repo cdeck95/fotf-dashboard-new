@@ -17,6 +17,7 @@ import { NumericFormat } from 'react-number-format';
 import NFTList from "../components/NFTList";
 import "../styles/Dashboard.css";
 import { LoadAllAccountDetails, allOwnedNFTs } from "../account/loadAllAccountDetails";
+import ConnectWalletPage from "../components/ConnectWalletPage";
 
 interface TheFactoryProps {
   allOwnedNFTs: allOwnedNFTs;
@@ -118,7 +119,7 @@ function TheFactory(props: TheFactoryProps) {
           <CircularProgress color="inherit" />
         </Backdrop>
         </div>
-      : <div><p>Connect your wallet</p> </div> 
+      : <ConnectWalletPage/>
       }
       <Box sx={{width: "100%", position: "fixed", bottom: "0px", left: "0px", height: "70px", backgroundColor: "#FED100"}}>
         <p className="stats">Not working yet</p>
