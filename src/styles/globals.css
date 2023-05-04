@@ -530,9 +530,26 @@ body {
 
 .accessDeniedImage {
   object-fit: contain;
+  max-width: 300px;
+  transform: rotateY(0deg) rotate(-20deg); /* needs Y at 0 deg to behave properly*/
+  transition: transform 2s;
+  position: absolute;
+  top: 50px;
+  left: 250px;
+  z-index: 0;
 }
 
 .accessDeniedImage-mobile {
   object-fit: contain;
-  max-width: 400px;
+  max-width: 300px;
+  transform: rotateY(0deg) rotate(-20deg); /* needs Y at 0 deg to behave properly*/
+  transition: transform 2s;
+  padding-top: 10px;
+  position: relative;
+  z-index: 100;
+
+}
+
+.addPadding {
+  padding-top: 100px;
 }

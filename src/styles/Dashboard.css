@@ -15,30 +15,36 @@
 
   .comingSoon {
     color: var(--accent-color);
-    font-size: 8rem;
+    font-size: 7rem;
     font: 'Bebas Neue';
     text-align: center;
+    z-index: 1;
   }
 
   .comingSoon-Mobile {
     color: var(--accent-color);
-    font-size: 4rem;
+    font-size: 3.5rem;
     font: 'Bebas Neue';
     text-align: center;
+    z-index: 1;
+    margin-top: -250px;
+    height: fit-content;
   }
 
   .comingSoonBlack {
     color: #000000;
-    font-size: 8rem;
+    font-size: 7rem;
     font: 'Bebas Neue';
     text-align: center;
+    z-index: 1;
   }
 
   .comingSoonBlack-Mobile {
     color: #000000;
-    font-size: 4rem;
+    font-size: 3.5rem;
     font: 'Bebas Neue';
     text-align: center;
+    z-index: 1;
   }
 
   

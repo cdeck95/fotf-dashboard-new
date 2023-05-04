@@ -252,8 +252,8 @@ function PermanentDrawerRight(props: NavProps) {
                 partnersList.map( (item, i) => <PartnerItem key={i} item={item} /> )
             }
           </Carousel> */}
-
-          <ImageList sx={{ width: drawerWidth, height: 240, paddingLeft: "10px", paddingRight: "10px", textAlign: "center", margin: "0", paddingTop: "0px"  }} cols={3} gap={isMobile ? 8 : 8} rowHeight={isMobile? 110: 110}>
+          <ImageList sx={{ height: 240, textAlign: "center", margin: "0", paddingTop: "0px"  }} cols={3} gap={isMobile ? 8 : 8} rowHeight={isMobile? 110: 110}>
+          {/* <ImageList sx={{ width: drawerWidth, height: 240, paddingLeft: "10px", paddingRight: "10px", textAlign: "center", margin: "0", paddingTop: "0px"  }} cols={3} gap={isMobile ? 8 : 8} rowHeight={isMobile? 110: 110}> */}
                 {partnersList.map((item) => (
                   <ImageListItem key={item.id} sx={{ height: "75px", width: "75px", marginLeft: "auto", marginRight: "auto", justifyContent: "center"}}
                   onClick={() => window.open(item.partnerLink)} >
