@@ -66,19 +66,19 @@ function TheFactory(props: TheFactoryProps) {
   const setFilter = (filterIn: string) => {
     switch(filterIn) {
       case "Active":
-        setIsActiveFilter(true);
+        setIsActiveFilter(!isActiveFilter);
         setIsTransferredFilter(false);
         setIsLongestHeldFilter(false);
         break;
       case "Recent":
         setIsActiveFilter(false);
-        setIsTransferredFilter(true);
+        setIsTransferredFilter(!isTransferredFilter);
         setIsLongestHeldFilter(false);
         break;
       case "Held":
         setIsActiveFilter(false);
         setIsTransferredFilter(false);
-        setIsLongestHeldFilter(true);
+        setIsLongestHeldFilter(!isLongestHeldFilter);
         break;
       default:
         setIsActiveFilter(false);
