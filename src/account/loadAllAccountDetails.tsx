@@ -7,6 +7,7 @@ import tedABI from "../ABIs/tedABI.json";
 import stakingABI from "../ABIs/stakingABI.json";
 import honeyABI from "../ABIs/honeyABI.json";
 import aiABI from "../ABIs/aiABI.json";
+import birthCertsABI from "../ABIs/birthCertsABI.json";
   
 interface StakedTokens {
     address: string;
@@ -93,6 +94,7 @@ const TEDDY_CONTRACT="0x4aB1337970E889Cf5E425A7267c51db183028cf4";
 const STAKING_CONTRACT="0x15829C851C3117f662C5A9E369bC3A4dBbeaFEBF";
 const REWARD_TOKEN="0x6ca0269dca415313256cfecD818F32c5AfF0A518";
 const AI_MINT="0x1C6d280280f7f8d139659E314d738bdD466741Ba";
+const BIRTH_CERTIFICATE_CONTRACT="0xFC182BB64a3283f880861E065463356de92FBEcb"
 
 async function AddStakedTokens(contract_TEDDY: SmartContract, tokenIDs: string[]) {
   //const { data: stakedTeddy, isLoading: isLoadingStakedTeddy, error: errorStakedTeddy } = await useNFT(contract_STAKING, BigNumber.from(tokenID));
@@ -129,12 +131,20 @@ export function LoadAllAccountDetails() : allOwnedNFTs  {
     const [contract_STAKING, setContractStaking] = useState<SmartContract<BaseContract>>();
     const [contract_REWARDS, setContractRewards] = useState<SmartContract<BaseContract>>();
     const [contract_AI, setContractAI] = useState<SmartContract<BaseContract>>();
+    const [contract_BIRTHCERTS, setContractBirthCerts] = useState<SmartContract<BaseContract>>();
+
     const [honey, setHoney] = useState<string>();
     const [stakedNFTs, setStakedNFTs] = useState<NFT[]>();
     
     const { data: tedNFTs, error, isLoading }  = useOwnedNFTs(contract_FOTF, address);
 
     const { contract: contract_TEDDY } = useContract(TEDDY_CONTRACT);
+
+    // const { contract: contract_BIRTH } = useContract(BIRTH_CERTIFICATE_CONTRACT);
+    const {data: birthCertsNFTs, error: errorBirthCerts, isLoading: isLoadingBirthCerts} = useOwnedNFTs(contract_BIRTHCERTS, address);
+    console.log(birthCertsNFTs);
+    console.log(errorBirthCerts);
+    console.log(isLoadingBirthCerts);
     
     
     const {data: teddyNFTs, error: errorTeddy, isLoading: isLoadingTeddy} = useOwnedNFTs(contract_TEDDY, address);
@@ -170,8 +180,6 @@ export function LoadAllAccountDetails() : allOwnedNFTs  {
           console.log(token);
           returnNFTs?.push(token);
         });
-
-        
     
         return {
           Teds: {
@@ -192,7 +200,7 @@ export function LoadAllAccountDetails() : allOwnedNFTs  {
           },
           BirthCertificates: {
             address: address!,
-            tokens: []
+            tokens: birthCertsNFTs!,
           },
           TraitSwapTokens: {
             address: "",
@@ -253,6 +261,16 @@ export function LoadAllAccountDetails() : allOwnedNFTs  {
     }
   }, [sdk]);
 
+  const LoadContractBirthCerts = useCallback(async () => {
+    try{
+      const contractIn = await sdk?.getContractFromAbi(BIRTH_CERTIFICATE_CONTRACT, birthCertsABI);
+      console.log(contractIn);
+      setContractBirthCerts(contractIn);
+    } catch (e) {
+      console.log(e); 
+    }
+  }, [sdk]);
+
   const LoadContractRewards = useCallback(async () => {
     try{
       const contractIn = await sdk?.getContractFromAbi(REWARD_TOKEN, honeyABI);
@@ -298,6 +316,9 @@ export function LoadAllAccountDetails() : allOwnedNFTs  {
       }
       if (!contract_STAKING) {
         LoadContractStaking();
+      }
+      if (!contract_BIRTHCERTS) {
+        LoadContractBirthCerts();
       }
       // else {
       //   LoadStakedTokens();
