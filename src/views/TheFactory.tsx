@@ -26,8 +26,9 @@ interface TheFactoryProps {
 function TheFactory(props: TheFactoryProps) {
   useTitle("FOTF | The Factory");
   // const { tokens, isLoading, error, honeyBalance } = LoadAllAccountDetails();
-  const allOwnedNFTs = props.allOwnedNFTs;
-  const {tokens, isLoading, error, honeyBalance } = allOwnedNFTs;
+  // const allOwnedNFTs = props.allOwnedNFTs;
+  const { tokens, isLoading, error, honeyBalance } = LoadAllAccountDetails();
+  // const {tokens, isLoading, error, honeyBalance } = allOwnedNFTs;
   console.log(tokens);
   console.log(isLoading);
   console.log(error);
@@ -40,7 +41,8 @@ function TheFactory(props: TheFactoryProps) {
 
   const theme = useTheme();
   const isMobile = !useMediaQuery(theme.breakpoints.up("md"));
-  const isLarge = !useMediaQuery(theme.breakpoints.up("lg"));
+  const isMediumLarge = useMediaQuery(theme.breakpoints.down("lg"));
+  const [isSmallScreen, setSmallScreen] = useState(false);
   const sdk = useSDK();
   const provider = sdk?.getProvider();
   const address = useAddress();
@@ -86,6 +88,14 @@ function TheFactory(props: TheFactoryProps) {
     }
   };
 
+  useEffect(() => {
+    if(isMediumLarge || isMobile){
+      setSmallScreen(true);
+    } else {
+      setSmallScreen(false);
+    }
+  }, [isMediumLarge, isMobile]);
+
   
 
   //////////// Header ///////////////////////////
@@ -122,9 +132,9 @@ function TheFactory(props: TheFactoryProps) {
 
   return (
     <Box className="factory-inner-container">
-      {address && <Box className={isMobile? "header-mobile" : "header"}>
-        <Box className={isMobile? "header-row-mobile" : "header-row"}>
-          <h3 className={isMobile? "page-header-mobile" : "page-header"}>The Factory</h3>
+      {address && <Box className={isSmallScreen? "header-mobile" : "header"}>
+        <Box className={isSmallScreen? "header-row-mobile" : "header-row"}>
+          <h3 className={isSmallScreen? "page-header-mobile" : "page-header"}>The Factory</h3>
           <input
             type="text"
             className="factory-search"
@@ -132,7 +142,7 @@ function TheFactory(props: TheFactoryProps) {
             onChange={handleSearch}
             value={searchInput} />
         </Box>
-         <Box className={isMobile? "filter-row-mobile" : "filter-row"}>
+         <Box className={isSmallScreen? "filter-row-mobile" : "filter-row"}>
           <Button disabled={!address} className={isActiveFilter ? "filter-button-selected" : "filter-button"}
                   onClick={() => setFilter("Active")}>
             Active NFTs
@@ -150,7 +160,7 @@ function TheFactory(props: TheFactoryProps) {
       ? <div>
           { error ? <div><p>NFT not found - error</p></div> 
           : <Box className="gallery" sx={{ zIndex: "0", paddingLeft: "10px", paddingBottom: "75px", backgroundColor: "white", paddingRight: "10px" }}>
-              {allOwnedNFTs
+              {tokens
               ? <NFTList tokens={AllTokens} searchText={searchInput} />
               : <p>Loading...</p> }
              </Box>

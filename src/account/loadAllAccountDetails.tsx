@@ -51,7 +51,7 @@ interface StakedTokens {
     honeyBalance: string;
   }
   
-  const initialState: allOwnedNFTs = {
+  export const initialState: allOwnedNFTs = {
     isLoading: false,
     error: false,
     honeyBalance: "0",
@@ -118,13 +118,13 @@ async function AddStakedTokens(contract_TEDDY: SmartContract, tokenIDs: string[]
 /////////////// Load All NFTs ///////////////////////
 
 export function LoadAllAccountDetails() : allOwnedNFTs  {
-// export const loadAllAccountDetails = () => {
     const allOwnedNFTs: allOwnedNFTs = initialState; 
     allOwnedNFTs.isLoading = true;
 
     const sdk = useSDK();
     const provider = sdk?.getProvider();
     const address = useAddress();
+
     const [contract_FOTF, setContractFOTF] = useState<SmartContract<BaseContract>>();
     const [contract_STAKING, setContractStaking] = useState<SmartContract<BaseContract>>();
     const [contract_REWARDS, setContractRewards] = useState<SmartContract<BaseContract>>();

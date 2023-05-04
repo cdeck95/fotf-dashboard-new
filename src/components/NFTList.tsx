@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Box, ImageList, useMediaQuery, useTheme } from "@mui/material";
+import { Box, ImageList, createTheme, useMediaQuery, useTheme } from "@mui/material";
 import { NFT } from '@thirdweb-dev/sdk';
 import StarBorderIcon from '@mui/icons-material/StarBorder';
 import StarIcon from '@mui/icons-material/Star';
@@ -11,33 +11,54 @@ interface NFTListProps {
     tokens: NFT[];
     searchText: string;
 }
-
-
-
   
 function NFTList(props: NFTListProps) {
 
   const theme = useTheme();
-  const isMobile = !useMediaQuery(theme.breakpoints.up("md"));
-  const isLarge = !useMediaQuery(theme.breakpoints.up("lg"));
-  const isXL = !useMediaQuery(theme.breakpoints.up("xl"));
-  console.log(isMobile);
-  console.log(isLarge);
-  console.log(isXL);
+  const isMobile = useMediaQuery(theme.breakpoints.down("md"))
+  const isSmall = useMediaQuery(theme.breakpoints.down("sm"));
+  const isMedium = useMediaQuery(theme.breakpoints.down("md"));
+  const isMediumLarge = useMediaQuery(theme.breakpoints.down("lg"));
+  const isLarge = useMediaQuery(theme.breakpoints.between("lg", "xl"));
+  const isXL = useMediaQuery(theme.breakpoints.up("xl"));
+  const isFullScreen = useMediaQuery(theme.breakpoints.up(1800));
+  console.log(`Mobile:  ${isMobile}`);
+  console.log(`Small:  ${isSmall}`);
+  console.log(`Medium:  ${isMedium}`);
+  console.log(`Medium-Large:  ${isMediumLarge}`);
+  console.log(`Large:  ${isLarge}`);
+  console.log(`XL:  ${isXL}`);
+  console.log(`Is 1920:  ${isFullScreen}`);
 
 
 
   const [columns, setColumns] = React.useState(3);
 
   React.useEffect(() => {
-    if (isMobile) {
-      setColumns(1);
-    } else if (isLarge) {
-      setColumns(2);
-    } else if (isXL) {
-      setColumns(3);
+    if(isMobile) {
+      if (isSmall) {
+        setColumns(1);
+      } else {
+        setColumns(2);
+      }
+    } else {
+      if (isSmall) {
+        setColumns(1);
+      } else if (isMedium) {
+        setColumns(1);
+      } else if (isMediumLarge) {
+        setColumns(2);
+      } else if (isLarge) {
+        setColumns(2);
+      } else if (isXL && !isFullScreen) {
+        setColumns(3);
+      } else if (isFullScreen){
+        setColumns(4);
+      } else {
+        setColumns(3);
+      }
     }
-  }, [isMobile, isLarge, isXL]);
+  }, [isMobile, isSmall, isMedium, isMediumLarge, isLarge, isXL, isFullScreen]);
 
     const add = () => {
         console.log("adding...");

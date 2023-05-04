@@ -12,6 +12,7 @@ import RightDrawer from "../components/RightDrawer";
 import { Home } from "@mui/icons-material";
 import { Routes, Route } from "react-router-dom";
 import ConnectWalletPage from "../components/ConnectWalletPage";
+import { LoadAllAccountDetails } from "../account/loadAllAccountDetails";
 
 
 function Dashboard() {
@@ -21,6 +22,8 @@ function Dashboard() {
   const sdk = useSDK();
   const provider = sdk?.getProvider();
   const address = useAddress();
+
+  const { tokens, isLoading, error, honeyBalance } = LoadAllAccountDetails();
 
   return (
     <Box className="inner-container">
