@@ -11,6 +11,7 @@ import LeftDrawer from "../components/LeftDrawer";
 import RightDrawer from "../components/RightDrawer";
 import { Home } from "@mui/icons-material";
 import { Routes, Route } from "react-router-dom";
+import ConnectWalletPage from "../components/ConnectWalletPage";
 
 
 function Dashboard() {
@@ -28,10 +29,7 @@ function Dashboard() {
         justifyContent: "center", alignItems: "center", width:"100%"}}>
         <h1 className={isMobile? "comingSoon-Mobile": "comingSoon"}>Dashboard</h1>
       </Box>
-      : <Box  sx={{ height: "100%", display: "flex", 
-          justifyContent: "center", alignItems: "center", width:"100%"}}>
-          <h1 className={isMobile? "comingSoon-Mobile": "comingSoon"}><span className={isMobile? "comingSoonBlack-Mobile": "comingSoonBlack"}>Connect Your</span> Wallet</h1>
-        </Box>
+      : <ConnectWalletPage/>
       }
     </Box>
   );
