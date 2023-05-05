@@ -73,10 +73,10 @@ function NFTList(props: NFTListProps) {
   
     return (
         <ImageList sx={{ justifyContent: "center", width: "100%", height: "100%", paddingLeft: "10px", paddingRight: "10px", overflowX: "hidden", 
-        overflowY: "auto", backgroundColor: "white" }} cols={columns} gap={10} rowHeight={360}>
+        overflowY: "auto", backgroundColor: "white" }} cols={columns} gap={25} rowHeight={450}>
                 {filteredNFTs.map(e =>
-                <Box key={e.metadata.id} className="card" sx={{ marginLeft: "auto", marginRight: "auto", background: "none", maxHeight: "450px", maxWidth: "350px"}}>
-                  <StarBorderIcon onClick={star} sx={{ position: "absolute", top: "5px", right: "5px" }}/>
+                <Box key={e.metadata.id} className="card" sx={{ marginLeft: "auto", marginRight: "auto", background: "none", maxHeight: "375px", maxWidth: "350px"}}>
+                  <StarBorderIcon onClick={star} sx={{ position: "absolute", top: "10px", right: "10px" }}/>
                   <ThirdwebNftMedia metadata={e.metadata} style={{ maxHeight: "280px", maxWidth: "280px",
                     borderRadius: "10px", objectFit: "cover", width: "280px", height: "280px"
                      }}/>

@@ -154,8 +154,8 @@ function App() {
 
        
         <Box sx={{
-          marginLeft: navOpen ? "240px" : "10px",
-          marginRight: rightNavOpen ? "340px" : "10px",
+          marginLeft: navOpen ? "240px" : "0px",
+          marginRight: rightNavOpen ? "340px" : "0px",
           marginTop: isSmallScreen ? "60px" : "0px",
           backgroundColor: "white",
           height: "100%"
