@@ -68,6 +68,12 @@ body {
   align-items: center;
 }
 
+.row-no-center{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
 .row-space-between {
   display: flex;
   flex-direction: row;
@@ -165,10 +171,10 @@ body {
   margin-top: 0%;
   margin-left: 0%;
   margin-bottom: 0%;
-  margin-right: 20px;
+  margin-right: 0px;
   padding-bottom: 0%;
   padding-top: 0%;
-  padding-right: 0%;
+  padding-right: 10px;
   padding-left: 10px;
 }
 

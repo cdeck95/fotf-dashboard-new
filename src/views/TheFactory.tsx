@@ -47,6 +47,9 @@ function TheFactory(props: TheFactoryProps) {
   const provider = sdk?.getProvider();
   const address = useAddress();
 
+  const leftDrawerWidth =  isSmallScreen? "0px" : "240px";
+  const rightDrawerWidth = isSmallScreen? "0px" : "340px";
+
   const [isActiveFilter, setIsActiveFilter] = useState(false);
   const [isTransferredFilter, setIsTransferredFilter] = useState(false);
   const [isLongestHeldFilter, setIsLongestHeldFilter] = useState(false);
@@ -176,17 +179,26 @@ function TheFactory(props: TheFactoryProps) {
         </div>
       : <ConnectWalletPage/>
       }
-      {address && <Box  sx={{ position: "fixed", bottom: "0px", height: "70px", width: "100%", backgroundColor: "#FED100"}}>
-          <Box className="row-space-between">
+      {address && <Box  sx={{ position: "fixed", paddingLeft: "20px", paddingRight: "20px", bottom: "0px", height: "70px", width: "100%", backgroundColor: "#FED100"}}>
+          <Box className="row-no-center">
             <Box className="selected-box" sx={{display: "flex", flexDirection:"row"}}>
-              <p className="stats">{selectedTeds?.length} Fury Teds</p>
-              <p className="stats">{selectedTeddies?.length} Teddys</p>
-              <p className="stats">{selectedAITeds?.length} AI Teds</p>
+              <Box className="stats-col">
+                <p className="stats">{new Intl.NumberFormat('en-US', { minimumIntegerDigits: 2 }).format(selectedTeds?.length)}</p>
+                <p className="stats-name"> Fury Teds</p>
+              </Box>
+              <Box className="stats-col">
+                <p className="stats">{new Intl.NumberFormat('en-US', { minimumIntegerDigits: 2 }).format(selectedTeddies?.length)}</p>
+                <p className="stats-name"> Teddy by FOTF</p>
+              </Box>
+              <Box className="stats-col">
+                <p className="stats">{new Intl.NumberFormat('en-US', { minimumIntegerDigits: 2 }).format(selectedAITeds?.length)}</p>
+                <p className="stats-name"> AI<br/> Teds</p>
+              </Box>
             </Box>
           {/* <NumericFormat value={honeyBalance} displayType={'text'} thousandSeparator={true} prefix={'$'} suffix={' HNY'} /> */}
             <Box className="burn-box" sx={{display: "flex", flexDirection:"row"}}>
-              <Button>Burn</Button>
-              <Button>1 of 1</Button> 
+              <Button className="burn-btn">Burn for $HNY</Button>
+              <Button className="burn-btn">Burn 10 + 500k $HNY for Custom 1/1</Button> 
             </Box>
           </Box>
       </Box>

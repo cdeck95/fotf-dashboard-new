@@ -131,9 +131,17 @@
     /* box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px, rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset; */
     /* box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px; */
     /* background-color: white;*/
-    border: none;
+    /* border: none; */
+    background-color: white !important;
+    color: grey;
+    border: 2px solid transparent;
+    border-color: transparent;
+    transition: color 0.15s ease, border-color 0.15s ease;
     margin: 0%;
-    padding: 0%;
+    padding-top: 2%;
+    padding-left: 2%;
+    padding-right: 2%;
+    padding-bottom: 0%;
     text-align: left;
     border-radius: 10px; 
     transition: color 0.15s ease, border-color 0.15s ease;
@@ -141,7 +149,6 @@
     position: relative;
     display: flex;
     flex-direction: column;  
-    border-bottom: none;
   }
   
   .card img {
@@ -158,6 +165,7 @@
     color: #FED100;
     border: 2px solid transparent;
     border-color: #FED100;
+    transition: color 0.15s ease, border-color 0.15s ease;
   }
   
   /* .card h2 {
@@ -199,17 +207,41 @@
     display: flex;
   }
   
-  .row {
+  /* .row {
     flex-direction: row;
     display: flex;
-  }
+  } */
   
   .stats {
     color: black;
-    font-size: large;
-    margin-left: 20px;
-    margin-top: 0%;
-    margin-bottom: 0%;
+    font-size: 48px;
+    font-weight: 600;
+    font-family: 'Bebas Neue';
+    margin: 0%;
+    padding: 5px;
+    text-align: end;
+    line-height: 1;
+  }
+
+  .stats-name {
+    font-size: 1.5rem;
+    font-family: 'Bebas Neue';
+    overflow-wrap: break-word;
+    text-align: left;
+    margin: 0%;
+    padding: 5px;
+    font-weight: 300;
+    line-height: 1;
+
+  }
+
+  .stats-col {
+    display: flex;
+    flex-direction: row;
+    width: 33.33%;
+    margin-right: 10px;
+    justify-content: center;
+    align-items: center;
   }
   
   .large-left-column {
@@ -275,4 +307,30 @@
     color: var(--accent-color) !important;
     border: 1px solid var(--accent-color) !important;
     border-radius: 30px !important;
+  }
+
+  .selected-box {
+    width: 400px;
+    align-items: center;
+    justify-content: flex-start;
+    height: 70px;
+  }
+
+  .burn-box {
+    width: 550px;
+    align-items: center;
+    justify-content: flex-start;
+    height: 70px;
+  }
+
+  .burn-btn {
+    margin-right: 10px !important;
+    padding: 10px !important;
+    min-width: 150px !important;
+    font-size: 24px;
+  }
+
+  .burn-btn:hover {
+    border: 1px solid black !important;
+    transition: '0.5s ease-in-out';
   }
