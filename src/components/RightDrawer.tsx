@@ -160,7 +160,15 @@ function PermanentDrawerRight(props: NavProps) {
 
   const openCurrencyExchange = () => {
     navigate("/HoneyExchange");
-    setNavOpen(false);
+    if(isMobile) {
+      setNavOpen(false);
+    }
+  };
+
+  const handleClickLink = () => {
+    if(isMobile) {
+      setNavOpen(false);
+    }
   };
   
 
@@ -227,7 +235,7 @@ function PermanentDrawerRight(props: NavProps) {
         <Box className="info-card">
           <Box className="row-even">
             <div className="info-card__title">{blogTitle}</div>
-            <Button onClick={() => setNavOpen(false)}
+            <Button onClick={() => handleClickLink()}
             href="https://docs.furyofthefur.com" className="learnMoreBtn">
               Learn More
             </Button>
@@ -242,7 +250,7 @@ function PermanentDrawerRight(props: NavProps) {
         <Box className="info-card">
           <Box className="row-even">
             <div className="info-card__title">Our Partners</div>
-            <Button onClick={() => setNavOpen(false)}
+            <Button onClick={() => handleClickLink()}
               href="https://docs.furyofthefur.com" className="learnMoreBtn">
                 View Full Benefits
               </Button>
