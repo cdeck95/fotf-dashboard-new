@@ -1,11 +1,9 @@
-
-import {  Box } from "@mui/material";
+import { Box } from "@mui/material";
 import { useTitle } from "../hooks/useTitle";
 import "../styles/Dashboard.css";
 import { useAddress } from "@thirdweb-dev/react";
 import { useSDK } from "@thirdweb-dev/react";
 import ComingSoon from "./ComingSoon";
-
 
 function HoneyExchange() {
   useTitle("FOTF | Honey Exchange");
@@ -15,9 +13,7 @@ function HoneyExchange() {
   const provider = sdk?.getProvider();
   const address = useAddress();
 
-  return (
-    <ComingSoon/>
-  );
+  return <ComingSoon />;
 }
 
 export default HoneyExchange;
