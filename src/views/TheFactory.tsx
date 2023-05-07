@@ -1,10 +1,22 @@
-import {  Box, Button, ImageList, useMediaQuery, useTheme } from "@mui/material";
-import { ConnectWallet, ThirdwebNftMedia, useContract, useNFT, useOwnedNFTs } from "@thirdweb-dev/react";
+import { Box, Button, ImageList, Typography, useMediaQuery, useTheme } from "@mui/material";
+import {
+  ConnectWallet,
+  ThirdwebNftMedia,
+  useContract,
+  useNFT,
+  useOwnedNFTs,
+} from "@thirdweb-dev/react";
 import { useTitle } from "../hooks/useTitle";
 import { useAddress } from "@thirdweb-dev/react";
-import Backdrop from '@mui/material/Backdrop';
-import CircularProgress from '@mui/material/CircularProgress';
-import { SetStateAction, useCallback, useEffect, useMemo, useState } from "react";
+import Backdrop from "@mui/material/Backdrop";
+import CircularProgress from "@mui/material/CircularProgress";
+import {
+  SetStateAction,
+  useCallback,
+  useEffect,
+  useMemo,
+  useState,
+} from "react";
 import { useSDK } from "@thirdweb-dev/react";
 import teddyABI from "../ABIs/teddyABI.json";
 import tedABI from "../ABIs/tedABI.json";
@@ -13,11 +25,15 @@ import honeyABI from "../ABIs/honeyABI.json";
 import aiABI from "../ABIs/aiABI.json";
 import { NFT, SmartContract } from "@thirdweb-dev/sdk";
 import { BaseContract, BigNumber, ethers } from "ethers";
-import { NumericFormat } from 'react-number-format';
+import { NumericFormat } from "react-number-format";
 import NFTList from "../components/NFTList";
 import "../styles/Dashboard.css";
-import { LoadAllAccountDetails, allOwnedNFTs } from "../account/loadAllAccountDetails";
+import {
+  LoadAllAccountDetails,
+  allOwnedNFTs,
+} from "../account/loadAllAccountDetails";
 import ConnectWalletPage from "../components/ConnectWalletPage";
+import Sheet from 'react-modal-sheet';
 
 interface TheFactoryProps {
   allOwnedNFTs: allOwnedNFTs;
@@ -25,6 +41,8 @@ interface TheFactoryProps {
 
 function TheFactory(props: TheFactoryProps) {
   useTitle("FOTF | The Factory");
+  const [isSheetOpen, setSheetOpen] = useState(false);
+
   // const { tokens, isLoading, error, honeyBalance } = LoadAllAccountDetails();
   // const allOwnedNFTs = props.allOwnedNFTs;
   const { tokens, isLoading, error, honeyBalance } = LoadAllAccountDetails();
@@ -47,8 +65,8 @@ function TheFactory(props: TheFactoryProps) {
   const provider = sdk?.getProvider();
   const address = useAddress();
 
-  const leftDrawerWidth =  isSmallScreen? "0px" : "240px";
-  const rightDrawerWidth = isSmallScreen? "0px" : "340px";
+  const leftDrawerWidth = isSmallScreen ? "0px" : "240px";
+  const rightDrawerWidth = isSmallScreen ? "0px" : "340px";
 
   const [isActiveFilter, setIsActiveFilter] = useState(false);
   const [isTransferredFilter, setIsTransferredFilter] = useState(false);
@@ -67,7 +85,7 @@ function TheFactory(props: TheFactoryProps) {
   };
 
   const setFilter = (filterIn: string) => {
-    switch(filterIn) {
+    switch (filterIn) {
       case "Active":
         setIsActiveFilter(!isActiveFilter);
         setIsTransferredFilter(false);
@@ -92,40 +110,42 @@ function TheFactory(props: TheFactoryProps) {
   };
 
   useEffect(() => {
-    if(isMediumLarge || isMobile){
+    if (isMediumLarge || isMobile) {
       setSmallScreen(true);
+      setSheetOpen(true);
     } else {
       setSmallScreen(false);
+      setSheetOpen(false);
     }
   }, [isMediumLarge, isMobile]);
-
-  
 
   //////////// Header ///////////////////////////
 
   interface IDictionary {
-    [index:string]: string;
+    [index: string]: string;
   }
 
   const [searchInput, setSearchInput] = useState("");
 
-  const handleSearch = (e: { preventDefault: () => void; target: { value: SetStateAction<string>; }; }) => {
+  const handleSearch = (e: {
+    preventDefault: () => void;
+    target: { value: SetStateAction<string> };
+  }) => {
     e.preventDefault();
     setSearchInput(e.target.value);
   };
-  
+
   try {
     if (searchInput.length > 0) {
-    if(searchInput.match("[0-9]+")) {
-      AllTokens.filter((token: NFT) => {
-        console.log(token.metadata.id.match(searchInput));
-        return token.metadata.id.match(searchInput);
-    });
-    } else {
-      //filter on attributes
-      
+      if (searchInput.match("[0-9]+")) {
+        AllTokens.filter((token: NFT) => {
+          console.log(token.metadata.id.match(searchInput));
+          return token.metadata.id.match(searchInput);
+        });
+      } else {
+        //filter on attributes
+      }
     }
-  }
   } catch (error) {
     console.log(error);
     setSearchInput("");
@@ -135,75 +155,223 @@ function TheFactory(props: TheFactoryProps) {
 
   return (
     <Box className="factory-inner-container">
-      {address && <Box className={isSmallScreen? "header-mobile" : "header"}>
-        <Box className={isSmallScreen? "header-row-mobile" : "header-row"}>
-          <h3 className={isSmallScreen? "page-header-mobile" : "page-header"}>The Factory</h3>
-          <input
-            type="text"
-            className="factory-search"
-            placeholder="Search for Ted, Teddy or AI Token ID"
-            onChange={handleSearch}
-            value={searchInput} />
+      {address && (
+        <Box className={isSmallScreen ? "header-mobile" : "header"}>
+          <Box className={isSmallScreen ? "header-row-mobile" : "header-row"}>
+            <h3
+              className={isSmallScreen ? "page-header-mobile" : "page-header"}
+            >
+              The Factory
+            </h3>
+            <input
+              type="text"
+              className="factory-search"
+              placeholder="Search for Ted, Teddy or AI Token ID"
+              onChange={handleSearch}
+              value={searchInput}
+            />
+          </Box>
+          <Box className={isSmallScreen ? "filter-row-mobile" : "filter-row"}>
+            <Button
+              disabled={!address}
+              className={
+                isActiveFilter ? "filter-button-selected" : "filter-button"
+              }
+              onClick={() => setFilter("Active")}
+            >
+              Active NFTs
+            </Button>
+            <Button
+              disabled={!address}
+              className={
+                isTransferredFilter ? "filter-button-selected" : "filter-button"
+              }
+              onClick={() => setFilter("Recent")}
+            >
+              Recently Transferred
+            </Button>
+            <Button
+              disabled={!address}
+              className={
+                isLongestHeldFilter ? "filter-button-selected" : "filter-button"
+              }
+              onClick={() => setFilter("Held")}
+            >
+              Longest Held
+            </Button>
+          </Box>
         </Box>
-         <Box className={isSmallScreen? "filter-row-mobile" : "filter-row"}>
-          <Button disabled={!address} className={isActiveFilter ? "filter-button-selected" : "filter-button"}
-                  onClick={() => setFilter("Active")}>
-            Active NFTs
-          </Button>
-          <Button disabled={!address} className={isTransferredFilter ? "filter-button-selected" : "filter-button"} onClick={() => setFilter("Recent")}>
-            Recently Transferred
-          </Button>
-          <Button disabled={!address} className={isLongestHeldFilter ? "filter-button-selected" : "filter-button"} onClick={() => setFilter("Held")}>
-            Longest Held
-          </Button>
-        </Box>
-      </Box>
-      }
-      {address
-      ? <div>
-          { error ? <div><p>NFT not found - error</p></div> 
-          : <Box className="gallery" sx={{ zIndex: "0", paddingLeft: "10px", paddingBottom: "75px", backgroundColor: "white", paddingRight: "10px" }}>
-              {tokens
-              ? <NFTList tokens={AllTokens} searchText={searchInput} />
-              : <p>Loading...</p> }
-             </Box>
-            }
+      )}
+      {address ? (
+        <div>
+          {error ? (
+            <div>
+              <p>NFT not found - error</p>
+            </div>
+          ) : (
+            <Box
+              className="gallery"
+              sx={{
+                zIndex: "0",
+                paddingLeft: "10px",
+                paddingBottom: "75px",
+                backgroundColor: "white",
+                paddingRight: "10px",
+              }}
+            >
+              {tokens ? (
+                <NFTList tokens={AllTokens} searchText={searchInput} />
+              ) : (
+                <p>Loading...</p>
+              )}
+            </Box>
+          )}
 
-        <Backdrop
-          sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
-          open={isLoading}
-          onClick={handleClose}
-        >
-          <CircularProgress color="inherit" />
-        </Backdrop>
+          <Backdrop
+            sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
+            open={isLoading}
+            onClick={handleClose}
+          >
+            <CircularProgress color="inherit" />
+          </Backdrop>
         </div>
-      : <ConnectWalletPage/>
-      }
-      {address && <Box  sx={{ position: "fixed", paddingLeft: "20px", paddingRight: "20px", bottom: "0px", height: "70px", width: "100%", backgroundColor: "#FED100"}}>
+      ) : (
+        <ConnectWalletPage />
+      )}
+      {address && !isSmallScreen && (
+        <Box
+          sx={{
+            position: "fixed",
+            paddingLeft: "20px",
+            paddingRight: "20px",
+            bottom: "0px",
+            height: "70px",
+            width: "100%",
+            backgroundColor: "#FED100",
+          }}
+        >
           <Box className="row-no-center">
-            <Box className="selected-box" sx={{display: "flex", flexDirection:"row"}}>
+            <Box
+              className="selected-box"
+              sx={{ display: "flex", flexDirection: "row" }}
+            >
               <Box className="stats-col">
-                <p className="stats">{new Intl.NumberFormat('en-US', { minimumIntegerDigits: 2 }).format(selectedTeds?.length)}</p>
+                <p className="stats">
+                  {new Intl.NumberFormat("en-US", {
+                    minimumIntegerDigits: 2,
+                  }).format(selectedTeds?.length)}
+                </p>
                 <p className="stats-name"> Fury Teds</p>
               </Box>
               <Box className="stats-col">
-                <p className="stats">{new Intl.NumberFormat('en-US', { minimumIntegerDigits: 2 }).format(selectedTeddies?.length)}</p>
+                <p className="stats">
+                  {new Intl.NumberFormat("en-US", {
+                    minimumIntegerDigits: 2,
+                  }).format(selectedTeddies?.length)}
+                </p>
                 <p className="stats-name"> Teddy by FOTF</p>
               </Box>
               <Box className="stats-col">
-                <p className="stats">{new Intl.NumberFormat('en-US', { minimumIntegerDigits: 2 }).format(selectedAITeds?.length)}</p>
-                <p className="stats-name"> AI<br/> Teds</p>
+                <p className="stats">
+                  {new Intl.NumberFormat("en-US", {
+                    minimumIntegerDigits: 2,
+                  }).format(selectedAITeds?.length)}
+                </p>
+                <p className="stats-name">
+                  {" "}
+                  AI
+                  <br /> Teds
+                </p>
               </Box>
             </Box>
-          {/* <NumericFormat value={honeyBalance} displayType={'text'} thousandSeparator={true} prefix={'$'} suffix={' HNY'} /> */}
-            <Box className="burn-box" sx={{display: "flex", flexDirection:"row"}}>
+            {/* <NumericFormat value={honeyBalance} displayType={'text'} thousandSeparator={true} prefix={'$'} suffix={' HNY'} /> */}
+            <Box
+              className="burn-box"
+              sx={{ display: "flex", flexDirection: "row" }}
+            >
               <Button className="burn-btn">Burn for $HNY</Button>
-              <Button className="burn-btn">Burn 10 + 500k $HNY for Custom 1/1</Button> 
+              <Button className="burn-btn">
+                Burn 10 + 500k $HNY for Custom 1/1
+              </Button>
             </Box>
           </Box>
+        </Box>
+      )}
+
+    {isSmallScreen && !isSheetOpen && (
+      <Box
+        sx={{
+          position: "fixed",
+          paddingLeft: "20px",
+          paddingRight: "20px",
+          bottom: "0px",
+          height: "70px",
+          width: "100%",
+          backgroundColor: "#FED100",
+        }}
+        onClick={() => setSheetOpen(true)}
+      >
+        <Typography className="factory-sheet-text">View Selected</Typography>
       </Box>
-}
-    </Box>  
+    )}
+
+    <Sheet 
+      rootId="root"
+      isOpen={isSheetOpen}
+      onClose={() => setSheetOpen(false)}
+      detent="content-height">
+        <Sheet.Container>
+          <Sheet.Header />
+          <Sheet.Content>
+          <Box
+              className="selected-box"
+              sx={{ display: "flex", flexDirection: "row" }}
+            >
+              <Box className="stats-col">
+                <p className="stats">
+                  {new Intl.NumberFormat("en-US", {
+                    minimumIntegerDigits: 2,
+                  }).format(selectedTeds?.length)}
+                </p>
+                <p className="stats-name"> Fury Teds</p>
+              </Box>
+              <Box className="stats-col">
+                <p className="stats">
+                  {new Intl.NumberFormat("en-US", {
+                    minimumIntegerDigits: 2,
+                  }).format(selectedTeddies?.length)}
+                </p>
+                <p className="stats-name"> Teddy by FOTF</p>
+              </Box>
+              <Box className="stats-col">
+                <p className="stats">
+                  {new Intl.NumberFormat("en-US", {
+                    minimumIntegerDigits: 2,
+                  }).format(selectedAITeds?.length)}
+                </p>
+                <p className="stats-name">
+                  {" "}
+                  AI
+                  <br /> Teds
+                </p>
+              </Box>
+            </Box>
+            {/* <NumericFormat value={honeyBalance} displayType={'text'} thousandSeparator={true} prefix={'$'} suffix={' HNY'} /> */}
+            <Box
+              className="burn-box"
+              sx={{ display: "flex", flexDirection: "row" }}
+            >
+              <Button className="burn-btn">Burn for $HNY</Button>
+              <Button className="burn-btn">
+                Burn 10 + 500k $HNY for Custom 1/1
+              </Button>
+            </Box>
+          </Sheet.Content>
+        </Sheet.Container>
+
+        <Sheet.Backdrop />
+      </Sheet>
+    </Box>
   );
 }
 
