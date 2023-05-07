@@ -42,6 +42,10 @@ import {
 import GraphicTemplates from "./views/GraphicTemplates";
 import ConnectWalletPage from "./components/ConnectWalletPage";
 
+export const LeftDrawerWidthPX = "260px";
+export const LeftDrawerWidth = 260;
+
+
 function App() {
   useTitle("FOTF | Dashboard");
   const themeMui = useTheme();
@@ -179,7 +183,7 @@ function App() {
 
         <Box
           sx={{
-            marginLeft: navOpen ? "240px" : "0px",
+            marginLeft: navOpen ? LeftDrawerWidthPX : "0px",
             marginRight: rightNavOpen ? "340px" : "0px",
             marginTop: isSmallScreen ? "60px" : "0px",
             backgroundColor: "white",
@@ -205,8 +209,11 @@ function App() {
             <ConnectWalletPage />
           )}
 
+        <LeftDrawer navOpen={navOpen} setNavOpen={setNavOpen} />
+
           {navOpen ? (
-            <LeftDrawer navOpen={navOpen} setNavOpen={setNavOpen} />
+            <Box></Box>
+            
           ) : (
             <Box
               sx={{

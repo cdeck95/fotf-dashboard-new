@@ -1,4 +1,4 @@
-import { Box, Button, ImageList, useMediaQuery, useTheme } from "@mui/material";
+import { Box, Button, ImageList, Typography, useMediaQuery, useTheme } from "@mui/material";
 import {
   ConnectWallet,
   ThirdwebNftMedia,
@@ -33,6 +33,7 @@ import {
   allOwnedNFTs,
 } from "../account/loadAllAccountDetails";
 import ConnectWalletPage from "../components/ConnectWalletPage";
+import Sheet from 'react-modal-sheet';
 
 interface TheFactoryProps {
   allOwnedNFTs: allOwnedNFTs;
@@ -40,6 +41,8 @@ interface TheFactoryProps {
 
 function TheFactory(props: TheFactoryProps) {
   useTitle("FOTF | The Factory");
+  const [isSheetOpen, setSheetOpen] = useState(false);
+
   // const { tokens, isLoading, error, honeyBalance } = LoadAllAccountDetails();
   // const allOwnedNFTs = props.allOwnedNFTs;
   const { tokens, isLoading, error, honeyBalance } = LoadAllAccountDetails();
@@ -109,8 +112,10 @@ function TheFactory(props: TheFactoryProps) {
   useEffect(() => {
     if (isMediumLarge || isMobile) {
       setSmallScreen(true);
+      setSheetOpen(true);
     } else {
       setSmallScreen(false);
+      setSheetOpen(false);
     }
   }, [isMediumLarge, isMobile]);
 
@@ -233,7 +238,7 @@ function TheFactory(props: TheFactoryProps) {
       ) : (
         <ConnectWalletPage />
       )}
-      {address && (
+      {address && !isSmallScreen && (
         <Box
           sx={{
             position: "fixed",
@@ -292,6 +297,80 @@ function TheFactory(props: TheFactoryProps) {
           </Box>
         </Box>
       )}
+
+    {isSmallScreen && !isSheetOpen && (
+      <Box
+        sx={{
+          position: "fixed",
+          paddingLeft: "20px",
+          paddingRight: "20px",
+          bottom: "0px",
+          height: "70px",
+          width: "100%",
+          backgroundColor: "#FED100",
+        }}
+        onClick={() => setSheetOpen(true)}
+      >
+        <Typography className="factory-sheet-text">View Selected</Typography>
+      </Box>
+    )}
+
+    <Sheet 
+      rootId="root"
+      isOpen={isSheetOpen}
+      onClose={() => setSheetOpen(false)}
+      detent="content-height">
+        <Sheet.Container>
+          <Sheet.Header />
+          <Sheet.Content>
+          <Box
+              className="selected-box"
+              sx={{ display: "flex", flexDirection: "row" }}
+            >
+              <Box className="stats-col">
+                <p className="stats">
+                  {new Intl.NumberFormat("en-US", {
+                    minimumIntegerDigits: 2,
+                  }).format(selectedTeds?.length)}
+                </p>
+                <p className="stats-name"> Fury Teds</p>
+              </Box>
+              <Box className="stats-col">
+                <p className="stats">
+                  {new Intl.NumberFormat("en-US", {
+                    minimumIntegerDigits: 2,
+                  }).format(selectedTeddies?.length)}
+                </p>
+                <p className="stats-name"> Teddy by FOTF</p>
+              </Box>
+              <Box className="stats-col">
+                <p className="stats">
+                  {new Intl.NumberFormat("en-US", {
+                    minimumIntegerDigits: 2,
+                  }).format(selectedAITeds?.length)}
+                </p>
+                <p className="stats-name">
+                  {" "}
+                  AI
+                  <br /> Teds
+                </p>
+              </Box>
+            </Box>
+            {/* <NumericFormat value={honeyBalance} displayType={'text'} thousandSeparator={true} prefix={'$'} suffix={' HNY'} /> */}
+            <Box
+              className="burn-box"
+              sx={{ display: "flex", flexDirection: "row" }}
+            >
+              <Button className="burn-btn">Burn for $HNY</Button>
+              <Button className="burn-btn">
+                Burn 10 + 500k $HNY for Custom 1/1
+              </Button>
+            </Box>
+          </Sheet.Content>
+        </Sheet.Container>
+
+        <Sheet.Backdrop />
+      </Sheet>
     </Box>
   );
 }

@@ -334,3 +334,15 @@
     border: 1px solid black !important;
     transition: '0.5s ease-in-out';
   }
+
+  .factory-sheet-text {
+    font-size: 1.5rem;
+    font-family: 'Bebas Neue';
+    overflow-wrap: break-word;
+    text-align: left;
+    margin: 0%;
+    padding: 5px;
+    font-weight: 300;
+    line-height: 1;
+    color: black;
+  }

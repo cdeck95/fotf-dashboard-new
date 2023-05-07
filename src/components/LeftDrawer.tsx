@@ -27,8 +27,9 @@ import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
 import ImageOutlinedIcon from "@mui/icons-material/ImageOutlined";
 import PrecisionManufacturingOutlinedIcon from "@mui/icons-material/PrecisionManufacturingOutlined";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useAddress, useSDK } from "@thirdweb-dev/react";
+import { LeftDrawerWidth } from "../App";
 
 type NavProps = {
   setNavOpen: Function;
@@ -54,8 +55,9 @@ function LeftDrawer(props: NavProps) {
   const themeMui = useTheme();
   const isMobile = !useMediaQuery(themeMui.breakpoints.up("md"));
   const isMediumLarge = useMediaQuery(themeMui.breakpoints.down("lg"));
+  const [isSmallScreen, setSmallScreen] = useState(false);
   const [activePage, setActivePage] = React.useState("Dashboard");
-  const drawerWidth = navOpen ? 240 : 0;
+  const drawerWidth = navOpen ? LeftDrawerWidth : 0;
 
   const sdk = useSDK();
   const provider = sdk?.getProvider();
@@ -74,6 +76,40 @@ function LeftDrawer(props: NavProps) {
       setNavOpen(false);
     }
   };
+
+  useEffect(() => {
+    if (!isMobile && isMediumLarge) {
+      setSmallScreen(true);
+    } else {
+      setSmallScreen(isMobile);
+    }
+
+    switch (window.location.pathname) {
+      case "/TheFactory":
+        setActivePage("TheFactory");
+        break;
+      case "/HoneyExchange":
+        setActivePage("HoneyExchange");
+        break;
+      case "BuildATeddy":
+        setActivePage("BuildATeddy");
+        break;
+      case "/TeddyStaking":
+        setActivePage("TeddyStaking");
+        break;
+      case "/TedClaims":
+        setActivePage("TedClaims");
+        break;
+      case "/TraitSwapTeds":
+        setActivePage("TraitSwapTeds");
+        break;
+      default:
+        setActivePage("Dashboard");
+        break;
+    }
+  }, [isMobile, isMediumLarge]);
+
+ 
 
   const loadPage = (page: string) => {
     switch (page) {
@@ -180,7 +216,7 @@ function LeftDrawer(props: NavProps) {
                 src={fotfAppLogo}
                 alt="FOTF Logo"
                 onClick={() => loadPage("Dashboard")}
-                className={isMobile ? "mainLogo-Mobile" : "mainLogo"}
+                className={isSmallScreen ? "mainLogo-Mobile" : "mainLogo"}
               />
               {isMobile || isMediumLarge ? (
                 <IconButton onClick={() => setNavOpen(false)} size="large">
