@@ -188,7 +188,7 @@ function TheFactory(props: TheFactoryProps) {
               }
               onClick={() => setFilter("Recent")}
             >
-              Recently Transferred
+              Newest
             </Button>
             <Button
               disabled={!address}
