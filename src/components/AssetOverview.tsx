@@ -13,10 +13,20 @@ function AssetOverview() {
   console.log(honeyBalance);
 
   const allOwnedNFTs = tokens.AllTokens.tokens;
-  const tedNFTs = tokens.Teds.tokens;
-  const teddyNFTs = tokens.Teddies.tokens;
-  const aiTedNFTs = tokens.AITeds.tokens;
+  const tedNFTs = tokens.Teds?.tokens;
+  const teddyNFTs = tokens.Teddies?.tokens;
+  const aiTedNFTs = tokens.AITeds?.tokens;
+  const stakedTeddies = tokens.StakedTeddiesIDs?.tokens;
 
+  var teddyCount = 0;
+  if (stakedTeddies && teddyNFTs) {
+    teddyCount  = teddyNFTs?.length + stakedTeddies?.length;
+  } else if (teddyNFTs) {
+    teddyCount = teddyNFTs?.length;
+  } else if (stakedTeddies) {
+    teddyCount = stakedTeddies?.length;
+  }
+  
   return (
     <Box
       sx={{ display: "flex", justifyContent: "center", alignItems: "center" }}
