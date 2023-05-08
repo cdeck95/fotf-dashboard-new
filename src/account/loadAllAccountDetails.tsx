@@ -3,6 +3,7 @@ import {
   useAddress,
   useOwnedNFTs,
   useContract,
+  useNFT,
 } from "@thirdweb-dev/react";
 import { NFT, SmartContract } from "@thirdweb-dev/sdk";
 import { BaseContract, BigNumber, BigNumberish, ethers } from "ethers";
@@ -103,32 +104,35 @@ const AI_MINT = "0x1C6d280280f7f8d139659E314d738bdD466741Ba";
 const BIRTH_CERTIFICATE_CONTRACT = "0xFC182BB64a3283f880861E065463356de92FBEcb";
 const ONE_OF_ONE_CONTRACT = "0x76b9D178fc4AdDaC0A2B6366d4DD44b4F900C168";
 
-async function AddStakedTokens(
-  contract_TEDDY: SmartContract,
-  tokenIDs: string[]
-) {
-  //const { data: stakedTeddy, isLoading: isLoadingStakedTeddy, error: errorStakedTeddy } = await useNFT(contract_STAKING, BigNumber.from(tokenID));
-  const {
-    data: allStakedNFTs,
-    error: errorStaked,
-    isLoading: isLoadingStaked,
-  } = useOwnedNFTs(contract_TEDDY, STAKING_CONTRACT);
-  console.log(allStakedNFTs);
-  console.log(errorStaked);
-  console.log(isLoadingStaked);
+// async function AddStakedTokens(
+//   contract_TEDDY: SmartContract,
+//   tokenIDs: string[]
+// ) {
+//   tokenIDs.forEach((tokenID) => {
+//     console.log(tokenID);
+//     const { data: stakedTeddy, isLoading: isLoadingStakedTeddy, error: errorStakedTeddy } = await useNFT(contract_TEDDY, BigNumber.from(tokenID));
+//   }
+//   // const {
+//   //   data: allStakedNFTs,
+//   //   error: errorStaked,
+//   //   isLoading: isLoadingStaked,
+//   // } = useOwnedNFTs(contract_TEDDY, STAKING_CONTRACT);
+//   console.log(allStakedNFTs);
+//   console.log(errorStaked);
+//   console.log(isLoadingStaked);
 
-  console.log("adding staked tokens");
-  console.log(allStakedNFTs);
-  const tokens: NFT[] = [];
-  allStakedNFTs?.map((token) => {
-    console.log(token.owner);
-    if (tokenIDs.includes(token.owner)) {
-      console.log(`${token.metadata.id} is staked}`);
-      tokens.push(token);
-    }
-  });
-  return tokens;
-}
+//   console.log("adding staked tokens");
+//   console.log(allStakedNFTs);
+//   const tokens: NFT[] = [];
+//   allStakedNFTs?.map((token) => {
+//     console.log(token.owner);
+//     if (tokenIDs.includes(token.owner)) {
+//       console.log(`${token.metadata.id} is staked}`);
+//       tokens.push(token);
+//     }
+//   });
+//   return tokens;
+// }
 
 /////////////// Load All NFTs ///////////////////////
 
@@ -201,6 +205,17 @@ export function LoadAllAccountDetails(): allOwnedNFTs {
 
   // const { contract: contract_STAKING } = useContract(STAKING_CONTRACT);
 
+  const [stakedTokenIDs, setStakedTokenIDs] = useState<any>([]);
+
+  stakedTokenIDs.forEach((tokenID: any) => {
+    console.log(tokenID);
+    const { data: stakedTeddy, isLoading: isLoadingStakedTeddy, error: errorStakedTeddy } = useNFT(contract_TEDDY, BigNumber.from(tokenID));
+    //maybe i need to pass this array of IDs into a subcomponent that will return the NFT?
+    console.log(stakedTeddy);
+    teddyNFTs?.push(stakedTeddy!);
+  });
+
+
   const {
     data: aiNFTs,
     error: errorAI,
@@ -266,7 +281,7 @@ export function LoadAllAccountDetails(): allOwnedNFTs {
   }, [tedNFTs, teddyNFTs, aiNFTs, stakedNFTs]);
 
   const LoadStakedTokens = useCallback(async () => {
-    let tokensToReturn: NFT[] = [];
+    // let tokensToReturn: NFT[] = [];
     try {
       const data: StakedTokens[] = await contract_STAKING?.call(
         "getStakedTokens", // Name of your function as it is on the smart contract
@@ -274,18 +289,21 @@ export function LoadAllAccountDetails(): allOwnedNFTs {
         address
       );
       console.log(data);
-      const tokenIDs: string[] = [];
-      data.forEach((token) => {
-        tokenIDs.push(token.tokenId.toString());
+      const stakedTokenIDsTmp: string[] = [];
+
+      data?.forEach((token) => {
+        stakedTokenIDsTmp.push(token.tokenId.toString());
+        // const { data: stakedTeddy, isLoading: isLoadingStakedTeddy, error: errorStakedTeddy } = useNFT(contract_TEDDY, BigNumber.from(token.tokenId));
+        // tokensToReturn.push(stakedTeddy!);
       });
 
-      tokensToReturn = await AddStakedTokens(contract_TEDDY!, tokenIDs);
-      console.log(tokensToReturn);
-      setStakedNFTs(tokensToReturn);
+      // tokensToReturn = await AddStakedTokens(contract_TEDDY!, tokenIDs);
+      // console.log(tokensToReturn);
+      setStakedTokenIDs(stakedTokenIDsTmp);
     } catch (e) {
       console.log(e);
     }
-  }, [address, contract_STAKING, contract_TEDDY]);
+  }, [address, contract_STAKING]);
 
   const LoadContractFOTF = useCallback(async () => {
     try {
@@ -400,7 +418,7 @@ export function LoadAllAccountDetails(): allOwnedNFTs {
       console.log(e);
       console.log("Error!");
     }
-  }, [sdk, address]);
+  }, [sdk, address, contract_FOTF, contract_REWARDS, contract_AI, contract_STAKING, contract_BIRTHCERTS, contract_OneOfOne, contract_TEDDY, LoadContractFOTF, LoadContractRewards, LoadContractAI, LoadContractStaking, LoadContractBirthCerts, LoadContractOneOfOne, LoadStakedTokens, LoadHoney]);
 
   if (error || errorTeddy || errorAI) {
     allOwnedNFTs.error = true;
