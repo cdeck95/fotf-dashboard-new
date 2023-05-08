@@ -192,15 +192,17 @@ export function LoadAllAccountDetails(): allOwnedNFTs {
   //   data: oneOfOneNFTs,
   //   error: errorOneOfOne,
   //   isLoading: isLoadingOneOfOne,
-  // } = useOwnedNFTs(contract_OneOfOne, address);
-  // // const {
-  // //   data: oneOfOneNFTs,
-  // //   error: errorOneOfOne,
-  // //   isLoading: isLoadingOneOfOne,
-  // // } = useOwnedNFTs(contract_OneOfOneNative, address);
-  // console.log(oneOfOneNFTs);
-  // console.log(errorOneOfOne);
-  // console.log(isLoadingOneOfOne);
+  // } = useOwnedNFTs(contract_OneOfOneNative, address);
+
+  const {
+    data: oneOfOneNFTs,
+    error: errorOneOfOne,
+    isLoading: isLoadingOneOfOne,
+  } = useOwnedNFTs(contract_OneOfOne, address);
+  console.log(contract_OneOfOne);
+  console.log(oneOfOneNFTs);
+  console.log(errorOneOfOne);
+  console.log(isLoadingOneOfOne);
 
 
   const {
