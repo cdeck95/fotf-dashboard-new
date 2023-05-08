@@ -12,10 +12,12 @@ import StarIcon from "@mui/icons-material/Star";
 import ControlPointIcon from "@mui/icons-material/ControlPoint";
 import { ThirdwebNftMedia } from "@thirdweb-dev/react";
 import "../styles/Dashboard.css";
+import { LoadStakedTeddy } from "../account/loadStakedTeddy";
 
 interface NFTListProps {
   tokens: NFT[];
   searchText: string;
+  stakedIDs: string[];
 }
 
 function NFTList(props: NFTListProps) {
@@ -75,6 +77,15 @@ function NFTList(props: NFTListProps) {
     e.metadata.id!.includes(props.searchText)
   );
   console.log(filteredNFTs);
+
+  //  props.stakedIDs.forEach((tokenID: string) => {
+  //   console.log(tokenID);
+  //   const stakedTeddy = LoadStakedTeddy(tokenID);
+  //   console.log(stakedTeddy);
+  //   teddyNFTs?.push(stakedTeddy!);
+  //   // //maybe i need to pass this array of IDs into a subcomponent that will return the NFT?
+    
+  // });
 
   return (
     <ImageList

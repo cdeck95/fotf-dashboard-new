@@ -13,13 +13,23 @@ function AssetOverview() {
   console.log(honeyBalance);
 
   const allOwnedNFTs = tokens.AllTokens.tokens;
-  const tedNFTs = tokens.Teds.tokens;
-  const teddyNFTs = tokens.Teddies.tokens;
-  const aiTedNFTs = tokens.AITeds.tokens;
+  const tedNFTs = tokens.Teds?.tokens;
+  const teddyNFTs = tokens.Teddies?.tokens;
+  const aiTedNFTs = tokens.AITeds?.tokens;
+  const stakedTeddies = tokens.StakedTeddiesIDs?.tokens;
 
-  const oneOfOnes = tokens.OneofOnes.tokens;
-  const birthCerts = tokens.BirthCertificates.tokens;
-  const traitTokens = tokens.TraitSwapTokens.tokens;
+  var teddyCount = 0;
+  if (stakedTeddies && teddyNFTs) {
+    teddyCount  = teddyNFTs?.length + stakedTeddies?.length;
+  } else if (teddyNFTs) {
+    teddyCount = teddyNFTs?.length;
+  } else if (stakedTeddies) {
+    teddyCount = stakedTeddies?.length;
+  }
+
+  const oneOfOnes = tokens.OneofOnes?.tokens;
+  const birthCerts = tokens.BirthCertificates?.tokens;
+  const traitTokens = tokens.TraitSwapTokens?.tokens;
 
   return (
     <Box className="info-card">
@@ -35,7 +45,7 @@ function AssetOverview() {
           <Typography className="aseet-type">Teds</Typography>
         </Box>
         <Box className="col-no-space">
-          <Typography className="asset-numbers">{teddyNFTs?.length}</Typography>
+          <Typography className="asset-numbers">{teddyCount}</Typography>
           <Typography className="aseet-type">Teddies</Typography>
         </Box>
         <Box className="col-no-space">

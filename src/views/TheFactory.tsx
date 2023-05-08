@@ -34,6 +34,7 @@ import {
 } from "../account/loadAllAccountDetails";
 import ConnectWalletPage from "../components/ConnectWalletPage";
 import Sheet from 'react-modal-sheet';
+import { LoadStakedTeddy } from "../account/loadStakedTeddy";
 
 interface TheFactoryProps {
   allOwnedNFTs: allOwnedNFTs;
@@ -53,9 +54,18 @@ function TheFactory(props: TheFactoryProps) {
   console.log(honeyBalance);
 
   const AllTokens = tokens.AllTokens.tokens;
-  const tedNFTs = tokens.Teds.tokens;
-  const teddyNFTs = tokens.Teddies.tokens;
-  const aiTedNFTs = tokens.AITeds.tokens;
+  const tedNFTs = tokens.Teds?.tokens;
+  const teddyNFTs = tokens.Teddies?.tokens;
+  const aiTedNFTs = tokens.AITeds?.tokens;
+  const stakedTeddiesIDs = tokens.StakedTeddiesIDs?.tokens;
+
+  // stakedTeddiesIDs.forEach((tokenID: string) => {
+  //   console.log(tokenID);
+  //   const stakedTeddy = LoadStakedTeddy(tokenID);
+  //   console.log(stakedTeddy);
+  //   teddyNFTs?.push(stakedTeddy!);
+  //   AllTokens.push    
+  // });
 
   const theme = useTheme();
   const isMobile = !useMediaQuery(theme.breakpoints.up("md"));
@@ -188,7 +198,7 @@ function TheFactory(props: TheFactoryProps) {
               }
               onClick={() => setFilter("Recent")}
             >
-              Recently Transferred
+              Newest
             </Button>
             <Button
               disabled={!address}
@@ -220,7 +230,7 @@ function TheFactory(props: TheFactoryProps) {
               }}
             >
               {tokens ? (
-                <NFTList tokens={AllTokens} searchText={searchInput} />
+                <NFTList tokens={AllTokens} searchText={searchInput} stakedIDs={stakedTeddiesIDs!}/>
               ) : (
                 <p>Loading...</p>
               )}
