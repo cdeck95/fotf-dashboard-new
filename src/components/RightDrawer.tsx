@@ -373,7 +373,7 @@ function PermanentDrawerRight(props: NavProps) {
           </Box>
         </Toolbar>
         <Box className="info-card">
-          <Box className="row-even">
+          <Box className="row-between">
             <div className="info-card__title">{blogTitle}</div>
             <Button
               onClick={() => handleClickLink()}
@@ -387,7 +387,7 @@ function PermanentDrawerRight(props: NavProps) {
         </Box>
         {showAssetOverview && <AssetOverviewSidebar />}
         <Box className="info-card">
-          <Box className="row-even">
+          <Box className="row-between">
             <div className="info-card__title">Our Partners</div>
             <Button
               onClick={() => handleClickLink()}
