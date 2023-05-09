@@ -205,6 +205,7 @@ body {
   align-items: center;
   flex-wrap: wrap;
   overflow-wrap: break-word;
+  width: 100%;
 }
 
 .row-around{
@@ -386,6 +387,7 @@ body {
 .app-container {
   width: 100%;
   height: 100% !important;
+  overflow-y: hidden;
 }
 
 .container {
@@ -559,4 +561,23 @@ body {
 
 .addPadding {
   padding-top: 100px;
+}
+
+.polygon-bridge-containter {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.Large-Header {
+  font-size: 5rem;
+  font-family: 'Bebas Neue';
+  color: #000000;
+  margin-top: 5px;
+  margin-left: 10px;
+  margin-bottom: 5px;
+  margin-right: 10px;
 }

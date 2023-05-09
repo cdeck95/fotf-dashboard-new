@@ -137,6 +137,22 @@ function PermanentDrawerRight(props: NavProps) {
         </p>
       );
       break;
+    case "/Bridge":
+      showAssetOverview = true;
+      blogTitle = "What is Polygon Bridge?!";
+      blogContent = (
+        <p className="info-card__description">
+          Simply put, it is a gas savings way for Fury of The Fur to exist as the brand we've all pictured.
+          Polygon is a Layer 2 Solution, meaning all assets will still exist on the Ethereum Blockchain in 
+          some way.
+          <br />
+          <br />
+          With lower gas fees & quicker transactions, Polygon not only allows you to spend less money on 
+          fees, but will also allow us to continue focusing on mass adoption of blockchain technologies
+          into a full functioning brand.
+        </p>
+      );
+      break;
     case "/TeddyStaking":
       showAssetOverview = true;
       blogTitle = "Teddy Staking!?";

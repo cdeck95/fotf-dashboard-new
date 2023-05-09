@@ -41,6 +41,7 @@ import {
 } from "./account/loadAllAccountDetails";
 import GraphicTemplates from "./views/GraphicTemplates";
 import ConnectWalletPage from "./components/ConnectWalletPage";
+import PolygonBridge from "./components/PolygonBridge";
 
 export const LeftDrawerWidthPX = "260px";
 export const LeftDrawerWidth = 260;
@@ -196,6 +197,8 @@ function App() {
               <Route path="/HoneyExchange" element={<HoneyExchange />} />
               <Route path="/TeddyStaking" element={<TeddyStaking />} />
               <Route path="/TedClaims" element={<TedClaims />} />{" "}
+              <Route path="/Bridge" element={<PolygonBridge allOwnedNFTs={allOwnedNFTsArray} />} />
+
               <Route
                 path="/TheFactory"
                 element={<TheFactory allOwnedNFTs={allOwnedNFTsArray} />}

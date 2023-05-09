@@ -30,6 +30,7 @@ import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import { useEffect, useState } from "react";
 import { useAddress, useSDK } from "@thirdweb-dev/react";
 import { LeftDrawerWidth } from "../App";
+import ConnectingAirportsOutlinedIcon from '@mui/icons-material/ConnectingAirportsOutlined';
 
 type NavProps = {
   setNavOpen: Function;
@@ -77,6 +78,8 @@ function LeftDrawer(props: NavProps) {
     }
   };
 
+  const [isBridgePage, setIsBridgePage] = useState(false);
+
   useEffect(() => {
     if (!isMobile && isMediumLarge) {
       setSmallScreen(true);
@@ -87,24 +90,35 @@ function LeftDrawer(props: NavProps) {
     switch (window.location.pathname) {
       case "/TheFactory":
         setActivePage("TheFactory");
+        setIsBridgePage(false);
         break;
       case "/HoneyExchange":
         setActivePage("HoneyExchange");
+        setIsBridgePage(false);
         break;
       case "BuildATeddy":
         setActivePage("BuildATeddy");
+        setIsBridgePage(false);
         break;
       case "/TeddyStaking":
         setActivePage("TeddyStaking");
+        setIsBridgePage(false);
         break;
       case "/TedClaims":
         setActivePage("TedClaims");
+        setIsBridgePage(false);
         break;
       case "/TraitSwapTeds":
         setActivePage("TraitSwapTeds");
+        setIsBridgePage(false);
+        break;
+      case "/Bridge":
+        setActivePage("PolygonBridge");
+        setIsBridgePage(true);
         break;
       default:
         setActivePage("Dashboard");
+        setIsBridgePage(false);
         break;
     }
   }, [isMobile, isMediumLarge]);
@@ -160,6 +174,11 @@ function LeftDrawer(props: NavProps) {
       case "TheFactory":
         navigate("/TheFactory");
         setActivePage("TheFactory");
+        handleMobileClick();
+        break;
+      case "PolygonBridge":
+        navigate("/Bridge");
+        setActivePage("PolygonBridge");
         handleMobileClick();
         break;
       case "GraphicTemplates":
@@ -372,6 +391,18 @@ function LeftDrawer(props: NavProps) {
               <ListItemText primary={"The Factory"} />
             </ListItemButton>
           </ListItem>
+          {/* <ListItem
+            key={"PolygonBridge"}
+            disablePadding
+            onClick={() => loadPage("PolygonBridge")}
+          >
+            <ListItemButton selected={activePage === "PolygonBridge"}>
+              <ListItemIcon>
+                <ConnectingAirportsOutlinedIcon fontSize="small" />
+              </ListItemIcon>
+              <ListItemText primary={"Polygon Bridge"} />
+            </ListItemButton>
+          </ListItem> */}
         </List>
         <Box
           sx={{
@@ -436,6 +467,18 @@ function LeftDrawer(props: NavProps) {
               theme.zIndex.drawer + 1,
           }}
           open={!address}
+          onClick={handleClose}
+        >
+          {/* <CircularProgress color="inherit" /> */}
+        </Backdrop>
+        <Backdrop
+          sx={{
+            color: "#fff",
+            width: drawerWidth,
+            zIndex: (theme: { zIndex: { drawer: number } }) =>
+              theme.zIndex.drawer + 1,
+          }}
+          open={isBridgePage}
           onClick={handleClose}
         >
           {/* <CircularProgress color="inherit" /> */}
