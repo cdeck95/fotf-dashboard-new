@@ -198,7 +198,7 @@ body {
   padding-left: 10px;
 }
 
-.row-even{
+.row-between{
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -218,6 +218,7 @@ body {
   margin: 0%;
   padding: 0%;
   overflow-wrap: break-word;
+  width: 100%;
 }
 
 .row-center{

@@ -59,6 +59,8 @@ function PolygonBridgeConfirm(props: BridgeProps) {
   const isMobile = !useMediaQuery(theme.breakpoints.up("md"));
   const isMediumLarge = useMediaQuery(theme.breakpoints.down("lg"));
   const [isSmallScreen, setSmallScreen] = useState(false);
+  const [collectionCount, setCollectionCount] = useState(0);
+
   const sdk = useSDK();
   const provider = sdk?.getProvider();
   const address = useAddress();
@@ -83,6 +85,16 @@ function PolygonBridgeConfirm(props: BridgeProps) {
       setSheetOpen(false);
     }
   }, [isMediumLarge, isMobile]);
+
+  useEffect(() => {
+    if (collection === "Fury Teds") {
+      setCollectionCount(tedNFTs?.length!);
+    } else if (collection === "Teddies by FOTF") {
+      setCollectionCount(teddyCount);
+    } else if (collection === "AI Teds") {
+      setCollectionCount(aiTedNFTs?.length!);
+    }
+  }, [aiTedNFTs?.length, collection, tedNFTs?.length, teddyCount]);
 
   //////////// OnSelect Functions ///////////////////////////
 
@@ -127,109 +139,56 @@ function PolygonBridgeConfirm(props: BridgeProps) {
           paddingBottom: "10px",
         }}
       >
-        {collection==="Fury Teds" && tedNFTs && (
-          <Box className="col-margin">
-            <Box
-              className={
-                selectedCollection === "Fury Teds" ? "card-selected" : "card"
-              }
-              onClick={() => {
-                handleOnSelect("Fury Teds");
-              }}
-              sx={{
-                marginLeft: "auto",
-                marginRight: "auto",
-                background: "none",
-                maxHeight: "375px",
-                maxWidth: "350px",
-              }}
-            >
-              <Box sx={{ width: "100%", height: "100%", position: "relative" }}>
-                <ThirdwebNftMedia
-                  metadata={tedNFTs![0].metadata}
-                  style={{
-                    maxHeight: "280px",
-                    maxWidth: "280px",
-                    borderRadius: "10px",
-                    objectFit: "cover",
-                    width: "280px",
-                    height: "280px",
-                  }}
-                />
-                {selectedCollection === "Fury Teds" && (
-                  <p className="title-selected">Bridge</p>
-                )}
-              </Box>
-              <Typography className="desc-text-larger">
-                <span className="desc-text-larger-accent">
-                  {tedNFTs?.length}
-                </span>{" "}
-                Fury Teds
-              </Typography>
-            </Box>
+        {collection==="Fury Teds" && aiTedNFTs && (
+          
+          <Box className="row-even" >
+             <ThirdwebNftMedia
+                metadata={tedNFTs![0].metadata}
+                style={{
+                  maxHeight: "280px",
+                  maxWidth: "280px",
+                  borderRadius: "10px",
+                  objectFit: "cover",
+                  width: "280px",
+                  height: "280px",
+                }}
+              />
+            <Typography className="desc-text-largest">
+              <span className="desc-text-largest-accent">
+                {tedNFTs?.length}
+              </span>{" "}
+              Fury Teds
+            </Typography>
           </Box>
-        )}
+      )}
 
-    {collection==="Teddies by FOTF" && teddyNFTs && (
-          <Box className="col-margin">
-            <Box
-              className={
-                selectedCollection === "Teddies by FOTF" ? "card-selected" : "card"
-              }
-              onClick={() => {
-                handleOnSelect("Teddies by FOTF");
-              }}
-              sx={{
-                marginLeft: "auto",
-                marginRight: "auto",
-                background: "none",
-                maxHeight: "375px",
-                maxWidth: "350px",
-              }}
-            >
-              <Box sx={{ width: "100%", height: "100%", position: "relative" }}>
-                <ThirdwebNftMedia
-                  metadata={teddyNFTs![0].metadata}
-                  style={{
-                    maxHeight: "280px",
-                    maxWidth: "280px",
-                    borderRadius: "10px",
-                    objectFit: "cover",
-                    width: "280px",
-                    height: "280px",
-                  }}
-                />
-                {selectedCollection === "Teddies by FOTF" && (
-                  <p className="title-selected">Bridge</p>
-                )}
-              </Box>
-              <Typography className="desc-text-larger">
-                <span className="desc-text-larger-accent">{teddyCount}</span>{" "}
-                Teddies
-              </Typography>
-            </Box>
+{collection==="Teddies by FOTF" && teddyNFTs && (
+          
+          <Box className="row-even" >
+             <ThirdwebNftMedia
+                metadata={teddyNFTs![0].metadata}
+                style={{
+                  maxHeight: "280px",
+                  maxWidth: "280px",
+                  borderRadius: "10px",
+                  objectFit: "cover",
+                  width: "280px",
+                  height: "280px",
+                }}
+              />
+            <Typography className="desc-text-largest">
+              <span className="desc-text-largest-accent">
+                {teddyCount}
+              </span>{" "}
+              Teddies
+            </Typography>
           </Box>
-        )}
+      )}
 
     {collection==="AI Teds" && aiTedNFTs && (
-          <Box className="col-margin">
-            <Box
-              className={
-                selectedCollection === "AI Teds" ? "card-selected" : "card"
-              }
-              onClick={() => {
-                handleOnSelect("AI Teds");
-              }}
-              sx={{
-                marginLeft: "auto",
-                marginRight: "auto",
-                background: "none",
-                maxHeight: "375px",
-                maxWidth: "350px",
-              }}
-            >
-              <Box sx={{ width: "100%", height: "100%", position: "relative" }}>
-                <ThirdwebNftMedia
+          
+            <Box className="row-even" >
+               <ThirdwebNftMedia
                   metadata={aiTedNFTs![0].metadata}
                   style={{
                     maxHeight: "280px",
@@ -240,18 +199,13 @@ function PolygonBridgeConfirm(props: BridgeProps) {
                     height: "280px",
                   }}
                 />
-                {selectedCollection === "AI Teds" && (
-                  <p className="title-selected">Bridge</p>
-                )}
-              </Box>
-              <Typography className="desc-text-larger">
-                <span className="desc-text-larger-accent">
+              <Typography className="desc-text-largest">
+                <span className="desc-text-largest-accent">
                   {aiTedNFTs?.length}
                 </span>{" "}
                 AI Teds
               </Typography>
             </Box>
-          </Box>
         )}
       </Box>
       <Box
@@ -259,9 +213,8 @@ function PolygonBridgeConfirm(props: BridgeProps) {
         sx={{ paddingTop: "10px", paddingBottom: "10px" }}
       >
         <Typography className="desc-text">
-          <span className="accent-text">Note:</span> This will include all
-          Staked Teddies. Please verify the total number of assets before you
-          choose which asset(s) to bridge. If you find any issues please open a
+          <span className="accent-text">Note:</span> Please verify the total
+          number of assets before you choose to bridge. If you find any issues please open a
           support ticket in the{" "}
           <a href="https://discord.gg/fotf">
             <span className="underline">FOTF Discord</span>
@@ -272,6 +225,7 @@ function PolygonBridgeConfirm(props: BridgeProps) {
       <Box className="row-center">
         <Button
           className="bridge-btn"
+          sx={{marginRight: "10px !important", marginLeft: "10px !important"}}
           variant="contained"          
           onClick={() => {
             setAdvance(false);
@@ -287,7 +241,8 @@ function PolygonBridgeConfirm(props: BridgeProps) {
         <Button
           className="bridge-btn"
           variant="contained"
-          disabled={selectedCollection === ""}
+          sx={{marginRight: "10px !important", marginLeft: "10px !important"}}
+          disabled={collection === ""}
           onClick={() => {
             if (selectedCollection === "teds") {
               console.log("Would bridge teds");
@@ -300,7 +255,7 @@ function PolygonBridgeConfirm(props: BridgeProps) {
             }
           }}
         >
-          <span className="top-padding">Continue With Bridge</span>{" "}
+          <span className="top-padding">Bridge {collectionCount} to Polygon </span>{" "}
           <ArrowRightIcon
             sx={{ alignItems: "center", justifyContent: "center" }}
           />

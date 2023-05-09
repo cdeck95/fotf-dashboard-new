@@ -33,7 +33,7 @@ function AssetOverview() {
 
   return (
     <Box className="info-card">
-      <Box className="row-even">
+      <Box className="row-between">
         <Box className="info-card__title">Asset Overview</Box>
         <Typography className="learnMore">
           {allOwnedNFTs.length} total tokens
