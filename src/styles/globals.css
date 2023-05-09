@@ -206,6 +206,7 @@ body {
   flex-wrap: wrap;
   overflow-wrap: break-word;
   width: 100%;
+  max-width: 1380px;
 }
 
 .row-around{
@@ -219,6 +220,7 @@ body {
   padding: 0%;
   overflow-wrap: break-word;
   width: 100%;
+  max-width: 1380px;
 }
 
 .row-center{
@@ -230,6 +232,7 @@ body {
   flex-wrap: wrap;
   overflow-wrap: break-word;
   width: 100%;
+  max-width: 1380px;
 }
 
 .row-center-margin{
@@ -243,7 +246,7 @@ body {
   margin-top: 7.5px;
   margin-bottom: 0px;
   width: 100%;
-
+  max-width: 1380px;
 }
 
 .asset-numbers {
@@ -485,6 +488,7 @@ body {
   padding-bottom: 5px;
   width: 100%;
   white-space: pre-wrap;
+  text-align: left;
 }
 
 .footer-card {
