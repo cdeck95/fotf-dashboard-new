@@ -197,7 +197,7 @@ function App() {
               <Route path="/HoneyExchange" element={<HoneyExchange />} />
               <Route path="/TeddyStaking" element={<TeddyStaking />} />
               <Route path="/TedClaims" element={<TedClaims />} />{" "}
-              <Route path="/Bridge" element={<PolygonBridge allOwnedNFTs={allOwnedNFTsArray} />} />
+              <Route path="/Bridge" element={<PolygonBridge />} />
 
               <Route
                 path="/TheFactory"
