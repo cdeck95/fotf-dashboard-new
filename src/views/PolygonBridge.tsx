@@ -19,8 +19,8 @@ import {
 } from "../account/loadAllAccountDetails";
 import ConnectWalletPage from "../components/ConnectWalletPage";
 import ArrowRightIcon from '@mui/icons-material/ArrowRight';
-import PolygonBridgeInitial from "./PolygonBridgeInitial";
-import PolygonBridgeConfirm from "./PolygonBridgeConfirm";
+import PolygonBridgeInitial from "../components/PolygonBridgeInitial";
+import PolygonBridgeConfirm from "../components/PolygonBridgeConfirm";
 
 function PolygonBridge() {
   useTitle("FOTF | The Bridge");
