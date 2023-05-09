@@ -90,27 +90,21 @@ function LeftDrawer(props: NavProps) {
     switch (window.location.pathname) {
       case "/TheFactory":
         setActivePage("TheFactory");
-        setIsBridgePage(false);
         break;
       case "/HoneyExchange":
         setActivePage("HoneyExchange");
-        setIsBridgePage(false);
         break;
       case "BuildATeddy":
         setActivePage("BuildATeddy");
-        setIsBridgePage(false);
         break;
       case "/TeddyStaking":
         setActivePage("TeddyStaking");
-        setIsBridgePage(false);
         break;
       case "/TedClaims":
         setActivePage("TedClaims");
-        setIsBridgePage(false);
         break;
       case "/TraitSwapTeds":
         setActivePage("TraitSwapTeds");
-        setIsBridgePage(false);
         break;
       case "/Bridge":
         setActivePage("PolygonBridge");
@@ -122,7 +116,6 @@ function LeftDrawer(props: NavProps) {
         break;
       default:
         setActivePage("Dashboard");
-        setIsBridgePage(false);
         break;
     }
   }, [isMobile, isMediumLarge]);
