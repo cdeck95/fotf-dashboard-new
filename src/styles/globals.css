@@ -220,6 +220,17 @@ body {
   overflow-wrap: break-word;
 }
 
+.row-center{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  flex-wrap: wrap;
+  overflow-wrap: break-word;
+  width: 100%;
+}
+
 .row-center-margin{
   display: flex;
   flex-direction: row;
@@ -301,6 +312,13 @@ body {
 .col{
   display: flex;
   flex-direction: column;
+}
+
+.col-margin{
+  display: flex;
+  flex-direction: column;
+  margin-left: 10px;
+  margin-right: 10px;
 }
 
 .SidebarWrapper .MuiDrawer-paper {
@@ -532,8 +550,13 @@ body {
   padding: 0;
 }
 
-.accent-text {
+.bold-text {
   /* color: var(--accent-color); */
+  font-weight: 500;
+}
+
+.accent-text {
+  color: var(--accent-color);
   font-weight: 500;
 }
 
@@ -570,14 +593,43 @@ body {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  text-align: center;
+  padding-bottom: 75px;
 }
 
 .Large-Header {
   font-size: 5rem;
   font-family: 'Bebas Neue';
   color: #000000;
-  margin-top: 5px;
-  margin-left: 10px;
-  margin-bottom: 5px;
-  margin-right: 10px;
+  margin: 0%;
+  padding: 0%;
+  text-align: center;
+  align-items: center;
+}
+
+.desc-text {
+  font-size: 1.4rem !important;
+  color: #000000;
+  margin: 0%;
+  padding: 0%;
+  text-align: center;
+  align-items: center;
+}
+
+.desc-text-larger {
+  font-size: 2rem !important;
+  color: #000000;
+  margin: 0%;
+  padding: 0%;
+  text-align: center;
+  align-items: center;
+}
+
+.desc-text-larger-accent {
+  font-size: 2rem !important;
+  color: var(--accent-color);
+  margin: 0%;
+  padding: 0%;
+  text-align: center;
+  align-items: center;
 }
