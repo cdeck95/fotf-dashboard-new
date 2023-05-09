@@ -41,7 +41,7 @@ import {
 } from "./account/loadAllAccountDetails";
 import GraphicTemplates from "./views/GraphicTemplates";
 import ConnectWalletPage from "./components/ConnectWalletPage";
-import PolygonBridge from "./components/PolygonBridge";
+import PolygonBridge from "./views/PolygonBridge";
 
 export const LeftDrawerWidthPX = "260px";
 export const LeftDrawerWidth = 260;
