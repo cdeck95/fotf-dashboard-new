@@ -200,7 +200,7 @@
     /* filter: grayscale(70%); */
   }
 
-  .title-selected {
+  /* .title-selected {
     text-align: center;
     margin-top: auto;
     margin-bottom: auto;
@@ -216,7 +216,7 @@
     letter-spacing: 3.5px;
     opacity: 1 !important;
     z-index: 1;
-  }
+  } */
   
   /* .card h2 {
     margin: 0 0 1rem 0;

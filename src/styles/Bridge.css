@@ -107,7 +107,7 @@
     position: relative;
     display: flex;
     flex-direction: column; 
-    filter: grayscale(70%);
+    filter: grayscale(90%);
   }
 
   .title-selected {
@@ -118,9 +118,9 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    -webkit-text-stroke: 1.5px black;
-	  -webkit-text-fill-color: white;
-    color: var(--accent-color);
+    /* -webkit-text-stroke: 1.5px black;
+	  -webkit-text-fill-color: white; */
+    color: white;
     font-size: 45px;
     font-family: "Bebas Neue";
     letter-spacing: 3.5px;
@@ -201,4 +201,5 @@
     align-items: center;
     text-align: center;
     width: 100%;
+    max-width: 1380px;
   }
