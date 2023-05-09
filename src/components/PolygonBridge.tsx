@@ -131,7 +131,7 @@ function PolygonBridge(props: TheFactoryProps) {
               }}
             >
               {tokens ? (
-                <Box className="polygon-bridge-containter">
+                <Box className="polygon-bridge-container">
                   <Box className="row-center">
                     <h1 className="Large-Header">Pick The Collection</h1>
                   </Box>
@@ -280,10 +280,11 @@ function PolygonBridge(props: TheFactoryProps) {
                       <a href="https://discord.gg/fotf"><span className="underline">FOTF Discord</span></a> (https://discord.gg/fotf).
                     </Typography>
                   </Box>
-                  {selectedCollection!=="" && <Box className="row-center">
+                <Box className="row-center">
                     <Button
                       className="bridge-btn"
                       variant="contained"
+                      disabled={selectedCollection===""}
                       onClick={() => {
                         if(selectedCollection === "teds") {
                           console.log("Would bridge teds");
@@ -298,8 +299,7 @@ function PolygonBridge(props: TheFactoryProps) {
                     >
                       <span className="top-padding">Continue With Bridge</span> <ArrowRightIcon sx={{ alignItems:"center", justifyContent: "center" }}/>
                     </Button>
-                    </Box>
-                  }
+                    </Box>  
                 </Box>
               ) : (
                 <p>Loading...</p>

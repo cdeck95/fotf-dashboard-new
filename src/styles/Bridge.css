@@ -127,3 +127,51 @@
     opacity: 1 !important;
     z-index: 1;
   }
+
+  .polygon-bridge-container {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding-bottom: 50px;
+  }
+  
+  .Large-Header {
+    font-size: 5rem;
+    font-family: 'Bebas Neue';
+    color: #000000;
+    margin: 0%;
+    padding: 0%;
+    text-align: center;
+    align-items: center;
+  }
+  
+  .desc-text {
+    font-size: 1.4rem !important;
+    color: #000000;
+    margin: 0%;
+    padding: 0%;
+    text-align: center;
+    align-items: center;
+  }
+  
+  .desc-text-larger {
+    font-size: 2rem !important;
+    color: #000000;
+    margin: 0%;
+    padding: 0%;
+    text-align: center;
+    align-items: center;
+  }
+  
+  .desc-text-larger-accent {
+    font-size: 2rem !important;
+    color: var(--accent-color);
+    margin: 0%;
+    padding: 0%;
+    text-align: center;
+    align-items: center;
+  }
