@@ -217,9 +217,8 @@ function PolygonBridgeConfirm(props: BridgeProps) {
           number of assets before you choose to bridge. If you find any issues please open a
           support ticket in the{" "}
           <a href="https://discord.gg/fotf">
-            <span className="underline">FOTF Discord</span>
-          </a>{" "}
-          (https://discord.gg/fotf).
+            <span className="underline">FOTF Discord.</span>
+          </a>
         </Typography>
       </Box>
       <Box className="row-center">
