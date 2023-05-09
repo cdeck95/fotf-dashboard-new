@@ -200,7 +200,7 @@ function PermanentDrawerRight(props: NavProps) {
           Though we do not allow for constant swapping of your DNA or Eyes, you
           are able to swap your Headgear, Clothing and Equipment at any time for
           one{" "}
-          <span className="accent-text">
+          <span className="bold-text">
             <strong>Trait Swap Token</strong>
           </span>{" "}
           per Trait. We have also integrated custom names for your NFTs because
