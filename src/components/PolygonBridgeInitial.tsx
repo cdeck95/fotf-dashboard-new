@@ -6,7 +6,7 @@ import {
   useMediaQuery,
   useTheme,
 } from "@mui/material";
-import { ThirdwebNftMedia } from "@thirdweb-dev/react";
+import { ThirdwebNftMedia, useNetwork, useNetworkMismatch } from "@thirdweb-dev/react";
 import { useTitle } from "../hooks/useTitle";
 import { useAddress } from "@thirdweb-dev/react";
 import Backdrop from "@mui/material/Backdrop";
@@ -18,26 +18,38 @@ import "../styles/Bridge.css";
 import {
   LoadAllAccountDetails,
   allOwnedNFTs,
+  tokens,
 } from "../account/loadAllAccountDetails";
 import ConnectWalletPage from "../components/ConnectWalletPage";
 import ArrowRightIcon from "@mui/icons-material/ArrowRight";
 import ErrorDialog from "./ErrorDialog";
+import { PolygonNetwork } from "./PolygonNetwork";
 
 interface BridgeProps {
   setCollection: Function;
   setAdvance: Function;
+  tokens: tokens;
 }
 
 function PolygonBridgeInitial(props: BridgeProps) {
   useTitle("FOTF | The Bridge");
-  const { tokens, isLoading, error, honeyBalance } = LoadAllAccountDetails();
+  const theme = useTheme();
+  const isMobile = !useMediaQuery(theme.breakpoints.up("md"));
+  const isMediumLarge = useMediaQuery(theme.breakpoints.down("lg"));
+  const [isSmallScreen, setSmallScreen] = useState(false);
+  const sdk = useSDK();
+  const provider = sdk?.getProvider();
+  const address = useAddress();
+  const [, switchNetwork] = useNetwork(); // Switch to desired chain
+  const isMismatched = useNetworkMismatch(); // Detect if user is connected to the wrong network
+  const tokens = props.tokens;
   const { setCollection, setAdvance } = props;
   console.log(tokens);
-  console.log(isLoading);
-  console.log(error);
-  console.log(honeyBalance);
+  // console.log(isLoading);
+  // console.log(error);
+  // console.log(honeyBalance);
 
-  const AllTokens = tokens.AllTokens.tokens;
+  const AllTokens = tokens.AllTokens.tokens; 
   const tedNFTs = tokens.Teds?.tokens;
   const teddyNFTs = tokens.Teddies?.tokens;
   //const aiTedNFTs: string | any[] = [];
@@ -52,15 +64,6 @@ function PolygonBridgeInitial(props: BridgeProps) {
   } else if (stakedTeddiesIDs) {
     teddyCount = stakedTeddiesIDs?.length;
   }
-
-  const theme = useTheme();
-  const isMobile = !useMediaQuery(theme.breakpoints.up("md"));
-  const isMediumLarge = useMediaQuery(theme.breakpoints.down("lg"));
-  const [isSmallScreen, setSmallScreen] = useState(false);
-  const sdk = useSDK();
-  const provider = sdk?.getProvider();
-  const address = useAddress();
-
   const leftDrawerWidth = isSmallScreen ? "0px" : "240px";
   const rightDrawerWidth = isSmallScreen ? "0px" : "340px";
 
@@ -120,6 +123,8 @@ function PolygonBridgeInitial(props: BridgeProps) {
 
   return (
     <Box className="polygon-bridge-container">
+      {isMismatched && (<PolygonNetwork/>)}
+
       <Box className="row-center">
         <h1 className="Large-Header">Pick The Collection</h1>
       </Box>
@@ -127,6 +132,12 @@ function PolygonBridgeInitial(props: BridgeProps) {
         className="row-center"
         sx={{ paddingTop: "10px", paddingBottom: "10px" }}
       >
+        <Backdrop
+            sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
+            open={isMismatched}
+          >
+            {/* <CircularProgress color="inherit" /> */}
+          </Backdrop>
         <Typography className="desc-text">
           Please choose which collection (Fury Teds, Teddies, or AI Teds) that
           you wish to bridge to Polygon.{" "}

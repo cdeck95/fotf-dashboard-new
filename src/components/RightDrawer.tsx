@@ -3,7 +3,7 @@ import Box from "@mui/material/Box";
 import Drawer from "@mui/material/Drawer";
 import CssBaseline from "@mui/material/CssBaseline";
 import Toolbar from "@mui/material/Toolbar";
-import { ConnectWallet } from "@thirdweb-dev/react";
+import { ConnectWallet, useAddress, useNetwork, useNetworkMismatch } from "@thirdweb-dev/react";
 import {
   Button,
   IconButton,
@@ -73,6 +73,7 @@ function PermanentDrawerRight(props: NavProps) {
   const [message, setMessage] = useState("");
   const [showNotification, setShowNotification] = useState(false);
   var showAssetOverview = false;
+  
 
   // setNavOpen(true);
 
@@ -138,6 +139,22 @@ function PermanentDrawerRight(props: NavProps) {
       );
       break;
     case "/Bridge":
+      showAssetOverview = true;
+      blogTitle = "What is Polygon Bridge?!";
+      blogContent = (
+        <p className="info-card__description">
+          Simply put, it is a gas savings way for Fury of The Fur to exist as the brand we've all pictured.
+          Polygon is a Layer 2 Solution, meaning all assets will still exist on the Ethereum Blockchain in 
+          some way.
+          <br />
+          <br />
+          With lower gas fees & quicker transactions, Polygon not only allows you to spend less money on 
+          fees, but will also allow us to continue focusing on mass adoption of blockchain technologies
+          into a full functioning brand.
+        </p>
+      );
+      break;
+    case "/bridge":
       showAssetOverview = true;
       blogTitle = "What is Polygon Bridge?!";
       blogContent = (
