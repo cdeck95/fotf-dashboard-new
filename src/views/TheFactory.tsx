@@ -90,6 +90,8 @@ function TheFactory(props: TheFactoryProps) {
   const [selectedTeddies, setSelectedTeddies] = useState<any>([]);
   const [selectedAITeds, setSelectedAITeds] = useState<any>([]);
 
+  const [ownershipVerified, setOwnershipVerified] = useState(false);
+
   const [open, setOpen] = useState(false);
   const handleClose = () => {
     setOpen(false);
@@ -132,6 +134,23 @@ function TheFactory(props: TheFactoryProps) {
       setSheetOpen(false);
     }
   }, [isMediumLarge, isMobile]);
+
+  useEffect(() => {
+    const tedNFTs = tokens.Teds?.tokens;
+    const teddyNFTs = tokens.Teddies?.tokens;
+    const aiTedNFTs = tokens.AITeds?.tokens;
+    const stakedTeddiesIDs = tokens.StakedTeddiesIDs?.tokens;
+
+    if (tedNFTs?.length === 0 || aiTedNFTs?.length === 0){
+      if (teddyNFTs?.length === 0 && stakedTeddiesIDs?.length === 0){
+        setOwnershipVerified(false);
+      } else { 
+        setOwnershipVerified(true);
+      }
+    } else {
+      setOwnershipVerified(true);
+    }
+  }, [tokens]);
 
   //////////// Header ///////////////////////////
 
@@ -176,6 +195,8 @@ function TheFactory(props: TheFactoryProps) {
           >
             {/* <CircularProgress color="inherit" /> */}
           </Backdrop>
+
+          
       {address && (
         <Box className={isSmallScreen ? "header-mobile" : "header"}>
           
@@ -251,7 +272,7 @@ function TheFactory(props: TheFactoryProps) {
 
           <Backdrop
             sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
-            open={isLoading}
+            open={!ownershipVerified}
             onClick={handleClose}
           >
             <CircularProgress color="inherit" />

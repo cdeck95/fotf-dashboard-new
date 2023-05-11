@@ -11,7 +11,7 @@ import { useTitle } from "../hooks/useTitle";
 import { useAddress } from "@thirdweb-dev/react";
 import Backdrop from "@mui/material/Backdrop";
 import CircularProgress from "@mui/material/CircularProgress";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useSDK } from "@thirdweb-dev/react";
 import "../styles/Dashboard.css";
 import "../styles/Bridge.css";
@@ -24,6 +24,7 @@ import ConnectWalletPage from "../components/ConnectWalletPage";
 import ArrowRightIcon from "@mui/icons-material/ArrowRight";
 import ErrorDialog from "./ErrorDialog";
 import { PolygonNetwork } from "./PolygonNetwork";
+import { BigNumber, ethers } from "ethers";
 
 interface BridgeProps {
   setCollection: Function;
@@ -38,6 +39,8 @@ function PolygonBridgeInitial(props: BridgeProps) {
   const isMediumLarge = useMediaQuery(theme.breakpoints.down("lg"));
   const [isSmallScreen, setSmallScreen] = useState(false);
   const sdk = useSDK();
+
+  
   const provider = sdk?.getProvider();
   const address = useAddress();
   const [, switchNetwork] = useNetwork(); // Switch to desired chain
@@ -48,6 +51,24 @@ function PolygonBridgeInitial(props: BridgeProps) {
   // console.log(isLoading);
   // console.log(error);
   // console.log(honeyBalance);
+
+  const [maticBalance, setMaticBalance] = useState<string>();
+
+  const LoadMaticBalance = useCallback(async () => {
+    try {
+      // const polygonSDK = new ThirdwebSDK("polygon");
+      // const maticBalance = await polygonSDK?.wallet.balance("0x0000000000000000000000000000000000001010");
+      const maticBalance = await sdk?.getBalance(address!);
+      console.log(`Matic: ${maticBalance?.displayValue}`);
+      if(maticBalance){
+        setMaticBalance(parseFloat(ethers.utils.formatEther(maticBalance.value)).toFixed(3));
+      } else {
+        setMaticBalance("0.000");
+      }
+    } catch (e) {
+      console.log(e);
+    }
+  }, [sdk, address]);
 
   const AllTokens = tokens.AllTokens.tokens; 
   const tedNFTs = tokens.Teds?.tokens;
@@ -82,6 +103,17 @@ function PolygonBridgeInitial(props: BridgeProps) {
       setSmallScreen(false);
     }
   }, [isMediumLarge, isMobile]);
+
+
+  useEffect(() => {
+    try {
+      if(!maticBalance){
+        LoadMaticBalance();
+      }
+    } catch (e) {
+      console.log(e);
+    }
+  }, [maticBalance, LoadMaticBalance]);
 
   const [selectedCollection, setSelectedCollection] = useState("");
   const [showError, setShowError] = useState(false);
@@ -138,6 +170,12 @@ function PolygonBridgeInitial(props: BridgeProps) {
           >
             {/* <CircularProgress color="inherit" /> */}
           </Backdrop>
+          <Backdrop
+            sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
+            open={isMismatched}
+          >
+            {/* <CircularProgress color="inherit" /> */}
+          </Backdrop>
         <Typography className="desc-text">
           Please choose which collection (Fury Teds, Teddies, or AI Teds) that
           you wish to bridge to Polygon.{" "}
@@ -145,6 +183,9 @@ function PolygonBridgeInitial(props: BridgeProps) {
           wallet from that collection will be bridged. You will not be able to
           choose only certain tokens to bridge. If you have items that you do
           not want to bridge, please leave them in a different wallet.
+        </Typography>
+        <Typography className="desc-text">
+          Matic Balance: {maticBalance}
         </Typography>
       </Box>
       <Box
