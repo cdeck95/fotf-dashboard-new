@@ -3,7 +3,7 @@ import Box from "@mui/material/Box";
 import Drawer from "@mui/material/Drawer";
 import CssBaseline from "@mui/material/CssBaseline";
 import Toolbar from "@mui/material/Toolbar";
-import { ConnectWallet } from "@thirdweb-dev/react";
+import { ConnectWallet, useAddress, useNetwork, useNetworkMismatch } from "@thirdweb-dev/react";
 import {
   Button,
   IconButton,
@@ -73,6 +73,7 @@ function PermanentDrawerRight(props: NavProps) {
   const [message, setMessage] = useState("");
   const [showNotification, setShowNotification] = useState(false);
   var showAssetOverview = false;
+  
 
   // setNavOpen(true);
 

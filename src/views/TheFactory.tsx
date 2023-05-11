@@ -4,6 +4,8 @@ import {
   ThirdwebNftMedia,
   useContract,
   useNFT,
+  useNetwork,
+  useNetworkMismatch,
   useOwnedNFTs,
 } from "@thirdweb-dev/react";
 import { useTitle } from "../hooks/useTitle";
@@ -35,6 +37,7 @@ import {
 import ConnectWalletPage from "../components/ConnectWalletPage";
 import Sheet from 'react-modal-sheet';
 import { LoadStakedTeddy } from "../account/loadStakedTeddy";
+import { MainnetNetwork } from "../components/MainnetNetwork";
 
 interface TheFactoryProps {
   allOwnedNFTs: allOwnedNFTs;
@@ -42,6 +45,15 @@ interface TheFactoryProps {
 
 function TheFactory(props: TheFactoryProps) {
   useTitle("FOTF | The Factory");
+  const theme = useTheme();
+  const isMobile = !useMediaQuery(theme.breakpoints.up("md"));
+  const isMediumLarge = useMediaQuery(theme.breakpoints.down("lg"));
+  const [isSmallScreen, setSmallScreen] = useState(false);
+  const sdk = useSDK();
+  const provider = sdk?.getProvider();
+  const address = useAddress(); // Get connected wallet address
+  const [, switchNetwork] = useNetwork(); // Switch to desired chain
+  const isMismatched = useNetworkMismatch(); // Detect if user is connected to the wrong network
   const [isSheetOpen, setSheetOpen] = useState(false);
 
   // const { tokens, isLoading, error, honeyBalance } = LoadAllAccountDetails();
@@ -67,15 +79,7 @@ function TheFactory(props: TheFactoryProps) {
   //   AllTokens.push    
   // });
 
-  const theme = useTheme();
-  const isMobile = !useMediaQuery(theme.breakpoints.up("md"));
-  const isMediumLarge = useMediaQuery(theme.breakpoints.down("lg"));
-  const [isSmallScreen, setSmallScreen] = useState(false);
-  const sdk = useSDK();
-  const provider = sdk?.getProvider();
-  const address = useAddress();
-
-  const leftDrawerWidth = isSmallScreen ? "0px" : "240px";
+   const leftDrawerWidth = isSmallScreen ? "0px" : "240px";
   const rightDrawerWidth = isSmallScreen ? "0px" : "340px";
 
   const [isActiveFilter, setIsActiveFilter] = useState(false);
@@ -165,8 +169,16 @@ function TheFactory(props: TheFactoryProps) {
 
   return (
     <Box className="factory-inner-container">
+      {isMismatched && (<MainnetNetwork/>)}
+          <Backdrop
+            sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
+            open={isMismatched}
+          >
+            {/* <CircularProgress color="inherit" /> */}
+          </Backdrop>
       {address && (
         <Box className={isSmallScreen ? "header-mobile" : "header"}>
+          
           <Box className={isSmallScreen ? "header-row-mobile" : "header-row"}>
             <h3
               className={isSmallScreen ? "page-header-mobile" : "page-header"}

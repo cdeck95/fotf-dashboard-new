@@ -3,7 +3,7 @@ import { createRoot } from "react-dom/client";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { ChainId, ThirdwebProvider } from "@thirdweb-dev/react";
-import { Ethereum} from "@thirdweb-dev/chains";
+import { Ethereum, Polygon } from "@thirdweb-dev/chains";
 import "./styles/globals.css";
 import ReactDOM from 'react-dom';
 import { BrowserRouter } from "react-router-dom";
@@ -25,7 +25,8 @@ const root = createRoot(container!);
   root.render(
   <React.StrictMode>
     <BrowserRouter>
-      <ThirdwebProvider activeChain={activeChain}>
+      <ThirdwebProvider activeChain={Ethereum}
+        supportedChains={[Ethereum, Polygon]}>
         <App />
       </ThirdwebProvider>
     </BrowserRouter>

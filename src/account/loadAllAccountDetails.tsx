@@ -5,7 +5,7 @@ import {
   useContract,
   useNFT,
 } from "@thirdweb-dev/react";
-import { NFT, SmartContract } from "@thirdweb-dev/sdk";
+import { NFT, SmartContract, ThirdwebSDK } from "@thirdweb-dev/sdk";
 import { BaseContract, BigNumber, BigNumberish, ethers } from "ethers";
 import { useState, useMemo, useCallback, useEffect } from "react";
 import teddyABI from "../ABIs/teddyABI.json";
@@ -23,7 +23,7 @@ interface StakedTokens {
   tokenId: BigNumber;
 }
 
-interface tokens {
+export interface tokens {
   Teds?: {
     address: string;
     tokens: NFT[];
@@ -63,12 +63,14 @@ export interface allOwnedNFTs {
   isLoading: boolean;
   error: boolean;
   honeyBalance: string;
+  maticBalance: string;
 }
 
 export const initialState: allOwnedNFTs = {
   isLoading: false,
   error: false,
   honeyBalance: "0",
+  maticBalance: "0",
   tokens: {
     Teds: {
       address: "",
@@ -216,6 +218,8 @@ export function LoadAllAccountDetails(): allOwnedNFTs {
 
   // const { contract: contract_STAKING } = useContract(STAKING_CONTRACT);
   const [stakedTokenIDs, setStakedTokenIDs] = useState<any>([]);
+  const [maticBalance, setMaticBalance] = useState<BigNumber>();
+
 
   // const stakedTeddy = LoadStakedTeddy(stakedTokenIDs[0]);
   // if(stakedTeddy){
@@ -316,6 +320,18 @@ export function LoadAllAccountDetails(): allOwnedNFTs {
       return initialState.tokens;
     }
   }, [address, tedNFTs, teddyNFTs, aiNFTs, stakedTokenIDs, birthCertsNFTs]);
+
+  const LoadMaticBalance = useCallback(async () => {
+    try {
+      // const polygonSDK = new ThirdwebSDK("polygon");
+      // const maticBalance = await polygonSDK?.wallet.balance("0x0000000000000000000000000000000000001010");
+      const maticBalance = await sdk?.wallet.balance("0x0000000000000000000000000000000000001010");
+      console.log(`Matic: ${maticBalance?.value}`);
+      setMaticBalance(maticBalance?.value);
+    } catch (e) {
+      console.log(e);
+    }
+  }, [sdk?.wallet]);
 
   const LoadStakedTokens = useCallback(async () => {
     // let tokensToReturn: NFT[] = [];
@@ -423,6 +439,9 @@ export function LoadAllAccountDetails(): allOwnedNFTs {
 
   useEffect(() => {
     try {
+      if(!maticBalance){
+        LoadMaticBalance();
+      }
       if (!contract_FOTF) {
         LoadContractFOTF();
       }
@@ -457,7 +476,7 @@ export function LoadAllAccountDetails(): allOwnedNFTs {
       console.log(e);
       console.log("Error!");
     }
-  }, [sdk, address, contract_FOTF, contract_REWARDS, contract_AI, contract_STAKING, contract_BIRTHCERTS, contract_OneOfOne, contract_TEDDY, LoadContractFOTF, LoadContractRewards, LoadContractAI, LoadContractStaking, LoadContractBirthCerts, LoadContractOneOfOne, LoadStakedTokens, LoadHoney, teddyNFTs, stakedTokenIDs]);
+  }, [sdk, address, contract_FOTF, contract_REWARDS, contract_AI, contract_STAKING, contract_BIRTHCERTS, contract_OneOfOne, contract_TEDDY, LoadContractFOTF, LoadContractRewards, LoadContractAI, LoadContractStaking, LoadContractBirthCerts, LoadContractOneOfOne, LoadStakedTokens, LoadHoney, teddyNFTs, stakedTokenIDs, maticBalance, LoadMaticBalance]);
 
   if (error || errorTeddy || errorAI) {
     allOwnedNFTs.error = true;
@@ -468,6 +487,9 @@ export function LoadAllAccountDetails(): allOwnedNFTs {
   allOwnedNFTs.tokens = nftArray;
   if (honey) {
     allOwnedNFTs.honeyBalance = honey;
+  }
+  if(maticBalance){
+    allOwnedNFTs.maticBalance = parseFloat(ethers.utils.formatEther(maticBalance)).toFixed(3);
   }
   return allOwnedNFTs;
 }

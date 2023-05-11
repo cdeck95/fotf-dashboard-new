@@ -10,8 +10,11 @@ import {
 import {
   ConnectWallet,
   ThirdwebNftMedia,
+  ThirdwebProvider,
   useContract,
   useNFT,
+  useNetwork,
+  useNetworkMismatch,
   useOwnedNFTs,
 } from "@thirdweb-dev/react";
 import { useTitle } from "./hooks/useTitle";
@@ -42,6 +45,8 @@ import {
 import GraphicTemplates from "./views/GraphicTemplates";
 import ConnectWalletPage from "./components/ConnectWalletPage";
 import PolygonBridge from "./views/PolygonBridge";
+import { MainnetNetwork } from "./components/MainnetNetwork";
+import { Ethereum, Polygon } from "@thirdweb-dev/chains";
 
 export const LeftDrawerWidthPX = "260px";
 export const LeftDrawerWidth = 260;
@@ -56,7 +61,9 @@ function App() {
 
   const sdk = useSDK();
   const provider = sdk?.getProvider();
-  const address = useAddress();
+  const address = useAddress(); // Get connected wallet address
+  const [, switchNetwork] = useNetwork(); // Switch to desired chain
+  const isMismatched = useNetworkMismatch(); // Detect if user is connected to the wrong network
   const primaryColor = getComputedStyle(
     document.documentElement
   ).getPropertyValue("--primary-color");
@@ -75,7 +82,7 @@ function App() {
 
   const [allOwnedNFTsArray, setAllOwnedNFTsArray] = useState<any>([]);
 
-  const { tokens, isLoading, error, honeyBalance } = allOwnedNFTsArray;
+  const { tokens, isLoading, error, honeyBalance } = LoadAllAccountDetails();
 
   console.log(tokens);
   console.log(isLoading);
@@ -95,10 +102,10 @@ function App() {
   };
 
   useEffect(() => {
-    // if(address) {
-    //   LoadAllAccountDetails();
-    //   //setAllOwnedNFTsArray(LoadAllAccountDetails());
-    // }
+    if(address) {
+      // LoadAllAccountDetails();
+      //setAllOwnedNFTsArray(LoadAllAccountDetails());
+    }
   }, [address]);
 
   useEffect(() => {
@@ -169,6 +176,7 @@ function App() {
   return (
     <Box className="app-container" sx={{ position: "relative" }}>
       <ThemeProvider theme={theme}>
+      
         {isSmallScreen && (
           <Box
             sx={{
@@ -186,18 +194,23 @@ function App() {
           sx={{
             marginLeft: navOpen ? LeftDrawerWidthPX : "0px",
             marginRight: rightNavOpen ? "340px" : "0px",
-            marginTop: isSmallScreen ? "60px" : "0px",
+            marginTop: isSmallScreen ? "60px" : "20px",
             backgroundColor: "white",
             height: "100%",
+            display: "flex",
+            flexDirection: "column",
           }}
         >
+          
           {address ? (
             <Routes>
               <Route path="/" element={<Dashboard />} />
               <Route path="/HoneyExchange" element={<HoneyExchange />} />
               <Route path="/TeddyStaking" element={<TeddyStaking />} />
               <Route path="/TedClaims" element={<TedClaims />} />{" "}
-              <Route path="/Bridge" element={<PolygonBridge />} />
+              <Route path="/Bridge" element={ 
+                          <PolygonBridge tokens={tokens} error={error} isLoading={isLoading}/>
+                        } />
 
               <Route
                 path="/TheFactory"

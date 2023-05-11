@@ -4,6 +4,8 @@ import {
   ThirdwebNftMedia,
   useContract,
   useNFT,
+  useNetwork,
+  useNetworkMismatch,
   useOwnedNFTs,
 } from "@thirdweb-dev/react";
 import { useTitle } from "../hooks/useTitle";
@@ -19,6 +21,7 @@ import { Home } from "@mui/icons-material";
 import { Routes, Route } from "react-router-dom";
 import ConnectWalletPage from "../components/ConnectWalletPage";
 import { LoadAllAccountDetails } from "../account/loadAllAccountDetails";
+import { MainnetNetwork } from "../components/MainnetNetwork";
 
 function Dashboard() {
   useTitle("FOTF | Dashboard");
@@ -26,7 +29,9 @@ function Dashboard() {
   const isMobile = !useMediaQuery(theme.breakpoints.up("md"));
   const sdk = useSDK();
   const provider = sdk?.getProvider();
-  const address = useAddress();
+  const address = useAddress(); // Get connected wallet address
+  const [, switchNetwork] = useNetwork(); // Switch to desired chain
+  const isMismatched = useNetworkMismatch(); // Detect if user is connected to the wrong network
 
   const { tokens, isLoading, error, honeyBalance } = LoadAllAccountDetails();
 
@@ -42,6 +47,13 @@ function Dashboard() {
             width: "100%",
           }}
         >
+          {isMismatched && (<MainnetNetwork/>)}
+          <Backdrop
+            sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
+            open={isMismatched}
+          >
+            {/* <CircularProgress color="inherit" /> */}
+          </Backdrop>
           <h1 className={isMobile ? "comingSoon-Mobile" : "comingSoon"}>
             Dashboard
           </h1>

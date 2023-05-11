@@ -1,6 +1,6 @@
 import { Box, Button, ImageList, Typography, useMediaQuery, useTheme } from "@mui/material";
 import {
-  ThirdwebNftMedia,
+  ThirdwebNftMedia, ThirdwebProvider, useNetwork, useNetworkMismatch,
 } from "@thirdweb-dev/react";
 import { useTitle } from "../hooks/useTitle";
 import { useAddress } from "@thirdweb-dev/react";
@@ -16,19 +16,34 @@ import "../styles/Bridge.css";
 import {
   LoadAllAccountDetails,
   allOwnedNFTs,
+  tokens,
 } from "../account/loadAllAccountDetails";
 import ConnectWalletPage from "../components/ConnectWalletPage";
 import ArrowRightIcon from '@mui/icons-material/ArrowRight';
 import PolygonBridgeInitial from "../components/PolygonBridgeInitial";
 import PolygonBridgeConfirm from "../components/PolygonBridgeConfirm";
+import { matchRoutes } from "react-router-dom";
+import { Ethereum, Polygon } from "@thirdweb-dev/chains";
+import { PolygonNetwork } from "../components/PolygonNetwork";
 
-function PolygonBridge() {
+interface TokenProps {
+  tokens: tokens;
+  error: boolean;
+  isLoading: boolean;
+}
+
+function PolygonBridge(props: TokenProps) {
   useTitle("FOTF | The Bridge");
-  const { tokens, isLoading, error, honeyBalance } = LoadAllAccountDetails();
+  const sdk = useSDK();
+  const provider = sdk?.getProvider();
+  const address = useAddress();
+  const [, switchNetwork] = useNetwork(); // Switch to desired chain
+  const isMismatched = useNetworkMismatch(); // Detect if user is connected to the wrong network
+  const { tokens, error, isLoading } = props;
   console.log(tokens);
-  console.log(isLoading);
-  console.log(error);
-  console.log(honeyBalance);
+  // console.log(isLoading);
+  // console.log(error);
+  // console.log(honeyBalance);
 
   const AllTokens = tokens.AllTokens.tokens;
   const tedNFTs = tokens.Teds?.tokens;
@@ -50,9 +65,6 @@ function PolygonBridge() {
   const isMobile = !useMediaQuery(theme.breakpoints.up("md"));
   const isMediumLarge = useMediaQuery(theme.breakpoints.down("lg"));
   const [isSmallScreen, setSmallScreen] = useState(false);
-  const sdk = useSDK();
-  const provider = sdk?.getProvider();
-  const address = useAddress();
 
   const leftDrawerWidth = isSmallScreen ? "0px" : "240px";
   const rightDrawerWidth = isSmallScreen ? "0px" : "340px";
@@ -77,10 +89,12 @@ function PolygonBridge() {
   const [collection, setCollection] = useState("");
   const [advance, setAdvance] = useState(false);
 
+
+
   //////////////////////////////////////////////
 
   return (
-    <Box className="factory-inner-container">
+     <Box className="factory-inner-container">
       {address && (
         <Box className={isSmallScreen ? "header-mobile" : "header"}>
           <Box className={isSmallScreen ? "header-row-mobile" : "header-row"}>
@@ -113,10 +127,13 @@ function PolygonBridge() {
             >
               {tokens ? (
                 <Box sx={{ height: "100%", width: "100%"}}>
+                   <ThirdwebProvider activeChain={Polygon}
+                      supportedChains={[Ethereum, Polygon]}>
                    {advance 
-                      ? <PolygonBridgeConfirm setCollection={setCollection} setAdvance={setAdvance} collection={collection}/>
-                      : <PolygonBridgeInitial setCollection={setCollection} setAdvance={setAdvance}/>
+                      ? <PolygonBridgeConfirm setCollection={setCollection} setAdvance={setAdvance} collection={collection} tokens={tokens}/>
+                      : <PolygonBridgeInitial setCollection={setCollection} setAdvance={setAdvance} tokens={tokens}/>
                       }
+                    </ThirdwebProvider>
                 </Box>
                
                 

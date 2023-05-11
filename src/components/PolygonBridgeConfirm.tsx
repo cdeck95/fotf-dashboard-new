@@ -6,7 +6,7 @@ import {
   useMediaQuery,
   useTheme,
 } from "@mui/material";
-import { ThirdwebNftMedia } from "@thirdweb-dev/react";
+import { ThirdwebNftMedia, useNetwork, useNetworkMismatch } from "@thirdweb-dev/react";
 import { useTitle } from "../hooks/useTitle";
 import { useAddress } from "@thirdweb-dev/react";
 import Backdrop from "@mui/material/Backdrop";
@@ -18,26 +18,29 @@ import "../styles/Bridge.css";
 import {
   LoadAllAccountDetails,
   allOwnedNFTs,
+  tokens,
 } from "../account/loadAllAccountDetails";
 import ConnectWalletPage from "../components/ConnectWalletPage";
 import ArrowLeftIcon from "@mui/icons-material/ArrowLeft";
 import ArrowRightIcon from "@mui/icons-material/ArrowRight";
+import { PolygonNetwork } from "./PolygonNetwork";
 
 interface BridgeProps {
   setCollection: Function;
   setAdvance: Function;
   collection: string;
+  tokens: tokens;
 }
 
 function PolygonBridgeConfirm(props: BridgeProps) {
   useTitle("FOTF | Confirm Bridge");
   const [isSheetOpen, setSheetOpen] = useState(false);
-  const { tokens, isLoading, error, honeyBalance } = LoadAllAccountDetails();
-  const { setCollection, setAdvance, collection } = props;
-  console.log(tokens);
-  console.log(isLoading);
-  console.log(error);
-  console.log(honeyBalance);
+  // const { tokens, isLoading, error, honeyBalance } = LoadAllAccountDetails();
+  const { setCollection, setAdvance, collection, tokens } = props;
+  // console.log(tokens);
+  // console.log(isLoading);
+  // console.log(error);
+  // console.log(honeyBalance);
 
   const AllTokens = tokens.AllTokens.tokens;
   const tedNFTs = tokens.Teds?.tokens;
@@ -45,6 +48,11 @@ function PolygonBridgeConfirm(props: BridgeProps) {
   //const aiTedNFTs: string | any[] = [];
   const aiTedNFTs = tokens.AITeds?.tokens;
   const stakedTeddiesIDs = tokens.StakedTeddiesIDs?.tokens;
+  const sdk = useSDK();
+  const provider = sdk?.getProvider();
+  const address = useAddress();
+  const [, switchNetwork] = useNetwork(); // Switch to desired chain
+  const isMismatched = useNetworkMismatch(); // Detect if user is connected to the wrong network
 
   var teddyCount = 0;
   if (stakedTeddiesIDs && teddyNFTs) {
@@ -61,9 +69,7 @@ function PolygonBridgeConfirm(props: BridgeProps) {
   const [isSmallScreen, setSmallScreen] = useState(false);
   const [collectionCount, setCollectionCount] = useState(0);
 
-  const sdk = useSDK();
-  const provider = sdk?.getProvider();
-  const address = useAddress();
+ 
 
   const leftDrawerWidth = isSmallScreen ? "0px" : "240px";
   const rightDrawerWidth = isSmallScreen ? "0px" : "340px";
@@ -96,6 +102,13 @@ function PolygonBridgeConfirm(props: BridgeProps) {
     }
   }, [aiTedNFTs?.length, collection, tedNFTs?.length, teddyCount]);
 
+   useEffect(() => {
+      // Check if the user is connected to the wrong network
+      if (isMismatched) {
+        console.log("Mismatched network detected. Switching to Polygon...");
+      }
+    }, [address, isMismatched]); // This above block gets run every time "address" changes (e.g. when the user connects)
+
   //////////// OnSelect Functions ///////////////////////////
 
   interface IDictionary {
@@ -117,6 +130,7 @@ function PolygonBridgeConfirm(props: BridgeProps) {
 
   return (
     <Box className="polygon-bridge-container">
+      {isMismatched && (<PolygonNetwork/>)}
       <Box className="row-center">
         <h1 className="Large-Header">Confirm Bridge</h1>
       </Box>
@@ -124,6 +138,12 @@ function PolygonBridgeConfirm(props: BridgeProps) {
         className="row-center"
         sx={{ paddingTop: "10px", paddingBottom: "10px" }}
       >
+        <Backdrop
+            sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
+            open={isMismatched}
+          >
+            {/* <CircularProgress color="inherit" /> */}
+          </Backdrop>
         <Typography className="desc-text">
           Confirm the total amount of <span className="accent-text">{collection}</span> to be bridged to Polygon. Once a collection is bridged, 
           your wallet can no longer bridge again (for this collection) and all assets will be moved to Polygon
