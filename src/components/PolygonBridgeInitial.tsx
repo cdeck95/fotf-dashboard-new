@@ -26,6 +26,7 @@ import ArrowRightIcon from "@mui/icons-material/ArrowRight";
 import ErrorDialog from "./ErrorDialog";
 import { PolygonNetwork } from "./PolygonNetwork";
 import { BigNumber, ethers } from "ethers";
+import MaticDialog from "./MaticDialog";
 
 interface BridgeProps {
   setCollection: Function;
@@ -54,6 +55,8 @@ function PolygonBridgeInitial(props: BridgeProps) {
   // console.log(honeyBalance);
 
   const [maticBalance, setMaticBalance] = useState<string>();
+  const [needsFunds, setNeedsFunds] = useState<boolean>(false);
+
 
   const LoadMaticBalance = useCallback(async () => {
     try {
@@ -62,9 +65,16 @@ function PolygonBridgeInitial(props: BridgeProps) {
       const maticBalance = await sdk?.getBalance(address!);
       console.log(`Matic: ${maticBalance?.displayValue}`);
       if(maticBalance){
-        setMaticBalance(parseFloat(ethers.utils.formatEther(maticBalance.value)).toFixed(3));
+        const maticBalanceString = parseFloat(ethers.utils.formatEther(maticBalance!.value)).toFixed(3);
+        setMaticBalance(maticBalanceString);
+        if(parseInt(maticBalanceString) < 10){
+          setNeedsFunds(true);
+        } else {
+          setNeedsFunds(false);
+        }
       } else {
         setMaticBalance("0.000");
+        setNeedsFunds(true);
       }
     } catch (e) {
       console.log(e);
@@ -200,7 +210,7 @@ function PolygonBridgeInitial(props: BridgeProps) {
   return (
     <Box className="polygon-bridge-container">
       {isMismatched && (<PolygonNetwork/>)}
-
+      <MaticDialog open={needsFunds} handleClose={handleClose} />
       <Box className="row-center">
         <h1 className="Large-Header">Pick The Collection</h1>
       </Box>
