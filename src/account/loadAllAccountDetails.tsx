@@ -277,15 +277,15 @@ export function LoadAllAccountDetails(): allOwnedNFTs {
         console.log(token);
         returnNFTs?.push(token);
       });
-
+    
       return {
         Teds: {
           address: address!,
-          tokens: tedNFTs!,
+          tokens: tedNFTs!,  
         },
         Teddies: {
           address: address!,
-          tokens: teddyNFTs!,
+          tokens: teddyNFTs!, 
         },
         StakedTeddiesIDs: {
           address: address!,
@@ -293,7 +293,7 @@ export function LoadAllAccountDetails(): allOwnedNFTs {
         },
         AITeds: {
           address: address!,
-          tokens: aiNFTs!,
+          tokens: aiNFTs!, 
         },
         OneofOnes: {
           address: address!,

@@ -2,6 +2,7 @@ import {
   Box,
   Button,
   ImageList,
+  Skeleton,
   Typography,
   useMediaQuery,
   useTheme,
@@ -77,6 +78,11 @@ function PolygonBridgeInitial(props: BridgeProps) {
   const aiTedNFTs = tokens.AITeds?.tokens;
   const stakedTeddiesIDs = tokens.StakedTeddiesIDs?.tokens;
 
+  const [hasTeds, setHasTeds] = useState(false);
+  const [hasTeddies, setHasTeddies] = useState(false);
+  const [hasAITeds, setHasAITeds] = useState(false);
+
+
   var teddyCount = 0;
   if (stakedTeddiesIDs && teddyNFTs) {
     teddyCount = teddyNFTs?.length + stakedTeddiesIDs?.length;
@@ -103,6 +109,44 @@ function PolygonBridgeInitial(props: BridgeProps) {
       setSmallScreen(false);
     }
   }, [isMediumLarge, isMobile]);
+
+  useEffect(() => {
+    if(!tedNFTs) {
+      console.log("No Teds");
+      setHasTeds(false);
+    } else {
+      if(tedNFTs?.length === 0){
+        setHasTeds(false);
+      } else {
+        setHasTeds(true);
+      }
+    }
+
+    if(!teddyNFTs && !stakedTeddiesIDs) {
+      console.log("No Teddies");
+      setHasTeddies(false);
+    } else {
+      setHasTeddies(true);
+    }
+    
+    // if () {
+    //   if(teddyNFTs?.length === 0 && stakedTeddiesIDs?.length === 0){
+    //     setHasTeddies(false);
+    //   } else {
+    //     setHasTeddies(true);
+    //   }
+    // }
+
+    if(!aiTedNFTs) {
+      console.log("No AI Teds");
+    } else {
+      if(aiTedNFTs?.length === 0){
+        setHasAITeds(false);
+      } else {
+        setHasAITeds(true);
+      }
+    }
+  }, [aiTedNFTs, stakedTeddiesIDs, tedNFTs, teddyNFTs]);
 
 
   useEffect(() => {
@@ -196,8 +240,8 @@ function PolygonBridgeInitial(props: BridgeProps) {
           paddingBottom: "10px",
         }}
       >
-        {tedNFTs && (
-          <Box className="col-margin">
+        
+          {hasTeds && <Box className="col-margin">
             <Box
               className={
                 selectedCollection === "Fury Teds" ? "card-selected" : "card"
@@ -214,7 +258,10 @@ function PolygonBridgeInitial(props: BridgeProps) {
               }}
             >
               <Box sx={{ width: "100%", height: "100%", position: "relative" }}>
-                <ThirdwebNftMedia
+                
+               {tedNFTs?.length! > 0
+               ? (
+                  <ThirdwebNftMedia
                   metadata={tedNFTs![0].metadata}
                   style={{
                     maxHeight: "280px",
@@ -225,22 +272,26 @@ function PolygonBridgeInitial(props: BridgeProps) {
                     height: "280px",
                   }}
                 />
+                ) : (
+                  <Skeleton variant="rectangular" width={280} height={280} />
+                  )
+                }
                 {selectedCollection === "Fury Teds" && (
                   <p className="title-selected">Bridge</p>
                 )}
               </Box>
               <Typography className="desc-text-larger">
                 <span className="desc-text-larger-accent">
-                  {tedNFTs?.length}
+                  {tedNFTs? tedNFTs.length : <CircularProgress size="1rem"/>}
                 </span>{" "}
                 Fury Teds
               </Typography>
             </Box>
           </Box>
-        )}
+        }
 
-        {teddyNFTs && (
-          <Box className="col-margin">
+        
+        {hasTeddies && <Box className="col-margin">
             <Box
               className={
                 selectedCollection === "Teddies by FOTF" ? "card-selected" : "card"
@@ -257,7 +308,9 @@ function PolygonBridgeInitial(props: BridgeProps) {
               }}
             >
               <Box sx={{ width: "100%", height: "100%", position: "relative" }}>
-                <ThirdwebNftMedia
+              {teddyNFTs
+               ? (
+               <ThirdwebNftMedia
                   metadata={teddyNFTs![0].metadata}
                   style={{
                     maxHeight: "280px",
@@ -268,20 +321,25 @@ function PolygonBridgeInitial(props: BridgeProps) {
                     height: "280px",
                   }}
                 />
+               )
+                : (
+                  <Skeleton variant="rectangular" width={280} height={280} />
+                )
+              }
                 {selectedCollection === "Teddies by FOTF" && (
                   <p className="title-selected">Bridge</p>
                 )}
               </Box>
               <Typography className="desc-text-larger">
-                <span className="desc-text-larger-accent">{teddyCount}</span>{" "}
+                <span className="desc-text-larger-accent">{teddyNFTs? teddyCount : <CircularProgress size="1rem"/>}</span>{" "}
                 Teddies
               </Typography>
             </Box>
           </Box>
-        )}
+        }
+        
 
-        {aiTedNFTs && (
-          <Box className="col-margin">
+        {hasAITeds && <Box className="col-margin">
             <Box
               className={
                 selectedCollection === "AI Teds" ? "card-selected" : "card"
@@ -298,7 +356,8 @@ function PolygonBridgeInitial(props: BridgeProps) {
               }}
             >
               <Box sx={{ width: "100%", height: "100%", position: "relative" }}>
-                <ThirdwebNftMedia
+                {aiTedNFTs!.length > 0
+                ? <ThirdwebNftMedia
                   metadata={aiTedNFTs![0].metadata}
                   style={{
                     maxHeight: "280px",
@@ -309,19 +368,23 @@ function PolygonBridgeInitial(props: BridgeProps) {
                     height: "280px",
                   }}
                 />
+                : (
+                  <Skeleton variant="rectangular" width={280} height={280} />
+                )
+                }
                 {selectedCollection === "AI Teds" && (
                   <p className="title-selected">Bridge</p>
                 )}
               </Box>
               <Typography className="desc-text-larger">
                 <span className="desc-text-larger-accent">
-                  {aiTedNFTs.length}
+                  {aiTedNFTs? aiTedNFTs.length : <CircularProgress size="1rem"/>}
                 </span>{" "}
                 AI Teds
               </Typography>
             </Box>
           </Box>
-        )}
+          }
       </Box>
       <Box
         className="row-center"

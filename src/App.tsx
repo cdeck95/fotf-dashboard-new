@@ -82,7 +82,9 @@ function App() {
 
   const [allOwnedNFTsArray, setAllOwnedNFTsArray] = useState<any>([]);
 
-  const { tokens, isLoading, error, honeyBalance } = LoadAllAccountDetails();
+  const tokenProps = LoadAllAccountDetails();
+
+  const { tokens, isLoading, error, honeyBalance } = tokenProps;
 
   console.log(tokens);
   console.log(isLoading);
@@ -209,7 +211,7 @@ function App() {
               <Route path="/TeddyStaking" element={<TeddyStaking />} />
               <Route path="/TedClaims" element={<TedClaims />} />{" "}
               <Route path="/Bridge" element={ 
-                          <PolygonBridge tokens={tokens} error={error} isLoading={isLoading}/>
+                          <PolygonBridge tokens={tokens} error={error} isLoading={isLoading} honeyBalance={honeyBalance}/>
                         } />
 
               <Route
@@ -253,7 +255,7 @@ function App() {
             </Box>
           )}
           {rightNavOpen ? (
-            <RightDrawer navOpen={rightNavOpen} setNavOpen={setRightNavOpen} />
+            <RightDrawer navOpen={rightNavOpen} setNavOpen={setRightNavOpen} tokenProps={tokenProps} />
           ) : (
             <Box
               sx={{

@@ -33,11 +33,12 @@ import { useEffect, useState } from "react";
 import notificationIcon from "../assets/icons8-notification-100.png";
 import NotificationsNoneOutlinedIcon from "@mui/icons-material/NotificationsNoneOutlined";
 import AssetOverview from "./AssetOverview";
-import AssetOverviewSidebar from "./AssetOverviewSidebar";
+import AssetOverviewSidebar, { TokenProps } from "./AssetOverviewSidebar";
 
 type NavProps = {
   setNavOpen: Function;
   navOpen: boolean;
+  tokenProps: TokenProps;
 };
 
 const primaryColor = getComputedStyle(
@@ -73,6 +74,8 @@ function PermanentDrawerRight(props: NavProps) {
   const [message, setMessage] = useState("");
   const [showNotification, setShowNotification] = useState(false);
   var showAssetOverview = false;
+
+  const tokenProps = props.tokenProps;
   
 
   // setNavOpen(true);
@@ -402,7 +405,7 @@ function PermanentDrawerRight(props: NavProps) {
           </Box>
           <Box className="row-even">{blogContent}</Box>
         </Box>
-        {showAssetOverview && <AssetOverviewSidebar />}
+        {showAssetOverview && <AssetOverviewSidebar tokens={tokenProps.tokens} error={tokenProps.error} isLoading={tokenProps.isLoading} honeyBalance={tokenProps.honeyBalance} />}
         <Box className="info-card">
           <Box className="row-between">
             <div className="info-card__title">Our Partners</div>

@@ -3,10 +3,17 @@ import { useTitle } from "../hooks/useTitle";
 import "../styles/Dashboard.css";
 import { useAddress } from "@thirdweb-dev/react";
 import { useSDK } from "@thirdweb-dev/react";
-import { LoadAllAccountDetails } from "../account/loadAllAccountDetails";
+import { LoadAllAccountDetails, tokens } from "../account/loadAllAccountDetails";
 
-function AssetOverview() {
-  const { tokens, isLoading, error, honeyBalance } = LoadAllAccountDetails();
+export interface TokenProps {
+  tokens: tokens;
+  error: boolean;
+  isLoading: boolean;
+  honeyBalance: string;
+}
+
+function AssetOverviewSidebar(props: TokenProps) {
+  const { tokens, isLoading, error, honeyBalance } = props
   console.log(tokens);
   console.log(isLoading);
   console.log(error);
@@ -79,4 +86,4 @@ function AssetOverview() {
   );
 }
 
-export default AssetOverview;
+export default AssetOverviewSidebar;

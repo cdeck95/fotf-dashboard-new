@@ -25,12 +25,14 @@ import PolygonBridgeConfirm from "../components/PolygonBridgeConfirm";
 import { matchRoutes } from "react-router-dom";
 import { Ethereum, Polygon } from "@thirdweb-dev/chains";
 import { PolygonNetwork } from "../components/PolygonNetwork";
+import { TokenProps } from "../components/AssetOverviewSidebar";
 
-interface TokenProps {
-  tokens: tokens;
-  error: boolean;
-  isLoading: boolean;
-}
+// interface TokenProps {
+//   tokens: tokens;
+//   error: boolean;
+//   isLoading: boolean;
+//   honeyBalance: string;
+// }
 
 function PolygonBridge(props: TokenProps) {
   useTitle("FOTF | The Bridge");
@@ -39,7 +41,7 @@ function PolygonBridge(props: TokenProps) {
   const address = useAddress();
   const [, switchNetwork] = useNetwork(); // Switch to desired chain
   const isMismatched = useNetworkMismatch(); // Detect if user is connected to the wrong network
-  const { tokens, error, isLoading } = props;
+  const { tokens, error, isLoading, honeyBalance} = props;
   console.log(tokens);
   // console.log(isLoading);
   // console.log(error);
