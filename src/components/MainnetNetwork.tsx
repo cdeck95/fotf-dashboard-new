@@ -14,7 +14,7 @@ export const MainnetNetwork = () => {
   return (
     <Box sx={{zIndex: "10000 !important", display: "flex", justifyContent: "center", textAlign: "center", alignItems: "center"}}>
       <p>{isMismatched}</p>
-      {isMismatched && (  <Alert severity="error"
+      {isMismatched && (  <Alert severity="error" sx={{backgroundColor: "#FED100"}}
         action={
             <Button color="inherit" size="small" onClick={() => switchNetworkToMainnet()}>
             Switch Network

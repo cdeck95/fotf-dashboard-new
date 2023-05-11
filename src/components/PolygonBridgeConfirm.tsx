@@ -139,8 +139,9 @@ function PolygonBridgeConfirm(props: BridgeProps) {
         sx={{ paddingTop: "10px", paddingBottom: "10px" }}
       >
         <Backdrop
-            sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
+            sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1, opacity: "0.9" }}
             open={isMismatched}
+            
           >
             {/* <CircularProgress color="inherit" /> */}
           </Backdrop>

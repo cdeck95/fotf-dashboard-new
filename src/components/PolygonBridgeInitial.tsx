@@ -138,6 +138,12 @@ function PolygonBridgeInitial(props: BridgeProps) {
           >
             {/* <CircularProgress color="inherit" /> */}
           </Backdrop>
+          <Backdrop
+            sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
+            open={isMismatched}
+          >
+            {/* <CircularProgress color="inherit" /> */}
+          </Backdrop>
         <Typography className="desc-text">
           Please choose which collection (Fury Teds, Teddies, or AI Teds) that
           you wish to bridge to Polygon.{" "}
