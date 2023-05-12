@@ -11,7 +11,7 @@ import { useTitle } from "../hooks/useTitle";
 import { useAddress } from "@thirdweb-dev/react";
 import Backdrop from "@mui/material/Backdrop";
 import CircularProgress from "@mui/material/CircularProgress";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useSDK } from "@thirdweb-dev/react";
 import "../styles/Dashboard.css";
 import "../styles/Bridge.css";
@@ -24,6 +24,8 @@ import ConnectWalletPage from "../components/ConnectWalletPage";
 import ArrowLeftIcon from "@mui/icons-material/ArrowLeft";
 import ArrowRightIcon from "@mui/icons-material/ArrowRight";
 import { PolygonNetwork } from "./PolygonNetwork";
+import { ethers } from "ethers";
+import MaticDialog from "./MaticDialog";
 
 interface BridgeProps {
   setCollection: Function;
@@ -69,14 +71,44 @@ function PolygonBridgeConfirm(props: BridgeProps) {
   const [isSmallScreen, setSmallScreen] = useState(false);
   const [collectionCount, setCollectionCount] = useState(0);
 
- 
+  const [maticBalance, setMaticBalance] = useState<string>();
+  const [needsFunds, setNeedsFunds] = useState<boolean>(false);
+
+  const LoadMaticBalance = useMemo(async () => {
+    try {
+      // const polygonSDK = new ThirdwebSDK("polygon");
+      // const maticBalance = await polygonSDK?.wallet.balance("0x0000000000000000000000000000000000001010");
+      const maticBalanceRaw = await sdk?.getBalance(address!);
+      console.log(`Matic: ${maticBalanceRaw?.displayValue}`);
+      if(maticBalanceRaw){
+        const maticBalanceString = parseFloat(ethers.utils.formatEther(maticBalanceRaw!.value)).toFixed(3);
+        if(maticBalanceString === maticBalance){
+          console.log("matic balance hasnt changed");
+          return;
+        } else {
+          setMaticBalance(maticBalanceString);
+          if(parseInt(maticBalanceString) < 30){
+            setNeedsFunds(true);
+          } else {
+            setNeedsFunds(false);
+          }
+        }
+      } else {
+        setMaticBalance("0.000");
+        setNeedsFunds(true);
+      }
+    } catch (e) {
+      console.log(e);
+    }
+  }, [sdk, address, maticBalance]);
 
   const leftDrawerWidth = isSmallScreen ? "0px" : "240px";
   const rightDrawerWidth = isSmallScreen ? "0px" : "340px";
 
   const [open, setOpen] = useState(false);
-  const handleClose = () => {
-    setOpen(false);
+  const handleMaticClose = () => {
+    setNeedsFunds(false);
+    console.log("closing dialog");
   };
   const handleToggle = () => {
     setOpen(!open);
@@ -131,6 +163,7 @@ function PolygonBridgeConfirm(props: BridgeProps) {
   return (
     <Box className="polygon-bridge-container">
       {isMismatched && (<PolygonNetwork/>)}
+      <MaticDialog open={needsFunds} handleClose={handleMaticClose} />
       <Box className="row-center">
         <h1 className="Large-Header">Confirm Bridge</h1>
       </Box>
@@ -141,7 +174,7 @@ function PolygonBridgeConfirm(props: BridgeProps) {
         <Backdrop
             sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1, opacity: "0.9" }}
             open={isMismatched}
-            
+
           >
             {/* <CircularProgress color="inherit" /> */}
           </Backdrop>

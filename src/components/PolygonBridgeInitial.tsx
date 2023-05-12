@@ -12,7 +12,7 @@ import { useTitle } from "../hooks/useTitle";
 import { useAddress } from "@thirdweb-dev/react";
 import Backdrop from "@mui/material/Backdrop";
 import CircularProgress from "@mui/material/CircularProgress";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { useSDK } from "@thirdweb-dev/react";
 import "../styles/Dashboard.css";
 import "../styles/Bridge.css";
@@ -27,6 +27,7 @@ import ErrorDialog from "./ErrorDialog";
 import { PolygonNetwork } from "./PolygonNetwork";
 import { BigNumber, ethers } from "ethers";
 import MaticDialog from "./MaticDialog";
+
 
 interface BridgeProps {
   setCollection: Function;
@@ -58,19 +59,24 @@ function PolygonBridgeInitial(props: BridgeProps) {
   const [needsFunds, setNeedsFunds] = useState<boolean>(false);
 
 
-  const LoadMaticBalance = useCallback(async () => {
+  const LoadMaticBalance = useMemo(async () => {
     try {
       // const polygonSDK = new ThirdwebSDK("polygon");
       // const maticBalance = await polygonSDK?.wallet.balance("0x0000000000000000000000000000000000001010");
-      const maticBalance = await sdk?.getBalance(address!);
-      console.log(`Matic: ${maticBalance?.displayValue}`);
-      if(maticBalance){
-        const maticBalanceString = parseFloat(ethers.utils.formatEther(maticBalance!.value)).toFixed(3);
-        setMaticBalance(maticBalanceString);
-        if(parseInt(maticBalanceString) < 10){
-          setNeedsFunds(true);
+      const maticBalanceRaw = await sdk?.getBalance(address!);
+      console.log(`Matic: ${maticBalanceRaw?.displayValue}`);
+      if(maticBalanceRaw){
+        const maticBalanceString = parseFloat(ethers.utils.formatEther(maticBalanceRaw!.value)).toFixed(3);
+        if(maticBalanceString === maticBalance){
+          console.log("matic balance hasnt changed");
+          return;
         } else {
-          setNeedsFunds(false);
+          setMaticBalance(maticBalanceString);
+          if(parseInt(maticBalanceString) < 30){
+            setNeedsFunds(true);
+          } else {
+            setNeedsFunds(false);
+          }
         }
       } else {
         setMaticBalance("0.000");
@@ -79,7 +85,7 @@ function PolygonBridgeInitial(props: BridgeProps) {
     } catch (e) {
       console.log(e);
     }
-  }, [sdk, address]);
+  }, [sdk, address, maticBalance]);
 
   const AllTokens = tokens.AllTokens.tokens; 
   const tedNFTs = tokens.Teds?.tokens;
@@ -105,8 +111,9 @@ function PolygonBridgeInitial(props: BridgeProps) {
   const rightDrawerWidth = isSmallScreen ? "0px" : "340px";
 
   const [open, setOpen] = useState(false);
-  const handleClose = () => {
-    setOpen(false);
+  const handleMaticClose = () => {
+    setNeedsFunds(false);
+    console.log("closing dialog");
   };
   const handleToggle = () => {
     setOpen(!open);
@@ -159,15 +166,15 @@ function PolygonBridgeInitial(props: BridgeProps) {
   }, [aiTedNFTs, stakedTeddiesIDs, tedNFTs, teddyNFTs]);
 
 
-  useEffect(() => {
-    try {
-      if(!maticBalance){
-        LoadMaticBalance();
-      }
-    } catch (e) {
-      console.log(e);
-    }
-  }, [maticBalance, LoadMaticBalance]);
+  // useEffect(() => {
+  //   try {
+  //     if(!maticBalance){
+  //       LoadMaticBalance();
+  //     }
+  //   } catch (e) {
+  //     console.log(e);
+  //   }
+  // }, [maticBalance, LoadMaticBalance]);
 
   const [selectedCollection, setSelectedCollection] = useState("");
   const [showError, setShowError] = useState(false);
@@ -210,7 +217,7 @@ function PolygonBridgeInitial(props: BridgeProps) {
   return (
     <Box className="polygon-bridge-container">
       {isMismatched && (<PolygonNetwork/>)}
-      <MaticDialog open={needsFunds} handleClose={handleClose} />
+      <MaticDialog open={needsFunds} handleClose={handleMaticClose} />
       <Box className="row-center">
         <h1 className="Large-Header">Pick The Collection</h1>
       </Box>
@@ -283,7 +290,7 @@ function PolygonBridgeInitial(props: BridgeProps) {
                   }}
                 />
                 ) : (
-                  <Skeleton variant="rectangular" width={280} height={280} />
+                  <Skeleton variant="rectangular" width={280} height={280} sx={{borderRadius: "10px"}} />
                   )
                 }
                 {selectedCollection === "Fury Teds" && (
@@ -333,7 +340,7 @@ function PolygonBridgeInitial(props: BridgeProps) {
                 />
                )
                 : (
-                  <Skeleton variant="rectangular" width={280} height={280} />
+                  <Skeleton variant="rectangular" width={280} height={280} sx={{borderRadius: "10px"}}/>
                 )
               }
                 {selectedCollection === "Teddies by FOTF" && (
@@ -379,7 +386,7 @@ function PolygonBridgeInitial(props: BridgeProps) {
                   }}
                 />
                 : (
-                  <Skeleton variant="rectangular" width={280} height={280} />
+                  <Skeleton variant="rectangular" width={280} height={280} sx={{borderRadius: "10px"}}/>
                 )
                 }
                 {selectedCollection === "AI Teds" && (
