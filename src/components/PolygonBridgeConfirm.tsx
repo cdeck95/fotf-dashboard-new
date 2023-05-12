@@ -87,7 +87,7 @@ function PolygonBridgeConfirm(props: BridgeProps) {
           return;
         } else {
           setMaticBalance(maticBalanceString);
-          if(parseInt(maticBalanceString) < 30){
+          if(parseInt(maticBalanceString) < 10){
             setNeedsFunds(true);
           } else {
             setNeedsFunds(false);
@@ -163,7 +163,7 @@ function PolygonBridgeConfirm(props: BridgeProps) {
   return (
     <Box className="polygon-bridge-container">
       {isMismatched && (<PolygonNetwork/>)}
-      <MaticDialog open={needsFunds} handleClose={handleMaticClose} />
+      <MaticDialog open={needsFunds && !isMismatched} handleClose={handleMaticClose} />
       <Box className="row-center">
         <h1 className="Large-Header">Confirm Bridge</h1>
       </Box>
