@@ -7,7 +7,7 @@ import {
   useMediaQuery,
   useTheme,
 } from "@mui/material";
-import { ThirdwebNftMedia, useNetwork, useNetworkMismatch } from "@thirdweb-dev/react";
+import { ThirdwebNftMedia, UseContractResult, useNetwork, useNetworkMismatch } from "@thirdweb-dev/react";
 import { useTitle } from "../hooks/useTitle";
 import { useAddress } from "@thirdweb-dev/react";
 import Backdrop from "@mui/material/Backdrop";
@@ -25,8 +25,9 @@ import ConnectWalletPage from "../components/ConnectWalletPage";
 import ArrowRightIcon from "@mui/icons-material/ArrowRight";
 import ErrorDialog from "./ErrorDialog";
 import { PolygonNetwork } from "./PolygonNetwork";
-import { BigNumber, ethers } from "ethers";
+import { BaseContract, BigNumber, ethers } from "ethers";
 import MaticDialog from "./MaticDialog";
+import { SmartContract } from "@thirdweb-dev/sdk";
 
 
 interface BridgeProps {
@@ -34,12 +35,13 @@ interface BridgeProps {
   setAdvance: Function;
   tokens: tokens;
   error: boolean;
-  isLoadingTed: boolean,
-  isLoadingTeddy: boolean,
-  isLoadingAI: boolean,
-  isLoadingBirthCerts: boolean,
-  isLoadingOneOfOne: boolean,
-  isLoadingStaked: boolean,
+  isLoadingTed: boolean;
+  isLoadingTeddy: boolean;
+  isLoadingAI: boolean;
+  isLoadingBirthCerts: boolean;
+  isLoadingOneOfOne: boolean;
+  isLoadingStaked: boolean;
+  bridgeContract: UseContractResult<SmartContract<BaseContract>>;
 }
 
 function PolygonBridgeInitial(props: BridgeProps) {
@@ -241,7 +243,7 @@ function PolygonBridgeInitial(props: BridgeProps) {
   //////////////////////////////////////////////
 
   return (
-    <Box className="polygon-bridge-container">
+    <Box className="polygon-bridge-container" sx={{overflowY: "hidden" }}>
       {isMismatched && (<PolygonNetwork/>)}
       <MaticDialog open={needsFunds && !isMismatched} handleClose={handleMaticClose} />
       <Box className="row-center">
@@ -282,8 +284,7 @@ function PolygonBridgeInitial(props: BridgeProps) {
           paddingTop: "10px",
           paddingBottom: "10px",
         }}
-      >
-        
+      >       
           <Box className="col-margin">
             <Box
               className={

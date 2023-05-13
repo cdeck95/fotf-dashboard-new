@@ -6,7 +6,7 @@ import {
   useMediaQuery,
   useTheme,
 } from "@mui/material";
-import { ThirdwebNftMedia, useNetwork, useNetworkMismatch } from "@thirdweb-dev/react";
+import { ThirdwebNftMedia, UseContractResult, useNetwork, useNetworkMismatch } from "@thirdweb-dev/react";
 import { useTitle } from "../hooks/useTitle";
 import { useAddress } from "@thirdweb-dev/react";
 import Backdrop from "@mui/material/Backdrop";
@@ -24,14 +24,17 @@ import ConnectWalletPage from "../components/ConnectWalletPage";
 import ArrowLeftIcon from "@mui/icons-material/ArrowLeft";
 import ArrowRightIcon from "@mui/icons-material/ArrowRight";
 import { PolygonNetwork } from "./PolygonNetwork";
-import { ethers } from "ethers";
+import { BaseContract, ethers } from "ethers";
 import MaticDialog from "./MaticDialog";
+import ErrorDialog from "./ErrorDialog";
+import { SmartContract } from "@thirdweb-dev/sdk";
 
 interface BridgeProps {
   setCollection: Function;
   setAdvance: Function;
   collection: string;
   tokens: tokens;
+  bridgeContract: UseContractResult<SmartContract<BaseContract>>;
 }
 
 function PolygonBridgeConfirm(props: BridgeProps) {
@@ -124,12 +127,33 @@ function PolygonBridgeConfirm(props: BridgeProps) {
     }
   }, [isMediumLarge, isMobile]);
 
+  const [showError, setShowError] = useState(false);
+  const [errorCode, setErrorCode] = useState(0);
+
   useEffect(() => {
     if (collection === "Fury Teds") {
       setCollectionCount(tedNFTs?.length!);
-    } else if (collection === "Teddies by FOTF") {
+      if (tedNFTs?.length === 0) {
+        console.log("No Fury Teds");
+        setShowError(true);
+        setErrorCode(2);
+        return;
+      }
+    } else if (collection === "Teddies by FOTF") { 
+      if (teddyCount === 0) {
+        console.log("No Tedies");
+        setShowError(true);
+        setErrorCode(2);
+        return;
+      }
       setCollectionCount(teddyCount);
     } else if (collection === "AI Teds") {
+      if (aiTedNFTs?.length === 0) {
+        console.log("No AI Teds");
+        setShowError(true);
+        setErrorCode(2);
+        return;
+      }
       setCollectionCount(aiTedNFTs?.length!);
     }
   }, [aiTedNFTs?.length, collection, tedNFTs?.length, teddyCount]);
@@ -156,6 +180,10 @@ function PolygonBridgeConfirm(props: BridgeProps) {
     } else {
       setSelectedCollection(collection);
     }
+  }
+
+  function handleErrorClose(): void {
+    setAdvance(false);
   }
 
   //////////////////////////////////////////////
@@ -314,6 +342,11 @@ function PolygonBridgeConfirm(props: BridgeProps) {
           />
         </Button>
       </Box>
+      <ErrorDialog
+        open={showError}
+        handleClose={handleErrorClose}
+        errorCode={errorCode}
+      />
     </Box>
   );
 }
