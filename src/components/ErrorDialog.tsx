@@ -35,6 +35,8 @@ function ErrorDialog(props: FailureDialogProps) {
     switch (errorCode) {
       case 1:
         return "No collection selected, please select a collection and try again.";
+      case 2:
+        return "The collection you selected does not have any bridgeable assets or is still loading. Please select a different collection and try again.";
       default:
         return "Something went wrong. We are not sure exactly what. Please refresh the page. If this continues to happen, please open a ticket within the FOTF Discord.";
     }
@@ -77,6 +79,10 @@ function ErrorDialog(props: FailureDialogProps) {
             fontFamily: "Bebas Neue",
             fontSize: "24px",
             marginBottom: "5px",
+            backgroundColor: "red",
+            color: "white",
+            borderColor: "white",
+            borderWidth: "1px",
             "&:hover": {
               backgroundColor: "white",
               color: "red",

@@ -196,6 +196,26 @@ function PolygonBridgeInitial(props: BridgeProps) {
       setSelectedCollection("");
       setCollection("");
     } else {
+      if((collection === "Fury Teds" && !hasTeds) || isLoadingTed){
+        console.log("No Fury Teds");
+        setShowError(true);
+        setErrorCode(2);
+        return;
+      }
+
+      if((collection === "Teddies by FOTF" && !hasTeddies) || isLoadingTeddy || isLoadingStaked){
+        console.log("No Teddies");
+        setShowError(true);
+        setErrorCode(2);
+        return;
+      }
+
+      if((collection === "AI Teds" && !hasAITeds) || isLoadingAI){
+        console.log("No AI Teds");
+        setShowError(true);
+        setErrorCode(2);
+        return;
+      }
       setSelectedCollection(collection);
       setCollection(collection);
     }
@@ -287,17 +307,22 @@ function PolygonBridgeInitial(props: BridgeProps) {
                 <Skeleton variant="rectangular" width={280} height={280} sx={{borderRadius: "10px"}} />
                 )
               : (
-                <ThirdwebNftMedia
-                metadata={tedNFTs![0].metadata}
-                style={{
-                  maxHeight: "280px",
-                  maxWidth: "280px",
-                  borderRadius: "10px",
-                  objectFit: "cover",
-                  width: "280px",
-                  height: "280px",
-                }}
-              />
+                <Box>
+                    {tedNFTs!.length > 0
+                    ?  <ThirdwebNftMedia
+                    metadata={tedNFTs![0].metadata}
+                    style={{
+                      maxHeight: "280px",
+                      maxWidth: "280px",
+                      borderRadius: "10px",
+                      objectFit: "cover",
+                      width: "280px",
+                      height: "280px",
+                    }}
+                  />
+                  : <Skeleton variant="rectangular" width={280} height={280} sx={{borderRadius: "10px"}}/>
+                  }
+                  </Box> 
               ) 
                 }
                 {selectedCollection === "Fury Teds" && (
@@ -336,17 +361,22 @@ function PolygonBridgeInitial(props: BridgeProps) {
                 <Skeleton variant="rectangular" width={280} height={280} sx={{borderRadius: "10px"}}/>
                )
                 : (
-                  <ThirdwebNftMedia
-                  metadata={teddyNFTs![0].metadata}
-                  style={{
-                    maxHeight: "280px",
-                    maxWidth: "280px",
-                    borderRadius: "10px",
-                    objectFit: "cover",
-                    width: "280px",
-                    height: "280px",
-                  }}
-                />
+                  <Box>
+                    {teddyNFTs!.length > 0
+                    ?  <ThirdwebNftMedia
+                    metadata={teddyNFTs![0].metadata}
+                    style={{
+                      maxHeight: "280px",
+                      maxWidth: "280px",
+                      borderRadius: "10px",
+                      objectFit: "cover",
+                      width: "280px",
+                      height: "280px",
+                    }}
+                  />
+                  : <Skeleton variant="rectangular" width={280} height={280} sx={{borderRadius: "10px"}}/>
+                  }
+                  </Box>          
                   
                 )
               }
@@ -382,17 +412,23 @@ function PolygonBridgeInitial(props: BridgeProps) {
                 {isLoadingAI
                 ?  <Skeleton variant="rectangular" width={280} height={280} sx={{borderRadius: "10px"}}/> 
                 : (
-                  <ThirdwebNftMedia
-                  metadata={aiTedNFTs![0].metadata}
-                  style={{
-                    maxHeight: "280px",
-                    maxWidth: "280px",
-                    borderRadius: "10px",
-                    objectFit: "cover",
-                    width: "280px",
-                    height: "280px",
-                  }}
-                />
+                  <Box>
+                    {aiTedNFTs!.length > 0
+                    ? <ThirdwebNftMedia
+                    metadata={aiTedNFTs![0].metadata}
+                    style={{
+                      maxHeight: "280px",
+                      maxWidth: "280px",
+                      borderRadius: "10px",
+                      objectFit: "cover",
+                      width: "280px",
+                      height: "280px",
+                    }}
+                  />
+                    : <Skeleton variant="rectangular" width={280} height={280} sx={{borderRadius: "10px"}}/> 
+                   }
+                    
+                  </Box>
                 )
                 }
                 {selectedCollection === "AI Teds" && (
