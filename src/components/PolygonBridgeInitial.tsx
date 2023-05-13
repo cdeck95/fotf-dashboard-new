@@ -198,21 +198,21 @@ function PolygonBridgeInitial(props: BridgeProps) {
       setSelectedCollection("");
       setCollection("");
     } else {
-      if((collection === "Fury Teds" && !hasTeds) || isLoadingTed){
+      if(collection === "Fury Teds" && (!hasTeds || isLoadingTed)){
         console.log("No Fury Teds");
         setShowError(true);
         setErrorCode(2);
         return;
       }
 
-      if((collection === "Teddies by FOTF" && !hasTeddies) || isLoadingTeddy || isLoadingStaked){
+      if(collection === "Teddies by FOTF" && (!hasTeddies || isLoadingTeddy || isLoadingStaked)){
         console.log("No Teddies");
         setShowError(true);
         setErrorCode(2);
         return;
       }
 
-      if((collection === "AI Teds" && !hasAITeds) || isLoadingAI){
+      if(collection === "AI Teds" && (!hasAITeds || isLoadingAI)){
         console.log("No AI Teds");
         setShowError(true);
         setErrorCode(2);
@@ -243,7 +243,7 @@ function PolygonBridgeInitial(props: BridgeProps) {
   //////////////////////////////////////////////
 
   return (
-    <Box className="polygon-bridge-container" sx={{overflowY: "hidden" }}>
+    <Box className="polygon-bridge-container">
       {isMismatched && (<PolygonNetwork/>)}
       <MaticDialog open={needsFunds && !isMismatched} handleClose={handleMaticClose} />
       <Box className="row-center">
@@ -273,9 +273,9 @@ function PolygonBridgeInitial(props: BridgeProps) {
           choose only certain tokens to bridge. If you have items that you do
           not want to bridge, please leave them in a different wallet.
         </Typography>
-        <Typography className="desc-text">
+        {/* <Typography className="desc-text">
           Matic Balance: {maticBalance}
-        </Typography>
+        </Typography> */}
       </Box>
       <Box
         className="row-around"

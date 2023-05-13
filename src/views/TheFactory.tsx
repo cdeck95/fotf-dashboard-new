@@ -58,12 +58,14 @@ function TheFactory(props: TheFactoryProps) {
 
   // const { tokens, isLoading, error, honeyBalance } = LoadAllAccountDetails();
   // const allOwnedNFTs = props.allOwnedNFTs;
-  const { tokens, isLoadingTed, error, honeyBalance } = LoadAllAccountDetails();
+  const { tokens, isLoadingTed, isLoadingAI, isLoadingBirthCerts, isLoadingOneOfOne, isLoadingStaked, isLoadingTeddy, error, honeyBalance } = LoadAllAccountDetails();
   // const {tokens, isLoading, error, honeyBalance } = allOwnedNFTs;
   console.log(tokens);
   console.log(isLoadingTed);
   console.log(error);
   console.log(honeyBalance);
+
+  const isLoading = isLoadingTed || isLoadingAI || isLoadingStaked || isLoadingTeddy;
 
   const AllTokens = tokens.AllTokens.tokens;
   const tedNFTs = tokens.Teds?.tokens;
@@ -141,16 +143,15 @@ function TheFactory(props: TheFactoryProps) {
     const aiTedNFTs = tokens.AITeds?.tokens;
     const stakedTeddiesIDs = tokens.StakedTeddiesIDs?.tokens;
 
-    if (tedNFTs?.length === 0 || aiTedNFTs?.length === 0){
-      if (teddyNFTs?.length === 0 && stakedTeddiesIDs?.length === 0){
-        setOwnershipVerified(false);
-      } else { 
+    if(!isLoading){
+      if(tedNFTs!.length > 0 && (teddyNFTs!.length > 0 || stakedTeddiesIDs!.length > 0) && aiTedNFTs!.length > 0){
         setOwnershipVerified(true);
+      } else {
+        setOwnershipVerified(false);
       }
-    } else {
-      setOwnershipVerified(true);
+
     }
-  }, [tokens]);
+  }, [isLoading, tokens]);
 
   //////////// Header ///////////////////////////
 
@@ -196,7 +197,23 @@ function TheFactory(props: TheFactoryProps) {
             {/* <CircularProgress color="inherit" /> */}
           </Backdrop>
 
-          
+          <Backdrop
+            sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1, marginLeft: "260px",  marginRight: "340px"}}
+            open={isLoading}
+          >
+            <CircularProgress color="inherit" />
+          </Backdrop>
+
+          <Backdrop
+            sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1, marginLeft: "260px", marginRight: "340px" }}
+            open={!ownershipVerified && !isLoading}
+            onClick={handleClose}
+          >
+            <Box sx={{ borderRadius: "10px", backgroundColor: "white"}}> 
+              <Typography sx={{padding: "20px", color: "Black"}}>You do not own all the required NFTs to access this page.</Typography>
+              <Typography sx={{padding: "20px", color: "Black"}}>Please visit the Dashboard to view your NFTs.</Typography>
+            </Box>
+          </Backdrop>
       {address && (
         <Box className={isSmallScreen ? "header-mobile" : "header"}>
           
@@ -270,13 +287,7 @@ function TheFactory(props: TheFactoryProps) {
             </Box>
           )}
 
-          <Backdrop
-            sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
-            open={!ownershipVerified}
-            onClick={handleClose}
-          >
-            <CircularProgress color="inherit" />
-          </Backdrop>
+          
         </div>
       ) : (
         <ConnectWalletPage />
