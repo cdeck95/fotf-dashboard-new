@@ -34,11 +34,20 @@ import notificationIcon from "../assets/icons8-notification-100.png";
 import NotificationsNoneOutlinedIcon from "@mui/icons-material/NotificationsNoneOutlined";
 import AssetOverview from "./AssetOverview";
 import AssetOverviewSidebar, { TokenProps } from "./AssetOverviewSidebar";
+import { tokens } from "../account/loadAllAccountDetails";
 
 type NavProps = {
   setNavOpen: Function;
   navOpen: boolean;
-  tokenProps: TokenProps;
+  error: boolean;
+  isLoadingTed: boolean,
+  isLoadingTeddy: boolean,
+  isLoadingAI: boolean,
+  isLoadingBirthCerts: boolean,
+  isLoadingOneOfOne: boolean,
+  isLoadingStaked: boolean,
+  honeyBalance: string;
+  tokens: tokens;
 };
 
 const primaryColor = getComputedStyle(
@@ -75,7 +84,9 @@ function PermanentDrawerRight(props: NavProps) {
   const [showNotification, setShowNotification] = useState(false);
   var showAssetOverview = false;
 
-  const tokenProps = props.tokenProps;
+  // const tokenProps = props.tokenProps;
+
+  const { tokens, error, isLoadingAI, isLoadingBirthCerts, isLoadingOneOfOne, isLoadingStaked, isLoadingTed, isLoadingTeddy, honeyBalance} = props;
   
 
   // setNavOpen(true);
@@ -405,7 +416,7 @@ function PermanentDrawerRight(props: NavProps) {
           </Box>
           <Box className="row-even">{blogContent}</Box>
         </Box>
-        {showAssetOverview && <AssetOverviewSidebar tokens={tokenProps.tokens} error={tokenProps.error} isLoading={tokenProps.isLoading} honeyBalance={tokenProps.honeyBalance} />}
+        {showAssetOverview && <AssetOverviewSidebar tokens={tokens} error={error} isLoadingTed={isLoadingTed}  isLoadingTeddy={isLoadingTeddy} isLoadingStaked={isLoadingStaked} isLoadingAI={isLoadingAI} isLoadingBirthCerts={isLoadingBirthCerts} isLoadingOneOfOne={isLoadingOneOfOne} honeyBalance={honeyBalance}/>}
         <Box className="info-card">
           <Box className="row-between">
             <div className="info-card__title">Our Partners</div>

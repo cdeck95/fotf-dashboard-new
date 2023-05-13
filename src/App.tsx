@@ -84,10 +84,10 @@ function App() {
 
   const tokenProps = LoadAllAccountDetails();
 
-  const { tokens, isLoading, error, honeyBalance } = tokenProps;
+  const { tokens, isLoadingTed, isLoadingTeddy, isLoadingStaked, isLoadingAI, isLoadingBirthCerts, isLoadingOneOfOne, error, honeyBalance } = tokenProps;
 
   console.log(tokens);
-  console.log(isLoading);
+  console.log(isLoadingTed);
   console.log(error);
   console.log(honeyBalance);
 
@@ -211,7 +211,7 @@ function App() {
               <Route path="/TeddyStaking" element={<TeddyStaking />} />
               <Route path="/TedClaims" element={<TedClaims />} />{" "}
               <Route path="/Bridge" element={ 
-                          <PolygonBridge tokens={tokens} error={error} isLoading={isLoading} honeyBalance={honeyBalance}/>
+                          <PolygonBridge tokens={tokens} error={error} isLoadingTed={isLoadingTed} isLoadingTeddy={isLoadingTeddy} isLoadingStaked={isLoadingStaked} isLoadingAI={isLoadingAI} isLoadingBirthCerts={isLoadingBirthCerts} isLoadingOneOfOne={isLoadingOneOfOne} honeyBalance={honeyBalance}/>
                         } />
 
               <Route
@@ -255,7 +255,7 @@ function App() {
             </Box>
           )}
           {rightNavOpen ? (
-            <RightDrawer navOpen={rightNavOpen} setNavOpen={setRightNavOpen} tokenProps={tokenProps} />
+            <RightDrawer navOpen={rightNavOpen} setNavOpen={setRightNavOpen} tokens={tokens} error={error} isLoadingTed={isLoadingTed} isLoadingTeddy={isLoadingTeddy} isLoadingStaked={isLoadingStaked} isLoadingAI={isLoadingAI} isLoadingBirthCerts={isLoadingBirthCerts} isLoadingOneOfOne={isLoadingOneOfOne} honeyBalance={honeyBalance} />
           ) : (
             <Box
               sx={{

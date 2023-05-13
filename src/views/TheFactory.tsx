@@ -58,10 +58,10 @@ function TheFactory(props: TheFactoryProps) {
 
   // const { tokens, isLoading, error, honeyBalance } = LoadAllAccountDetails();
   // const allOwnedNFTs = props.allOwnedNFTs;
-  const { tokens, isLoading, error, honeyBalance } = LoadAllAccountDetails();
+  const { tokens, isLoadingTed, error, honeyBalance } = LoadAllAccountDetails();
   // const {tokens, isLoading, error, honeyBalance } = allOwnedNFTs;
   console.log(tokens);
-  console.log(isLoading);
+  console.log(isLoadingTed);
   console.log(error);
   console.log(honeyBalance);
 

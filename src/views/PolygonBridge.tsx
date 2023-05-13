@@ -41,7 +41,7 @@ function PolygonBridge(props: TokenProps) {
   const address = useAddress();
   const [, switchNetwork] = useNetwork(); // Switch to desired chain
   const isMismatched = useNetworkMismatch(); // Detect if user is connected to the wrong network
-  const { tokens, error, isLoading, honeyBalance} = props;
+  const { tokens, error, isLoadingAI, isLoadingBirthCerts, isLoadingOneOfOne, isLoadingStaked, isLoadingTed, isLoadingTeddy, honeyBalance} = props;
   console.log(tokens);
   // console.log(isLoading);
   // console.log(error);
@@ -133,7 +133,7 @@ function PolygonBridge(props: TokenProps) {
                       supportedChains={[Ethereum, Polygon]}>
                    {advance 
                       ? <PolygonBridgeConfirm setCollection={setCollection} setAdvance={setAdvance} collection={collection} tokens={tokens}/>
-                      : <PolygonBridgeInitial setCollection={setCollection} setAdvance={setAdvance} tokens={tokens}/>
+                      : <PolygonBridgeInitial setCollection={setCollection} setAdvance={setAdvance} tokens={tokens} error={error} isLoadingTed={isLoadingTed} isLoadingTeddy={isLoadingTeddy} isLoadingStaked={isLoadingStaked} isLoadingAI={isLoadingAI} isLoadingBirthCerts={isLoadingBirthCerts} isLoadingOneOfOne={isLoadingOneOfOne} />
                       }
                     </ThirdwebProvider>
                 </Box>
@@ -145,13 +145,13 @@ function PolygonBridge(props: TokenProps) {
             </Box>
           )}
 
-          <Backdrop
+          {/* <Backdrop
             sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
-            open={isLoading}
+            open={isLoadingAI || isLoadingBirthCerts || isLoadingStaked || isLoadingTed || isLoadingTeddy}
             onClick={handleClose}
           >
             <CircularProgress color="inherit" />
-          </Backdrop>
+          </Backdrop> */}
         </Box>
       ) : (
         <ConnectWalletPage />

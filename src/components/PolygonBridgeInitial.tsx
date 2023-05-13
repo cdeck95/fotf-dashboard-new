@@ -33,6 +33,13 @@ interface BridgeProps {
   setCollection: Function;
   setAdvance: Function;
   tokens: tokens;
+  error: boolean;
+  isLoadingTed: boolean,
+  isLoadingTeddy: boolean,
+  isLoadingAI: boolean,
+  isLoadingBirthCerts: boolean,
+  isLoadingOneOfOne: boolean,
+  isLoadingStaked: boolean,
 }
 
 function PolygonBridgeInitial(props: BridgeProps) {
@@ -48,8 +55,7 @@ function PolygonBridgeInitial(props: BridgeProps) {
   const address = useAddress();
   const [, switchNetwork] = useNetwork(); // Switch to desired chain
   const isMismatched = useNetworkMismatch(); // Detect if user is connected to the wrong network
-  const tokens = props.tokens;
-  const { setCollection, setAdvance } = props;
+  const { setCollection, setAdvance, tokens, isLoadingAI, isLoadingBirthCerts, isLoadingOneOfOne, isLoadingStaked, isLoadingTed, isLoadingTeddy } = props;
   console.log(tokens);
   // console.log(isLoading);
   // console.log(error);
@@ -258,7 +264,7 @@ function PolygonBridgeInitial(props: BridgeProps) {
         }}
       >
         
-          {hasTeds && <Box className="col-margin">
+          <Box className="col-margin">
             <Box
               className={
                 selectedCollection === "Fury Teds" ? "card-selected" : "card"
@@ -276,22 +282,23 @@ function PolygonBridgeInitial(props: BridgeProps) {
             >
               <Box sx={{ width: "100%", height: "100%", position: "relative" }}>
                 
-               {tedNFTs?.length! > 0
+               {isLoadingTed
                ? (
-                  <ThirdwebNftMedia
-                  metadata={tedNFTs![0].metadata}
-                  style={{
-                    maxHeight: "280px",
-                    maxWidth: "280px",
-                    borderRadius: "10px",
-                    objectFit: "cover",
-                    width: "280px",
-                    height: "280px",
-                  }}
-                />
-                ) : (
-                  <Skeleton variant="rectangular" width={280} height={280} sx={{borderRadius: "10px"}} />
-                  )
+                <Skeleton variant="rectangular" width={280} height={280} sx={{borderRadius: "10px"}} />
+                )
+              : (
+                <ThirdwebNftMedia
+                metadata={tedNFTs![0].metadata}
+                style={{
+                  maxHeight: "280px",
+                  maxWidth: "280px",
+                  borderRadius: "10px",
+                  objectFit: "cover",
+                  width: "280px",
+                  height: "280px",
+                }}
+              />
+              ) 
                 }
                 {selectedCollection === "Fury Teds" && (
                   <p className="title-selected">Bridge</p>
@@ -299,16 +306,15 @@ function PolygonBridgeInitial(props: BridgeProps) {
               </Box>
               <Typography className="desc-text-larger">
                 <span className="desc-text-larger-accent">
-                  {tedNFTs? tedNFTs.length : <CircularProgress size="1rem"/>}
+                  {isLoadingTed? <CircularProgress size="1rem"/> :  tedNFTs!.length}
                 </span>{" "}
                 Fury Teds
               </Typography>
             </Box>
           </Box>
-        }
 
         
-        {hasTeddies && <Box className="col-margin">
+        <Box className="col-margin">
             <Box
               className={
                 selectedCollection === "Teddies by FOTF" ? "card-selected" : "card"
@@ -325,9 +331,12 @@ function PolygonBridgeInitial(props: BridgeProps) {
               }}
             >
               <Box sx={{ width: "100%", height: "100%", position: "relative" }}>
-              {teddyNFTs
+              {isLoadingTeddy
                ? (
-               <ThirdwebNftMedia
+                <Skeleton variant="rectangular" width={280} height={280} sx={{borderRadius: "10px"}}/>
+               )
+                : (
+                  <ThirdwebNftMedia
                   metadata={teddyNFTs![0].metadata}
                   style={{
                     maxHeight: "280px",
@@ -338,9 +347,7 @@ function PolygonBridgeInitial(props: BridgeProps) {
                     height: "280px",
                   }}
                 />
-               )
-                : (
-                  <Skeleton variant="rectangular" width={280} height={280} sx={{borderRadius: "10px"}}/>
+                  
                 )
               }
                 {selectedCollection === "Teddies by FOTF" && (
@@ -348,15 +355,14 @@ function PolygonBridgeInitial(props: BridgeProps) {
                 )}
               </Box>
               <Typography className="desc-text-larger">
-                <span className="desc-text-larger-accent">{teddyNFTs? teddyCount : <CircularProgress size="1rem"/>}</span>{" "}
+                <span className="desc-text-larger-accent">{isLoadingTeddy || isLoadingStaked ? <CircularProgress size="1rem"/> : teddyCount }</span>{" "}
                 Teddies
               </Typography>
             </Box>
           </Box>
-        }
         
 
-        {hasAITeds && <Box className="col-margin">
+        <Box className="col-margin">
             <Box
               className={
                 selectedCollection === "AI Teds" ? "card-selected" : "card"
@@ -373,8 +379,10 @@ function PolygonBridgeInitial(props: BridgeProps) {
               }}
             >
               <Box sx={{ width: "100%", height: "100%", position: "relative" }}>
-                {aiTedNFTs!.length > 0
-                ? <ThirdwebNftMedia
+                {isLoadingAI
+                ?  <Skeleton variant="rectangular" width={280} height={280} sx={{borderRadius: "10px"}}/> 
+                : (
+                  <ThirdwebNftMedia
                   metadata={aiTedNFTs![0].metadata}
                   style={{
                     maxHeight: "280px",
@@ -385,8 +393,6 @@ function PolygonBridgeInitial(props: BridgeProps) {
                     height: "280px",
                   }}
                 />
-                : (
-                  <Skeleton variant="rectangular" width={280} height={280} sx={{borderRadius: "10px"}}/>
                 )
                 }
                 {selectedCollection === "AI Teds" && (
@@ -395,13 +401,12 @@ function PolygonBridgeInitial(props: BridgeProps) {
               </Box>
               <Typography className="desc-text-larger">
                 <span className="desc-text-larger-accent">
-                  {aiTedNFTs? aiTedNFTs.length : <CircularProgress size="1rem"/>}
+                  {isLoadingAI? <CircularProgress size="1rem"/> : aiTedNFTs!.length}
                 </span>{" "}
                 AI Teds
               </Typography>
             </Box>
           </Box>
-          }
       </Box>
       <Box
         className="row-center"

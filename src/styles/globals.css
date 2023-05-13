@@ -307,7 +307,8 @@ body {
 .col-no-space {
   display: flex;
   flex-direction: column;
-  justify-content: space-around;
+  justify-content: center;
+  /* justify-content: space-around; */
   margin: 0%;
   padding: 0%;
   height: 100%;

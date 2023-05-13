@@ -33,7 +33,7 @@ function Dashboard() {
   const [, switchNetwork] = useNetwork(); // Switch to desired chain
   const isMismatched = useNetworkMismatch(); // Detect if user is connected to the wrong network
 
-  const { tokens, isLoading, error, honeyBalance } = LoadAllAccountDetails();
+  const { tokens, isLoadingTed, error, honeyBalance } = LoadAllAccountDetails();
 
   return (
     <Box className="inner-container">
