@@ -405,9 +405,11 @@ function TheFactory(props: TheFactoryProps) {
               sx={{
                 zIndex: "0",
                 paddingLeft: "10px",
-                paddingBottom: "75px",
+                paddingBottom: "110px",
                 backgroundColor: "white",
                 paddingRight: "10px",
+                overflowX: "hidden",
+                overflowY: "auto",
               }}
             >
               {tokens ? (
@@ -558,6 +560,7 @@ function TheFactory(props: TheFactoryProps) {
           height: "70px",
           width: "100%",
           backgroundColor: "#FED100",
+          zIndex: "1"
         }}
         onClick={() => setSheetOpen(true)}
       >
@@ -574,7 +577,7 @@ function TheFactory(props: TheFactoryProps) {
           <Sheet.Header />
           <Sheet.Content>
           <Box
-              className="selected-box"
+              className="selected-box-mobile"
               sx={{ display: "flex", flexDirection: "row" }}
             >
               <Box className="stats-col">
@@ -608,12 +611,10 @@ function TheFactory(props: TheFactoryProps) {
             </Box>
             {/* <NumericFormat value={honeyBalance} displayType={'text'} thousandSeparator={true} prefix={'$'} suffix={' HNY'} /> */}
             <Box
-              className="burn-box"
-              sx={{ display: "flex", flexDirection: "row" }}
-            >
-              <Button className="burn-btn">Burn for $HNY</Button>
-              <Button className="burn-btn">
-                Burn 10 + 500k $HNY for Custom 1/1
+              className="burn-box-mobile" >
+              <Button className="burn-btn-mobile " disabled={!isOneOfEachSelected}>Burn Selected for {parseInt(burnRewards).toLocaleString()} $HNY</Button>
+              <Button className="burn-btn-mobile " disabled={!is10Selected}> 
+                Burn {selectedTokens.length} + {(1000000 - parseInt(burnRewards)).toLocaleString()} $HNY for Custom 1/1
               </Button>
             </Box>
           </Sheet.Content>

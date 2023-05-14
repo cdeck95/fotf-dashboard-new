@@ -366,11 +366,32 @@
     height: 70px;
   }
 
+  .selected-box-mobile {
+    width: 100%;
+    padding-left: 10px;
+    padding-right: 10px;
+    align-items: center;
+    justify-content: center;
+  }
+
   .burn-box {
     width: 550px;
     align-items: center;
     justify-content: flex-start;
     height: 70px;
+    display: "flex";
+    flex-direction: "row";
+  }
+
+  .burn-box-mobile {
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+    height: auto;
+    padding-bottom: 20px;
+    padding-top: 20px;
+    display: flex;
+    flex-direction: column;
   }
 
   .burn-btn {
@@ -378,6 +399,13 @@
     padding: 10px !important;
     min-width: 200px !important;
     font-size: 24px;
+  }
+
+  .burn-btn-mobile {
+    padding: 10px !important;
+    min-width: 250px !important;
+    font-size: 24px !important;
+    margin-bottom: 20px !important;
   }
 
   .burn-btn:hover {
