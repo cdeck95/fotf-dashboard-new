@@ -8,7 +8,8 @@ export const PolygonNetwork = () => {
   const [, switchNetwork] = useNetwork();
 
   const switchNetworkToPolygon = () => {
-    switchNetwork!(ChainId.Polygon);
+     switchNetwork!(ChainId.Polygon);
+    //switchNetwork!(ChainId.Mumbai);
   };
 
   return (

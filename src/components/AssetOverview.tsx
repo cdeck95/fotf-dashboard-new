@@ -6,9 +6,9 @@ import { useSDK } from "@thirdweb-dev/react";
 import { LoadAllAccountDetails } from "../account/loadAllAccountDetails";
 
 function AssetOverview() {
-  const { tokens, isLoading, error, honeyBalance } = LoadAllAccountDetails();
+  const { tokens, isLoadingTed, error, honeyBalance } = LoadAllAccountDetails();
   console.log(tokens);
-  console.log(isLoading);
+  console.log(isLoadingTed);
   console.log(error);
   console.log(honeyBalance);
 

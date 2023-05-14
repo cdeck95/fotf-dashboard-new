@@ -12,12 +12,17 @@ import StarIcon from "@mui/icons-material/Star";
 import ControlPointIcon from "@mui/icons-material/ControlPoint";
 import { ThirdwebNftMedia } from "@thirdweb-dev/react";
 import "../styles/Dashboard.css";
+import "../styles/Bridge.css";
 import { LoadStakedTeddy } from "../account/loadStakedTeddy";
+import { SetStateAction, useState } from "react";
+import "../styles/TheFactory.css";
 
 interface NFTListProps {
   tokens: NFT[];
   searchText: string;
   stakedIDs: string[];
+  selectedTokens: NFT[];
+  setSelectedTokens: React.Dispatch<SetStateAction<NFT[]>>;
 }
 
 function NFTList(props: NFTListProps) {
@@ -37,7 +42,11 @@ function NFTList(props: NFTListProps) {
   console.log(`XL:  ${isXL}`);
   console.log(`Is 1920:  ${isFullScreen}`);
 
-  const [columns, setColumns] = React.useState(3);
+  const { tokens, searchText, stakedIDs, selectedTokens, setSelectedTokens } = props;
+
+  // const [selectedTokensArray, setSelectedTokensArray] = useState<string[]>();
+
+  const [columns, setColumns] = useState(3);
 
   React.useEffect(() => {
     if (isMobile) {
@@ -65,18 +74,37 @@ function NFTList(props: NFTListProps) {
     }
   }, [isMobile, isSmall, isMedium, isMediumLarge, isLarge, isXL, isFullScreen]);
 
-  const add = () => {
+  const add = (token: NFT) => {
     console.log("adding...");
+    handleOnSelect(token);
   };
 
   const star = () => {
     console.log("staring...");
   };
 
-  const filteredNFTs = props.tokens?.filter((e) =>
-    e.metadata.id!.includes(props.searchText)
+  const filteredNFTs = tokens?.filter((e) =>
+    e.metadata.id!.includes(searchText)
   );
   console.log(filteredNFTs);
+
+  function handleOnSelect(token: NFT) {
+    // if(selectedTokens?.includes(token)) {
+    //   const index = selectedTokens?.indexOf(token);
+    //   if (index !== undefined) {
+    //     selectedTokens?.splice(index, 1);
+    //   }
+    //   setSelectedTokens(selectedTokens);
+    //   console.log("removed token");
+    //   console.log(selectedTokens);
+    //   return;
+    // }
+    selectedTokens.push(token);
+    setSelectedTokens(selectedTokens);
+    console.log("pushed token");
+    console.log(selectedTokens);
+  }
+
 
   //  props.stakedIDs.forEach((tokenID: string) => {
   //   console.log(tokenID);
@@ -103,10 +131,12 @@ function NFTList(props: NFTListProps) {
       gap={25}
       rowHeight={450}
     >
-      {filteredNFTs.map((e) => (
+      {filteredNFTs.map((token: NFT) => (
         <Box
-          key={e.metadata.id}
-          className="card"
+          key={token.metadata.id}
+          className={
+            selectedTokens?.includes(token) ? "card-selected" : "card"
+          }
           sx={{
             marginLeft: "auto",
             marginRight: "auto",
@@ -114,13 +144,17 @@ function NFTList(props: NFTListProps) {
             maxHeight: "375px",
             maxWidth: "350px",
           }}
+          onClick={() => add(token)}
         >
-          <StarBorderIcon
+          {/* <StarBorderIcon
             onClick={star}
             sx={{ position: "absolute", top: "10px", right: "10px" }}
-          />
+          /> */}
+           <Box sx={{
+            position: "relative",
+          }}  >
           <ThirdwebNftMedia
-            metadata={e.metadata}
+            metadata={token.metadata}
             style={{
               maxHeight: "280px",
               maxWidth: "280px",
@@ -130,13 +164,18 @@ function NFTList(props: NFTListProps) {
               height: "280px",
             }}
           />
+
+          {selectedTokens?.includes(token) && (
+            <p className="title-selected">Burn</p>
+          )}
+          </Box>
           <Box className="column-container" sx={{ marginBottom: "10px" }}>
             <div className="large-left-column">
-              <h3 className="metadata-title">{e.metadata.name}</h3>
+              <h3 className="metadata-title">{token.metadata.name}</h3>
               <h4 className="metadata">Last Transfer: 03/11/2023</h4>
             </div>
             <div className="small-right-column">
-              <ControlPointIcon onClick={add} fontSize="small" />
+              <ControlPointIcon onClick={() => add(token)} fontSize="small" />
             </div>
           </Box>
         </Box>

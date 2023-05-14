@@ -3,6 +3,7 @@ import {
   IconButton,
   ImageList,
   ThemeProvider,
+  Typography,
   createTheme,
   useMediaQuery,
   useTheme,
@@ -51,7 +52,6 @@ import { Ethereum, Polygon } from "@thirdweb-dev/chains";
 export const LeftDrawerWidthPX = "260px";
 export const LeftDrawerWidth = 260;
 
-
 function App() {
   useTitle("FOTF | Dashboard");
   const themeMui = useTheme();
@@ -82,10 +82,22 @@ function App() {
 
   const [allOwnedNFTsArray, setAllOwnedNFTsArray] = useState<any>([]);
 
-  const { tokens, isLoading, error, honeyBalance } = LoadAllAccountDetails();
+  const tokenProps = LoadAllAccountDetails();
+
+  const {
+    tokens,
+    isLoadingTed,
+    isLoadingTeddy,
+    isLoadingStaked,
+    isLoadingAI,
+    isLoadingBirthCerts,
+    isLoadingOneOfOne,
+    error,
+    honeyBalance,
+  } = tokenProps;
 
   console.log(tokens);
-  console.log(isLoading);
+  console.log(isLoadingTed);
   console.log(error);
   console.log(honeyBalance);
 
@@ -102,7 +114,7 @@ function App() {
   };
 
   useEffect(() => {
-    if(address) {
+    if (address) {
       // LoadAllAccountDetails();
       //setAllOwnedNFTsArray(LoadAllAccountDetails());
     }
@@ -167,16 +179,52 @@ function App() {
               backgroundColor: accentColor,
               color: primaryColor,
             },
+            "&:disabled": {
+              backgroundColor: "grey",
+            },
           },
         },
       },
     },
   });
 
+  var pageTitle = "";
+
+  switch (window.location.pathname) {
+    case "/":
+      pageTitle = "Dashboard";
+      break;
+    case "/TheFactory":
+      pageTitle = "The Factory";
+      break;
+    case "/BuildATeddy":
+      pageTitle = "Build A Teddy";
+      break;
+    case "/TraitSwapTeds":
+      pageTitle = "Trait Swap Teds";
+      break;
+    case "/GraphicTemplates":
+      pageTitle = "Graphic Templates";
+      break;
+    case "/HoneyExchange":
+      pageTitle = "Honey Exchange";
+      break;
+    case "/TeddyStaking":
+      pageTitle = "Teddy Staking";
+      break;
+    case "/TedClaims":
+      pageTitle = "Ted Claims";
+      break;
+    case "/Bridge":
+      pageTitle = "Polygon Bridge";
+      break;
+    default:
+      pageTitle = "";
+  }
+
   return (
     <Box className="app-container" sx={{ position: "relative" }}>
       <ThemeProvider theme={theme}>
-      
         {isSmallScreen && (
           <Box
             sx={{
@@ -187,7 +235,32 @@ function App() {
               width: "100%",
               zIndex: "1 !important",
             }}
-          ></Box>
+          >
+            <Box
+              sx={{
+                display: "flex",
+                width: "100%",
+                justifyContent: "center",
+                alignItems: "center",
+                textAlign: "center",
+              }}
+            >
+              {address && <Typography
+                sx={{
+                  color: "White",
+                  marginLeft: "10px",
+                  marginTop: "10px",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  textAlign: "center",
+                  fontSize: "2rem",
+                }}
+              >
+                {pageTitle}
+              </Typography>
+              }
+            </Box>
+          </Box>
         )}
 
         <Box
@@ -201,17 +274,28 @@ function App() {
             flexDirection: "column",
           }}
         >
-          
           {address ? (
             <Routes>
               <Route path="/" element={<Dashboard />} />
               <Route path="/HoneyExchange" element={<HoneyExchange />} />
               <Route path="/TeddyStaking" element={<TeddyStaking />} />
               <Route path="/TedClaims" element={<TedClaims />} />{" "}
-              <Route path="/Bridge" element={ 
-                          <PolygonBridge tokens={tokens} error={error} isLoading={isLoading}/>
-                        } />
-
+              <Route
+                path="/Bridge"
+                element={
+                  <PolygonBridge
+                    tokens={tokens}
+                    error={error}
+                    isLoadingTed={isLoadingTed}
+                    isLoadingTeddy={isLoadingTeddy}
+                    isLoadingStaked={isLoadingStaked}
+                    isLoadingAI={isLoadingAI}
+                    isLoadingBirthCerts={isLoadingBirthCerts}
+                    isLoadingOneOfOne={isLoadingOneOfOne}
+                    honeyBalance={honeyBalance}
+                  />
+                }
+              />
               <Route
                 path="/TheFactory"
                 element={<TheFactory allOwnedNFTs={allOwnedNFTsArray} />}
@@ -225,11 +309,10 @@ function App() {
             <ConnectWalletPage />
           )}
 
-        <LeftDrawer navOpen={navOpen} setNavOpen={setNavOpen} />
+          <LeftDrawer navOpen={navOpen} setNavOpen={setNavOpen} />
 
           {navOpen ? (
             <Box></Box>
-            
           ) : (
             <Box
               sx={{
@@ -253,7 +336,19 @@ function App() {
             </Box>
           )}
           {rightNavOpen ? (
-            <RightDrawer navOpen={rightNavOpen} setNavOpen={setRightNavOpen} />
+            <RightDrawer
+              navOpen={rightNavOpen}
+              setNavOpen={setRightNavOpen}
+              tokens={tokens}
+              error={error}
+              isLoadingTed={isLoadingTed}
+              isLoadingTeddy={isLoadingTeddy}
+              isLoadingStaked={isLoadingStaked}
+              isLoadingAI={isLoadingAI}
+              isLoadingBirthCerts={isLoadingBirthCerts}
+              isLoadingOneOfOne={isLoadingOneOfOne}
+              honeyBalance={honeyBalance}
+            />
           ) : (
             <Box
               sx={{

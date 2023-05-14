@@ -2,16 +2,17 @@ import {
   Box,
   Button,
   ImageList,
+  Skeleton,
   Typography,
   useMediaQuery,
   useTheme,
 } from "@mui/material";
-import { ThirdwebNftMedia, useNetwork, useNetworkMismatch } from "@thirdweb-dev/react";
+import { ThirdwebNftMedia, UseContractResult, useNetwork, useNetworkMismatch } from "@thirdweb-dev/react";
 import { useTitle } from "../hooks/useTitle";
 import { useAddress } from "@thirdweb-dev/react";
 import Backdrop from "@mui/material/Backdrop";
 import CircularProgress from "@mui/material/CircularProgress";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useSDK } from "@thirdweb-dev/react";
 import "../styles/Dashboard.css";
 import "../styles/Bridge.css";
@@ -24,12 +25,17 @@ import ConnectWalletPage from "../components/ConnectWalletPage";
 import ArrowLeftIcon from "@mui/icons-material/ArrowLeft";
 import ArrowRightIcon from "@mui/icons-material/ArrowRight";
 import { PolygonNetwork } from "./PolygonNetwork";
+import { BaseContract, ethers } from "ethers";
+import MaticDialog from "./MaticDialog";
+import ErrorDialog from "./ErrorDialog";
+import { SmartContract } from "@thirdweb-dev/sdk";
 
 interface BridgeProps {
   setCollection: Function;
   setAdvance: Function;
   collection: string;
   tokens: tokens;
+  bridgeContract: UseContractResult<SmartContract<BaseContract>>;
 }
 
 function PolygonBridgeConfirm(props: BridgeProps) {
@@ -69,14 +75,44 @@ function PolygonBridgeConfirm(props: BridgeProps) {
   const [isSmallScreen, setSmallScreen] = useState(false);
   const [collectionCount, setCollectionCount] = useState(0);
 
- 
+  const [maticBalance, setMaticBalance] = useState<string>();
+  const [needsFunds, setNeedsFunds] = useState<boolean>(false);
+
+  const LoadMaticBalance = useMemo(async () => {
+    try {
+      // const polygonSDK = new ThirdwebSDK("polygon");
+      // const maticBalance = await polygonSDK?.wallet.balance("0x0000000000000000000000000000000000001010");
+      const maticBalanceRaw = await sdk?.getBalance(address!);
+      console.log(`Matic: ${maticBalanceRaw?.displayValue}`);
+      if(maticBalanceRaw){
+        const maticBalanceString = parseFloat(ethers.utils.formatEther(maticBalanceRaw!.value)).toFixed(3);
+        if(maticBalanceString === maticBalance){
+          console.log("matic balance hasnt changed");
+          return;
+        } else {
+          setMaticBalance(maticBalanceString);
+          if(parseInt(maticBalanceString) < 10){
+            setNeedsFunds(true);
+          } else {
+            setNeedsFunds(false);
+          }
+        }
+      } else {
+        setMaticBalance("0.000");
+        setNeedsFunds(true);
+      }
+    } catch (e) {
+      console.log(e);
+    }
+  }, [sdk, address, maticBalance]);
 
   const leftDrawerWidth = isSmallScreen ? "0px" : "240px";
   const rightDrawerWidth = isSmallScreen ? "0px" : "340px";
 
   const [open, setOpen] = useState(false);
-  const handleClose = () => {
-    setOpen(false);
+  const handleMaticClose = () => {
+    setNeedsFunds(false);
+    console.log("closing dialog");
   };
   const handleToggle = () => {
     setOpen(!open);
@@ -92,12 +128,33 @@ function PolygonBridgeConfirm(props: BridgeProps) {
     }
   }, [isMediumLarge, isMobile]);
 
+  const [showError, setShowError] = useState(false);
+  const [errorCode, setErrorCode] = useState(0);
+
   useEffect(() => {
     if (collection === "Fury Teds") {
       setCollectionCount(tedNFTs?.length!);
-    } else if (collection === "Teddies by FOTF") {
+      if (tedNFTs?.length === 0) {
+        console.log("No Fury Teds");
+        setShowError(true);
+        setErrorCode(2);
+        return;
+      }
+    } else if (collection === "Teddies by FOTF") { 
+      if (teddyCount === 0) {
+        console.log("No Tedies");
+        setShowError(true);
+        setErrorCode(2);
+        return;
+      }
       setCollectionCount(teddyCount);
     } else if (collection === "AI Teds") {
+      if (aiTedNFTs?.length === 0) {
+        console.log("No AI Teds");
+        setShowError(true);
+        setErrorCode(2);
+        return;
+      }
       setCollectionCount(aiTedNFTs?.length!);
     }
   }, [aiTedNFTs?.length, collection, tedNFTs?.length, teddyCount]);
@@ -126,11 +183,16 @@ function PolygonBridgeConfirm(props: BridgeProps) {
     }
   }
 
+  function handleErrorClose(): void {
+    setAdvance(false);
+  }
+
   //////////////////////////////////////////////
 
   return (
     <Box className="polygon-bridge-container">
       {isMismatched && (<PolygonNetwork/>)}
+      <MaticDialog open={needsFunds && !isMismatched} handleClose={handleMaticClose} />
       <Box className="row-center">
         <h1 className="Large-Header">Confirm Bridge</h1>
       </Box>
@@ -141,7 +203,7 @@ function PolygonBridgeConfirm(props: BridgeProps) {
         <Backdrop
             sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1, opacity: "0.9" }}
             open={isMismatched}
-            
+
           >
             {/* <CircularProgress color="inherit" /> */}
           </Backdrop>
@@ -186,17 +248,23 @@ function PolygonBridgeConfirm(props: BridgeProps) {
 {collection==="Teddies by FOTF" && teddyNFTs && (
           
           <Box className="row-even" >
-             <ThirdwebNftMedia
-                metadata={teddyNFTs![0].metadata}
-                style={{
-                  maxHeight: "280px",
-                  maxWidth: "280px",
-                  borderRadius: "10px",
-                  objectFit: "cover",
-                  width: "280px",
-                  height: "280px",
-                }}
-              />
+             {teddyNFTs.length > 0 
+              ? (
+                <ThirdwebNftMedia
+                  metadata={teddyNFTs![0].metadata}
+                  style={{
+                    maxHeight: "280px",
+                    maxWidth: "280px",
+                    borderRadius: "10px",
+                    objectFit: "cover",
+                    width: "280px",
+                    height: "280px",
+                  }}/>
+                )
+              : (
+                <Skeleton variant="rectangular" width={280} height={280} /> )
+              } 
+              
             <Typography className="desc-text-largest">
               <span className="desc-text-largest-accent">
                 {teddyCount}
@@ -281,6 +349,11 @@ function PolygonBridgeConfirm(props: BridgeProps) {
           />
         </Button>
       </Box>
+      <ErrorDialog
+        open={showError}
+        handleClose={handleErrorClose}
+        errorCode={errorCode}
+      />
     </Box>
   );
 }

@@ -1,14 +1,26 @@
-import { Box, Typography } from "@mui/material";
+import { Box, CircularProgress, Typography } from "@mui/material";
 import { useTitle } from "../hooks/useTitle";
 import "../styles/Dashboard.css";
 import { useAddress } from "@thirdweb-dev/react";
 import { useSDK } from "@thirdweb-dev/react";
-import { LoadAllAccountDetails } from "../account/loadAllAccountDetails";
+import { LoadAllAccountDetails, tokens } from "../account/loadAllAccountDetails";
 
-function AssetOverview() {
-  const { tokens, isLoading, error, honeyBalance } = LoadAllAccountDetails();
+export interface TokenProps {
+  tokens: tokens;
+  error: boolean;
+  isLoadingTed: boolean,
+  isLoadingTeddy: boolean,
+  isLoadingAI: boolean,
+  isLoadingBirthCerts: boolean,
+  isLoadingOneOfOne: boolean,
+  isLoadingStaked: boolean,
+  honeyBalance: string;
+}
+
+function AssetOverviewSidebar(props: TokenProps) {
+  const { tokens, isLoadingTed, isLoadingTeddy, isLoadingStaked, isLoadingAI, isLoadingBirthCerts, isLoadingOneOfOne, error, honeyBalance } = props
   console.log(tokens);
-  console.log(isLoading);
+  console.log(isLoadingTed);
   console.log(error);
   console.log(honeyBalance);
 
@@ -41,15 +53,24 @@ function AssetOverview() {
       </Box>
       <Box className="row-around">
         <Box className="col-no-space">
-          <Typography className="asset-numbers">{tedNFTs?.length}</Typography>
+          {isLoadingTed 
+            ? <CircularProgress size="1rem" sx={{margin: "auto"}}/>
+            : <Typography className="asset-numbers">{tedNFTs?.length}</Typography>
+          }
           <Typography className="aseet-type">Teds</Typography>
         </Box>
         <Box className="col-no-space">
-          <Typography className="asset-numbers">{teddyCount}</Typography>
+          {isLoadingTeddy || isLoadingStaked 
+            ? <CircularProgress size="1rem" sx={{margin: "auto"}}/>
+            : <Typography className="asset-numbers">{teddyCount}</Typography>
+          }
           <Typography className="aseet-type">Teddies</Typography>
         </Box>
         <Box className="col-no-space">
-          <Typography className="asset-numbers">{aiTedNFTs?.length}</Typography>
+          {isLoadingAI
+            ? <CircularProgress size="1rem" sx={{margin: "auto"}}/>
+            : <Typography className="asset-numbers">{aiTedNFTs?.length}</Typography>
+          }
           <Typography className="aseet-type">AI Teds</Typography>
         </Box>
       </Box>
@@ -63,9 +84,10 @@ function AssetOverview() {
           <Typography className="aseet-type">One of Ones</Typography>
         </Box>
         <Box className="col-no-space">
-          <Typography className="asset-numbers">
-            {birthCerts?.length}
-          </Typography>
+        {isLoadingBirthCerts
+            ? <CircularProgress size="1rem" sx={{margin: "auto"}}/>
+            : <Typography className="asset-numbers"> {birthCerts?.length}</Typography>
+        }
           <Typography className="aseet-type">Birth Certificates</Typography>
         </Box>
         <Box className="col-no-space">
@@ -79,4 +101,4 @@ function AssetOverview() {
   );
 }
 
-export default AssetOverview;
+export default AssetOverviewSidebar;

@@ -1,6 +1,6 @@
 import { Box, Button, ImageList, Typography, useMediaQuery, useTheme } from "@mui/material";
 import {
-  ThirdwebNftMedia, ThirdwebProvider, useNetwork, useNetworkMismatch,
+  ThirdwebNftMedia, ThirdwebProvider, useContract, useNetwork, useNetworkMismatch,
 } from "@thirdweb-dev/react";
 import { useTitle } from "../hooks/useTitle";
 import { useAddress } from "@thirdweb-dev/react";
@@ -23,14 +23,18 @@ import ArrowRightIcon from '@mui/icons-material/ArrowRight';
 import PolygonBridgeInitial from "../components/PolygonBridgeInitial";
 import PolygonBridgeConfirm from "../components/PolygonBridgeConfirm";
 import { matchRoutes } from "react-router-dom";
-import { Ethereum, Polygon } from "@thirdweb-dev/chains";
+import { Ethereum, Polygon, Goerli, Mumbai } from "@thirdweb-dev/chains";
 import { PolygonNetwork } from "../components/PolygonNetwork";
+import { TokenProps } from "../components/AssetOverviewSidebar";
 
-interface TokenProps {
-  tokens: tokens;
-  error: boolean;
-  isLoading: boolean;
-}
+// interface TokenProps {
+//   tokens: tokens;
+//   error: boolean;
+//   isLoading: boolean;
+//   honeyBalance: string;
+// }
+
+const BRIDGE_CONTRACT = "0x2fA12AD563d53f0642244E2D70f0824c5dc9c5c3";
 
 function PolygonBridge(props: TokenProps) {
   useTitle("FOTF | The Bridge");
@@ -39,11 +43,14 @@ function PolygonBridge(props: TokenProps) {
   const address = useAddress();
   const [, switchNetwork] = useNetwork(); // Switch to desired chain
   const isMismatched = useNetworkMismatch(); // Detect if user is connected to the wrong network
-  const { tokens, error, isLoading } = props;
+  const { tokens, error, isLoadingAI, isLoadingBirthCerts, isLoadingOneOfOne, isLoadingStaked, isLoadingTed, isLoadingTeddy, honeyBalance} = props;
   console.log(tokens);
   // console.log(isLoading);
   // console.log(error);
   // console.log(honeyBalance);
+
+  const bridgeContract = useContract(BRIDGE_CONTRACT);
+  console.log(bridgeContract);
 
   const AllTokens = tokens.AllTokens.tokens;
   const tedNFTs = tokens.Teds?.tokens;
@@ -94,8 +101,8 @@ function PolygonBridge(props: TokenProps) {
   //////////////////////////////////////////////
 
   return (
-     <Box className="factory-inner-container">
-      {address && (
+     <Box className={isSmallScreen ? "bridge-inner-container-mobile" :"bridge-inner-container"}>
+      {address && !isSmallScreen && (
         <Box className={isSmallScreen ? "header-mobile" : "header"}>
           <Box className={isSmallScreen ? "header-row-mobile" : "header-row"}>
             <Typography
@@ -107,7 +114,7 @@ function PolygonBridge(props: TokenProps) {
         </Box>
       )}
       {address ? (
-        <Box sx={{ width: "100%", height: "100%" }}>
+        <Box>
           {error ? (
             <div>
               <p>NFTs not found - error</p>
@@ -118,20 +125,22 @@ function PolygonBridge(props: TokenProps) {
               sx={{
                 zIndex: "0",
                 paddingLeft: "10px",
-                paddingBottom: "75px",
+                paddingBottom: "10px",
                 backgroundColor: "white",
                 paddingRight: "10px",
                 width: "100%",
                 height: "100%",
+                overflowY: "auto"
               }}
             >
               {tokens ? (
-                <Box sx={{ height: "100%", width: "100%"}}>
+                <Box sx={{ width: "100%", height: "100%" }}>
                    <ThirdwebProvider activeChain={Polygon}
+                    // <ThirdwebProvider activeChain={Mumbai}
                       supportedChains={[Ethereum, Polygon]}>
                    {advance 
-                      ? <PolygonBridgeConfirm setCollection={setCollection} setAdvance={setAdvance} collection={collection} tokens={tokens}/>
-                      : <PolygonBridgeInitial setCollection={setCollection} setAdvance={setAdvance} tokens={tokens}/>
+                      ? <PolygonBridgeConfirm setCollection={setCollection} setAdvance={setAdvance} collection={collection} tokens={tokens} bridgeContract={bridgeContract}/>
+                      : <PolygonBridgeInitial setCollection={setCollection} setAdvance={setAdvance} tokens={tokens} error={error} isLoadingTed={isLoadingTed} isLoadingTeddy={isLoadingTeddy} isLoadingStaked={isLoadingStaked} isLoadingAI={isLoadingAI} isLoadingBirthCerts={isLoadingBirthCerts} isLoadingOneOfOne={isLoadingOneOfOne} bridgeContract={bridgeContract} />
                       }
                     </ThirdwebProvider>
                 </Box>
@@ -143,13 +152,13 @@ function PolygonBridge(props: TokenProps) {
             </Box>
           )}
 
-          <Backdrop
+          {/* <Backdrop
             sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
-            open={isLoading}
+            open={isLoadingAI || isLoadingBirthCerts || isLoadingStaked || isLoadingTed || isLoadingTeddy}
             onClick={handleClose}
           >
             <CircularProgress color="inherit" />
-          </Backdrop>
+          </Backdrop> */}
         </Box>
       ) : (
         <ConnectWalletPage />

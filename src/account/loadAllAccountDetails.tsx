@@ -60,13 +60,23 @@ export interface tokens {
 
 export interface allOwnedNFTs {
   tokens: tokens;
-  isLoading: boolean;
+  isLoadingTed: boolean,
+  isLoadingTeddy: boolean,
+  isLoadingAI: boolean,
+  isLoadingBirthCerts: boolean,
+  isLoadingOneOfOne: boolean,
+  isLoadingStaked: boolean,
   error: boolean;
   honeyBalance: string;
 }
 
 export const initialState: allOwnedNFTs = {
-  isLoading: false,
+  isLoadingTed: false,
+  isLoadingTeddy: false,
+  isLoadingAI: false,
+  isLoadingBirthCerts: false,
+  isLoadingOneOfOne: false,
+  isLoadingStaked: false,
   error: false,
   honeyBalance: "0",
   tokens: {
@@ -147,8 +157,7 @@ const ONE_OF_ONE_CONTRACT = "0x76b9D178fc4AdDaC0A2B6366d4DD44b4F900C168";
 
 export function LoadAllAccountDetails(): allOwnedNFTs {
   const allOwnedNFTs: allOwnedNFTs = initialState;
-  allOwnedNFTs.isLoading = true;
-
+  
   const sdk = useSDK();
   const provider = sdk?.getProvider();
   const address = useAddress();
@@ -170,9 +179,11 @@ export function LoadAllAccountDetails(): allOwnedNFTs {
 
   const {
     data: tedNFTs,
-    error,
-    isLoading,
+    error: errorTed,
+    isLoading: isLoadingTed,
   } = useOwnedNFTs(contract_FOTF, address);
+
+  allOwnedNFTs.isLoadingTed = isLoadingTed;
 
   const { contract: contract_TEDDY } = useContract(TEDDY_CONTRACT);
 
@@ -185,6 +196,8 @@ export function LoadAllAccountDetails(): allOwnedNFTs {
   console.log(birthCertsNFTs);
   console.log(errorBirthCerts);
   console.log(isLoadingBirthCerts);
+
+  allOwnedNFTs.isLoadingBirthCerts = isLoadingBirthCerts; 
 
   // const { contract: contract_OneOfOneNative } = useContract(ONE_OF_ONE_CONTRACT);
   // console.log(contract_OneOfOneNative);
@@ -204,6 +217,7 @@ export function LoadAllAccountDetails(): allOwnedNFTs {
   console.log(errorOneOfOne);
   console.log(isLoadingOneOfOne);
 
+  allOwnedNFTs.isLoadingOneOfOne = isLoadingOneOfOne;
 
   const {
     data: teddyNFTs,
@@ -213,6 +227,8 @@ export function LoadAllAccountDetails(): allOwnedNFTs {
   console.log(teddyNFTs);
   console.log(errorTeddy);
   console.log(isLoadingTeddy);
+
+  allOwnedNFTs.isLoadingTeddy = isLoadingTeddy;
 
   // const { contract: contract_STAKING } = useContract(STAKING_CONTRACT);
   const [stakedTokenIDs, setStakedTokenIDs] = useState<any>([]);
@@ -258,6 +274,8 @@ export function LoadAllAccountDetails(): allOwnedNFTs {
   console.log(errorAI);
   console.log(isLoadingAI);
 
+  allOwnedNFTs.isLoadingAI = isLoadingAI;
+
   const nftArray: tokens = useMemo(() => {
     if (address) {
       const returnNFTs: NFT[] = [];
@@ -277,23 +295,23 @@ export function LoadAllAccountDetails(): allOwnedNFTs {
         console.log(token);
         returnNFTs?.push(token);
       });
-
+    
       return {
         Teds: {
           address: address!,
-          tokens: tedNFTs!,
+          tokens: tedNFTs!,  
         },
         Teddies: {
           address: address!,
-          tokens: teddyNFTs!,
+          tokens: teddyNFTs!, 
         },
         StakedTeddiesIDs: {
           address: address!,
-          tokens: stakedTokenIDs!,
+          tokens: stakedTokenIDs!,  
         },
         AITeds: {
           address: address!,
-          tokens: aiNFTs!,
+          tokens: aiNFTs!,  
         },
         OneofOnes: {
           address: address!,
@@ -348,6 +366,7 @@ export function LoadAllAccountDetails(): allOwnedNFTs {
       });
       console.log(stakedTokenIDsTmp);
       setStakedTokenIDs(stakedTokenIDsTmp);
+      allOwnedNFTs.isLoadingStaked = false;
     } catch (e) {
       console.log(e);
     }
@@ -449,6 +468,7 @@ export function LoadAllAccountDetails(): allOwnedNFTs {
       }
       if (!contract_STAKING) {
         LoadContractStaking();
+        allOwnedNFTs.isLoadingStaked = true;
       }
       if (!contract_BIRTHCERTS) {
         LoadContractBirthCerts();
@@ -474,18 +494,18 @@ export function LoadAllAccountDetails(): allOwnedNFTs {
     }
   }, [sdk, address, contract_FOTF, contract_REWARDS, contract_AI, contract_STAKING, contract_BIRTHCERTS, contract_OneOfOne, contract_TEDDY, LoadContractFOTF, LoadContractRewards, LoadContractAI, LoadContractStaking, LoadContractBirthCerts, LoadContractOneOfOne, LoadStakedTokens, LoadHoney, teddyNFTs, stakedTokenIDs]);
 
-  if (error || errorTeddy || errorAI) {
+  if (errorTed || errorTeddy || errorAI) {
     allOwnedNFTs.error = true;
   } else {
     allOwnedNFTs.error = false;
   }
-  allOwnedNFTs.isLoading = false;
+
+  //FIX THE ERROR ABOVE -NEED EACH ONE
+  
   allOwnedNFTs.tokens = nftArray;
   if (honey) {
     allOwnedNFTs.honeyBalance = honey;
   }
-  // if(maticBalance){
-  //   allOwnedNFTs.maticBalance = parseFloat(ethers.utils.formatEther(maticBalance)).toFixed(3);
-  // }
+
   return allOwnedNFTs;
 }
