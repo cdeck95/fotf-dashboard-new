@@ -30,6 +30,9 @@ import { BaseContract, BigNumber, ethers } from "ethers";
 import { NumericFormat } from "react-number-format";
 import NFTList from "../components/NFTList";
 import "../styles/Dashboard.css";
+import StarBorderIcon from "@mui/icons-material/StarBorder";
+import StarIcon from "@mui/icons-material/Star";
+import ControlPointIcon from "@mui/icons-material/ControlPoint";
 import {
   LoadAllAccountDetails,
   allOwnedNFTs,
@@ -46,8 +49,13 @@ interface TheFactoryProps {
 function TheFactory(props: TheFactoryProps) {
   useTitle("FOTF | The Factory");
   const theme = useTheme();
-  const isMobile = !useMediaQuery(theme.breakpoints.up("md"));
+  const isMobile = useMediaQuery(theme.breakpoints.down("md"));
+  const isSmall = useMediaQuery(theme.breakpoints.down("sm"));
+  const isMedium = useMediaQuery(theme.breakpoints.down("md"));
   const isMediumLarge = useMediaQuery(theme.breakpoints.down("lg"));
+  const isLarge = useMediaQuery(theme.breakpoints.between("lg", "xl"));
+  const isXL = useMediaQuery(theme.breakpoints.up("xl"));
+  const isFullScreen = useMediaQuery(theme.breakpoints.up(1800));
   const [isSmallScreen, setSmallScreen] = useState(false);
   const sdk = useSDK();
   const provider = sdk?.getProvider();
@@ -55,6 +63,13 @@ function TheFactory(props: TheFactoryProps) {
   const [, switchNetwork] = useNetwork(); // Switch to desired chain
   const isMismatched = useNetworkMismatch(); // Detect if user is connected to the wrong network
   const [isSheetOpen, setSheetOpen] = useState(false);
+  console.log(`Mobile:  ${isMobile}`);
+  console.log(`Small:  ${isSmall}`);
+  console.log(`Medium:  ${isMedium}`);
+  console.log(`Medium-Large:  ${isMediumLarge}`);
+  console.log(`Large:  ${isLarge}`);
+  console.log(`XL:  ${isXL}`);
+  console.log(`Is 1920:  ${isFullScreen}`);
 
   // const { tokens, isLoading, error, honeyBalance } = LoadAllAccountDetails();
   // const allOwnedNFTs = props.allOwnedNFTs;
@@ -72,6 +87,60 @@ function TheFactory(props: TheFactoryProps) {
   const teddyNFTs = tokens.Teddies?.tokens;
   const aiTedNFTs = tokens.AITeds?.tokens;
   const stakedTeddiesIDs = tokens.StakedTeddiesIDs?.tokens;
+
+  const [columns, setColumns] = useState(3);
+
+  useEffect(() => {
+    if (isMobile) {
+      if (isSmall) {
+        setColumns(1);
+      } else {
+        setColumns(2);
+      }
+    } else {
+      if (isSmall) {
+        setColumns(1);
+      } else if (isMedium) {
+        setColumns(1);
+      } else if (isMediumLarge) {
+        setColumns(2);
+      } else if (isLarge) {
+        setColumns(2);
+      } else if (isXL && !isFullScreen) {
+        setColumns(3);
+      } else if (isFullScreen) {
+        setColumns(4);
+      } else {
+        setColumns(3);
+      }
+    }
+  }, [isMobile, isSmall, isMedium, isMediumLarge, isLarge, isXL, isFullScreen]);
+
+  const add = (token: NFT) => {
+    console.log("adding...");
+    handleOnSelect(token);
+  };
+
+  const star = () => {
+    console.log("staring...");
+  };
+
+  function handleOnSelect(token: NFT) {
+    if(selectedTokens?.includes(token)) {
+      const index = selectedTokens?.indexOf(token);
+      if (index !== undefined) {
+        setSelectedTokens([...selectedTokens].splice(index, 1)); 
+      }
+      // setSelectedTokens(selectedTokens);
+      console.log("removed token");
+      console.log(selectedTokens);
+      return;
+    }
+    setSelectedTokens([...selectedTokens, token]);
+    //setSelectedTokens(selectedTokens);
+    console.log("pushed token");
+    console.log(selectedTokens);
+  }
 
   // stakedTeddiesIDs.forEach((tokenID: string) => {
   //   console.log(tokenID);
@@ -92,7 +161,7 @@ function TheFactory(props: TheFactoryProps) {
   const [selectedTeddies, setSelectedTeddies] = useState<any>([]);
   const [selectedAITeds, setSelectedAITeds] = useState<any>([]);
 
-  const [ownershipVerified, setOwnershipVerified] = useState(false);
+  const [ownershipVerified, setOwnershipVerified] = useState(true);
 
   const [open, setOpen] = useState(false);
   const handleClose = () => {
@@ -184,7 +253,14 @@ function TheFactory(props: TheFactoryProps) {
     console.log(error);
     setSearchInput("");
   }
+  
+  const [selectedTokens, setSelectedTokens] = useState<NFT[]>([]);
 
+  const filteredNFTs = AllTokens?.filter((e) =>
+    e.metadata.id!.includes(searchInput)
+  );
+  console.log(filteredNFTs);
+  
   //////////////////////////////////////////////
 
   return (
@@ -231,7 +307,7 @@ function TheFactory(props: TheFactoryProps) {
               value={searchInput}
             />
           </Box>
-          <Box className={isSmallScreen ? "filter-row-mobile" : "filter-row"}>
+          {/* <Box className={isSmallScreen ? "filter-row-mobile" : "filter-row"}>
             <Button
               disabled={!address}
               className={
@@ -259,7 +335,7 @@ function TheFactory(props: TheFactoryProps) {
             >
               Longest Held
             </Button>
-          </Box>
+          </Box> */}
         </Box>
       )}
       {address ? (
@@ -280,8 +356,73 @@ function TheFactory(props: TheFactoryProps) {
               }}
             >
               {tokens ? (
-                <NFTList tokens={AllTokens} searchText={searchInput} stakedIDs={stakedTeddiesIDs!}/>
-              ) : (
+                // <NFTList tokens={AllTokens} searchText={searchInput} stakedIDs={stakedTeddiesIDs!} selectedTokens={selectedTokens} setSelectedTokens={setSelectedTokens} />
+                <ImageList
+                sx={{
+                  justifyContent: "center",
+                  width: "100%",
+                  height: "100%",
+                  paddingLeft: "10px",
+                  paddingRight: "10px",
+                  overflowX: "hidden",
+                  overflowY: "auto",
+                  backgroundColor: "white",
+                }}
+                cols={columns}
+                gap={25}
+                rowHeight={450}
+              >
+                {filteredNFTs.map((token: NFT) => (
+                  <Box
+                    key={token.metadata.id}
+                    className={
+                      selectedTokens?.includes(token) ? "card-selected" : "card"
+                    }
+                    sx={{
+                      marginLeft: "auto",
+                      marginRight: "auto",
+                      background: "none",
+                      maxHeight: "375px",
+                      maxWidth: "350px",
+                    }}
+                    onClick={() => add(token)}
+                  >
+                    {/* <StarBorderIcon
+                      onClick={star}
+                      sx={{ position: "absolute", top: "10px", right: "10px" }}
+                    /> */}
+                     <Box sx={{
+                      position: "relative",
+                    }}  >
+                    <ThirdwebNftMedia
+                      metadata={token.metadata}
+                      style={{
+                        maxHeight: "280px",
+                        maxWidth: "280px",
+                        borderRadius: "10px",
+                        objectFit: "cover",
+                        width: "280px",
+                        height: "280px",
+                      }}
+                    />
+          
+                    {selectedTokens?.includes(token) && (
+                      <p className="title-selected">Burn</p>
+                    )}
+                    </Box>
+                    <Box className="column-container" sx={{ marginBottom: "10px" }}>
+                      <div className="large-left-column">
+                        <h3 className="metadata-title">{token.metadata.name}</h3>
+                        <h4 className="metadata">Last Transfer: 03/11/2023</h4>
+                      </div>
+                      <div className="small-right-column">
+                        <ControlPointIcon onClick={() => add(token)} fontSize="small" />
+                      </div>
+                    </Box>
+                  </Box>
+                ))}
+              </ImageList>
+                ) : (
                 <p>Loading...</p>
               )}
             </Box>
@@ -345,7 +486,7 @@ function TheFactory(props: TheFactoryProps) {
             >
               <Button className="burn-btn">Burn for $HNY</Button>
               <Button className="burn-btn">
-                Burn 10 + 500k $HNY for Custom 1/1
+                Burn {selectedTokens.length} + 500k $HNY for Custom 1/1
               </Button>
             </Box>
           </Box>

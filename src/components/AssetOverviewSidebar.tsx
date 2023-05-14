@@ -54,21 +54,21 @@ function AssetOverviewSidebar(props: TokenProps) {
       <Box className="row-around">
         <Box className="col-no-space">
           {isLoadingTed 
-            ? <CircularProgress size="1rem"/> 
+            ? <CircularProgress size="1rem" sx={{margin: "auto"}}/>
             : <Typography className="asset-numbers">{tedNFTs?.length}</Typography>
           }
           <Typography className="aseet-type">Teds</Typography>
         </Box>
         <Box className="col-no-space">
           {isLoadingTeddy || isLoadingStaked 
-            ? <CircularProgress size="1rem"/>
+            ? <CircularProgress size="1rem" sx={{margin: "auto"}}/>
             : <Typography className="asset-numbers">{teddyCount}</Typography>
           }
           <Typography className="aseet-type">Teddies</Typography>
         </Box>
         <Box className="col-no-space">
           {isLoadingAI
-            ? <CircularProgress size="1rem"/>
+            ? <CircularProgress size="1rem" sx={{margin: "auto"}}/>
             : <Typography className="asset-numbers">{aiTedNFTs?.length}</Typography>
           }
           <Typography className="aseet-type">AI Teds</Typography>
@@ -85,7 +85,7 @@ function AssetOverviewSidebar(props: TokenProps) {
         </Box>
         <Box className="col-no-space">
         {isLoadingBirthCerts
-            ? <CircularProgress size="1rem"/>
+            ? <CircularProgress size="1rem" sx={{margin: "auto"}}/>
             : <Typography className="asset-numbers"> {birthCerts?.length}</Typography>
         }
           <Typography className="aseet-type">Birth Certificates</Typography>
