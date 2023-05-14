@@ -126,20 +126,27 @@ function TheFactory(props: TheFactoryProps) {
   };
 
   function handleOnSelect(token: NFT) {
+
     if(selectedTokens?.includes(token)) {
       const index = selectedTokens?.indexOf(token);
       if (index !== undefined) {
-        setSelectedTokens([...selectedTokens].splice(index, 1)); 
+        const splicedArray = [...selectedTokens];
+        splicedArray.splice(index, 1);
+        console.log(splicedArray);
+        setSelectedTokens(splicedArray); 
       }
       // setSelectedTokens(selectedTokens);
       console.log("removed token");
       console.log(selectedTokens);
       return;
+    } else {
+      setSelectedTokens([...selectedTokens, token]);
+      //setSelectedTokens(selectedTokens);
+      console.log("pushed token");
+      console.log(selectedTokens);
     }
-    setSelectedTokens([...selectedTokens, token]);
-    //setSelectedTokens(selectedTokens);
-    console.log("pushed token");
-    console.log(selectedTokens);
+
+    
   }
 
   // stakedTeddiesIDs.forEach((tokenID: string) => {
@@ -162,6 +169,14 @@ function TheFactory(props: TheFactoryProps) {
   const [selectedAITeds, setSelectedAITeds] = useState<any>([]);
 
   const [ownershipVerified, setOwnershipVerified] = useState(true);
+  const [selectedTokens, setSelectedTokens] = useState<NFT[]>([]);
+  const [is10Selected, setIs10Selected] = useState<boolean>(false);
+  const [isOneOfEachSelected, setIsOneOfEachSelected] = useState<boolean>(false);
+  const [burnRewards, setBurnRewards] = useState<string>("0");
+
+  const tedBurnWorth = 5000;
+  const teddyBurnWorth = 6500;
+  const aiTedBurnWorth = 50000;   
 
   const [open, setOpen] = useState(false);
   const handleClose = () => {
@@ -205,6 +220,48 @@ function TheFactory(props: TheFactoryProps) {
       setSheetOpen(false);
     }
   }, [isMediumLarge, isMobile]);
+
+  useEffect(() => {
+    if(selectedTokens.length >= 10){
+      setIs10Selected(true);
+    } else {
+      setIs10Selected(false);
+    }
+    var tedCount = 0;
+    var teddyCount = 0;
+    var aiTedCount = 0;
+
+    const selectedTedArray: NFT[] = [];
+    const selectedTeddyArray: NFT[] = [];
+    const selectedAITedArray: NFT[] = [];
+
+    selectedTokens.forEach((token: NFT) => {
+      if(teddyNFTs?.includes(token)){
+        teddyCount += 1;
+        selectedTeddyArray.push(token);
+      } else if (aiTedNFTs?.includes(token)){
+        aiTedCount += 1;
+        selectedAITedArray.push(token);
+      } else if (tedNFTs?.includes(token)){
+        tedCount += 1;
+        selectedTedArray.push(token);
+      }
+    });
+
+    setSelectedAITeds(selectedAITedArray);
+    setSelectedTeddies(selectedTeddyArray);
+    setSelectedTeds(selectedTedArray);
+
+    if(tedCount > 0 && teddyCount > 0 && aiTedCount > 0){
+      setIsOneOfEachSelected(true);
+    } else {
+      setIsOneOfEachSelected(false);
+    }   
+    
+    const burnValue = (tedCount * tedBurnWorth) + (teddyCount * teddyBurnWorth) + (aiTedCount * aiTedBurnWorth);
+    setBurnRewards(burnValue.toString());
+
+  }, [aiTedNFTs, selectedTokens, tedNFTs, teddyNFTs]);
 
   useEffect(() => {
     const tedNFTs = tokens.Teds?.tokens;
@@ -254,8 +311,6 @@ function TheFactory(props: TheFactoryProps) {
     setSearchInput("");
   }
   
-  const [selectedTokens, setSelectedTokens] = useState<NFT[]>([]);
-
   const filteredNFTs = AllTokens?.filter((e) =>
     e.metadata.id!.includes(searchInput)
   );
@@ -384,8 +439,7 @@ function TheFactory(props: TheFactoryProps) {
                       background: "none",
                       maxHeight: "375px",
                       maxWidth: "350px",
-                    }}
-                    onClick={() => add(token)}
+                    }}                    
                   >
                     {/* <StarBorderIcon
                       onClick={star}
@@ -393,7 +447,8 @@ function TheFactory(props: TheFactoryProps) {
                     /> */}
                      <Box sx={{
                       position: "relative",
-                    }}  >
+                      cursor: "pointer"
+                    }}  onClick={() => add(token)}>
                     <ThirdwebNftMedia
                       metadata={token.metadata}
                       style={{
@@ -484,9 +539,9 @@ function TheFactory(props: TheFactoryProps) {
               className="burn-box"
               sx={{ display: "flex", flexDirection: "row" }}
             >
-              <Button className="burn-btn">Burn for $HNY</Button>
-              <Button className="burn-btn">
-                Burn {selectedTokens.length} + 500k $HNY for Custom 1/1
+              <Button className="burn-btn" disabled={!isOneOfEachSelected}>Burn Selected for {parseInt(burnRewards).toLocaleString()} $HNY</Button>
+              <Button className="burn-btn" disabled={!is10Selected}> 
+                Burn {selectedTokens.length} + {(1000000 - parseInt(burnRewards)).toLocaleString()} $HNY for Custom 1/1
               </Button>
             </Box>
           </Box>

@@ -168,7 +168,10 @@ function App() {
             "&:hover": {
               backgroundColor: accentColor,
               color: primaryColor,
-            },
+            }, 
+            '&:disabled': {
+              backgroundColor: "grey"
+          }
           },
         },
       },
