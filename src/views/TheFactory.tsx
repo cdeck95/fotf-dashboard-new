@@ -633,7 +633,10 @@ function TheFactory(props: TheFactoryProps) {
           onClick={() => setSheetOpen(true)}
         >
           <Typography className="factory-sheet-text">
-            Ready to Burn {selectedTokens.length} tokens?
+            {selectedTokens.length === 1
+              ? `Ready to Burn ${selectedTokens.length} token?`
+              : `Ready to Burn ${selectedTokens.length} tokens?`
+            }
           </Typography>
           <ExpandMoreOutlinedIcon/>
         </Box>
