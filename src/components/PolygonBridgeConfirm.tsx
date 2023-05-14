@@ -2,6 +2,7 @@ import {
   Box,
   Button,
   ImageList,
+  Skeleton,
   Typography,
   useMediaQuery,
   useTheme,
@@ -247,17 +248,23 @@ function PolygonBridgeConfirm(props: BridgeProps) {
 {collection==="Teddies by FOTF" && teddyNFTs && (
           
           <Box className="row-even" >
-             <ThirdwebNftMedia
-                metadata={teddyNFTs![0].metadata}
-                style={{
-                  maxHeight: "280px",
-                  maxWidth: "280px",
-                  borderRadius: "10px",
-                  objectFit: "cover",
-                  width: "280px",
-                  height: "280px",
-                }}
-              />
+             {teddyNFTs.length > 0 
+              ? (
+                <ThirdwebNftMedia
+                  metadata={teddyNFTs![0].metadata}
+                  style={{
+                    maxHeight: "280px",
+                    maxWidth: "280px",
+                    borderRadius: "10px",
+                    objectFit: "cover",
+                    width: "280px",
+                    height: "280px",
+                  }}/>
+                )
+              : (
+                <Skeleton variant="rectangular" width={280} height={280} /> )
+              } 
+              
             <Typography className="desc-text-largest">
               <span className="desc-text-largest-accent">
                 {teddyCount}

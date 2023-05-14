@@ -28,6 +28,7 @@ import { PolygonNetwork } from "./PolygonNetwork";
 import { BaseContract, BigNumber, ethers } from "ethers";
 import MaticDialog from "./MaticDialog";
 import { SmartContract } from "@thirdweb-dev/sdk";
+import fotfLogo from "../assets/fotf_logo_colorized.png";
 
 
 interface BridgeProps {
@@ -375,7 +376,13 @@ function PolygonBridgeInitial(props: BridgeProps) {
                       height: "280px",
                     }}
                   />
-                  : <Skeleton variant="rectangular" width={280} height={280} sx={{borderRadius: "10px"}}/>
+                  : <Box>
+                      {stakedTeddiesIDs!.length > 0
+                      ? (<img src={fotfLogo} className={"teddyStakedPlaceholder"} alt="Placeholder Logo - All Teddies are Staked" />)
+                      : (<Box></Box>)
+                      }
+                      
+                    </Box>
                   }
                   </Box>          
                   

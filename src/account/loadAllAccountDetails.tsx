@@ -303,11 +303,11 @@ export function LoadAllAccountDetails(): allOwnedNFTs {
         },
         Teddies: {
           address: address!,
-          tokens: teddyNFTs! , 
+          tokens: teddyNFTs!, 
         },
         StakedTeddiesIDs: {
           address: address!,
-          tokens: stakedTokenIDs!, 
+          tokens: stakedTokenIDs!,  
         },
         AITeds: {
           address: address!,

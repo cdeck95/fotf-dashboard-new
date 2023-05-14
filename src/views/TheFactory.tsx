@@ -1,4 +1,11 @@
-import { Box, Button, ImageList, Typography, useMediaQuery, useTheme } from "@mui/material";
+import {
+  Box,
+  Button,
+  ImageList,
+  Typography,
+  useMediaQuery,
+  useTheme,
+} from "@mui/material";
 import {
   ConnectWallet,
   ThirdwebNftMedia,
@@ -38,9 +45,11 @@ import {
   allOwnedNFTs,
 } from "../account/loadAllAccountDetails";
 import ConnectWalletPage from "../components/ConnectWalletPage";
-import Sheet from 'react-modal-sheet';
+import Sheet from "react-modal-sheet";
 import { LoadStakedTeddy } from "../account/loadStakedTeddy";
 import { MainnetNetwork } from "../components/MainnetNetwork";
+import ExpandLessOutlinedIcon from '@mui/icons-material/ExpandLessOutlined';
+import ExpandMoreOutlinedIcon from '@mui/icons-material/ExpandMoreOutlined';
 
 interface TheFactoryProps {
   allOwnedNFTs: allOwnedNFTs;
@@ -73,14 +82,25 @@ function TheFactory(props: TheFactoryProps) {
 
   // const { tokens, isLoading, error, honeyBalance } = LoadAllAccountDetails();
   // const allOwnedNFTs = props.allOwnedNFTs;
-  const { tokens, isLoadingTed, isLoadingAI, isLoadingBirthCerts, isLoadingOneOfOne, isLoadingStaked, isLoadingTeddy, error, honeyBalance } = LoadAllAccountDetails();
+  const {
+    tokens,
+    isLoadingTed,
+    isLoadingAI,
+    isLoadingBirthCerts,
+    isLoadingOneOfOne,
+    isLoadingStaked,
+    isLoadingTeddy,
+    error,
+    honeyBalance,
+  } = LoadAllAccountDetails();
   // const {tokens, isLoading, error, honeyBalance } = allOwnedNFTs;
   console.log(tokens);
   console.log(isLoadingTed);
   console.log(error);
   console.log(honeyBalance);
 
-  const isLoading = isLoadingTed || isLoadingAI || isLoadingStaked || isLoadingTeddy;
+  const isLoading =
+    isLoadingTed || isLoadingAI || isLoadingStaked || isLoadingTeddy;
 
   const AllTokens = tokens.AllTokens.tokens;
   const tedNFTs = tokens.Teds?.tokens;
@@ -126,14 +146,13 @@ function TheFactory(props: TheFactoryProps) {
   };
 
   function handleOnSelect(token: NFT) {
-
-    if(selectedTokens?.includes(token)) {
+    if (selectedTokens?.includes(token)) {
       const index = selectedTokens?.indexOf(token);
       if (index !== undefined) {
         const splicedArray = [...selectedTokens];
         splicedArray.splice(index, 1);
         console.log(splicedArray);
-        setSelectedTokens(splicedArray); 
+        setSelectedTokens(splicedArray);
       }
       // setSelectedTokens(selectedTokens);
       console.log("removed token");
@@ -145,8 +164,6 @@ function TheFactory(props: TheFactoryProps) {
       console.log("pushed token");
       console.log(selectedTokens);
     }
-
-    
   }
 
   // stakedTeddiesIDs.forEach((tokenID: string) => {
@@ -154,10 +171,10 @@ function TheFactory(props: TheFactoryProps) {
   //   const stakedTeddy = LoadStakedTeddy(tokenID);
   //   console.log(stakedTeddy);
   //   teddyNFTs?.push(stakedTeddy!);
-  //   AllTokens.push    
+  //   AllTokens.push
   // });
 
-   const leftDrawerWidth = isSmallScreen ? "0px" : "240px";
+  const leftDrawerWidth = isSmallScreen ? "0px" : "260px";
   const rightDrawerWidth = isSmallScreen ? "0px" : "340px";
 
   const [isActiveFilter, setIsActiveFilter] = useState(false);
@@ -171,12 +188,13 @@ function TheFactory(props: TheFactoryProps) {
   const [ownershipVerified, setOwnershipVerified] = useState(true);
   const [selectedTokens, setSelectedTokens] = useState<NFT[]>([]);
   const [is10Selected, setIs10Selected] = useState<boolean>(false);
-  const [isOneOfEachSelected, setIsOneOfEachSelected] = useState<boolean>(false);
+  const [isOneOfEachSelected, setIsOneOfEachSelected] =
+    useState<boolean>(false);
   const [burnRewards, setBurnRewards] = useState<string>("0");
 
   const tedBurnWorth = 5000;
   const teddyBurnWorth = 6500;
-  const aiTedBurnWorth = 50000;   
+  const aiTedBurnWorth = 50000;
 
   const [open, setOpen] = useState(false);
   const handleClose = () => {
@@ -222,7 +240,7 @@ function TheFactory(props: TheFactoryProps) {
   }, [isMediumLarge, isMobile]);
 
   useEffect(() => {
-    if(selectedTokens.length >= 10){
+    if (selectedTokens.length >= 10) {
       setIs10Selected(true);
     } else {
       setIs10Selected(false);
@@ -236,13 +254,13 @@ function TheFactory(props: TheFactoryProps) {
     const selectedAITedArray: NFT[] = [];
 
     selectedTokens.forEach((token: NFT) => {
-      if(teddyNFTs?.includes(token)){
+      if (teddyNFTs?.includes(token)) {
         teddyCount += 1;
         selectedTeddyArray.push(token);
-      } else if (aiTedNFTs?.includes(token)){
+      } else if (aiTedNFTs?.includes(token)) {
         aiTedCount += 1;
         selectedAITedArray.push(token);
-      } else if (tedNFTs?.includes(token)){
+      } else if (tedNFTs?.includes(token)) {
         tedCount += 1;
         selectedTedArray.push(token);
       }
@@ -252,15 +270,17 @@ function TheFactory(props: TheFactoryProps) {
     setSelectedTeddies(selectedTeddyArray);
     setSelectedTeds(selectedTedArray);
 
-    if(tedCount > 0 && teddyCount > 0 && aiTedCount > 0){
+    if (tedCount > 0 && teddyCount > 0 && aiTedCount > 0) {
       setIsOneOfEachSelected(true);
     } else {
       setIsOneOfEachSelected(false);
-    }   
-    
-    const burnValue = (tedCount * tedBurnWorth) + (teddyCount * teddyBurnWorth) + (aiTedCount * aiTedBurnWorth);
-    setBurnRewards(burnValue.toString());
+    }
 
+    const burnValue =
+      tedCount * tedBurnWorth +
+      teddyCount * teddyBurnWorth +
+      aiTedCount * aiTedBurnWorth;
+    setBurnRewards(burnValue.toString());
   }, [aiTedNFTs, selectedTokens, tedNFTs, teddyNFTs]);
 
   useEffect(() => {
@@ -269,13 +289,16 @@ function TheFactory(props: TheFactoryProps) {
     const aiTedNFTs = tokens.AITeds?.tokens;
     const stakedTeddiesIDs = tokens.StakedTeddiesIDs?.tokens;
 
-    if(!isLoading){
-      if(tedNFTs!.length > 0 && (teddyNFTs!.length > 0 || stakedTeddiesIDs!.length > 0) && aiTedNFTs!.length > 0){
+    if (!isLoading) {
+      if (
+        tedNFTs!.length > 0 &&
+        (teddyNFTs!.length > 0 || stakedTeddiesIDs!.length > 0) &&
+        aiTedNFTs!.length > 0
+      ) {
         setOwnershipVerified(true);
       } else {
         setOwnershipVerified(false);
       }
-
     }
   }, [isLoading, tokens]);
 
@@ -310,44 +333,63 @@ function TheFactory(props: TheFactoryProps) {
     console.log(error);
     setSearchInput("");
   }
-  
+
   const filteredNFTs = AllTokens?.filter((e) =>
     e.metadata.id!.includes(searchInput)
   );
   console.log(filteredNFTs);
-  
+
   //////////////////////////////////////////////
 
   return (
-    <Box className="factory-inner-container">
-      {isMismatched && (<MainnetNetwork/>)}
-          <Backdrop
-            sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
-            open={isMismatched}
-          >
-            {/* <CircularProgress color="inherit" /> */}
-          </Backdrop>
+    <Box
+      className={
+        isSmallScreen
+          ? "factory-inner-container-mobile"
+          : "factory-inner-container"
+      }
+    >
+      {isMismatched && <MainnetNetwork />}
+      <Backdrop
+        sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
+        open={isMismatched}
+      >
+        {/* <CircularProgress color="inherit" /> */}
+      </Backdrop>
 
-          <Backdrop
-            sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1, marginLeft: "260px",  marginRight: "340px"}}
-            open={isLoading}
-          >
-            <CircularProgress color="inherit" />
-          </Backdrop>
+      <Backdrop
+        sx={{
+          color: "#fff",
+          zIndex: (theme) => theme.zIndex.drawer + 1,
+          marginLeft: leftDrawerWidth,
+          marginRight: rightDrawerWidth,
+        }}
+        open={isLoading}
+      >
+        <CircularProgress color="inherit" />
+      </Backdrop>
 
-          <Backdrop
-            sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1, marginLeft: "260px", marginRight: "340px" }}
-            open={!ownershipVerified && !isLoading}
-            onClick={handleClose}
-          >
-            <Box sx={{ borderRadius: "10px", backgroundColor: "white"}}> 
-              <Typography sx={{padding: "20px", color: "Black"}}>You do not own all the required NFTs to access this page.</Typography>
-              <Typography sx={{padding: "20px", color: "Black"}}>Please visit the Dashboard to view your NFTs.</Typography>
-            </Box>
-          </Backdrop>
+      <Backdrop
+        sx={{
+          color: "#fff",
+          zIndex: (theme) => theme.zIndex.drawer + 1,
+          marginLeft: leftDrawerWidth,
+          marginRight: rightDrawerWidth,
+        }}
+        open={!ownershipVerified && !isLoading}
+        onClick={handleClose}
+      >
+        <Box sx={{ borderRadius: "10px", backgroundColor: "white" }}>
+          <Typography sx={{ padding: "20px", color: "Black" }}>
+            You do not own all the required NFTs to access this page.
+          </Typography>
+          <Typography sx={{ padding: "20px", color: "Black" }}>
+            Please visit the Dashboard to view your NFTs.
+          </Typography>
+        </Box>
+      </Backdrop>
       {address && (
         <Box className={isSmallScreen ? "header-mobile" : "header"}>
-          
           <Box className={isSmallScreen ? "header-row-mobile" : "header-row"}>
             <h3
               className={isSmallScreen ? "page-header-mobile" : "page-header"}
@@ -356,7 +398,9 @@ function TheFactory(props: TheFactoryProps) {
             </h3>
             <input
               type="text"
-              className="factory-search"
+              className={
+                isSmallScreen ? "factory-search-mobile" : "factory-search"
+              }
               placeholder="Search for Ted, Teddy or AI Token ID"
               onChange={handleSearch}
               value={searchInput}
@@ -415,77 +459,90 @@ function TheFactory(props: TheFactoryProps) {
               {tokens ? (
                 // <NFTList tokens={AllTokens} searchText={searchInput} stakedIDs={stakedTeddiesIDs!} selectedTokens={selectedTokens} setSelectedTokens={setSelectedTokens} />
                 <ImageList
-                sx={{
-                  justifyContent: "center",
-                  width: "100%",
-                  height: "100%",
-                  paddingLeft: "10px",
-                  paddingRight: "10px",
-                  overflowX: "hidden",
-                  overflowY: "auto",
-                  backgroundColor: "white",
-                }}
-                cols={columns}
-                gap={25}
-                rowHeight={450}
-              >
-                {filteredNFTs.map((token: NFT) => (
-                  <Box
-                    key={token.metadata.id}
-                    className={
-                      selectedTokens?.includes(token) ? "card-selected" : "card"
-                    }
-                    sx={{
-                      marginLeft: "auto",
-                      marginRight: "auto",
-                      background: "none",
-                      maxHeight: "375px",
-                      maxWidth: "350px",
-                    }}                    
-                  >
-                    {/* <StarBorderIcon
+                  sx={{
+                    justifyContent: "center",
+                    width: "100%",
+                    height: "100%",
+                    paddingLeft: "10px",
+                    paddingRight: "10px",
+                    overflowX: "hidden",
+                    overflowY: "auto",
+                    backgroundColor: "white",
+                  }}
+                  cols={columns}
+                  gap={25}
+                  rowHeight={450}
+                >
+                  {filteredNFTs.map((token: NFT) => (
+                    <Box
+                      key={token.metadata.id}
+                      className={
+                        selectedTokens?.includes(token)
+                          ? "card-selected"
+                          : "card"
+                      }
+                      sx={{
+                        marginLeft: "auto",
+                        marginRight: "auto",
+                        background: "none",
+                        maxHeight: "375px",
+                        maxWidth: "350px",
+                      }}
+                    >
+                      {/* <StarBorderIcon
                       onClick={star}
                       sx={{ position: "absolute", top: "10px", right: "10px" }}
                     /> */}
-                     <Box sx={{
-                      position: "relative",
-                      cursor: "pointer"
-                    }}  onClick={() => add(token)}>
-                    <ThirdwebNftMedia
-                      metadata={token.metadata}
-                      style={{
-                        maxHeight: "280px",
-                        maxWidth: "280px",
-                        borderRadius: "10px",
-                        objectFit: "cover",
-                        width: "280px",
-                        height: "280px",
-                      }}
-                    />
-          
-                    {selectedTokens?.includes(token) && (
-                      <p className="title-selected">Burn</p>
-                    )}
+                      <Box
+                        sx={{
+                          position: "relative",
+                          cursor: "pointer",
+                        }}
+                        onClick={() => add(token)}
+                      >
+                        <ThirdwebNftMedia
+                          metadata={token.metadata}
+                          style={{
+                            maxHeight: "280px",
+                            maxWidth: "280px",
+                            borderRadius: "10px",
+                            objectFit: "cover",
+                            width: "280px",
+                            height: "280px",
+                          }}
+                        />
+
+                        {selectedTokens?.includes(token) && (
+                          <p className="title-selected">Burn</p>
+                        )}
+                      </Box>
+                      <Box
+                        className="column-container"
+                        sx={{ marginBottom: "10px" }}
+                      >
+                        <div className="large-left-column">
+                          <h3 className="metadata-title">
+                            {token.metadata.name}
+                          </h3>
+                          <h4 className="metadata">
+                            Last Transfer: 03/11/2023
+                          </h4>
+                        </div>
+                        <div className="small-right-column">
+                          <ControlPointIcon
+                            onClick={() => add(token)}
+                            fontSize="small"
+                          />
+                        </div>
+                      </Box>
                     </Box>
-                    <Box className="column-container" sx={{ marginBottom: "10px" }}>
-                      <div className="large-left-column">
-                        <h3 className="metadata-title">{token.metadata.name}</h3>
-                        <h4 className="metadata">Last Transfer: 03/11/2023</h4>
-                      </div>
-                      <div className="small-right-column">
-                        <ControlPointIcon onClick={() => add(token)} fontSize="small" />
-                      </div>
-                    </Box>
-                  </Box>
-                ))}
-              </ImageList>
-                ) : (
+                  ))}
+                </ImageList>
+              ) : (
                 <p>Loading...</p>
               )}
             </Box>
           )}
-
-          
         </div>
       ) : (
         <ConnectWalletPage />
@@ -541,45 +598,59 @@ function TheFactory(props: TheFactoryProps) {
               className="burn-box"
               sx={{ display: "flex", flexDirection: "row" }}
             >
-              <Button className="burn-btn" disabled={!isOneOfEachSelected}>Burn Selected for {parseInt(burnRewards).toLocaleString()} $HNY</Button>
-              <Button className="burn-btn" disabled={!is10Selected}> 
-                Burn {selectedTokens.length} + {(1000000 - parseInt(burnRewards)).toLocaleString()} $HNY for Custom 1/1
+              <Button className="burn-btn" disabled={!isOneOfEachSelected}>
+                Burn {selectedTokens.length} for{" "}
+                {parseInt(burnRewards).toLocaleString()} $HNY
+              </Button>
+              <Button className="burn-btn" disabled={!is10Selected}>
+                Burn {selectedTokens.length} +{" "}
+                {(1000000 - parseInt(burnRewards)).toLocaleString()} $HNY for
+                Custom 1/1
               </Button>
             </Box>
           </Box>
         </Box>
       )}
 
-    {isSmallScreen && !isSheetOpen && (
-      <Box
-        sx={{
-          position: "fixed",
-          paddingLeft: "20px",
-          paddingRight: "20px",
-          bottom: "0px",
-          height: "70px",
-          width: "100%",
-          backgroundColor: "#FED100",
-          zIndex: "1"
-        }}
-        onClick={() => setSheetOpen(true)}
-      >
-        <Typography className="factory-sheet-text">View Selected</Typography>
-      </Box>
-    )}
+      {isSmallScreen && (
+        <Box
+          sx={{
+            position: "fixed",
+            paddingLeft: "20px",
+            paddingRight: "20px",
+            bottom: "0px",
+            height: "70px",
+            width: "100%",
+            backgroundColor: "#FED100",
+            zIndex: "1",
+            display: "flex",
+            flexDirection: "row",
+            justifyContent: "space-between",
+            alignItems: "center",
+            cursor: "pointer",
+            border: "2px solid black",
+          }}
+          onClick={() => setSheetOpen(true)}
+        >
+          <Typography className="factory-sheet-text">
+            Ready to Burn {selectedTokens.length} tokens?
+          </Typography>
+          <ExpandMoreOutlinedIcon/>
+        </Box>
+      )}
 
-    <Sheet 
-      rootId="root"
-      isOpen={isSheetOpen}
-      onClose={() => setSheetOpen(false)}
-      detent="content-height">
+      <Sheet
+        rootId="root"
+        isOpen={isSheetOpen}
+        onClose={() => setSheetOpen(false)}
+        detent="content-height"
+      >
         <Sheet.Container>
-          <Sheet.Header />
+          <Sheet.Header/>
           <Sheet.Content>
-          <Box
+            <Box
               className="selected-box-mobile"
-              sx={{ display: "flex", flexDirection: "row" }}
-            >
+              sx={{ display: "flex", flexDirection: "row" }}>
               <Box className="stats-col">
                 <p className="stats">
                   {new Intl.NumberFormat("en-US", {
@@ -610,11 +681,18 @@ function TheFactory(props: TheFactoryProps) {
               </Box>
             </Box>
             {/* <NumericFormat value={honeyBalance} displayType={'text'} thousandSeparator={true} prefix={'$'} suffix={' HNY'} /> */}
-            <Box
-              className="burn-box-mobile" >
-              <Button className="burn-btn-mobile " disabled={!isOneOfEachSelected}>Burn Selected for {parseInt(burnRewards).toLocaleString()} $HNY</Button>
-              <Button className="burn-btn-mobile " disabled={!is10Selected}> 
-                Burn {selectedTokens.length} + {(1000000 - parseInt(burnRewards)).toLocaleString()} $HNY for Custom 1/1
+            <Box className="burn-box-mobile">
+              <Button
+                className="burn-btn-mobile "
+                disabled={!isOneOfEachSelected}
+              >
+                Burn {selectedTokens.length} for{" "}
+                {parseInt(burnRewards).toLocaleString()} $HNY
+              </Button>
+              <Button className="burn-btn-mobile " disabled={!is10Selected}>
+                Burn {selectedTokens.length} +{" "}
+                {(1000000 - parseInt(burnRewards)).toLocaleString()} $HNY for
+                Custom 1/1
               </Button>
             </Box>
           </Sheet.Content>
