@@ -257,10 +257,17 @@
     display: flex;
   }
   
-  /* .row {
+  .column {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+  }
+
+  .row {
     flex-direction: row;
     display: flex;
-  } */
+    width: 100%;
+  }
   
   .stats {
     color: black;

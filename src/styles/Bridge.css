@@ -15,6 +15,23 @@
   overflow-y: auto;
 }
 
+.row-around-bridge{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+  text-align: center;
+  flex-wrap: wrap;
+  margin: 0%;
+  padding: 0%;
+  overflow-wrap: break-word;
+  width: 100%;
+  max-width: 1380px;
+  height: 450px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
 .bridge-header{
     display: flex;
     justify-content: center;
@@ -164,6 +181,16 @@
     justify-content: center;
     align-items: center;
     text-align: center;
+  }
+  .polygon-bridge-container-mobile {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding-bottom: 70px;
   }
   
   .Large-Header {

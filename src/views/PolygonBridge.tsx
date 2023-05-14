@@ -102,7 +102,7 @@ function PolygonBridge(props: TokenProps) {
 
   return (
      <Box className={isSmallScreen ? "bridge-inner-container-mobile" :"bridge-inner-container"}>
-      {address && (
+      {address && !isSmallScreen && (
         <Box className={isSmallScreen ? "header-mobile" : "header"}>
           <Box className={isSmallScreen ? "header-row-mobile" : "header-row"}>
             <Typography
@@ -114,7 +114,7 @@ function PolygonBridge(props: TokenProps) {
         </Box>
       )}
       {address ? (
-        <Box sx={{overflowY: "hidden" }}>
+        <Box>
           {error ? (
             <div>
               <p>NFTs not found - error</p>
@@ -134,7 +134,7 @@ function PolygonBridge(props: TokenProps) {
               }}
             >
               {tokens ? (
-                <Box>
+                <Box sx={{ width: "100%", height: "100%" }}>
                    <ThirdwebProvider activeChain={Polygon}
                     // <ThirdwebProvider activeChain={Mumbai}
                       supportedChains={[Ethereum, Polygon]}>
