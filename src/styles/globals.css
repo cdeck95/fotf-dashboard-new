@@ -499,11 +499,13 @@ body {
 
 .connectWalletOverride {
   width: 215px !important;
+  border: 1px solid var(--primary-color) !important;
 }
 
 .connectWalletOverride-Mobile {
   width: 225px !important;
   min-width: 225px !important;
+  border: 1px solid var(--primary-color) !important;
 }
 
 .info-card {

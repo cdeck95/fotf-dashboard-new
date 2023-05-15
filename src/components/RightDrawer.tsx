@@ -393,8 +393,7 @@ function PermanentDrawerRight(props: NavProps) {
               />
             </div> */}
             <ConnectWallet
-              accentColor="#000000"
-              colorMode="dark"
+              theme="dark"
               className={
                 isMobile
                   ? "connectWalletOverride-Mobile"

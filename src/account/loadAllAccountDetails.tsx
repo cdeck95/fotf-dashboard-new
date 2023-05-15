@@ -353,7 +353,7 @@ export function LoadAllAccountDetails(): allOwnedNFTs {
       const data: StakedTokens[] = await contract_STAKING?.call(
         "getStakedTokens", // Name of your function as it is on the smart contract
         // Arguments to your function, in the same order they are on your smart contract
-        address
+        [address]
       );
       console.log(data);
       const stakedTokenIDsTmp: string[] = [];
@@ -443,7 +443,7 @@ export function LoadAllAccountDetails(): allOwnedNFTs {
       const data: BigNumber = await contract_REWARDS?.call(
         "balanceOf", // Name of your function as it is on the smart contract
         // Arguments to your function, in the same order they are on your smart contract
-        address
+        [address]
       );
       const honeyTMP = parseFloat(ethers.utils.formatEther(data)).toFixed(3);
       setHoney(honeyTMP.toString());
