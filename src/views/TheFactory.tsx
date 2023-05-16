@@ -659,7 +659,7 @@ function TheFactory(props: TokenProps) {
 
       <Sheet
         rootId="root"
-        isOpen={isSheetOpen && !showMismatch && ownershipVerified}
+        isOpen={isSheetOpen && !showMismatch && ownershipVerified && (!isSmallScreen || (isSmallScreen && !rightNavOpen && !leftNavOpen) )}
         onClose={() => setSheetOpen(false)}
         detent="content-height"
       >
