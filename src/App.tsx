@@ -276,7 +276,17 @@ function App() {
         >
           {address ? (
             <Routes>
-              <Route path="/" element={<Dashboard />} />
+              <Route path="/" element={<Dashboard tokens={tokens}
+                    error={error}
+                    isLoadingTed={isLoadingTed}
+                    isLoadingTeddy={isLoadingTeddy}
+                    isLoadingStaked={isLoadingStaked}
+                    isLoadingAI={isLoadingAI}
+                    isLoadingBirthCerts={isLoadingBirthCerts}
+                    isLoadingOneOfOne={isLoadingOneOfOne}
+                    honeyBalance={honeyBalance}
+                    leftNavOpen={navOpen}
+                    rightNavOpen={rightNavOpen} />} />
               <Route path="/HoneyExchange" element={<HoneyExchange />} />
               <Route path="/TeddyStaking" element={<TeddyStaking />} />
               <Route path="/TedClaims" element={<TedClaims />} />{" "}
@@ -293,12 +303,24 @@ function App() {
                     isLoadingBirthCerts={isLoadingBirthCerts}
                     isLoadingOneOfOne={isLoadingOneOfOne}
                     honeyBalance={honeyBalance}
+                    leftNavOpen={navOpen}
+                    rightNavOpen={rightNavOpen}
                   />
                 }
               />
               <Route
                 path="/TheFactory"
-                element={<TheFactory allOwnedNFTs={allOwnedNFTsArray} />}
+                element={<TheFactory tokens={tokens}
+                error={error}
+                isLoadingTed={isLoadingTed}
+                isLoadingTeddy={isLoadingTeddy}
+                isLoadingStaked={isLoadingStaked}
+                isLoadingAI={isLoadingAI}
+                isLoadingBirthCerts={isLoadingBirthCerts}
+                isLoadingOneOfOne={isLoadingOneOfOne}
+                honeyBalance={honeyBalance}
+                leftNavOpen={navOpen}
+                rightNavOpen={rightNavOpen} />}
               />
               <Route path="/BuildATeddy" element={<BuildATeddy />} />
               <Route path="/TraitSwapTeds" element={<TraitSwapTeds />} />

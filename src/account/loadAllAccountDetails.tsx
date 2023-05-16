@@ -299,7 +299,7 @@ export function LoadAllAccountDetails(): allOwnedNFTs {
       return {
         Teds: {
           address: address!,
-          tokens: tedNFTs!,  
+          tokens: tedNFTs!, 
         },
         Teddies: {
           address: address!,

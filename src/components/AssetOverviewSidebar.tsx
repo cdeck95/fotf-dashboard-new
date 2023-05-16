@@ -15,6 +15,8 @@ export interface TokenProps {
   isLoadingOneOfOne: boolean,
   isLoadingStaked: boolean,
   honeyBalance: string;
+  leftNavOpen: boolean;
+  rightNavOpen: boolean;
 }
 
 function AssetOverviewSidebar(props: TokenProps) {

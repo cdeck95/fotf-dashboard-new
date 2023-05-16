@@ -50,12 +50,15 @@ import { LoadStakedTeddy } from "../account/loadStakedTeddy";
 import { MainnetNetwork } from "../components/MainnetNetwork";
 import ExpandLessOutlinedIcon from '@mui/icons-material/ExpandLessOutlined';
 import ExpandMoreOutlinedIcon from '@mui/icons-material/ExpandMoreOutlined';
+import { TokenProps } from "../components/AssetOverviewSidebar";
 
-interface TheFactoryProps {
-  allOwnedNFTs: allOwnedNFTs;
-}
+// interface TheFactoryProps {
+//   allOwnedNFTs: allOwnedNFTs;
+//   leftNavOpen: boolean;
+//   rightNavOpen: boolean;
+// }
 
-function TheFactory(props: TheFactoryProps) {
+function TheFactory(props: TokenProps) {
   useTitle("FOTF | The Factory");
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
@@ -72,6 +75,7 @@ function TheFactory(props: TheFactoryProps) {
   const [, switchNetwork] = useNetwork(); // Switch to desired chain
   const isMismatched = useNetworkMismatch(); // Detect if user is connected to the wrong network
   const [isSheetOpen, setSheetOpen] = useState(false);
+  const [showMismatch, setShowMismatch] = useState(false);
   console.log(`Mobile:  ${isMobile}`);
   console.log(`Small:  ${isSmall}`);
   console.log(`Medium:  ${isMedium}`);
@@ -92,7 +96,9 @@ function TheFactory(props: TheFactoryProps) {
     isLoadingTeddy,
     error,
     honeyBalance,
-  } = LoadAllAccountDetails();
+    leftNavOpen,
+    rightNavOpen
+  } = props;
   // const {tokens, isLoading, error, honeyBalance } = allOwnedNFTs;
   console.log(tokens);
   console.log(isLoadingTed);
@@ -237,7 +243,13 @@ function TheFactory(props: TheFactoryProps) {
       setSmallScreen(false);
       setSheetOpen(false);
     }
-  }, [isMediumLarge, isMobile]);
+
+    if (isMismatched && (!isSmallScreen || (isSmallScreen && !rightNavOpen && !leftNavOpen))){
+      setShowMismatch(true);
+    } else {
+      setShowMismatch(false);
+    }
+  }, [isMediumLarge, isMismatched, isMobile, isSmallScreen, leftNavOpen, rightNavOpen]);
 
   useEffect(() => {
     if (selectedTokens.length >= 10) {
@@ -349,12 +361,17 @@ function TheFactory(props: TheFactoryProps) {
           : "factory-inner-container"
       }
     >
-      {isMismatched && <MainnetNetwork />}
+      {/* {showMismatch &&  */}
       <Backdrop
         sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
-        open={isMismatched}
+        open={showMismatch}
       >
-        {/* <CircularProgress color="inherit" /> */}
+        <Backdrop
+      sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
+      open={showMismatch}
+        >
+        <MainnetNetwork />
+        </Backdrop>
       </Backdrop>
 
       <Backdrop
@@ -364,7 +381,7 @@ function TheFactory(props: TheFactoryProps) {
           marginLeft: leftDrawerWidth,
           marginRight: rightDrawerWidth,
         }}
-        open={isLoading}
+        open={isLoading && !showMismatch}
       >
         <CircularProgress color="inherit" />
       </Backdrop>
@@ -376,7 +393,7 @@ function TheFactory(props: TheFactoryProps) {
           marginLeft: leftDrawerWidth,
           marginRight: rightDrawerWidth,
         }}
-        open={!ownershipVerified && !isLoading}
+        open={!ownershipVerified && !isLoading && !isMismatched}
         onClick={handleClose}
       >
         <Box sx={{ borderRadius: "10px", backgroundColor: "white" }}>
@@ -391,11 +408,9 @@ function TheFactory(props: TheFactoryProps) {
       {address && (
         <Box className={isSmallScreen ? "header-mobile" : "header"}>
           <Box className={isSmallScreen ? "header-row-mobile" : "header-row"}>
-            <h3
-              className={isSmallScreen ? "page-header-mobile" : "page-header"}
-            >
+            {!isSmallScreen && <h3 className={isSmallScreen ? "page-header-mobile" : "page-header"} >
               The Factory
-            </h3>
+            </h3> }
             <input
               type="text"
               className={
@@ -644,7 +659,7 @@ function TheFactory(props: TheFactoryProps) {
 
       <Sheet
         rootId="root"
-        isOpen={isSheetOpen}
+        isOpen={isSheetOpen && !showMismatch && ownershipVerified}
         onClose={() => setSheetOpen(false)}
         detent="content-height"
       >

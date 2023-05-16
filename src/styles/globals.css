@@ -207,19 +207,16 @@ body {
   background-color: transparent;
   border: grey 1px solid;
   height: 35px;
-  width: 210px;
+  width: 250px;
   border-radius: 15px;
   font-size: .9rem;
   font-family: 'Bebas Neue';
   color: grey;
-  margin-top: 0%;
+  margin-top: 10px;
   margin-left: 0%;
   margin-bottom: 0%;
   margin-right: 0px;
-  padding-bottom: 0%;
-  padding-top: 0%;
-  padding-right: 10px;
-  padding-left: 10px;
+  padding: 10px;
 }
 
 .factory-search-mobile:active{
@@ -636,8 +633,7 @@ body {
   transition: transform 2s;
   padding-top: 10px;
   position: relative;
-  z-index: 100;
-
+  z-index: 1;
 }
 
 .addPadding {

@@ -34,7 +34,7 @@ import { TokenProps } from "../components/AssetOverviewSidebar";
 //   honeyBalance: string;
 // }
 
-const BRIDGE_CONTRACT = "0x2fA12AD563d53f0642244E2D70f0824c5dc9c5c3";
+const BRIDGE_CONTRACT = "0x2E7E9117B978eBe9c4d680009fF8665Ba83ED166";
 
 function PolygonBridge(props: TokenProps) {
   useTitle("FOTF | The Bridge");
@@ -43,7 +43,7 @@ function PolygonBridge(props: TokenProps) {
   const address = useAddress();
   const [, switchNetwork] = useNetwork(); // Switch to desired chain
   const isMismatched = useNetworkMismatch(); // Detect if user is connected to the wrong network
-  const { tokens, error, isLoadingAI, isLoadingBirthCerts, isLoadingOneOfOne, isLoadingStaked, isLoadingTed, isLoadingTeddy, honeyBalance} = props;
+  const { tokens, error, isLoadingAI, isLoadingBirthCerts, isLoadingOneOfOne, isLoadingStaked, isLoadingTed, isLoadingTeddy, honeyBalance, leftNavOpen, rightNavOpen} = props;
   console.log(tokens);
   // console.log(isLoading);
   // console.log(error);
@@ -139,8 +139,8 @@ function PolygonBridge(props: TokenProps) {
                     // <ThirdwebProvider activeChain={Mumbai}
                       supportedChains={[Ethereum, Polygon]}>
                    {advance 
-                      ? <PolygonBridgeConfirm setCollection={setCollection} setAdvance={setAdvance} collection={collection} tokens={tokens} bridgeContract={bridgeContract}/>
-                      : <PolygonBridgeInitial setCollection={setCollection} setAdvance={setAdvance} tokens={tokens} error={error} isLoadingTed={isLoadingTed} isLoadingTeddy={isLoadingTeddy} isLoadingStaked={isLoadingStaked} isLoadingAI={isLoadingAI} isLoadingBirthCerts={isLoadingBirthCerts} isLoadingOneOfOne={isLoadingOneOfOne} bridgeContract={bridgeContract} />
+                      ? <PolygonBridgeConfirm setCollection={setCollection} setAdvance={setAdvance} collection={collection} tokens={tokens} bridgeContract={bridgeContract} leftNavOpen={leftNavOpen} rightNavOpen={rightNavOpen}/>
+                      : <PolygonBridgeInitial setCollection={setCollection} setAdvance={setAdvance} tokens={tokens} error={error} isLoadingTed={isLoadingTed} isLoadingTeddy={isLoadingTeddy} isLoadingStaked={isLoadingStaked} isLoadingAI={isLoadingAI} isLoadingBirthCerts={isLoadingBirthCerts} isLoadingOneOfOne={isLoadingOneOfOne} bridgeContract={bridgeContract} leftNavOpen={leftNavOpen} rightNavOpen={rightNavOpen} />
                       }
                     </ThirdwebProvider>
                 </Box>
