@@ -189,42 +189,48 @@ function App() {
   });
 
   var pageTitle = "";
+  switch (window.location.pathname) {
+    case "/":
+      pageTitle = "Dashboard";
+      break;
+    case "/TheFactory":
+      pageTitle = "The Factory";
+      break;
+    case "/BuildATeddy":
+      pageTitle = "Build A Teddy";
+      break;
+    case "/TraitSwapTeds":
+      pageTitle = "Trait Swap Teds";
+      break;
+    case "/GraphicTemplates":
+      pageTitle = "Graphic Templates";
+      break;
+    case "/HoneyExchange":
+      pageTitle = "Honey Exchange";
+      break;
+    case "/TeddyStaking":
+      pageTitle = "Teddy Staking";
+      break;
+    case "/TedClaims":
+      pageTitle = "Ted Claims";
+      break;
+    case "/Bridge" || "bridge":
+      pageTitle = "Polygon Bridge";
+      break;
+    default:
+      pageTitle = "";
+  }
 
   useEffect(() => { 
-
-    switch (window.location.pathname) {
-      case "/":
-        pageTitle = "Dashboard";
-        break;
-      case "/TheFactory":
-        pageTitle = "The Factory";
-        break;
-      case "/BuildATeddy":
-        pageTitle = "Build A Teddy";
-        break;
-      case "/TraitSwapTeds":
-        pageTitle = "Trait Swap Teds";
-        break;
-      case "/GraphicTemplates":
-        pageTitle = "Graphic Templates";
-        break;
-      case "/HoneyExchange":
-        pageTitle = "Honey Exchange";
-        break;
-      case "/TeddyStaking":
-        pageTitle = "Teddy Staking";
-        break;
-      case "/TedClaims":
-        pageTitle = "Ted Claims";
-        break;
-      case "/Bridge":
-        pageTitle = "Polygon Bridge";
-        setIsBridgePage(true);
-        break;
-      default:
-        pageTitle = "";
+ 
+    if(window.location.pathname === "/Bridge" || window.location.pathname === "/bridge"){
+      setIsBridgePage(true);
+    } else {
+      setIsBridgePage(false);
     }
   }, []);
+
+  
 
   return (
     <Box className="app-container" sx={{ position: "relative" }}>
@@ -262,7 +268,7 @@ function App() {
               >
                 {pageTitle}
               </Typography>
-              }
+            }
             </Box>
           </Box>
         )}
