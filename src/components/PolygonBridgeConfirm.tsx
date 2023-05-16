@@ -197,7 +197,6 @@ function PolygonBridgeConfirm(props: BridgeProps) {
 
   return (
     <Box className="polygon-bridge-container">
-      {showMismatch && (<PolygonNetwork/>)}
       <MaticDialog open={needsFunds && !showMismatch} handleClose={handleMaticClose} />
       <Box className="row-center">
         <h1 className="Large-Header">Confirm Bridge</h1>
@@ -208,11 +207,13 @@ function PolygonBridgeConfirm(props: BridgeProps) {
       >
         <Backdrop
             sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1, opacity: "0.9" }}
-            open={showMismatch}
-
-          >
-            {/* <CircularProgress color="inherit" /> */}
-          </Backdrop>
+            open={showMismatch}>
+            <Backdrop
+            sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1, opacity: "0.9" }}
+            open={showMismatch}>
+                    {showMismatch && (<PolygonNetwork/>)}
+            </Backdrop>
+        </Backdrop>
         <Typography className="desc-text">
           Confirm the total amount of <span className="accent-text">{collection}</span> to be bridged to Polygon. Once a collection is bridged, 
           your wallet can no longer bridge again (for this collection) and all assets will be moved to Polygon
