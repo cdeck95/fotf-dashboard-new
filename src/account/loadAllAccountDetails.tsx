@@ -199,19 +199,19 @@ export function LoadAllAccountDetails(): allOwnedNFTs {
 
   allOwnedNFTs.isLoadingBirthCerts = isLoadingBirthCerts; 
 
-  // const { contract: contract_OneOfOneNative } = useContract(ONE_OF_ONE_CONTRACT);
-  // console.log(contract_OneOfOneNative);
-  // const {
-  //   data: oneOfOneNFTs,
-  //   error: errorOneOfOne,
-  //   isLoading: isLoadingOneOfOne,
-  // } = useOwnedNFTs(contract_OneOfOneNative, address);
-
+  const { contract: contract_OneOfOneNative } = useContract(ONE_OF_ONE_CONTRACT);
+  console.log(contract_OneOfOneNative);
   const {
     data: oneOfOneNFTs,
     error: errorOneOfOne,
     isLoading: isLoadingOneOfOne,
-  } = useOwnedNFTs(contract_OneOfOne, address);
+  } = useOwnedNFTs(contract_OneOfOneNative, address);
+
+  // const {
+  //   data: oneOfOneNFTs,
+  //   error: errorOneOfOne,
+  //   isLoading: isLoadingOneOfOne,
+  // } = useOwnedNFTs(contract_OneOfOne, address);
   console.log(contract_OneOfOne);
   console.log(oneOfOneNFTs);
   console.log(errorOneOfOne);
@@ -295,11 +295,16 @@ export function LoadAllAccountDetails(): allOwnedNFTs {
         console.log(token);
         returnNFTs?.push(token);
       });
+
+      // oneOfOneNFTs?.forEach((token) => {
+      //   console.log(token);
+      //   returnNFTs?.push(token);
+      // });
     
       return {
         Teds: {
           address: address!,
-          tokens: tedNFTs!,  
+          tokens: tedNFTs!, 
         },
         Teddies: {
           address: address!,
@@ -315,7 +320,7 @@ export function LoadAllAccountDetails(): allOwnedNFTs {
         },
         OneofOnes: {
           address: address!,
-          tokens: [],
+          tokens: oneOfOneNFTs!,
         },
         BirthCertificates: {
           address: address!,
@@ -353,7 +358,7 @@ export function LoadAllAccountDetails(): allOwnedNFTs {
       const data: StakedTokens[] = await contract_STAKING?.call(
         "getStakedTokens", // Name of your function as it is on the smart contract
         // Arguments to your function, in the same order they are on your smart contract
-        address
+        [address]
       );
       console.log(data);
       const stakedTokenIDsTmp: string[] = [];
@@ -443,7 +448,7 @@ export function LoadAllAccountDetails(): allOwnedNFTs {
       const data: BigNumber = await contract_REWARDS?.call(
         "balanceOf", // Name of your function as it is on the smart contract
         // Arguments to your function, in the same order they are on your smart contract
-        address
+        [address]
       );
       const honeyTMP = parseFloat(ethers.utils.formatEther(data)).toFixed(3);
       setHoney(honeyTMP.toString());

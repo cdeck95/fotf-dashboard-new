@@ -36,13 +36,15 @@ interface BridgeProps {
   collection: string;
   tokens: tokens;
   bridgeContract: UseContractResult<SmartContract<BaseContract>>;
+  leftNavOpen: boolean;
+  rightNavOpen: boolean;
 }
 
 function PolygonBridgeConfirm(props: BridgeProps) {
   useTitle("FOTF | Confirm Bridge");
-  const [isSheetOpen, setSheetOpen] = useState(false);
+  // const [isSheetOpen, setSheetOpen] = useState(false);
   // const { tokens, isLoading, error, honeyBalance } = LoadAllAccountDetails();
-  const { setCollection, setAdvance, collection, tokens } = props;
+  const { setCollection, setAdvance, collection, tokens, bridgeContract, leftNavOpen, rightNavOpen } = props;
   // console.log(tokens);
   // console.log(isLoading);
   // console.log(error);
@@ -59,6 +61,7 @@ function PolygonBridgeConfirm(props: BridgeProps) {
   const address = useAddress();
   const [, switchNetwork] = useNetwork(); // Switch to desired chain
   const isMismatched = useNetworkMismatch(); // Detect if user is connected to the wrong network
+  const [showMismatch, setShowMismatch] = useState(false);
 
   var teddyCount = 0;
   if (stakedTeddiesIDs && teddyNFTs) {
@@ -121,12 +124,15 @@ function PolygonBridgeConfirm(props: BridgeProps) {
   useEffect(() => {
     if (isMediumLarge || isMobile) {
       setSmallScreen(true);
-      setSheetOpen(true);
     } else {
       setSmallScreen(false);
-      setSheetOpen(false);
     }
-  }, [isMediumLarge, isMobile]);
+    if (isMismatched && (!isSmallScreen || (isSmallScreen && !rightNavOpen && !leftNavOpen))){
+      setShowMismatch(true);
+    } else {
+      setShowMismatch(false);
+    }
+  }, [isMediumLarge, isMismatched, isMobile, isSmallScreen, leftNavOpen, rightNavOpen]);
 
   const [showError, setShowError] = useState(false);
   const [errorCode, setErrorCode] = useState(0);
@@ -191,8 +197,7 @@ function PolygonBridgeConfirm(props: BridgeProps) {
 
   return (
     <Box className="polygon-bridge-container">
-      {isMismatched && (<PolygonNetwork/>)}
-      <MaticDialog open={needsFunds && !isMismatched} handleClose={handleMaticClose} />
+      <MaticDialog open={needsFunds && !showMismatch} handleClose={handleMaticClose} />
       <Box className="row-center">
         <h1 className="Large-Header">Confirm Bridge</h1>
       </Box>
@@ -202,11 +207,13 @@ function PolygonBridgeConfirm(props: BridgeProps) {
       >
         <Backdrop
             sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1, opacity: "0.9" }}
-            open={isMismatched}
-
-          >
-            {/* <CircularProgress color="inherit" /> */}
-          </Backdrop>
+            open={showMismatch}>
+            <Backdrop
+            sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1, opacity: "0.9" }}
+            open={showMismatch}>
+                    {showMismatch && (<PolygonNetwork/>)}
+            </Backdrop>
+        </Backdrop>
         <Typography className="desc-text">
           Confirm the total amount of <span className="accent-text">{collection}</span> to be bridged to Polygon. Once a collection is bridged, 
           your wallet can no longer bridge again (for this collection) and all assets will be moved to Polygon

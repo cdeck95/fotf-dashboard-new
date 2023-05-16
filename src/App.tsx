@@ -79,7 +79,7 @@ function App() {
 
   const [navOpen, setNavOpen] = useState(true);
   const [rightNavOpen, setRightNavOpen] = useState(true);
-
+  const [isBridgePage, setIsBridgePage] = useState(false);
   const [allOwnedNFTsArray, setAllOwnedNFTsArray] = useState<any>([]);
 
   const tokenProps = LoadAllAccountDetails();
@@ -189,7 +189,6 @@ function App() {
   });
 
   var pageTitle = "";
-
   switch (window.location.pathname) {
     case "/":
       pageTitle = "Dashboard";
@@ -215,12 +214,23 @@ function App() {
     case "/TedClaims":
       pageTitle = "Ted Claims";
       break;
-    case "/Bridge":
+    case "/Bridge" || "bridge":
       pageTitle = "Polygon Bridge";
       break;
     default:
       pageTitle = "";
   }
+
+  useEffect(() => { 
+ 
+    if(window.location.pathname === "/Bridge" || window.location.pathname === "/bridge"){
+      setIsBridgePage(true);
+    } else {
+      setIsBridgePage(false);
+    }
+  }, []);
+
+  
 
   return (
     <Box className="app-container" sx={{ position: "relative" }}>
@@ -258,7 +268,7 @@ function App() {
               >
                 {pageTitle}
               </Typography>
-              }
+            }
             </Box>
           </Box>
         )}
@@ -276,7 +286,17 @@ function App() {
         >
           {address ? (
             <Routes>
-              <Route path="/" element={<Dashboard />} />
+              <Route path="/" element={<Dashboard tokens={tokens}
+                    error={error}
+                    isLoadingTed={isLoadingTed}
+                    isLoadingTeddy={isLoadingTeddy}
+                    isLoadingStaked={isLoadingStaked}
+                    isLoadingAI={isLoadingAI}
+                    isLoadingBirthCerts={isLoadingBirthCerts}
+                    isLoadingOneOfOne={isLoadingOneOfOne}
+                    honeyBalance={honeyBalance}
+                    leftNavOpen={navOpen}
+                    rightNavOpen={rightNavOpen} />} />
               <Route path="/HoneyExchange" element={<HoneyExchange />} />
               <Route path="/TeddyStaking" element={<TeddyStaking />} />
               <Route path="/TedClaims" element={<TedClaims />} />{" "}
@@ -293,12 +313,24 @@ function App() {
                     isLoadingBirthCerts={isLoadingBirthCerts}
                     isLoadingOneOfOne={isLoadingOneOfOne}
                     honeyBalance={honeyBalance}
+                    leftNavOpen={navOpen}
+                    rightNavOpen={rightNavOpen}
                   />
                 }
               />
               <Route
                 path="/TheFactory"
-                element={<TheFactory allOwnedNFTs={allOwnedNFTsArray} />}
+                element={<TheFactory tokens={tokens}
+                error={error}
+                isLoadingTed={isLoadingTed}
+                isLoadingTeddy={isLoadingTeddy}
+                isLoadingStaked={isLoadingStaked}
+                isLoadingAI={isLoadingAI}
+                isLoadingBirthCerts={isLoadingBirthCerts}
+                isLoadingOneOfOne={isLoadingOneOfOne}
+                honeyBalance={honeyBalance}
+                leftNavOpen={navOpen}
+                rightNavOpen={rightNavOpen} />}
               />
               <Route path="/BuildATeddy" element={<BuildATeddy />} />
               <Route path="/TraitSwapTeds" element={<TraitSwapTeds />} />
@@ -323,7 +355,7 @@ function App() {
                 zIndex: "1 !important",
               }}
             >
-              {address && (
+              {address && !isBridgePage && (
                 <IconButton
                   color="inherit"
                   aria-label="open drawer"

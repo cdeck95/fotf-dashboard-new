@@ -15,6 +15,8 @@ export interface TokenProps {
   isLoadingOneOfOne: boolean,
   isLoadingStaked: boolean,
   honeyBalance: string;
+  leftNavOpen: boolean;
+  rightNavOpen: boolean;
 }
 
 function AssetOverviewSidebar(props: TokenProps) {
@@ -29,26 +31,39 @@ function AssetOverviewSidebar(props: TokenProps) {
   const teddyNFTs = tokens.Teddies?.tokens;
   const aiTedNFTs = tokens.AITeds?.tokens;
   const stakedTeddies = tokens.StakedTeddiesIDs?.tokens;
+  const oneOfOnes = tokens.OneofOnes?.tokens;
+  const birthCerts = tokens.BirthCertificates?.tokens;
+  const traitTokens = tokens.TraitSwapTokens?.tokens;
 
   var teddyCount = 0;
+  var tokenCount = allOwnedNFTs?.length;
   if (stakedTeddies && teddyNFTs) {
     teddyCount  = teddyNFTs?.length + stakedTeddies?.length;
+    tokenCount = tokenCount + stakedTeddies?.length;
   } else if (teddyNFTs) {
     teddyCount = teddyNFTs?.length;
   } else if (stakedTeddies) {
     teddyCount = stakedTeddies?.length;
   }
 
-  const oneOfOnes = tokens.OneofOnes?.tokens;
-  const birthCerts = tokens.BirthCertificates?.tokens;
-  const traitTokens = tokens.TraitSwapTokens?.tokens;
+  if (oneOfOnes) {
+    tokenCount = tokenCount + oneOfOnes?.length;
+  }
+
+  if (birthCerts) {
+    tokenCount = tokenCount + birthCerts?.length;
+  }
+
+  if (traitTokens) {
+    tokenCount = tokenCount + traitTokens?.length;
+  }
 
   return (
     <Box className="info-card">
       <Box className="row-between">
         <Box className="info-card__title">Asset Overview</Box>
         <Typography className="learnMore">
-          {allOwnedNFTs.length} total tokens
+          {tokenCount} total tokens
         </Typography>
       </Box>
       <Box className="row-around">
@@ -80,7 +95,10 @@ function AssetOverviewSidebar(props: TokenProps) {
       </Box>
       <Box className="row-around">
         <Box className="col-no-space">
-          <Typography className="asset-numbers">{oneOfOnes?.length}</Typography>
+        {isLoadingOneOfOne
+            ? <CircularProgress size="1rem" sx={{margin: "auto"}}/>
+            : <Typography className="asset-numbers"> {oneOfOnes?.length}</Typography>
+        }
           <Typography className="aseet-type">One of Ones</Typography>
         </Box>
         <Box className="col-no-space">

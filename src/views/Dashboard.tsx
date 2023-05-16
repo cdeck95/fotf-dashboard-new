@@ -22,18 +22,37 @@ import { Routes, Route } from "react-router-dom";
 import ConnectWalletPage from "../components/ConnectWalletPage";
 import { LoadAllAccountDetails } from "../account/loadAllAccountDetails";
 import { MainnetNetwork } from "../components/MainnetNetwork";
+import { TokenProps } from "../components/AssetOverviewSidebar";
 
-function Dashboard() {
+function Dashboard(props: TokenProps) {
   useTitle("FOTF | Dashboard");
+  const { tokens, error, isLoadingAI, isLoadingBirthCerts, isLoadingOneOfOne, isLoadingStaked, isLoadingTed, isLoadingTeddy, honeyBalance, leftNavOpen, rightNavOpen} = props;
   const theme = useTheme();
   const isMobile = !useMediaQuery(theme.breakpoints.up("md"));
+  const isMediumLarge = useMediaQuery(theme.breakpoints.down("lg"));
+  const [isSmallScreen, setSmallScreen] = useState(false);
   const sdk = useSDK();
   const provider = sdk?.getProvider();
   const address = useAddress(); // Get connected wallet address
   const [, switchNetwork] = useNetwork(); // Switch to desired chain
   const isMismatched = useNetworkMismatch(); // Detect if user is connected to the wrong network
+  const [showMismatch, setShowMismatch] = useState(false);
 
-  const { tokens, isLoadingTed, error, honeyBalance } = LoadAllAccountDetails();
+  // const { tokens, isLoadingTed, error, honeyBalance } = LoadAllAccountDetails();
+
+  useEffect(() => {
+    if (isMediumLarge || isMobile) {
+      setSmallScreen(true);
+    } else {
+      setSmallScreen(false);
+    }
+
+    if (isMismatched && (!isSmallScreen || (isSmallScreen && !rightNavOpen && !leftNavOpen))){
+      setShowMismatch(true);
+    } else {
+      setShowMismatch(false);
+    }
+  }, [isMediumLarge, isMismatched, isMobile, isSmallScreen, leftNavOpen, rightNavOpen]);
 
   return (
     <Box className="inner-container">
@@ -48,10 +67,10 @@ function Dashboard() {
             width: "100%",
           }}
         >
-          {isMismatched && (<MainnetNetwork/>)}
+          {showMismatch && (<MainnetNetwork/>)}
           <Backdrop
             sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
-            open={isMismatched}
+            open={showMismatch}
           >
             {/* <CircularProgress color="inherit" /> */}
           </Backdrop>

@@ -393,8 +393,7 @@ function PermanentDrawerRight(props: NavProps) {
               />
             </div> */}
             <ConnectWallet
-              accentColor="#000000"
-              colorMode="dark"
+              theme="dark"
               className={
                 isMobile
                   ? "connectWalletOverride-Mobile"
@@ -416,7 +415,7 @@ function PermanentDrawerRight(props: NavProps) {
           </Box>
           <Box className="row-even">{blogContent}</Box>
         </Box>
-        {showAssetOverview && <AssetOverviewSidebar tokens={tokens} error={error} isLoadingTed={isLoadingTed}  isLoadingTeddy={isLoadingTeddy} isLoadingStaked={isLoadingStaked} isLoadingAI={isLoadingAI} isLoadingBirthCerts={isLoadingBirthCerts} isLoadingOneOfOne={isLoadingOneOfOne} honeyBalance={honeyBalance}/>}
+        {showAssetOverview && <AssetOverviewSidebar tokens={tokens} error={error} isLoadingTed={isLoadingTed}  isLoadingTeddy={isLoadingTeddy} isLoadingStaked={isLoadingStaked} isLoadingAI={isLoadingAI} isLoadingBirthCerts={isLoadingBirthCerts} isLoadingOneOfOne={isLoadingOneOfOne} honeyBalance={honeyBalance} leftNavOpen={navOpen} rightNavOpen={navOpen}/>}
         <Box className="info-card">
           <Box className="row-between">
             <div className="info-card__title">Our Partners</div>

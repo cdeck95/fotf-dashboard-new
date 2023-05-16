@@ -47,6 +47,8 @@ interface BridgeProps {
   isLoadingOneOfOne: boolean;
   isLoadingStaked: boolean;
   bridgeContract: UseContractResult<SmartContract<BaseContract>>;
+  leftNavOpen: boolean;
+  rightNavOpen: boolean;
 }
 
 function PolygonBridgeInitial(props: BridgeProps) {
@@ -55,6 +57,7 @@ function PolygonBridgeInitial(props: BridgeProps) {
   const isMobile = !useMediaQuery(theme.breakpoints.up("md"));
   const isMediumLarge = useMediaQuery(theme.breakpoints.down("lg"));
   const [isSmallScreen, setSmallScreen] = useState(false);
+  const [showMismatch, setShowMismatch] = useState(false);
   const sdk = useSDK();
 
   const provider = sdk?.getProvider();
@@ -71,6 +74,10 @@ function PolygonBridgeInitial(props: BridgeProps) {
     isLoadingStaked,
     isLoadingTed,
     isLoadingTeddy,
+    error,
+    bridgeContract,
+    leftNavOpen,
+    rightNavOpen,
   } = props;
   console.log(tokens);
   // console.log(isLoading);
@@ -95,7 +102,7 @@ function PolygonBridgeInitial(props: BridgeProps) {
           return;
         } else {
           setMaticBalance(maticBalanceString);
-          if (parseInt(maticBalanceString) < 10) {
+          if (parseInt(maticBalanceString) < 5) {
             setNeedsFunds(true);
           } else {
             setNeedsFunds(false);
@@ -147,7 +154,12 @@ function PolygonBridgeInitial(props: BridgeProps) {
     } else {
       setSmallScreen(false);
     }
-  }, [isMediumLarge, isMobile]);
+    if (isMismatched && (!isSmallScreen || (isSmallScreen && !rightNavOpen && !leftNavOpen))){
+      setShowMismatch(true);
+    } else {
+      setShowMismatch(false);
+    }
+  }, [isMediumLarge, isMismatched, isMobile, isSmallScreen, leftNavOpen, rightNavOpen]);
 
   useEffect(() => {
     if (!tedNFTs) {
@@ -200,6 +212,7 @@ function PolygonBridgeInitial(props: BridgeProps) {
   const [selectedCollection, setSelectedCollection] = useState("");
   const [showError, setShowError] = useState(false);
   const [errorCode, setErrorCode] = useState(0);
+  const [collectionForError, setCollectionForError] = useState("");
 
   const handleErrorClose = () => {
     setShowError(false);
@@ -211,27 +224,45 @@ function PolygonBridgeInitial(props: BridgeProps) {
       setSelectedCollection("");
       setCollection("");
     } else {
-      if (collection === "Fury Teds" && (!hasTeds || isLoadingTed)) {
-        console.log("No Fury Teds");
+      if (collection === "Fury Teds" && isLoadingTed) {
+        console.log("still loading Teds");
         setShowError(true);
         setErrorCode(2);
+        setCollectionForError("Fury Teds");
+        return;
+      } else if (collection === "Fury Teds" && !hasTeds) {
+        console.log("No Teds");
+        setShowError(true);        
+        setErrorCode(3);
+        setCollectionForError("Fury Teds");
         return;
       }
 
-      if (
-        collection === "Teddies by FOTF" &&
-        (!hasTeddies || isLoadingTeddy || isLoadingStaked)
-      ) {
+      if (collection === "Teddies by FOTF" && (isLoadingTeddy || isLoadingStaked)) {
+        console.log("still loading Teddies");
+        setShowError(true);
+        setErrorCode(2);
+        setCollectionForError("Teddies by FOTF");
+        return;
+      } else if (collection === "Teddies by FOTF" && !hasTeddies) {
         console.log("No Teddies");
         setShowError(true);
-        setErrorCode(2);
+        setErrorCode(3);
+        setCollectionForError("Teddies by FOTF");
         return;
       }
 
-      if (collection === "AI Teds" && (!hasAITeds || isLoadingAI)) {
-        console.log("No AI Teds");
+      if (collection === "AI Teds" && isLoadingAI) {
+        console.log("Still loading AI Teds");
         setShowError(true);
         setErrorCode(2);
+        setCollectionForError("AI Teds");
+        return;
+      } else if (collection === "AI Teds" && !hasAITeds) {
+        console.log("No AI Teds");
+        setShowError(true);
+        setErrorCode(3);
+        setCollectionForError("AI Teds");
         return;
       }
       setSelectedCollection(collection);
@@ -260,9 +291,8 @@ function PolygonBridgeInitial(props: BridgeProps) {
 
   return (
     <Box className={isSmallScreen? "polygon-bridge-container-mobile" : "polygon-bridge-container"}>
-      {isMismatched && <PolygonNetwork />}
       <MaticDialog
-        open={needsFunds && !isMismatched}
+        open={needsFunds && !showMismatch}
         handleClose={handleMaticClose}
       />
       <Box className="row-center">
@@ -274,16 +304,14 @@ function PolygonBridgeInitial(props: BridgeProps) {
       >
         <Backdrop
           sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
-          open={isMismatched}
-        >
-          {/* <CircularProgress color="inherit" /> */}
-        </Backdrop>
-        <Backdrop
+          open={showMismatch}>  
+          <Backdrop
           sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
-          open={isMismatched}
-        >
-          {/* <CircularProgress color="inherit" /> */}
+          open={showMismatch}>
+            {showMismatch && <PolygonNetwork />}
+         </Backdrop>
         </Backdrop>
+       
         <Typography className="desc-text">
           Please choose which collection (Fury Teds, Teddies, or AI Teds) that
           you wish to bridge to Polygon.{" "}
@@ -530,6 +558,7 @@ function PolygonBridgeInitial(props: BridgeProps) {
         open={showError}
         handleClose={handleErrorClose}
         errorCode={errorCode}
+        collection={collectionForError}
       />
     </Box>
   );
