@@ -39,9 +39,35 @@ function ErrorDialog(props: FailureDialogProps) {
       case 2:
         return "The collection you selected is still loading. Please wait and try again.";
       case 3:
-        return `Whoops! Seems like you don’t have any ${collection} so there’s no need to bridge them. Don’t worry though, after the bridge closes you’ll be able to get your hands on some right here in the app. Stay tuned for that!`;
+        return `Seems like you don’t have any ${collection} so there’s no need to bridge them. Don’t worry though, after the bridge closes you’ll be able to get your hands on some right here in the app. Stay tuned for that!`;
       default:
         return "Something went wrong. We are not sure exactly what. Please refresh the page. If this continues to happen, please open a ticket within the FOTF Discord.";
+    }
+  };
+
+  const errorTitle = () => {
+    switch (errorCode) {
+      case 1:
+        return "Error";
+      case 2:
+        return "Error";
+      case 3:
+        return `Whoops!`;
+      default:
+        return "Error";
+    }
+  };
+
+  const errorColor = () => {
+    switch (errorCode) {
+      case 1:
+        return "red";
+      case 2:
+        return "red";
+      case 3:
+        return "#FED100"
+      default:
+        return "red"
     }
   };
 
@@ -59,13 +85,13 @@ function ErrorDialog(props: FailureDialogProps) {
         sx={{borderRadius:"0px"}}
       >
         <DialogTitle sx={{
-          backgroundColor: "red", 
+          backgroundColor: errorColor(), 
           color: "white", 
           margin: "0px",
           fontFamily: "Bebas Neue",
           fontSize: "30px"
         }}>
-        {"Error"}
+        {errorTitle()}
         {/* <Box sx={{position:"absolute", top: "5px", right: "5px", marginLeft: "auto"}} 
         >
           <Button sx={{color: "red", position:"absolute", top: "0px", right: "0px", marginLeft: "auto"}} 
@@ -82,14 +108,14 @@ function ErrorDialog(props: FailureDialogProps) {
             fontFamily: "Bebas Neue",
             fontSize: "24px",
             marginBottom: "5px",
-            backgroundColor: "red",
+            backgroundColor: errorColor(),
             color: "white",
             borderColor: "white",
             borderWidth: "1px",
             "&:hover": {
               backgroundColor: "white",
-              color: "red",
-              borderColor: "red",
+              color: errorColor(),
+              borderColor: errorColor(),
               borderWidth: "1px",
               borderStyle: "solid"
             }
