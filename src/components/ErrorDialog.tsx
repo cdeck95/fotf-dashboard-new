@@ -40,6 +40,8 @@ function ErrorDialog(props: FailureDialogProps) {
         return "The collection you selected is still loading. Please wait and try again.";
       case 3:
         return `Seems like you don’t have any ${collection} so there’s no need to bridge them. Don’t worry though, after the bridge closes you’ll be able to get your hands on some right here in the app. Stay tuned for that!`;
+      case 4:
+          return "The Factory is currently disabled. Please check back later.";
       default:
         return "Something went wrong. We are not sure exactly what. Please refresh the page. If this continues to happen, please open a ticket within the FOTF Discord.";
     }
@@ -53,6 +55,8 @@ function ErrorDialog(props: FailureDialogProps) {
         return "Error";
       case 3:
         return `Whoops!`;
+      case 4:
+        return `Coming Soon!`;
       default:
         return "Error";
     }
@@ -65,7 +69,9 @@ function ErrorDialog(props: FailureDialogProps) {
       case 2:
         return "red";
       case 3:
-        return "#FED100"
+        return "#FED100";
+      case 4:
+        return "#FED100";
       default:
         return "red"
     }

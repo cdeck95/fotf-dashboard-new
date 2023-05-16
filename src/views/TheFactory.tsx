@@ -51,6 +51,7 @@ import { MainnetNetwork } from "../components/MainnetNetwork";
 import ExpandLessOutlinedIcon from '@mui/icons-material/ExpandLessOutlined';
 import ExpandMoreOutlinedIcon from '@mui/icons-material/ExpandMoreOutlined';
 import { TokenProps } from "../components/AssetOverviewSidebar";
+import ErrorDialog from "../components/ErrorDialog";
 
 // interface TheFactoryProps {
 //   allOwnedNFTs: allOwnedNFTs;
@@ -83,6 +84,8 @@ function TheFactory(props: TokenProps) {
   console.log(`Large:  ${isLarge}`);
   console.log(`XL:  ${isXL}`);
   console.log(`Is 1920:  ${isFullScreen}`);
+
+  const isDisabled = true;
 
   // const { tokens, isLoading, error, honeyBalance } = LoadAllAccountDetails();
   // const allOwnedNFTs = props.allOwnedNFTs;
@@ -351,6 +354,32 @@ function TheFactory(props: TokenProps) {
   );
   console.log(filteredNFTs);
 
+  const [showError, setShowError] = useState(false);
+  const [errorCode, setErrorCode] = useState(0);
+
+  const handleErrorClose = () => {
+    setShowError(false);
+  };
+
+
+  function burn(selectedTokens: NFT[]) {
+    console.log("burn for hny clicked");
+    if(isDisabled) {
+      setShowError(true);
+      setErrorCode(4);
+      return;
+    }  
+  }
+
+  function burnForOneOfOne(selectedTokens: NFT[]) {
+    console.log("burn 1 of 1 clicked");
+    if(isDisabled) {
+      setShowError(true);
+      setErrorCode(4);
+      return;
+    }
+  }
+
   //////////////////////////////////////////////
 
   return (
@@ -405,6 +434,33 @@ function TheFactory(props: TokenProps) {
           </Typography>
         </Box>
       </Backdrop>
+
+      <ErrorDialog
+        open={showError}
+        handleClose={handleErrorClose}
+        errorCode={errorCode}
+        collection={"The Factory"}
+      />
+
+      {/* <Backdrop
+        sx={{
+          color: "#fff",
+          zIndex: (theme) => theme.zIndex.drawer + 1,
+          marginLeft: leftDrawerWidth,
+          marginRight: rightDrawerWidth,
+        }}
+        open={isDisabled}
+        onClick={handleClose}
+      >
+        <Box sx={{ borderRadius: "10px", backgroundColor: "white" }}>
+          <Typography sx={{ padding: "20px", color: "Black" }}>
+            The Factory is currently disabled.
+          </Typography>
+          <Typography sx={{ padding: "20px", color: "Black" }}>
+            Please come back later.
+          </Typography>
+        </Box>
+      </Backdrop> */}
       {address && (
         <Box className={isSmallScreen ? "header-mobile" : "header"}>
           <Box className={isSmallScreen ? "header-row-mobile" : "header-row"}>
@@ -613,11 +669,11 @@ function TheFactory(props: TokenProps) {
               className="burn-box"
               sx={{ display: "flex", flexDirection: "row" }}
             >
-              <Button className="burn-btn" disabled={selectedTokens.length === 0}>
+              <Button className="burn-btn" disabled={selectedTokens.length === 0} onClick={() => burn(selectedTokens)}>
                 Burn {selectedTokens.length} for{" "}
                 {parseInt(burnRewards).toLocaleString()} $HNY
               </Button>
-              <Button className="burn-btn" disabled={!is10Selected || !isOneOfEachSelected}>
+              <Button className="burn-btn" disabled={!is10Selected || !isOneOfEachSelected} onClick={() => burnForOneOfOne(selectedTokens)}>
                 Burn {selectedTokens.length} +{" "}
                 {(1000000 - parseInt(burnRewards)).toLocaleString()} $HNY for
                 Custom 1/1
@@ -703,11 +759,12 @@ function TheFactory(props: TokenProps) {
               <Button
                 className="burn-btn-mobile "
                 disabled={selectedTokens.length === 0}
+                onClick={() => burn(selectedTokens)}
               >
                 Burn {selectedTokens.length} for{" "}
                 {parseInt(burnRewards).toLocaleString()} $HNY
               </Button>
-              <Button className="burn-btn-mobile " disabled={!is10Selected || !isOneOfEachSelected}>
+              <Button className="burn-btn-mobile " disabled={!is10Selected || !isOneOfEachSelected} onClick={() => burnForOneOfOne(selectedTokens)}>
                 Burn {selectedTokens.length} +{" "}
                 {(1000000 - parseInt(burnRewards)).toLocaleString()} $HNY for
                 Custom 1/1
