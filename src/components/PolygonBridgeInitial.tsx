@@ -291,7 +291,6 @@ function PolygonBridgeInitial(props: BridgeProps) {
 
   return (
     <Box className={isSmallScreen? "polygon-bridge-container-mobile" : "polygon-bridge-container"}>
-      {showMismatch && <PolygonNetwork />}
       <MaticDialog
         open={needsFunds && !showMismatch}
         handleClose={handleMaticClose}
@@ -305,16 +304,14 @@ function PolygonBridgeInitial(props: BridgeProps) {
       >
         <Backdrop
           sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
-          open={showMismatch}
-        >
-          {/* <CircularProgress color="inherit" /> */}
-        </Backdrop>
-        <Backdrop
+          open={showMismatch}>  
+          <Backdrop
           sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
-          open={isMismatched}
-        >
-          {/* <CircularProgress color="inherit" /> */}
+          open={showMismatch}>
+            {showMismatch && <PolygonNetwork />}
+         </Backdrop>
         </Backdrop>
+       
         <Typography className="desc-text">
           Please choose which collection (Fury Teds, Teddies, or AI Teds) that
           you wish to bridge to Polygon.{" "}
