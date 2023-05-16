@@ -613,11 +613,11 @@ function TheFactory(props: TokenProps) {
               className="burn-box"
               sx={{ display: "flex", flexDirection: "row" }}
             >
-              <Button className="burn-btn" disabled={!isOneOfEachSelected}>
+              <Button className="burn-btn" disabled={selectedTokens.length === 0}>
                 Burn {selectedTokens.length} for{" "}
                 {parseInt(burnRewards).toLocaleString()} $HNY
               </Button>
-              <Button className="burn-btn" disabled={!is10Selected}>
+              <Button className="burn-btn" disabled={!is10Selected || !isOneOfEachSelected}>
                 Burn {selectedTokens.length} +{" "}
                 {(1000000 - parseInt(burnRewards)).toLocaleString()} $HNY for
                 Custom 1/1
@@ -702,12 +702,12 @@ function TheFactory(props: TokenProps) {
             <Box className="burn-box-mobile">
               <Button
                 className="burn-btn-mobile "
-                disabled={!isOneOfEachSelected}
+                disabled={selectedTokens.length === 0}
               >
                 Burn {selectedTokens.length} for{" "}
                 {parseInt(burnRewards).toLocaleString()} $HNY
               </Button>
-              <Button className="burn-btn-mobile " disabled={!is10Selected}>
+              <Button className="burn-btn-mobile " disabled={!is10Selected || !isOneOfEachSelected}>
                 Burn {selectedTokens.length} +{" "}
                 {(1000000 - parseInt(burnRewards)).toLocaleString()} $HNY for
                 Custom 1/1
