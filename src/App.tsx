@@ -188,46 +188,51 @@ function App() {
     },
   });
 
-  var pageTitle = "";
-  switch (window.location.pathname) {
-    case "/":
-      pageTitle = "Dashboard";
-      break;
-    case "/TheFactory":
-      pageTitle = "The Factory";
-      break;
-    case "/BuildATeddy":
-      pageTitle = "Build A Teddy";
-      break;
-    case "/TraitSwapTeds":
-      pageTitle = "Trait Swap Teds";
-      break;
-    case "/GraphicTemplates":
-      pageTitle = "Graphic Templates";
-      break;
-    case "/HoneyExchange":
-      pageTitle = "Honey Exchange";
-      break;
-    case "/TeddyStaking":
-      pageTitle = "Teddy Staking";
-      break;
-    case "/TedClaims":
-      pageTitle = "Ted Claims";
-      break;
-    case "/Bridge" || "bridge":
-      pageTitle = "Polygon Bridge";
-      break;
-    default:
-      pageTitle = "";
-  }
+  const [pageTitle, setPageTitle] = useState("");
 
   useEffect(() => { 
  
-    if(window.location.pathname === "/Bridge" || window.location.pathname === "/bridge"){
-      setIsBridgePage(true);
-    } else {
-      setIsBridgePage(false);
+    switch (window.location.pathname) {
+      case "/":
+        setPageTitle("Dashboard");
+        break;
+      case "/TheFactory":
+        setPageTitle("The Factory");
+        break;
+      case "/BuildATeddy":
+        setPageTitle("Build A Teddy");
+        break;
+      case "/TraitSwapTeds":
+        setPageTitle("Trait Swap Teds");
+        break;
+      case "/GraphicTemplates":
+        setPageTitle("Graphic Templates");
+        break;
+      case "/HoneyExchange":
+        setPageTitle("Honey Exchange");
+        break;
+      case "/TeddyStaking":
+        setPageTitle("Teddy Staking");
+        break;
+      case "/TedClaims":
+        setPageTitle("Ted Claims");
+        break;
+      case "/Bridge":
+        setPageTitle("Polygon Bridge");
+        setIsBridgePage(true);
+        break;
+      case "/bridge":
+        setPageTitle("Polygon Bridge");
+        setIsBridgePage(true);
+        break;
+      default:
+        setPageTitle("Error");
     }
+    // if(window.location.pathname === "/Bridge" || window.location.pathname === "/bridge"){
+     
+    // } else {
+    //   setIsBridgePage(false);
+    // }
   }, []);
 
   
@@ -253,6 +258,7 @@ function App() {
                 justifyContent: "center",
                 alignItems: "center",
                 textAlign: "center",
+                zIndex: "1 !important",
               }}
             >
               {address && <Typography
@@ -264,9 +270,10 @@ function App() {
                   alignItems: "center",
                   textAlign: "center",
                   fontSize: "2rem",
+                  zIndex: "1 !important",
                 }}
               >
-                {pageTitle}
+               {pageTitle}
               </Typography>
             }
             </Box>
