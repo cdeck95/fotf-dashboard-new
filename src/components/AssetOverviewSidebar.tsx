@@ -82,7 +82,10 @@ function AssetOverviewSidebar(props: TokenProps) {
       </Box>
       <Box className="row-around">
         <Box className="col-no-space">
-          <Typography className="asset-numbers">{oneOfOnes?.length}</Typography>
+        {isLoadingOneOfOne
+            ? <CircularProgress size="1rem" sx={{margin: "auto"}}/>
+            : <Typography className="asset-numbers"> {oneOfOnes?.length}</Typography>
+        }
           <Typography className="aseet-type">One of Ones</Typography>
         </Box>
         <Box className="col-no-space">

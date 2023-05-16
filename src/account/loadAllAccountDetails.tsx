@@ -199,19 +199,19 @@ export function LoadAllAccountDetails(): allOwnedNFTs {
 
   allOwnedNFTs.isLoadingBirthCerts = isLoadingBirthCerts; 
 
-  // const { contract: contract_OneOfOneNative } = useContract(ONE_OF_ONE_CONTRACT);
-  // console.log(contract_OneOfOneNative);
-  // const {
-  //   data: oneOfOneNFTs,
-  //   error: errorOneOfOne,
-  //   isLoading: isLoadingOneOfOne,
-  // } = useOwnedNFTs(contract_OneOfOneNative, address);
-
+  const { contract: contract_OneOfOneNative } = useContract(ONE_OF_ONE_CONTRACT);
+  console.log(contract_OneOfOneNative);
   const {
     data: oneOfOneNFTs,
     error: errorOneOfOne,
     isLoading: isLoadingOneOfOne,
-  } = useOwnedNFTs(contract_OneOfOne, address);
+  } = useOwnedNFTs(contract_OneOfOneNative, address);
+
+  // const {
+  //   data: oneOfOneNFTs,
+  //   error: errorOneOfOne,
+  //   isLoading: isLoadingOneOfOne,
+  // } = useOwnedNFTs(contract_OneOfOne, address);
   console.log(contract_OneOfOne);
   console.log(oneOfOneNFTs);
   console.log(errorOneOfOne);
@@ -295,6 +295,11 @@ export function LoadAllAccountDetails(): allOwnedNFTs {
         console.log(token);
         returnNFTs?.push(token);
       });
+
+      // oneOfOneNFTs?.forEach((token) => {
+      //   console.log(token);
+      //   returnNFTs?.push(token);
+      // });
     
       return {
         Teds: {
@@ -315,7 +320,7 @@ export function LoadAllAccountDetails(): allOwnedNFTs {
         },
         OneofOnes: {
           address: address!,
-          tokens: [],
+          tokens: oneOfOneNFTs!,
         },
         BirthCertificates: {
           address: address!,
