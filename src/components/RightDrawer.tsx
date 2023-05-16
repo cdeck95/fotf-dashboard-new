@@ -257,7 +257,7 @@ function PermanentDrawerRight(props: NavProps) {
       name: "NFT Supply",
       description: "Placeholder Text",
       image: nftSupply,
-      partnerLink: "https://enctr.gg/",
+      partnerLink: "https://nftsupplyco.io/",
     },
     {
       id: 2,
