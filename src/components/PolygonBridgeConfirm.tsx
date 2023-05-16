@@ -196,7 +196,7 @@ function PolygonBridgeConfirm(props: BridgeProps) {
   //////////////////////////////////////////////
 
   return (
-    <Box className="polygon-bridge-container">
+    <Box className={isSmallScreen? "polygon-bridge-container-mobile" : "polygon-bridge-container"}>
       <MaticDialog open={needsFunds && !showMismatch} handleClose={handleMaticClose} />
       <Box className="row-center">
         <h1 className="Large-Header">Confirm Bridge</h1>
@@ -231,7 +231,7 @@ function PolygonBridgeConfirm(props: BridgeProps) {
       >
         {collection==="Fury Teds" && aiTedNFTs && (
           
-          <Box className="row-even" >
+          <Box className={isSmallScreen? "column" : "row-even"} >
              <ThirdwebNftMedia
                 metadata={tedNFTs![0].metadata}
                 style={{
@@ -254,7 +254,7 @@ function PolygonBridgeConfirm(props: BridgeProps) {
 
 {collection==="Teddies by FOTF" && teddyNFTs && (
           
-          <Box className="row-even" >
+          <Box className={isSmallScreen? "column" : "row-even"} >
              {teddyNFTs.length > 0 
               ? (
                 <ThirdwebNftMedia
@@ -283,7 +283,7 @@ function PolygonBridgeConfirm(props: BridgeProps) {
 
     {collection==="AI Teds" && aiTedNFTs && (
           
-            <Box className="row-even" >
+          <Box className={isSmallScreen? "column" : "row-even"} >
                <ThirdwebNftMedia
                   metadata={aiTedNFTs![0].metadata}
                   style={{
@@ -304,9 +304,8 @@ function PolygonBridgeConfirm(props: BridgeProps) {
             </Box>
         )}
       </Box>
-      <Box
-        className="row-center"
-        sx={{ paddingTop: "10px", paddingBottom: "10px" }}
+      <Box className={isSmallScreen? "column" : "row-center"} 
+          sx={{ paddingTop: "10px", paddingBottom: "10px" }}
       >
         <Typography className="desc-text">
           <span className="accent-text">Note:</span> Please verify the total
@@ -317,9 +316,9 @@ function PolygonBridgeConfirm(props: BridgeProps) {
           </a>
         </Typography>
       </Box>
-      <Box className="row-center">
+      <Box className={isSmallScreen? "column" : "row-center"}>
         <Button
-          className="bridge-btn"
+          className={isSmallScreen ? "back-btn-mobile" : "back-btn" }
           sx={{marginRight: "10px !important", marginLeft: "10px !important"}}
           variant="contained"          
           onClick={() => {
@@ -334,7 +333,7 @@ function PolygonBridgeConfirm(props: BridgeProps) {
           <span className="top-padding">Back To Collection Picker</span>
         </Button>
         <Button
-          className="bridge-btn"
+          className={isSmallScreen ? "bridge-btn-mobile" : "bridge-btn" }
           variant="contained"
           sx={{marginRight: "10px !important", marginLeft: "10px !important"}}
           disabled={collection === ""}

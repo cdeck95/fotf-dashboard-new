@@ -548,7 +548,7 @@ function PolygonBridgeInitial(props: BridgeProps) {
           disabled={selectedCollection === ""}
           onClick={() => handleAdvance()}
         >
-          <span className="top-padding">Continue With Bridge</span>{" "}
+          <span>Continue With Bridge</span>{" "}
           <ArrowRightIcon
             sx={{ alignItems: "center", justifyContent: "center" }}
           />

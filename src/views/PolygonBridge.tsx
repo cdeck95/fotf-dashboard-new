@@ -125,9 +125,9 @@ function PolygonBridge(props: TokenProps) {
               sx={{
                 zIndex: "0",
                 paddingLeft: "10px",
-                paddingBottom: "10px",
                 backgroundColor: "white",
                 paddingRight: "10px",
+                marginBottom: "10px",
                 width: "100%",
                 height: "100%",
                 overflowY: "auto"
