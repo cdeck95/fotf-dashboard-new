@@ -190,6 +190,10 @@ function TheFactory(props: TokenProps) {
   const [isTransferredFilter, setIsTransferredFilter] = useState(false);
   const [isLongestHeldFilter, setIsLongestHeldFilter] = useState(false);
 
+  const [isTedFilter, setIsTedFilter] = useState(false);
+  const [isTeddyFilter, setIsTeddyFilter] = useState(false);
+  const [isAIFilter, setIsAIFilter] = useState(false);
+
   const [selectedTeds, setSelectedTeds] = useState<any>([]);
   const [selectedTeddies, setSelectedTeddies] = useState<any>([]);
   const [selectedAITeds, setSelectedAITeds] = useState<any>([]);
@@ -229,6 +233,21 @@ function TheFactory(props: TokenProps) {
         setIsActiveFilter(false);
         setIsTransferredFilter(false);
         setIsLongestHeldFilter(!isLongestHeldFilter);
+        break;
+      case "Ted":
+        setIsTedFilter(!isTedFilter);
+        setIsTeddyFilter(false);
+        setIsAIFilter(false);
+        break;
+      case "Teddy":
+        setIsTedFilter(false);
+        setIsTeddyFilter(!isTeddyFilter);
+        setIsAIFilter(false);
+        break;
+      case "AI":
+        setIsTedFilter(false);
+        setIsTeddyFilter(false);
+        setIsAIFilter(!isAIFilter);
         break;
       default:
         setIsActiveFilter(false);
@@ -349,10 +368,38 @@ function TheFactory(props: TokenProps) {
     setSearchInput("");
   }
 
-  const filteredNFTs = AllTokens?.filter((e) =>
-    e.metadata.id!.includes(searchInput)
-  );
-  console.log(filteredNFTs);
+  // const filteredNFTs = AllTokens?.filter((e) =>
+  //   e.metadata.id!.includes(searchInput)
+  // );
+  // console.log(filteredNFTs);
+
+  const [filteredNFTsWithCategory, setFilteredNFTsWithCategory] = useState<NFT[]>([]);
+
+  useEffect(() => {
+    if(isAIFilter || isTeddyFilter || isTedFilter) {
+      if(isAIFilter) {
+        setFilteredNFTsWithCategory(aiTedNFTs!.filter((e) =>
+        e.metadata.id!.includes(searchInput)
+      ));
+      } else if (isTeddyFilter) {
+        setFilteredNFTsWithCategory(teddyNFTs!.filter((e) =>
+        e.metadata.id!.includes(searchInput)
+      ));
+      } else if (isTedFilter) {
+        setFilteredNFTsWithCategory(tedNFTs!.filter((e) =>
+        e.metadata.id!.includes(searchInput)
+      ));
+      } else {
+        setFilteredNFTsWithCategory(AllTokens?.filter((e) =>
+        e.metadata.id!.includes(searchInput)
+      ));
+      }
+    } else {
+      setFilteredNFTsWithCategory(AllTokens?.filter((e) =>
+      e.metadata.id!.includes(searchInput)
+    ));
+    }
+  }, [isAIFilter, isTeddyFilter, isTedFilter, aiTedNFTs, searchInput, teddyNFTs, tedNFTs, AllTokens]);
 
   const [showError, setShowError] = useState(false);
   const [errorCode, setErrorCode] = useState(0);
@@ -477,6 +524,35 @@ function TheFactory(props: TokenProps) {
               value={searchInput}
             />
           </Box>
+          <Box className={isSmallScreen ? "filter-row-mobile" : "filter-row"}>
+            <Button
+              disabled={!address}
+              className={
+                isTedFilter ? "filter-button-selected" : "filter-button"
+              }
+              onClick={() => setFilter("Ted")}
+            >
+              Fury Teds
+            </Button>
+            <Button
+              disabled={!address}
+              className={
+                isTeddyFilter ? "filter-button-selected" : "filter-button"
+              }
+              onClick={() => setFilter("Teddy")}
+            >
+              Teddy by FOTF
+            </Button>
+            <Button
+              disabled={!address}
+              className={
+                isAIFilter ? "filter-button-selected" : "filter-button"
+              }
+              onClick={() => setFilter("AI")}
+            >
+              AI Teds
+            </Button>
+          </Box>
           {/* <Box className={isSmallScreen ? "filter-row-mobile" : "filter-row"}>
             <Button
               disabled={!address}
@@ -544,7 +620,7 @@ function TheFactory(props: TokenProps) {
                   gap={25}
                   rowHeight={450}
                 >
-                  {filteredNFTs.map((token: NFT) => (
+                  {filteredNFTsWithCategory.map((token: NFT) => (
                     <Box
                       key={token.metadata.id}
                       className={
