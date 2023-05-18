@@ -31,13 +31,13 @@ import ErrorDialog from "./ErrorDialog";
 import { SmartContract } from "@thirdweb-dev/sdk";
 import LoadingDialog from "./LoadingDialog";
 import BridgeSuccessDialog from "./BridgeSuccessDialog";
+import { LoadPolygonAccountDetails } from "../account/loadPolygonAccountDetails";
 
 interface BridgeConfirmProps {
   setCollection: Function;
   setAdvance: Function;
   collection: string;
   tokens: tokens;
-  bridgeContract: UseContractResult<SmartContract<BaseContract>>;
   leftNavOpen: boolean;
   rightNavOpen: boolean;
 }
@@ -50,8 +50,7 @@ function PolygonBridgeConfirm(props: BridgeConfirmProps) {
   useTitle("FOTF | Confirm Bridge");
   // const [isSheetOpen, setSheetOpen] = useState(false);
   // const { tokens, isLoading, error, honeyBalance } = LoadAllAccountDetails();
-  const { setCollection, setAdvance, collection, tokens, bridgeContract, leftNavOpen, rightNavOpen } = props;
-  console.log(bridgeContract);
+  const { setCollection, setAdvance, collection, tokens, leftNavOpen, rightNavOpen } = props;
   // console.log(tokens);
   // console.log(isLoading);
   // console.log(error);
@@ -89,43 +88,14 @@ function PolygonBridgeConfirm(props: BridgeConfirmProps) {
   const [isSmallScreen, setSmallScreen] = useState(false);
   const [collectionCount, setCollectionCount] = useState(0);
 
-  const [maticBalance, setMaticBalance] = useState<string>();
-  const [needsFunds, setNeedsFunds] = useState<boolean>(false);
-
-  const LoadMaticBalance = useMemo(async () => {
-    try {
-      // const polygonSDK = new ThirdwebSDK("polygon");
-      // const maticBalance = await polygonSDK?.wallet.balance("0x0000000000000000000000000000000000001010");
-      const maticBalanceRaw = await sdk?.getBalance(address!);
-      console.log(`Matic: ${maticBalanceRaw?.displayValue}`);
-      if(maticBalanceRaw){
-        const maticBalanceString = parseFloat(ethers.utils.formatEther(maticBalanceRaw!.value)).toFixed(3);
-        if(maticBalanceString === maticBalance){
-          console.log("matic balance hasnt changed");
-          return;
-        } else {
-          setMaticBalance(maticBalanceString);
-          if(parseInt(maticBalanceString) < 10){
-            setNeedsFunds(true);
-          } else {
-            setNeedsFunds(false);
-          }
-        }
-      } else {
-        setMaticBalance("0.000");
-        setNeedsFunds(true);
-      }
-    } catch (e) {
-      console.log(e);
-    }
-  }, [sdk, address, maticBalance]);
+  const { maticBalance, needsFunds, setNeedsFunds, bridgeTeds } = LoadPolygonAccountDetails();
 
   const leftDrawerWidth = isSmallScreen ? "0px" : "240px";
   const rightDrawerWidth = isSmallScreen ? "0px" : "340px";
 
   const [open, setOpen] = useState(false);
   const handleMaticClose = () => {
-    setNeedsFunds(false);
+    setNeedsFunds!(false);
     console.log("closing dialog");
   };
   const handleToggle = () => {
@@ -208,41 +178,91 @@ function PolygonBridgeConfirm(props: BridgeConfirmProps) {
     setIsLoading(false);
   }
 
+  async function handleBridgeCleanup (urlParam: string, pairedBridgeIDs?: IDictionary[]) {
+    console.log(pairedBridgeIDs);
+    const json = JSON.stringify(pairedBridgeIDs, null, 2);
+    console.log(json);
+    try {
+        const response = await fetch(`https://h7ke8qc4ng.execute-api.us-east-1.amazonaws.com/Prod/${urlParam}`, {
+            method: 'POST',
+            body: json
+        })
+        const responseStatus = await response.status;
+        console.log(response.status);
+        if (responseStatus !== 200) {
+          setErrorCode(responseStatus);
+          setShowError(true);
+          setIsLoading(false);
+          return;
+        } else {
+          setSuccess(true);
+          setIsLoading(false);
+        }
+    } catch (error){
+        console.log(error);
+        setIsLoading(false);
+        setErrorCode(500);
+        setShowError(true);
+    }
+  }
+
   const handleBridge = async () => {
     setIsLoading(true);
-    // const json = JSON.stringify(updatedJSON, null, 2);
-    // const blob = new Blob([json], { type: "application/json" });.
-    if (collection === "Fury Teds") {
-      console.log("bridging teds");
-      setCollectionCount(tedNFTs?.length!);
-    } else if (collection === "Teddies by FOTF") {
-      console.log("Would bridge teddies");
-      setCollectionCount(teddyCount);
-    } else if (collection === "AI Teds") {
-      console.log("Would bridge aiTeds");
-      setCollectionCount(aiTedNFTs?.length!);
-    } else {
-      console.log("No collection selected");
-    }
 
-    await timeout(3000);
-    setIsLoading(false); 
-    setSuccess(true); 
+    const pairedBridgeIDs: IDictionary[] = [];
+     
+    var returnedBridgeIDs = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+    var bridgeCount = 0;
 
-    // const response = await fetch('https://h7ke8qc4ng.execute-api.us-east-1.amazonaws.com/Prod/create-gif', {
-    //     method: 'POST',
-    //     body: json
-    // })
-    // console.log(response.status);
-    // if(response.status !== 200){
-    //   setIsLoading(false);
-    //   setSuccess(false)
-    //   setFailure(true);
-    // } else {
-    //   setIsLoading(false); 
-    //   setSuccess(true);  
-    // }
-    
+    switch (collection) {
+      case "Fury Teds":
+        setCollectionCount(tedNFTs?.length!);
+        // BRIDGE FIRST
+        // const responseStatus = bridgeTeds!(tedNFTs!);
+        // console.log(responseStatus);
+        //get tokenIDs being minted on Polygon
+        tedNFTs?.forEach((token) => {
+          console.log(token.metadata.id);
+          pairedBridgeIDs.push({oldTokenID: token.metadata.id, newPolygonID: returnedBridgeIDs[bridgeCount].toString()});
+          bridgeCount++;
+        });
+        handleBridgeCleanup("bridgeTeds", pairedBridgeIDs);
+        break;
+      case "Teddies by FOTF":
+        setCollectionCount(teddyCount);
+        // BRIDGE FIRST
+        // const responseStatus = bridgeTeds!(tedNFTs!);
+        // console.log(responseStatus);
+        teddyNFTs?.forEach((token) => {
+          console.log(token.metadata.id);
+          pairedBridgeIDs.push({oldTokenID: token.metadata.id, newPolygonID: returnedBridgeIDs[bridgeCount].toString()});
+          bridgeCount++;
+        });
+
+        stakedTeddiesIDs?.forEach((id) => {
+          console.log(id);
+          pairedBridgeIDs.push({oldTokenID: id, newPolygonID: returnedBridgeIDs[bridgeCount].toString()});
+          bridgeCount++;
+        });
+
+        handleBridgeCleanup("bridgeTeddies", pairedBridgeIDs);
+        break;
+      case "AI Teds":
+        setCollectionCount(aiTedNFTs?.length!);
+        // BRIDGE FIRST
+        // const responseStatus = bridgeTeds!(tedNFTs!);
+        // console.log(responseStatus);
+        aiTedNFTs?.forEach((token) => {
+          console.log(token.metadata.id);
+          pairedBridgeIDs.push({oldTokenID: token.metadata.id, newPolygonID: returnedBridgeIDs[bridgeCount].toString()});
+          bridgeCount++;
+        });
+        handleBridgeCleanup("bridgeAITeds", pairedBridgeIDs);
+        break;
+      default:
+        console.log("No collection selected");
+        break;
+      }
   }
 
   //////////////////////////////////////////////

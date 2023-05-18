@@ -102,7 +102,7 @@ function MaticDialog(props: DialogProps) {
             sx={{ marginTop: "10px", fontSize: "22px" }}
             id="alert-dialog-slide-description"
           >
-            It looks like you are low on MATIC. We suggest having at least $10
+            It looks like you are low on MATIC. We suggest having at least $5
             of MATIC to be safe. Getting MATIC is relatively easy and you can
             bridge your current ETH up using the Polygon Wallet for the best
             pricing. Click "Bridge ETH &rarr; Matic" below to start.

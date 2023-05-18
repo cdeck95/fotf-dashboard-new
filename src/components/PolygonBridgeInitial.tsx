@@ -34,6 +34,7 @@ import { BaseContract, BigNumber, ethers } from "ethers";
 import MaticDialog from "./MaticDialog";
 import { SmartContract } from "@thirdweb-dev/sdk";
 import fotfLogo from "../assets/fotf_logo_colorized.png";
+import { LoadPolygonAccountDetails } from "../account/loadPolygonAccountDetails";
 
 interface BridgeProps {
   setCollection: Function;
@@ -46,7 +47,6 @@ interface BridgeProps {
   isLoadingBirthCerts: boolean;
   isLoadingOneOfOne: boolean;
   isLoadingStaked: boolean;
-  bridgeContract: UseContractResult<SmartContract<BaseContract>>;
   leftNavOpen: boolean;
   rightNavOpen: boolean;
 }
@@ -75,7 +75,6 @@ function PolygonBridgeInitial(props: BridgeProps) {
     isLoadingTed,
     isLoadingTeddy,
     error,
-    bridgeContract,
     leftNavOpen,
     rightNavOpen,
   } = props;
@@ -84,38 +83,7 @@ function PolygonBridgeInitial(props: BridgeProps) {
   // console.log(error);
   // console.log(honeyBalance);
 
-  const [maticBalance, setMaticBalance] = useState<string>();
-  const [needsFunds, setNeedsFunds] = useState<boolean>(false);
-
-  const LoadMaticBalance = useMemo(async () => {
-    try {
-      // const polygonSDK = new ThirdwebSDK("polygon");
-      // const maticBalance = await polygonSDK?.wallet.balance("0x0000000000000000000000000000000000001010");
-      const maticBalanceRaw = await sdk?.getBalance(address!);
-      console.log(`Matic: ${maticBalanceRaw?.displayValue}`);
-      if (maticBalanceRaw) {
-        const maticBalanceString = parseFloat(
-          ethers.utils.formatEther(maticBalanceRaw!.value)
-        ).toFixed(3);
-        if (maticBalanceString === maticBalance) {
-          console.log("matic balance hasnt changed");
-          return;
-        } else {
-          setMaticBalance(maticBalanceString);
-          if (parseInt(maticBalanceString) < 5) {
-            setNeedsFunds(true);
-          } else {
-            setNeedsFunds(false);
-          }
-        }
-      } else {
-        setMaticBalance("0.000");
-        setNeedsFunds(true);
-      }
-    } catch (e) {
-      console.log(e);
-    }
-  }, [sdk, address, maticBalance]);
+  const { maticBalance, needsFunds, setNeedsFunds } = LoadPolygonAccountDetails();
 
   const AllTokens = tokens.AllTokens.tokens;
   const tedNFTs = tokens.Teds?.tokens;
@@ -141,7 +109,7 @@ function PolygonBridgeInitial(props: BridgeProps) {
 
   const [open, setOpen] = useState(false);
   const handleMaticClose = () => {
-    setNeedsFunds(false);
+    setNeedsFunds!(false);
     console.log("closing dialog");
   };
   const handleToggle = () => {

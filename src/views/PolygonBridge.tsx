@@ -27,15 +27,6 @@ import { Ethereum, Polygon, Goerli, Mumbai } from "@thirdweb-dev/chains";
 import { PolygonNetwork } from "../components/PolygonNetwork";
 import { TokenProps } from "../components/AssetOverviewSidebar";
 
-// interface TokenProps {
-//   tokens: tokens;
-//   error: boolean;
-//   isLoading: boolean;
-//   honeyBalance: string;
-// }
-
-const BRIDGE_CONTRACT = "0x2E7E9117B978eBe9c4d680009fF8665Ba83ED166";
-
 function PolygonBridge(props: TokenProps) {
   useTitle("FOTF | The Bridge");
   const sdk = useSDK();
@@ -48,9 +39,6 @@ function PolygonBridge(props: TokenProps) {
   // console.log(isLoading);
   // console.log(error);
   // console.log(honeyBalance);
-
-  const bridgeContract = useContract(BRIDGE_CONTRACT);
-  console.log(bridgeContract);
 
   const AllTokens = tokens.AllTokens.tokens;
   const tedNFTs = tokens.Teds?.tokens;
@@ -139,8 +127,8 @@ function PolygonBridge(props: TokenProps) {
                     // <ThirdwebProvider activeChain={Mumbai}
                       supportedChains={[Ethereum, Polygon]}>
                    {advance 
-                      ? <PolygonBridgeConfirm setCollection={setCollection} setAdvance={setAdvance} collection={collection} tokens={tokens} bridgeContract={bridgeContract} leftNavOpen={leftNavOpen} rightNavOpen={rightNavOpen}/>
-                      : <PolygonBridgeInitial setCollection={setCollection} setAdvance={setAdvance} tokens={tokens} error={error} isLoadingTed={isLoadingTed} isLoadingTeddy={isLoadingTeddy} isLoadingStaked={isLoadingStaked} isLoadingAI={isLoadingAI} isLoadingBirthCerts={isLoadingBirthCerts} isLoadingOneOfOne={isLoadingOneOfOne} bridgeContract={bridgeContract} leftNavOpen={leftNavOpen} rightNavOpen={rightNavOpen} />
+                      ? <PolygonBridgeConfirm setCollection={setCollection} setAdvance={setAdvance} collection={collection} tokens={tokens} leftNavOpen={leftNavOpen} rightNavOpen={rightNavOpen}/>
+                      : <PolygonBridgeInitial setCollection={setCollection} setAdvance={setAdvance} tokens={tokens} error={error} isLoadingTed={isLoadingTed} isLoadingTeddy={isLoadingTeddy} isLoadingStaked={isLoadingStaked} isLoadingAI={isLoadingAI} isLoadingBirthCerts={isLoadingBirthCerts} isLoadingOneOfOne={isLoadingOneOfOne} leftNavOpen={leftNavOpen} rightNavOpen={rightNavOpen} />
                       }
                     </ThirdwebProvider>
                 </Box>
