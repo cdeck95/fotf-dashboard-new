@@ -83,7 +83,11 @@ function PolygonBridgeInitial(props: BridgeProps) {
   // console.log(error);
   // console.log(honeyBalance);
 
-  const { maticBalance, needsFunds, setNeedsFunds } = LoadPolygonAccountDetails();
+  const { maticBalance, needsFunds, setNeedsFunds, CanIBridgeTeds, CanIBridgeTeddies, CanIBridgeAITeds } = LoadPolygonAccountDetails();
+
+  console.log(CanIBridgeTeds);
+  console.log(CanIBridgeTeddies);
+  console.log(CanIBridgeAITeds);
 
   const AllTokens = tokens.AllTokens.tokens;
   const tedNFTs = tokens.Teds?.tokens;
@@ -204,7 +208,14 @@ function PolygonBridgeInitial(props: BridgeProps) {
         setErrorCode(3);
         setCollectionForError("Fury Teds");
         return;
-      }
+       } 
+      //else if (collection === "Fury Teds" && !CanIBridgeTeds) {
+      //   console.log("Not approved for Bridging Teds");
+      //   setShowError(true);        
+      //   setErrorCode(5);
+      //   setCollectionForError("Fury Teds");
+      //   return;
+      // }
 
       if (collection === "Teddies by FOTF" && (isLoadingTeddy || isLoadingStaked)) {
         console.log("still loading Teddies");
@@ -218,7 +229,14 @@ function PolygonBridgeInitial(props: BridgeProps) {
         setErrorCode(3);
         setCollectionForError("Teddies by FOTF");
         return;
-      }
+       } 
+      //   else if (collection === "Teddies by FOTF" && !CanIBridgeTeddies) {
+      //   console.log("Not approved for Bridging Teddies by FOTF");
+      //   setShowError(true);        
+      //   setErrorCode(5);
+      //   setCollectionForError("Teddies by FOTF");
+      //   return;
+      // }
 
       if (collection === "AI Teds" && isLoadingAI) {
         console.log("Still loading AI Teds");
@@ -233,6 +251,13 @@ function PolygonBridgeInitial(props: BridgeProps) {
         setCollectionForError("AI Teds");
         return;
       }
+      // else if (collection === "AI Teds" && !CanIBridgeAITeds) {
+      //   console.log("Not approved for Bridging AI Teds");
+      //   setShowError(true);        
+      //   setErrorCode(5);
+      //   setCollectionForError("AI Teds");
+      //   return;
+      // }
       setSelectedCollection(collection);
       setCollection(collection);
     }

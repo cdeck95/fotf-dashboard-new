@@ -88,7 +88,12 @@ function PolygonBridgeConfirm(props: BridgeConfirmProps) {
   const [isSmallScreen, setSmallScreen] = useState(false);
   const [collectionCount, setCollectionCount] = useState(0);
 
-  const { maticBalance, needsFunds, setNeedsFunds, bridgeTeds } = LoadPolygonAccountDetails();
+  const { maticBalance, needsFunds, setNeedsFunds, bridgeTeds, CanIBridgeTeds, CanIBridgeTeddies, CanIBridgeAITeds } = LoadPolygonAccountDetails();
+
+  console.log(CanIBridgeTeds);
+  console.log(CanIBridgeTeddies);
+  console.log(CanIBridgeAITeds);
+
 
   const leftDrawerWidth = isSmallScreen ? "0px" : "240px";
   const rightDrawerWidth = isSmallScreen ? "0px" : "340px";
@@ -159,17 +164,32 @@ function PolygonBridgeConfirm(props: BridgeConfirmProps) {
     [index: string]: string;
   }
 
-  // const [selectedCollection, setSelectedCollection] = useState("");
+  const [collectionForError, setCollectionForError] = useState("");
 
-  // function handleOnSelect(collection: string) {
-  //   console.log(collection);
-  //   if (collection === selectedCollection) {
-  //     setSelectedCollection("");
-  //   } else {
-  //     setSelectedCollection(collection);
-  //   }
-  // }
+  useEffect(() => {
+    // if (collection === "Fury Teds" && !CanIBridgeTeds) {
+    //   console.log("Not approved for Bridging Fury Teds");
+    //   setShowError(true);        
+    //   setErrorCode(5);
+    //   setCollectionForError("Fury Teds");
+    // }
+  
+    // if (collection === "Teddies by FOTF" && !CanIBridgeTeddies) {
+    //     console.log("Not approved for Bridging Teddies by FOTF");
+    //     setShowError(true);        
+    //     setErrorCode(5);
+    //     setCollectionForError("Teddies by FOTF");
+    // }
+  
+    // if (collection === "AI Teds" && !CanIBridgeAITeds) {
+    //   console.log("Not approved for Bridging AI Teds");
+    //   setShowError(true);        
+    //   setErrorCode(5);
+    //   setCollectionForError("AI Teds");
+    // }
+  }, [CanIBridgeAITeds, CanIBridgeTeddies, CanIBridgeTeds, collection]);  
 
+  
   function handleErrorClose(): void {
     setAdvance(false);
   }
@@ -426,6 +446,7 @@ function PolygonBridgeConfirm(props: BridgeConfirmProps) {
         open={showError}
         handleClose={handleErrorClose}
         errorCode={errorCode}
+        collection={collectionForError}
       />
     </Box>
   );

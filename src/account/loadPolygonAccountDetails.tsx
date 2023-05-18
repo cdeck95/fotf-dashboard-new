@@ -43,6 +43,9 @@ import {
     errorAI: any;
     maticBalance: string;
     needsFunds: boolean;
+    CanIBridgeTeds: boolean;
+    CanIBridgeTeddies: boolean;
+    CanIBridgeAITeds: boolean;
     setNeedsFunds?: React.Dispatch<React.SetStateAction<boolean>>;
     bridgeTeds?: Function;
   }
@@ -56,6 +59,9 @@ import {
     errorAI: false,
     maticBalance: "0",
     needsFunds: false,
+    CanIBridgeTeds: false,
+    CanIBridgeTeddies: false,
+    CanIBridgeAITeds: false,
     tokens: {
       Teds: {
         address: "",
@@ -180,6 +186,51 @@ import {
     }
 
     allOwnedNFTs.bridgeTeds = bridgeTeds;
+
+    const CanIBridgeTeds = useCallback(async () => {
+        try {
+          const canIBridge = await tedPolygonContract?.call(
+            "canibridge", // Name of your function as it is on the smart contract
+            // Arguments to your function, in the same order they are on your smart contract
+            [address]
+          );
+          console.log(canIBridge);
+          allOwnedNFTs.CanIBridgeTeds = canIBridge;
+        } catch (e) {
+          console.log(e);
+          allOwnedNFTs.CanIBridgeTeds = false
+        }
+      }, [address, allOwnedNFTs, tedPolygonContract]);
+
+      const CanIBridgeTeddies = useCallback(async () => {
+        try {
+          const canIBridge = await teddiesPolygonContract?.call(
+            "canibridge", // Name of your function as it is on the smart contract
+            // Arguments to your function, in the same order they are on your smart contract
+            [address]
+          );
+          console.log(canIBridge);
+          allOwnedNFTs.CanIBridgeTeddies = canIBridge;
+        } catch (e) {
+          console.log(e);
+          allOwnedNFTs.CanIBridgeTeddies = false
+        }
+      }, [address, allOwnedNFTs, teddiesPolygonContract]);
+
+      const CanIBridgeAITeds = useCallback(async () => {
+        try {
+          const canIBridge = await aiTedsPolygonContract?.call(
+            "canibridge", // Name of your function as it is on the smart contract
+            // Arguments to your function, in the same order they are on your smart contract
+            [address]
+          );
+          console.log(canIBridge);
+          allOwnedNFTs.CanIBridgeAITeds = canIBridge;
+        } catch (e) {
+          console.log(e);
+          allOwnedNFTs.CanIBridgeAITeds = false
+        }
+      }, [address, aiTedsPolygonContract, allOwnedNFTs]);
       
     return allOwnedNFTs;
   }
