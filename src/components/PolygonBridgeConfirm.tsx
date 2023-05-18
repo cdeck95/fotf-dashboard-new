@@ -29,8 +29,10 @@ import { BaseContract, ethers } from "ethers";
 import MaticDialog from "./MaticDialog";
 import ErrorDialog from "./ErrorDialog";
 import { SmartContract } from "@thirdweb-dev/sdk";
+import LoadingDialog from "./LoadingDialog";
+import BridgeSuccessDialog from "./BridgeSuccessDialog";
 
-interface BridgeProps {
+interface BridgeConfirmProps {
   setCollection: Function;
   setAdvance: Function;
   collection: string;
@@ -40,15 +42,24 @@ interface BridgeProps {
   rightNavOpen: boolean;
 }
 
-function PolygonBridgeConfirm(props: BridgeProps) {
+function timeout(delay: number) {
+  return new Promise( res => setTimeout(res, delay) );
+}
+
+function PolygonBridgeConfirm(props: BridgeConfirmProps) {
   useTitle("FOTF | Confirm Bridge");
   // const [isSheetOpen, setSheetOpen] = useState(false);
   // const { tokens, isLoading, error, honeyBalance } = LoadAllAccountDetails();
   const { setCollection, setAdvance, collection, tokens, bridgeContract, leftNavOpen, rightNavOpen } = props;
+  console.log(bridgeContract);
   // console.log(tokens);
   // console.log(isLoading);
   // console.log(error);
   // console.log(honeyBalance);
+
+  const [isLoading, setIsLoading] = useState(false);
+  const [success, setSuccess] =  useState(false);
+  const [failure, setFailure] =  useState(false);
 
   const AllTokens = tokens.AllTokens.tokens;
   const tedNFTs = tokens.Teds?.tokens;
@@ -178,19 +189,60 @@ function PolygonBridgeConfirm(props: BridgeProps) {
     [index: string]: string;
   }
 
-  const [selectedCollection, setSelectedCollection] = useState("");
+  // const [selectedCollection, setSelectedCollection] = useState("");
 
-  function handleOnSelect(collection: string) {
-    console.log(collection);
-    if (collection === selectedCollection) {
-      setSelectedCollection("");
-    } else {
-      setSelectedCollection(collection);
-    }
-  }
+  // function handleOnSelect(collection: string) {
+  //   console.log(collection);
+  //   if (collection === selectedCollection) {
+  //     setSelectedCollection("");
+  //   } else {
+  //     setSelectedCollection(collection);
+  //   }
+  // }
 
   function handleErrorClose(): void {
     setAdvance(false);
+  }
+
+  const handleLoadingClosed = () => {
+    setIsLoading(false);
+  }
+
+  const handleBridge = async () => {
+    setIsLoading(true);
+    // const json = JSON.stringify(updatedJSON, null, 2);
+    // const blob = new Blob([json], { type: "application/json" });.
+    if (collection === "Fury Teds") {
+      console.log("bridging teds");
+      setCollectionCount(tedNFTs?.length!);
+    } else if (collection === "Teddies by FOTF") {
+      console.log("Would bridge teddies");
+      setCollectionCount(teddyCount);
+    } else if (collection === "AI Teds") {
+      console.log("Would bridge aiTeds");
+      setCollectionCount(aiTedNFTs?.length!);
+    } else {
+      console.log("No collection selected");
+    }
+
+    await timeout(3000);
+    setIsLoading(false); 
+    setSuccess(true); 
+
+    // const response = await fetch('https://h7ke8qc4ng.execute-api.us-east-1.amazonaws.com/Prod/create-gif', {
+    //     method: 'POST',
+    //     body: json
+    // })
+    // console.log(response.status);
+    // if(response.status !== 200){
+    //   setIsLoading(false);
+    //   setSuccess(false)
+    //   setFailure(true);
+    // } else {
+    //   setIsLoading(false); 
+    //   setSuccess(true);  
+    // }
+    
   }
 
   //////////////////////////////////////////////
@@ -337,17 +389,7 @@ function PolygonBridgeConfirm(props: BridgeProps) {
           variant="contained"
           sx={{marginRight: "10px !important", marginLeft: "10px !important"}}
           disabled={collection === ""}
-          onClick={() => {
-            if (selectedCollection === "teds") {
-              console.log("Would bridge teds");
-            } else if (selectedCollection === "teddies") {
-              console.log("Would bridge teddies");
-            } else if (selectedCollection === "aiTeds") {
-              console.log("Would bridge aiTeds");
-            } else {
-              console.log("No collection selected");
-            }
-          }}
+          onClick={() => handleBridge()}
         >
           <span className="top-padding">Bridge {collectionCount} to Polygon </span>{" "}
           <ArrowRightIcon
@@ -355,6 +397,11 @@ function PolygonBridgeConfirm(props: BridgeProps) {
           />
         </Button>
       </Box>
+
+      <BridgeSuccessDialog open={success} setOpen={setSuccess} setAdvance={setAdvance} collection={collection} collectionCount={collectionCount}/>
+
+      <LoadingDialog open={isLoading} onClose={handleLoadingClosed} collection={collection} collectionCount={collectionCount}/>
+
       <ErrorDialog
         open={showError}
         handleClose={handleErrorClose}
