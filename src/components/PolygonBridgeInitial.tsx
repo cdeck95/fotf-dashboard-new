@@ -83,11 +83,15 @@ function PolygonBridgeInitial(props: BridgeProps) {
   // console.log(error);
   // console.log(honeyBalance);
 
-  const { maticBalance, needsFunds, setNeedsFunds, CanIBridgeTeds, CanIBridgeTeddies, CanIBridgeAITeds } = LoadPolygonAccountDetails();
+  const { maticBalance, needsFunds, setNeedsFunds, CanIBridgeTeds, CanIBridgeTeddies, CanIBridgeAITeds, hasBridgedTeds, hasBridgedTeddies, hasBridgedAITeds } = LoadPolygonAccountDetails();
 
   console.log(CanIBridgeTeds);
   console.log(CanIBridgeTeddies);
   console.log(CanIBridgeAITeds);
+
+  console.log(hasBridgedTeds);
+  console.log(hasBridgedTeddies);
+  console.log(hasBridgedAITeds);
 
   const AllTokens = tokens.AllTokens.tokens;
   const tedNFTs = tokens.Teds?.tokens;
@@ -321,10 +325,11 @@ function PolygonBridgeInitial(props: BridgeProps) {
         <Box className={isSmallScreen ? "row" : "col-margin"}>
           <Box
             className={
-              selectedCollection === "Fury Teds" ? "card-selected" : "card"
+              (selectedCollection === "Fury Teds" || hasBridgedTeds) ? "card-selected" : "card"
             }
-            onClick={() => {
+            onClick={() => { if(!hasBridgedTeds){
               handleOnSelect("Fury Teds");
+            }
             }}
             sx={{
               marginLeft: "auto",
@@ -366,6 +371,9 @@ function PolygonBridgeInitial(props: BridgeProps) {
                   )}
                 </Box>
               )}
+              {hasBridgedTeds && (
+                <p className="title-selected">Bridge Complete</p>
+              )}
               {selectedCollection === "Fury Teds" && (
                 <p className="title-selected">Bridge</p>
               )}
@@ -386,12 +394,13 @@ function PolygonBridgeInitial(props: BridgeProps) {
         <Box className={isSmallScreen ? "row" : "col-margin"}>
           <Box
             className={
-              selectedCollection === "Teddies by FOTF"
+              (selectedCollection === "Teddies by FOTF" || hasBridgedTeddies)
                 ? "card-selected"
                 : "card"
             }
-            onClick={() => {
+            onClick={() => {if(!hasBridgedTeddies){
               handleOnSelect("Teddies by FOTF");
+            }
             }}
             sx={{
               marginLeft: "auto",
@@ -438,6 +447,9 @@ function PolygonBridgeInitial(props: BridgeProps) {
                   )}
                 </Box>
               )}
+              {hasBridgedTeddies && (
+                <p className="title-selected">Bridge Complete</p>
+              )}
               {selectedCollection === "Teddies by FOTF" && (
                 <p className="title-selected">Bridge</p>
               )}
@@ -458,10 +470,11 @@ function PolygonBridgeInitial(props: BridgeProps) {
         <Box className={isSmallScreen ? "row" : "col-margin"}>
           <Box
             className={
-              selectedCollection === "AI Teds" ? "card-selected" : "card"
+              (selectedCollection === "AI Teds" || hasBridgedAITeds) ? "card-selected" : "card"
             }
-            onClick={() => {
+            onClick={() => {if(!hasBridgedAITeds){
               handleOnSelect("AI Teds");
+            }
             }}
             sx={{
               marginLeft: "auto",
@@ -502,6 +515,9 @@ function PolygonBridgeInitial(props: BridgeProps) {
                     />
                   )}
                 </Box>
+              )}
+              {hasBridgedAITeds && (
+                <p className="title-selected">Bridge Complete</p>
               )}
               {selectedCollection === "AI Teds" && (
                 <p className="title-selected">Bridge</p>

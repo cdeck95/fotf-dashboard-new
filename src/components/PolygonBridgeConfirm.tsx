@@ -88,7 +88,7 @@ function PolygonBridgeConfirm(props: BridgeConfirmProps) {
   const [isSmallScreen, setSmallScreen] = useState(false);
   const [collectionCount, setCollectionCount] = useState(0);
 
-  const { maticBalance, needsFunds, setNeedsFunds, bridgeTeds, CanIBridgeTeds, CanIBridgeTeddies, CanIBridgeAITeds } = LoadPolygonAccountDetails();
+  const { maticBalance, needsFunds, setNeedsFunds, bridgeTeds, CanIBridgeTeds, CanIBridgeTeddies, CanIBridgeAITeds, hasBridgedTeds, hasBridgedTeddies, hasBridgedAITeds } = LoadPolygonAccountDetails();
 
   console.log(CanIBridgeTeds);
   console.log(CanIBridgeTeddies);
@@ -428,7 +428,7 @@ function PolygonBridgeConfirm(props: BridgeConfirmProps) {
           className={isSmallScreen ? "bridge-btn-mobile" : "bridge-btn" }
           variant="contained"
           sx={{marginRight: "10px !important", marginLeft: "10px !important"}}
-          disabled={collection === ""}
+          disabled={(collection === "" || ((collection === "Fury Teds" && hasBridgedTeds) || (collection === "Teddies by FOTF" && hasBridgedTeddies) || (collection === "AI Teds" && hasBridgedAITeds)))}
           onClick={() => handleBridge()}
         >
           <span className="top-padding">Bridge {collectionCount} to Polygon </span>{" "}

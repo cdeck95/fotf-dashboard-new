@@ -46,6 +46,9 @@ import {
     CanIBridgeTeds: boolean;
     CanIBridgeTeddies: boolean;
     CanIBridgeAITeds: boolean;
+    hasBridgedTeds: boolean;
+    hasBridgedTeddies: boolean;
+    hasBridgedAITeds: boolean;
     setNeedsFunds?: React.Dispatch<React.SetStateAction<boolean>>;
     bridgeTeds?: Function;
   }
@@ -62,6 +65,9 @@ import {
     CanIBridgeTeds: false,
     CanIBridgeTeddies: false,
     CanIBridgeAITeds: false,
+    hasBridgedTeds: false,
+    hasBridgedTeddies: false,
+    hasBridgedAITeds: false,
     tokens: {
       Teds: {
         address: "",
@@ -231,6 +237,8 @@ import {
           allOwnedNFTs.CanIBridgeAITeds = false
         }
       }, [address, aiTedsPolygonContract, allOwnedNFTs]);
+
+      //implement has bridged
       
     return allOwnedNFTs;
   }
