@@ -238,8 +238,14 @@ function PolygonBridgeConfirm(props: BridgeConfirmProps) {
       case "Fury Teds":
         setCollectionCount(tedNFTs?.length!);
         // BRIDGE FIRST
-        // const responseStatus = bridgeTeds!(tedNFTs!);
-        // console.log(responseStatus);
+        const bridgeResponse = await bridgeTeds!();
+        console.log(bridgeResponse);
+        if(bridgeResponse === null){
+          setErrorCode(500);
+          setShowError(true);
+          setIsLoading(false);
+          return;
+        }
         //get tokenIDs being minted on Polygon
         tedNFTs?.forEach((token) => {
           console.log(token.metadata.id);

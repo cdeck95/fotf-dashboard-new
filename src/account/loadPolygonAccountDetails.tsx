@@ -173,22 +173,17 @@ import {
     allOwnedNFTs.needsFunds = needsFunds;
     allOwnedNFTs.setNeedsFunds = setNeedsFunds;
 
-    async function bridgeTeds (tokens: NFT[]){
-        const json = JSON.stringify("", null, 2);
-        console.log(json);
+    async function bridgeTeds (){
         try {
-            //replace this with the contract call - no lambda here
-            const response = await fetch('https://h7ke8qc4ng.execute-api.us-east-1.amazonaws.com/Prod/bridgeTeds', {
-                method: 'POST',
-                body: json
-            })
-            console.log(response.status);
-            return response.status;
-        } catch (error){
-            console.log(error);
-            return 500;
-        }
-
+            const bridgeResults = await tedPolygonContract?.call(
+              "fotfbridge"
+            );
+            console.log(bridgeResults);
+            return bridgeResults;
+          } catch (e) {
+            console.log(e);
+            return null;
+          }
     }
 
     allOwnedNFTs.bridgeTeds = bridgeTeds;
@@ -239,6 +234,8 @@ import {
       }, [address, aiTedsPolygonContract, allOwnedNFTs]);
 
       //implement has bridged
+
+     
       
     return allOwnedNFTs;
   }
