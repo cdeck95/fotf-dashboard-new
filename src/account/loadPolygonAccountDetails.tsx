@@ -51,6 +51,8 @@ import {
     hasBridgedAITeds: boolean;
     setNeedsFunds?: React.Dispatch<React.SetStateAction<boolean>>;
     bridgeTeds?: Function;
+    bridgeTeddies?: Function;
+    bridgeAITeds?: Function;
   }
   
   export const initialState: PolygonAccountDetails = {
@@ -186,7 +188,35 @@ import {
           }
     }
 
+    async function bridgeTeddies (){
+        try {
+            const bridgeResults = await teddiesPolygonContract?.call(
+              "teddybridge"
+            );
+            console.log(bridgeResults);
+            return bridgeResults;
+          } catch (e) {
+            console.log(e);
+            return null;
+          }
+    }
+
+    async function bridgeAITeds (){
+        try {
+            const bridgeResults = await aiTedsPolygonContract?.call(
+              "aibridge"
+            );
+            console.log(bridgeResults);
+            return bridgeResults;
+          } catch (e) {
+            console.log(e);
+            return null;
+          }
+    }
+
     allOwnedNFTs.bridgeTeds = bridgeTeds;
+    allOwnedNFTs.bridgeTeddies = bridgeTeddies;
+    allOwnedNFTs.bridgeAITeds = bridgeAITeds;
 
     const CanIBridgeTeds = useCallback(async () => {
         try {

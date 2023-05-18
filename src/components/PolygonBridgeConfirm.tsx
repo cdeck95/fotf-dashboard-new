@@ -88,7 +88,7 @@ function PolygonBridgeConfirm(props: BridgeConfirmProps) {
   const [isSmallScreen, setSmallScreen] = useState(false);
   const [collectionCount, setCollectionCount] = useState(0);
 
-  const { maticBalance, needsFunds, setNeedsFunds, bridgeTeds, CanIBridgeTeds, CanIBridgeTeddies, CanIBridgeAITeds, hasBridgedTeds, hasBridgedTeddies, hasBridgedAITeds } = LoadPolygonAccountDetails();
+  const { maticBalance, needsFunds, setNeedsFunds, bridgeTeds, bridgeTeddies, bridgeAITeds, CanIBridgeTeds, CanIBridgeTeddies, CanIBridgeAITeds, hasBridgedTeds, hasBridgedTeddies, hasBridgedAITeds } = LoadPolygonAccountDetails();
 
   console.log(CanIBridgeTeds);
   console.log(CanIBridgeTeddies);
@@ -238,9 +238,9 @@ function PolygonBridgeConfirm(props: BridgeConfirmProps) {
       case "Fury Teds":
         setCollectionCount(tedNFTs?.length!);
         // BRIDGE FIRST
-        const bridgeResponse = await bridgeTeds!();
-        console.log(bridgeResponse);
-        if(bridgeResponse === null){
+        const bridgeResponseTeds = await bridgeTeds!();
+        console.log(bridgeResponseTeds);
+        if(bridgeResponseTeds === null){
           setErrorCode(500);
           setShowError(true);
           setIsLoading(false);
@@ -257,8 +257,14 @@ function PolygonBridgeConfirm(props: BridgeConfirmProps) {
       case "Teddies by FOTF":
         setCollectionCount(teddyCount);
         // BRIDGE FIRST
-        // const responseStatus = bridgeTeds!(tedNFTs!);
-        // console.log(responseStatus);
+        const bridgeResponseTeddies = await bridgeTeddies!();
+        console.log(bridgeResponseTeddies);
+        if(bridgeResponseTeddies === null){
+          setErrorCode(500);
+          setShowError(true);
+          setIsLoading(false);
+          return;
+        }
         teddyNFTs?.forEach((token) => {
           console.log(token.metadata.id);
           pairedBridgeIDs.push({oldTokenID: token.metadata.id, newPolygonID: returnedBridgeIDs[bridgeCount].toString()});
@@ -276,8 +282,14 @@ function PolygonBridgeConfirm(props: BridgeConfirmProps) {
       case "AI Teds":
         setCollectionCount(aiTedNFTs?.length!);
         // BRIDGE FIRST
-        // const responseStatus = bridgeTeds!(tedNFTs!);
-        // console.log(responseStatus);
+        const bridgeResponseAITeds = await bridgeAITeds!();
+        console.log(bridgeResponseAITeds);
+        if(bridgeResponseAITeds === null){
+          setErrorCode(500);
+          setShowError(true);
+          setIsLoading(false);
+          return;
+        }
         aiTedNFTs?.forEach((token) => {
           console.log(token.metadata.id);
           pairedBridgeIDs.push({oldTokenID: token.metadata.id, newPolygonID: returnedBridgeIDs[bridgeCount].toString()});
