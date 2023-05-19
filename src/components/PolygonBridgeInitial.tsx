@@ -85,17 +85,17 @@ function PolygonBridgeInitial(props: BridgeProps) {
 
   const { maticBalance, needsFunds, setNeedsFunds, CanIBridgeTeds, CanIBridgeTedsFlag, CanIBridgeTedsAmount, CanIBridgeTeddies, CanIBridgeTeddiesFlag, CanIBridgeTeddiesAmount, CanIBridgeAITeds, CanIBridgeAITedsFlag, CanIBridgeAITedsAmount, tokens: polygonTokens } = LoadPolygonAccountDetails();
 
-  console.log(CanIBridgeTeds!());
-  console.log(CanIBridgeTedsFlag);
-  console.log(CanIBridgeTedsAmount.toString());
+  // console.log(CanIBridgeTeds!());
+  // console.log(CanIBridgeTedsFlag);
+  // console.log(CanIBridgeTedsAmount.toString());
 
-  console.log(CanIBridgeTeddies!());
-  console.log(CanIBridgeTeddiesFlag);
-  console.log(CanIBridgeTeddiesAmount.toString());
+  // console.log(CanIBridgeTeddies!());
+  // console.log(CanIBridgeTeddiesFlag);
+  // console.log(CanIBridgeTeddiesAmount.toString());
 
-  console.log(CanIBridgeAITeds!());
-  console.log(CanIBridgeAITedsFlag);
-  console.log(CanIBridgeAITedsAmount.toString());
+  // console.log(CanIBridgeAITeds!());
+  // console.log(CanIBridgeAITedsFlag);
+  // console.log(CanIBridgeAITedsAmount.toString());
 
   
 
