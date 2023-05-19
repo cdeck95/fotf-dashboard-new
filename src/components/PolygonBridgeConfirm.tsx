@@ -264,7 +264,7 @@ function PolygonBridgeConfirm(props: BridgeConfirmProps) {
           pairedBridgeIDs.push({oldTokenID: token.metadata.id, newPolygonID: returnedBridgeIDs[bridgeCount].toString()});
           bridgeCount++;
         });
-        //handleBridgeCleanup("bridgeTeds", pairedBridgeIDs);
+        handleBridgeCleanup("bridgeTeds", pairedBridgeIDs);
         break;
       case "Teddies by FOTF":
         setCollectionCount(teddyCount);
