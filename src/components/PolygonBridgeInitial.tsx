@@ -359,8 +359,8 @@ function PolygonBridgeInitial(props: BridgeProps) {
               marginLeft: "auto",
               marginRight: "auto",
               background: "none",
-              maxHeight: "375px",
-              maxWidth: "350px",
+              // maxHeight: "375px",
+              // maxWidth: "350px",
             }}
           >
             <Box sx={{ width: "100%", height: "100%", position: "relative" }}>
@@ -438,8 +438,8 @@ function PolygonBridgeInitial(props: BridgeProps) {
               marginLeft: "auto",
               marginRight: "auto",
               background: "none",
-              maxHeight: "375px",
-              maxWidth: "350px",
+              // maxHeight: "375px",
+              // maxWidth: "350px",
             }}
           >
             <Box sx={{ width: "100%", height: "100%", position: "relative" }}>
@@ -521,8 +521,8 @@ function PolygonBridgeInitial(props: BridgeProps) {
               marginLeft: "auto",
               marginRight: "auto",
               background: "none",
-              maxHeight: "375px",
-              maxWidth: "350px",
+              // maxHeight: "375px",
+              // maxWidth: "350px",
             }}
           >
             <Box sx={{ width: "100%", height: "100%", position: "relative" }}>
