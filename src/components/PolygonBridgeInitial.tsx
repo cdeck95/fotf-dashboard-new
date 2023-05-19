@@ -374,17 +374,25 @@ function PolygonBridgeInitial(props: BridgeProps) {
               ) : (
                 <Box>
                   {tedNFTs!.length > 0 ? (
-                    <ThirdwebNftMedia
-                      metadata={tedNFTs![0].metadata}
-                      style={{
-                        maxHeight: "280px",
-                        maxWidth: "280px",
-                        borderRadius: "10px",
-                        objectFit: "cover",
-                        width: "280px",
-                        height: "280px",
-                      }}
+                    <Box>
+                      {tedNFTs![0].metadata.name!=="Failed to load NFT metadata" ? <ThirdwebNftMedia
+                        metadata={tedNFTs![0].metadata}
+                        style={{
+                          maxHeight: "280px",
+                          maxWidth: "280px",
+                          borderRadius: "10px",
+                          objectFit: "cover",
+                          width: "280px",
+                          height: "280px",
+                        }}
+                      />
+                      : <img
+                      src={fotfLogo}
+                      className={"teddyStakedPlaceholder"}
+                      alt="Placeholder Logo - All Teddies are Staked"
                     />
+                      }
+                      </Box>
                   ) : (
                     <Skeleton
                       variant="rectangular"
@@ -445,17 +453,26 @@ function PolygonBridgeInitial(props: BridgeProps) {
               ) : (
                 <Box>
                   {teddyNFTs!.length > 0 ? (
-                    <ThirdwebNftMedia
-                      metadata={teddyNFTs![0].metadata}
-                      style={{
-                        maxHeight: "280px",
-                        maxWidth: "280px",
-                        borderRadius: "10px",
-                        objectFit: "cover",
-                        width: "280px",
-                        height: "280px",
-                      }}
+                    <Box>
+                    {tedNFTs![0].metadata.name!=="Failed to load NFT metadata" ?
+                      <ThirdwebNftMedia
+                        metadata={teddyNFTs![0].metadata}
+                        style={{
+                          maxHeight: "280px",
+                          maxWidth: "280px",
+                          borderRadius: "10px",
+                          objectFit: "cover",
+                          width: "280px",
+                          height: "280px",
+                        }}
+                      />
+                      : <img
+                      src={fotfLogo}
+                      className={"teddyStakedPlaceholder"}
+                      alt="Placeholder Logo - All Teddies are Staked"
                     />
+                  }
+                  </Box>
                   ) : (
                     <Box>
                       {stakedTeddiesIDs!.length > 0 ? (
