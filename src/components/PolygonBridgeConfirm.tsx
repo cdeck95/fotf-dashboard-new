@@ -88,11 +88,11 @@ function PolygonBridgeConfirm(props: BridgeConfirmProps) {
   const [isSmallScreen, setSmallScreen] = useState(false);
   const [collectionCount, setCollectionCount] = useState(0);
 
-  const { maticBalance, needsFunds, setNeedsFunds, bridgeTeds, bridgeTeddies, bridgeAITeds, CanIBridgeTeds, CanIBridgeTeddies, CanIBridgeAITeds, hasBridgedTeds, hasBridgedTeddies, hasBridgedAITeds } = LoadPolygonAccountDetails();
+  const { maticBalance, needsFunds, setNeedsFunds, bridgeTeds, bridgeTeddies, bridgeAITeds, testbridgeTeds, testbridgeTeddies, testbridgeAITeds, CanIBridgeTeds, CanIBridgeTeddies, CanIBridgeAITeds, hasBridgedTeds, hasBridgedTeddies, hasBridgedAITeds } = LoadPolygonAccountDetails();
 
   console.log(CanIBridgeTeds!());
-  console.log(CanIBridgeTeddies);
-  console.log(CanIBridgeAITeds);
+  console.log(CanIBridgeTeddies!());
+  console.log(CanIBridgeAITeds!());
 
 
   const leftDrawerWidth = isSmallScreen ? "0px" : "240px";
@@ -264,14 +264,15 @@ function PolygonBridgeConfirm(props: BridgeConfirmProps) {
           pairedBridgeIDs.push({oldTokenID: token.metadata.id, newPolygonID: returnedBridgeIDs[bridgeCount].toString()});
           bridgeCount++;
         });
-        handleBridgeCleanup("bridgeTeds", pairedBridgeIDs);
+        //handleBridgeCleanup("bridgeTeds", pairedBridgeIDs);
         break;
       case "Teddies by FOTF":
         setCollectionCount(teddyCount);
         // BRIDGE FIRST
+        //const bridgeResponseTeddies = await testbridgeTeddies!();
         const bridgeResponseTeddies = await bridgeTeddies!();
         const eventsTeddies = bridgeResponseTeddies["receipt"]["events"];
-        const TokensMintedTeddies: BigNumber[] = eventsTeddies[events.length -2]["args"]["tokenIds"];
+        const TokensMintedTeddies: BigNumber[] = eventsTeddies[eventsTeddies.length -2]["args"]["tokenIds"];
         console.log(TokensMintedTeddies);
 
         TokensMintedTeddies.forEach((id) => {
@@ -286,6 +287,7 @@ function PolygonBridgeConfirm(props: BridgeConfirmProps) {
           setIsLoading(false);
           return;
         }
+        // if(teddyN)
         teddyNFTs?.forEach((token) => {
           console.log(token.metadata.id);
           pairedBridgeIDs.push({oldTokenID: token.metadata.id, newPolygonID: returnedBridgeIDs[bridgeCount].toString()});
@@ -303,9 +305,10 @@ function PolygonBridgeConfirm(props: BridgeConfirmProps) {
       case "AI Teds":
         setCollectionCount(aiTedNFTs?.length!);
         // BRIDGE FIRST
+        //const bridgeResponseAITeds = await testbridgeAITeds!();
         const bridgeResponseAITeds = await bridgeAITeds!();
         const eventsAITeds = bridgeResponseAITeds["receipt"]["events"];
-        const TokensMintedAITeds: BigNumber[] = eventsAITeds[events.length -2]["args"]["tokenIds"];
+        const TokensMintedAITeds: BigNumber[] = eventsAITeds[eventsAITeds.length -2]["args"]["tokenIds"];
         console.log(TokensMintedAITeds);
 
         TokensMintedAITeds.forEach((id) => {

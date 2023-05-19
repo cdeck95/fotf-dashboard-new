@@ -513,6 +513,12 @@ function PolygonBridgeInitial(props: BridgeProps) {
             className={
               (selectedCollection === "AI Teds" || hasBridgedAITeds) ? "card-selected" : "card"
             }
+            // className={
+            //   (selectedCollection === "AI Teds") ? "card-selected" : "card"
+            // }
+            // onClick={() => {
+            //   handleOnSelect("AI Teds");
+            
             onClick={() => {if(!hasBridgedAITeds){
               handleOnSelect("AI Teds");
             }
