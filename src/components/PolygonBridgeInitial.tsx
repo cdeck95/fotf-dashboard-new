@@ -389,7 +389,7 @@ function PolygonBridgeInitial(props: BridgeProps) {
                       : <img
                       src={fotfLogo}
                       className={"teddyStakedPlaceholder"}
-                      alt="Placeholder Logo - All Teddies are Staked"
+                      alt="Placeholder Logo - All Fury Teds are Bridged"
                     />
                       }
                       </Box>
@@ -454,7 +454,7 @@ function PolygonBridgeInitial(props: BridgeProps) {
                 <Box>
                   {teddyNFTs!.length > 0 ? (
                     <Box>
-                    {tedNFTs![0].metadata.name!=="Failed to load NFT metadata" ?
+                    {teddyNFTs![0].metadata.name!=="Failed to load NFT metadata" ?
                       <ThirdwebNftMedia
                         metadata={teddyNFTs![0].metadata}
                         style={{
@@ -469,7 +469,7 @@ function PolygonBridgeInitial(props: BridgeProps) {
                       : <img
                       src={fotfLogo}
                       className={"teddyStakedPlaceholder"}
-                      alt="Placeholder Logo - All Teddies are Staked"
+                      alt="Placeholder Logo - All Teddies are Bridged"
                     />
                   }
                   </Box>
@@ -536,17 +536,26 @@ function PolygonBridgeInitial(props: BridgeProps) {
               ) : (
                 <Box>
                   {aiTedNFTs!.length > 0 ? (
-                    <ThirdwebNftMedia
-                      metadata={aiTedNFTs![0].metadata}
-                      style={{
-                        maxHeight: "280px",
-                        maxWidth: "280px",
-                        borderRadius: "10px",
-                        objectFit: "cover",
-                        width: "280px",
-                        height: "280px",
-                      }}
+                    <Box>
+                    {aiTedNFTs![0].metadata.name!=="Failed to load NFT metadata" ?
+                      <ThirdwebNftMedia
+                        metadata={aiTedNFTs![0].metadata}
+                        style={{
+                          maxHeight: "280px",
+                          maxWidth: "280px",
+                          borderRadius: "10px",
+                          objectFit: "cover",
+                          width: "280px",
+                          height: "280px",
+                        }}
+                      />
+                      :  <img
+                      src={fotfLogo}
+                      className={"teddyStakedPlaceholder"}
+                      alt="Placeholder Logo - All AI Teds are Bridged"
                     />
+                      }
+                      </Box>
                   ) : (
                     <Skeleton
                       variant="rectangular"
