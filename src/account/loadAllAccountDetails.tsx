@@ -182,6 +182,18 @@ export function LoadAllAccountDetails(): allOwnedNFTs {
     error: errorTed,
     isLoading: isLoadingTed,
   } = useOwnedNFTs(contract_FOTF, address);
+  console.log(tedNFTs);
+
+  // const {contract: tedContract } = useContract(FOTF_CONTRACT);
+
+  // const {
+  //   data: tedNFTs2,
+  //   error: errorTed2,
+  //   isLoading: isLoadingTed2,
+  // } = useOwnedNFTs(tedContract, address);
+  // console.log(tedNFTs2);
+  // console.log(errorTed2);
+  // console.log(isLoadingTed2);
 
   allOwnedNFTs.isLoadingTed = isLoadingTed;
 

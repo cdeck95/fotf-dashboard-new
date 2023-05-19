@@ -2,7 +2,7 @@ import React from "react";
 import { createRoot } from "react-dom/client";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
-import { ThirdwebProvider, ConnectWallet, metamaskWallet, coinbaseWallet, walletConnect, localWallet, safeWallet } from "@thirdweb-dev/react";
+import { ThirdwebProvider, ConnectWallet, metamaskWallet, coinbaseWallet, walletConnect, localWallet, safeWallet, walletConnectV1 } from "@thirdweb-dev/react";
 import { Ethereum, Polygon, Mumbai } from "@thirdweb-dev/chains";
 import "./styles/globals.css";
 import ReactDOM from 'react-dom';
@@ -25,6 +25,7 @@ const root = createRoot(container!);
   root.render(
   <React.StrictMode>
     <BrowserRouter>
+    {/* walletConnect() */}
       <ThirdwebProvider supportedWallets={[metamaskWallet(), coinbaseWallet(), walletConnect(), localWallet(), safeWallet()]}
         activeChain={Ethereum}
         supportedChains={[Polygon, Ethereum]}>

@@ -336,6 +336,7 @@ function LeftDrawer(props: NavProps) {
             </ListItemButton>
           </ListItem>
         </List>
+        <Divider />
         <Typography sx={{ marginTop: "10px", paddingLeft: "18px" }}>
           Utility
         </Typography>
@@ -414,8 +415,8 @@ function LeftDrawer(props: NavProps) {
             marginBottom: "25px",
             maxWidth: "200px !important",
             width: "200px !important",
-            height: "200px !important",
-            maxHeight: "200px !important",
+            height: "150px !important",
+            maxHeight: "150px !important",
             display: "flex",
             justifyContent: "space-between",
           }}

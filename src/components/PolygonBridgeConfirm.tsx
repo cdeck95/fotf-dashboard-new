@@ -25,30 +25,40 @@ import ConnectWalletPage from "../components/ConnectWalletPage";
 import ArrowLeftIcon from "@mui/icons-material/ArrowLeft";
 import ArrowRightIcon from "@mui/icons-material/ArrowRight";
 import { PolygonNetwork } from "./PolygonNetwork";
-import { BaseContract, ethers } from "ethers";
+import { BaseContract, BigNumber, ethers } from "ethers";
 import MaticDialog from "./MaticDialog";
 import ErrorDialog from "./ErrorDialog";
 import { SmartContract } from "@thirdweb-dev/sdk";
+import LoadingDialog from "./LoadingDialog";
+import BridgeSuccessDialog from "./BridgeSuccessDialog";
+import { LoadPolygonAccountDetails } from "../account/loadPolygonAccountDetails";
 
-interface BridgeProps {
+interface BridgeConfirmProps {
   setCollection: Function;
   setAdvance: Function;
   collection: string;
   tokens: tokens;
-  bridgeContract: UseContractResult<SmartContract<BaseContract>>;
   leftNavOpen: boolean;
   rightNavOpen: boolean;
 }
 
-function PolygonBridgeConfirm(props: BridgeProps) {
+function timeout(delay: number) {
+  return new Promise( res => setTimeout(res, delay) );
+}
+
+function PolygonBridgeConfirm(props: BridgeConfirmProps) {
   useTitle("FOTF | Confirm Bridge");
   // const [isSheetOpen, setSheetOpen] = useState(false);
   // const { tokens, isLoading, error, honeyBalance } = LoadAllAccountDetails();
-  const { setCollection, setAdvance, collection, tokens, bridgeContract, leftNavOpen, rightNavOpen } = props;
+  const { setCollection, setAdvance, collection, tokens, leftNavOpen, rightNavOpen } = props;
   // console.log(tokens);
   // console.log(isLoading);
   // console.log(error);
   // console.log(honeyBalance);
+
+  const [isLoading, setIsLoading] = useState(false);
+  const [success, setSuccess] =  useState(false);
+  const [failure, setFailure] =  useState(false);
 
   const AllTokens = tokens.AllTokens.tokens;
   const tedNFTs = tokens.Teds?.tokens;
@@ -78,43 +88,19 @@ function PolygonBridgeConfirm(props: BridgeProps) {
   const [isSmallScreen, setSmallScreen] = useState(false);
   const [collectionCount, setCollectionCount] = useState(0);
 
-  const [maticBalance, setMaticBalance] = useState<string>();
-  const [needsFunds, setNeedsFunds] = useState<boolean>(false);
+  const { maticBalance, needsFunds, setNeedsFunds, bridgeTeds, bridgeTeddies, bridgeAITeds, testbridgeTeds, testbridgeTeddies, testbridgeAITeds, CanIBridgeTeds, CanIBridgeTeddies, CanIBridgeAITeds, hasBridgedTeds, hasBridgedTeddies, hasBridgedAITeds } = LoadPolygonAccountDetails();
 
-  const LoadMaticBalance = useMemo(async () => {
-    try {
-      // const polygonSDK = new ThirdwebSDK("polygon");
-      // const maticBalance = await polygonSDK?.wallet.balance("0x0000000000000000000000000000000000001010");
-      const maticBalanceRaw = await sdk?.getBalance(address!);
-      console.log(`Matic: ${maticBalanceRaw?.displayValue}`);
-      if(maticBalanceRaw){
-        const maticBalanceString = parseFloat(ethers.utils.formatEther(maticBalanceRaw!.value)).toFixed(3);
-        if(maticBalanceString === maticBalance){
-          console.log("matic balance hasnt changed");
-          return;
-        } else {
-          setMaticBalance(maticBalanceString);
-          if(parseInt(maticBalanceString) < 10){
-            setNeedsFunds(true);
-          } else {
-            setNeedsFunds(false);
-          }
-        }
-      } else {
-        setMaticBalance("0.000");
-        setNeedsFunds(true);
-      }
-    } catch (e) {
-      console.log(e);
-    }
-  }, [sdk, address, maticBalance]);
+  console.log(CanIBridgeTeds!());
+  console.log(CanIBridgeTeddies!());
+  console.log(CanIBridgeAITeds!());
+
 
   const leftDrawerWidth = isSmallScreen ? "0px" : "240px";
   const rightDrawerWidth = isSmallScreen ? "0px" : "340px";
 
   const [open, setOpen] = useState(false);
   const handleMaticClose = () => {
-    setNeedsFunds(false);
+    setNeedsFunds!(false);
     console.log("closing dialog");
   };
   const handleToggle = () => {
@@ -178,25 +164,184 @@ function PolygonBridgeConfirm(props: BridgeProps) {
     [index: string]: string;
   }
 
-  const [selectedCollection, setSelectedCollection] = useState("");
+  const [collectionForError, setCollectionForError] = useState("");
 
-  function handleOnSelect(collection: string) {
-    console.log(collection);
-    if (collection === selectedCollection) {
-      setSelectedCollection("");
-    } else {
-      setSelectedCollection(collection);
+  useEffect(() => {
+    // if (collection === "Fury Teds" && !CanIBridgeTeds) {
+    //   console.log("Not approved for Bridging Fury Teds");
+    //   setShowError(true);        
+    //   setErrorCode(5);
+    //   setCollectionForError("Fury Teds");
+    // }
+  
+    if (collection === "Teddies by FOTF" && !CanIBridgeTeddies) {
+        console.log("Not approved for Bridging Teddies by FOTF");
+        setShowError(true);        
+        setErrorCode(5);
+        setCollectionForError("Teddies by FOTF");
+    }
+  
+    if (collection === "AI Teds" && !CanIBridgeAITeds) {
+      console.log("Not approved for Bridging AI Teds");
+      setShowError(true);        
+      setErrorCode(5);
+      setCollectionForError("AI Teds");
+    }
+  }, [CanIBridgeAITeds, CanIBridgeTeddies, CanIBridgeTeds, collection]);  
+
+  
+  function handleErrorClose(): void {
+    setAdvance(false);
+  }
+
+  const handleLoadingClosed = () => {
+    setIsLoading(false);
+  }
+
+  async function handleBridgeCleanup (urlParam: string, pairedBridgeIDs?: IDictionary[]) {
+    console.log(pairedBridgeIDs);
+    const json = JSON.stringify(pairedBridgeIDs, null, 2);
+    console.log(json);
+    try {
+        const response = await fetch(`https://h7ke8qc4ng.execute-api.us-east-1.amazonaws.com/Prod/${urlParam}`, {
+            method: 'POST',
+            body: json
+        })
+        const responseStatus = await response.status;
+        console.log(response.status);
+        if (responseStatus !== 200) {
+          setErrorCode(responseStatus);
+          setShowError(true);
+          setIsLoading(false);
+          return;
+        } else {
+          setSuccess(true);
+          setIsLoading(false);
+        }
+    } catch (error){
+        console.log(error);
+        setIsLoading(false);
+        setErrorCode(500);
+        setShowError(true);
     }
   }
 
-  function handleErrorClose(): void {
-    setAdvance(false);
+  const handleBridge = async () => {
+    setIsLoading(true);
+
+    const pairedBridgeIDs: IDictionary[] = [];
+     
+    var returnedBridgeIDs: string[] = [];
+    var bridgeCount = 0;
+
+    switch (collection) {
+      case "Fury Teds":
+        setCollectionCount(tedNFTs?.length!);
+        // BRIDGE FIRST
+        const bridgeResponseTeds = await bridgeTeds!();
+        //const bridgeResponseTeds = await testbridgeTeds!();
+        console.log(bridgeResponseTeds);
+        const events = bridgeResponseTeds["receipt"]["events"];
+        const TokensMinted: BigNumber[] = events[events.length -2]["args"]["tokenIds"];
+        console.log(TokensMinted);
+
+        TokensMinted.forEach((id) => {
+          console.log(id.toString());
+          returnedBridgeIDs.push(id.toString());
+        });
+
+        console.log(returnedBridgeIDs);
+
+        if(bridgeResponseTeds === null){
+          setErrorCode(500);
+          setShowError(true);
+          setIsLoading(false);
+          return;
+        }
+        //get tokenIDs being minted on Polygon
+        tedNFTs?.forEach((token) => {
+          console.log(token.metadata.id);
+          pairedBridgeIDs.push({oldTokenID: token.metadata.id, newPolygonID: returnedBridgeIDs[bridgeCount].toString()});
+          bridgeCount++;
+        });
+        handleBridgeCleanup("bridgeTeds", pairedBridgeIDs);
+        break;
+      case "Teddies by FOTF":
+        setCollectionCount(teddyCount);
+        // BRIDGE FIRST
+        //const bridgeResponseTeddies = await testbridgeTeddies!();
+        const bridgeResponseTeddies = await bridgeTeddies!();
+        const eventsTeddies = bridgeResponseTeddies["receipt"]["events"];
+        const TokensMintedTeddies: BigNumber[] = eventsTeddies[eventsTeddies.length -2]["args"]["tokenIds"];
+        console.log(TokensMintedTeddies);
+
+        TokensMintedTeddies.forEach((id) => {
+          console.log(id.toString());
+          returnedBridgeIDs.push(id.toString());
+        });
+
+        console.log(returnedBridgeIDs);
+        if(bridgeResponseTeddies === null){
+          setErrorCode(500);
+          setShowError(true);
+          setIsLoading(false);
+          return;
+        }
+        // if(teddyN)
+        teddyNFTs?.forEach((token) => {
+          console.log(token.metadata.id);
+          pairedBridgeIDs.push({oldTokenID: token.metadata.id, newPolygonID: returnedBridgeIDs[bridgeCount].toString()});
+          bridgeCount++;
+        });
+
+        stakedTeddiesIDs?.forEach((id) => {
+          console.log(id);
+          pairedBridgeIDs.push({oldTokenID: id, newPolygonID: returnedBridgeIDs[bridgeCount].toString()});
+          bridgeCount++;
+        });
+
+        handleBridgeCleanup("bridgeTeddies", pairedBridgeIDs);
+        break;
+      case "AI Teds":
+        setCollectionCount(aiTedNFTs?.length!);
+        // BRIDGE FIRST
+        //const bridgeResponseAITeds = await testbridgeAITeds!();
+        const bridgeResponseAITeds = await bridgeAITeds!();
+        const eventsAITeds = bridgeResponseAITeds["receipt"]["events"];
+        const TokensMintedAITeds: BigNumber[] = eventsAITeds[eventsAITeds.length -2]["args"]["tokenIds"];
+        console.log(TokensMintedAITeds);
+
+        TokensMintedAITeds.forEach((id) => {
+          console.log(id.toString());
+          returnedBridgeIDs.push(id.toString());
+        });
+
+        console.log(returnedBridgeIDs);
+        if(bridgeResponseAITeds === null){
+          setErrorCode(500);
+          setShowError(true);
+          setIsLoading(false);
+          return;
+        }
+        aiTedNFTs?.forEach((token) => {
+          console.log(token.metadata.id);
+          pairedBridgeIDs.push({oldTokenID: token.metadata.id, newPolygonID: returnedBridgeIDs[bridgeCount].toString()});
+          bridgeCount++;
+        });
+        handleBridgeCleanup("bridgeAITeds", pairedBridgeIDs);
+        break;
+      default:
+        console.log("No collection selected");
+        break;
+    }
+    setIsLoading(false);
+
   }
 
   //////////////////////////////////////////////
 
   return (
-    <Box className="polygon-bridge-container">
+    <Box className={isSmallScreen? "polygon-bridge-container-mobile" : "polygon-bridge-container"}>
       <MaticDialog open={needsFunds && !showMismatch} handleClose={handleMaticClose} />
       <Box className="row-center">
         <h1 className="Large-Header">Confirm Bridge</h1>
@@ -231,7 +376,7 @@ function PolygonBridgeConfirm(props: BridgeProps) {
       >
         {collection==="Fury Teds" && aiTedNFTs && (
           
-          <Box className="row-even" >
+          <Box className={isSmallScreen? "column" : "row-even"} >
              <ThirdwebNftMedia
                 metadata={tedNFTs![0].metadata}
                 style={{
@@ -254,7 +399,7 @@ function PolygonBridgeConfirm(props: BridgeProps) {
 
 {collection==="Teddies by FOTF" && teddyNFTs && (
           
-          <Box className="row-even" >
+          <Box className={isSmallScreen? "column" : "row-even"} >
              {teddyNFTs.length > 0 
               ? (
                 <ThirdwebNftMedia
@@ -283,7 +428,7 @@ function PolygonBridgeConfirm(props: BridgeProps) {
 
     {collection==="AI Teds" && aiTedNFTs && (
           
-            <Box className="row-even" >
+          <Box className={isSmallScreen? "column" : "row-even"} >
                <ThirdwebNftMedia
                   metadata={aiTedNFTs![0].metadata}
                   style={{
@@ -304,9 +449,8 @@ function PolygonBridgeConfirm(props: BridgeProps) {
             </Box>
         )}
       </Box>
-      <Box
-        className="row-center"
-        sx={{ paddingTop: "10px", paddingBottom: "10px" }}
+      <Box className={isSmallScreen? "column" : "row-center"} 
+          sx={{ paddingTop: "10px", paddingBottom: "10px" }}
       >
         <Typography className="desc-text">
           <span className="accent-text">Note:</span> Please verify the total
@@ -317,9 +461,9 @@ function PolygonBridgeConfirm(props: BridgeProps) {
           </a>
         </Typography>
       </Box>
-      <Box className="row-center">
+      <Box className={isSmallScreen? "column" : "row-center"}>
         <Button
-          className="bridge-btn"
+          className={isSmallScreen ? "back-btn-mobile" : "back-btn" }
           sx={{marginRight: "10px !important", marginLeft: "10px !important"}}
           variant="contained"          
           onClick={() => {
@@ -334,21 +478,11 @@ function PolygonBridgeConfirm(props: BridgeProps) {
           <span className="top-padding">Back To Collection Picker</span>
         </Button>
         <Button
-          className="bridge-btn"
+          className={isSmallScreen ? "bridge-btn-mobile" : "bridge-btn" }
           variant="contained"
           sx={{marginRight: "10px !important", marginLeft: "10px !important"}}
-          disabled={collection === ""}
-          onClick={() => {
-            if (selectedCollection === "teds") {
-              console.log("Would bridge teds");
-            } else if (selectedCollection === "teddies") {
-              console.log("Would bridge teddies");
-            } else if (selectedCollection === "aiTeds") {
-              console.log("Would bridge aiTeds");
-            } else {
-              console.log("No collection selected");
-            }
-          }}
+          disabled={(collection === "" || ((collection === "Fury Teds" && hasBridgedTeds) || (collection === "Teddies by FOTF" && hasBridgedTeddies) || (collection === "AI Teds" && hasBridgedAITeds)))}
+          onClick={() => handleBridge()}
         >
           <span className="top-padding">Bridge {collectionCount} to Polygon </span>{" "}
           <ArrowRightIcon
@@ -356,10 +490,16 @@ function PolygonBridgeConfirm(props: BridgeProps) {
           />
         </Button>
       </Box>
+
+      <BridgeSuccessDialog open={success} setOpen={setSuccess} setAdvance={setAdvance} collection={collection} collectionCount={collectionCount}/>
+
+      <LoadingDialog open={isLoading} onClose={handleLoadingClosed} collection={collection} collectionCount={collectionCount}/>
+
       <ErrorDialog
         open={showError}
         handleClose={handleErrorClose}
         errorCode={errorCode}
+        collection={collectionForError}
       />
     </Box>
   );

@@ -34,6 +34,7 @@ import { BaseContract, BigNumber, ethers } from "ethers";
 import MaticDialog from "./MaticDialog";
 import { SmartContract } from "@thirdweb-dev/sdk";
 import fotfLogo from "../assets/fotf_logo_colorized.png";
+import { LoadPolygonAccountDetails } from "../account/loadPolygonAccountDetails";
 
 interface BridgeProps {
   setCollection: Function;
@@ -46,7 +47,6 @@ interface BridgeProps {
   isLoadingBirthCerts: boolean;
   isLoadingOneOfOne: boolean;
   isLoadingStaked: boolean;
-  bridgeContract: UseContractResult<SmartContract<BaseContract>>;
   leftNavOpen: boolean;
   rightNavOpen: boolean;
 }
@@ -75,7 +75,6 @@ function PolygonBridgeInitial(props: BridgeProps) {
     isLoadingTed,
     isLoadingTeddy,
     error,
-    bridgeContract,
     leftNavOpen,
     rightNavOpen,
   } = props;
@@ -84,38 +83,29 @@ function PolygonBridgeInitial(props: BridgeProps) {
   // console.log(error);
   // console.log(honeyBalance);
 
-  const [maticBalance, setMaticBalance] = useState<string>();
-  const [needsFunds, setNeedsFunds] = useState<boolean>(false);
+  const { maticBalance, needsFunds, setNeedsFunds, CanIBridgeTeds, CanIBridgeTedsFlag, CanIBridgeTedsAmount, CanIBridgeTeddies, CanIBridgeTeddiesFlag, CanIBridgeTeddiesAmount, CanIBridgeAITeds, CanIBridgeAITedsFlag, CanIBridgeAITedsAmount, tokens: polygonTokens } = LoadPolygonAccountDetails();
 
-  const LoadMaticBalance = useMemo(async () => {
-    try {
-      // const polygonSDK = new ThirdwebSDK("polygon");
-      // const maticBalance = await polygonSDK?.wallet.balance("0x0000000000000000000000000000000000001010");
-      const maticBalanceRaw = await sdk?.getBalance(address!);
-      console.log(`Matic: ${maticBalanceRaw?.displayValue}`);
-      if (maticBalanceRaw) {
-        const maticBalanceString = parseFloat(
-          ethers.utils.formatEther(maticBalanceRaw!.value)
-        ).toFixed(3);
-        if (maticBalanceString === maticBalance) {
-          console.log("matic balance hasnt changed");
-          return;
-        } else {
-          setMaticBalance(maticBalanceString);
-          if (parseInt(maticBalanceString) < 5) {
-            setNeedsFunds(true);
-          } else {
-            setNeedsFunds(false);
-          }
-        }
-      } else {
-        setMaticBalance("0.000");
-        setNeedsFunds(true);
-      }
-    } catch (e) {
-      console.log(e);
-    }
-  }, [sdk, address, maticBalance]);
+  console.log(CanIBridgeTeds!());
+  console.log(CanIBridgeTedsFlag);
+  console.log(CanIBridgeTedsAmount.toString());
+
+  console.log(CanIBridgeTeddies!());
+  console.log(CanIBridgeTeddiesFlag);
+  console.log(CanIBridgeTeddiesAmount.toString());
+
+  console.log(CanIBridgeAITeds!());
+  console.log(CanIBridgeAITedsFlag);
+  console.log(CanIBridgeAITedsAmount.toString());
+
+  
+
+  const [hasBridgedTeds, setHasBridgedTeds] = useState(false);
+  const [hasBridgedTeddies, setHasBridgedTeddies] = useState(false);
+  const [hasBridgedAITeds, setHasBridgedAITeds] = useState(false);
+
+  console.log(hasBridgedTeds);
+  console.log(hasBridgedTeddies);
+  console.log(hasBridgedAITeds);
 
   const AllTokens = tokens.AllTokens.tokens;
   const tedNFTs = tokens.Teds?.tokens;
@@ -141,7 +131,7 @@ function PolygonBridgeInitial(props: BridgeProps) {
 
   const [open, setOpen] = useState(false);
   const handleMaticClose = () => {
-    setNeedsFunds(false);
+    setNeedsFunds!(false);
     console.log("closing dialog");
   };
   const handleToggle = () => {
@@ -170,6 +160,11 @@ function PolygonBridgeInitial(props: BridgeProps) {
         setHasTeds(false);
       } else {
         setHasTeds(true);
+        if(polygonTokens.Teds?.tokens){
+          if(polygonTokens.Teds?.tokens.length! > 0) {
+            setHasBridgedTeds(true);
+          }
+        }
       }
     }
 
@@ -178,15 +173,12 @@ function PolygonBridgeInitial(props: BridgeProps) {
       setHasTeddies(false);
     } else {
       setHasTeddies(true);
+      if(polygonTokens.Teddies?.tokens){
+        if(polygonTokens.Teddies?.tokens.length! > 0) {
+          setHasBridgedTeddies(true);
+        }
+      }
     }
-
-    // if () {
-    //   if(teddyNFTs?.length === 0 && stakedTeddiesIDs?.length === 0){
-    //     setHasTeddies(false);
-    //   } else {
-    //     setHasTeddies(true);
-    //   }
-    // }
 
     if (!aiTedNFTs) {
       console.log("No AI Teds");
@@ -195,9 +187,17 @@ function PolygonBridgeInitial(props: BridgeProps) {
         setHasAITeds(false);
       } else {
         setHasAITeds(true);
+        if(polygonTokens.AITeds?.tokens){
+          if(polygonTokens.AITeds?.tokens.length! > 0) {
+            setHasBridgedAITeds(true);
+          }
+        } 
       }
     }
-  }, [aiTedNFTs, stakedTeddiesIDs, tedNFTs, teddyNFTs]);
+
+    
+
+  }, [aiTedNFTs, polygonTokens.AITeds?.tokens, polygonTokens.Teddies?.tokens, polygonTokens.Teds?.tokens, stakedTeddiesIDs, tedNFTs, teddyNFTs]);
 
   // useEffect(() => {
   //   try {
@@ -236,6 +236,13 @@ function PolygonBridgeInitial(props: BridgeProps) {
         setErrorCode(3);
         setCollectionForError("Fury Teds");
         return;
+       } 
+      else if (collection === "Fury Teds" && !CanIBridgeTedsFlag) {
+        console.log("Not approved for Bridging Teds");
+        setShowError(true);        
+        setErrorCode(5);
+        setCollectionForError("Fury Teds");
+        return;
       }
 
       if (collection === "Teddies by FOTF" && (isLoadingTeddy || isLoadingStaked)) {
@@ -250,6 +257,13 @@ function PolygonBridgeInitial(props: BridgeProps) {
         setErrorCode(3);
         setCollectionForError("Teddies by FOTF");
         return;
+       } 
+        else if (collection === "Teddies by FOTF" && !CanIBridgeTeddiesFlag) {
+        console.log("Not approved for Bridging Teddies by FOTF");
+        setShowError(true);        
+        setErrorCode(5);
+        setCollectionForError("Teddies by FOTF");
+        return;
       }
 
       if (collection === "AI Teds" && isLoadingAI) {
@@ -262,6 +276,13 @@ function PolygonBridgeInitial(props: BridgeProps) {
         console.log("No AI Teds");
         setShowError(true);
         setErrorCode(3);
+        setCollectionForError("AI Teds");
+        return;
+      }
+      else if (collection === "AI Teds" && !CanIBridgeAITedsFlag) {
+        console.log("Not approved for Bridging AI Teds");
+        setShowError(true);        
+        setErrorCode(5);
         setCollectionForError("AI Teds");
         return;
       }
@@ -328,17 +349,18 @@ function PolygonBridgeInitial(props: BridgeProps) {
         <Box className={isSmallScreen ? "row" : "col-margin"}>
           <Box
             className={
-              selectedCollection === "Fury Teds" ? "card-selected" : "card"
+              (selectedCollection === "Fury Teds" || hasBridgedTeds) ? "card-selected" : "card"
             }
-            onClick={() => {
+            onClick={() => { if(!hasBridgedTeds){
               handleOnSelect("Fury Teds");
+            }
             }}
             sx={{
               marginLeft: "auto",
               marginRight: "auto",
               background: "none",
-              maxHeight: "375px",
-              maxWidth: "350px",
+              // maxHeight: "375px",
+              // maxWidth: "350px",
             }}
           >
             <Box sx={{ width: "100%", height: "100%", position: "relative" }}>
@@ -352,17 +374,25 @@ function PolygonBridgeInitial(props: BridgeProps) {
               ) : (
                 <Box>
                   {tedNFTs!.length > 0 ? (
-                    <ThirdwebNftMedia
-                      metadata={tedNFTs![0].metadata}
-                      style={{
-                        maxHeight: "280px",
-                        maxWidth: "280px",
-                        borderRadius: "10px",
-                        objectFit: "cover",
-                        width: "280px",
-                        height: "280px",
-                      }}
+                    <Box>
+                      {tedNFTs![0].metadata.name!=="Failed to load NFT metadata" ? <ThirdwebNftMedia
+                        metadata={tedNFTs![0].metadata}
+                        style={{
+                          maxHeight: "280px",
+                          maxWidth: "280px",
+                          borderRadius: "10px",
+                          objectFit: "cover",
+                          width: "280px",
+                          height: "280px",
+                        }}
+                      />
+                      : <img
+                      src={fotfLogo}
+                      className={"teddyStakedPlaceholder"}
+                      alt="Placeholder Logo - All Fury Teds are Bridged"
                     />
+                      }
+                      </Box>
                   ) : (
                     <Skeleton
                       variant="rectangular"
@@ -372,6 +402,9 @@ function PolygonBridgeInitial(props: BridgeProps) {
                     />
                   )}
                 </Box>
+              )}
+              {hasBridgedTeds && (
+                <p className="title-selected">Bridge Complete</p>
               )}
               {selectedCollection === "Fury Teds" && (
                 <p className="title-selected">Bridge</p>
@@ -393,19 +426,20 @@ function PolygonBridgeInitial(props: BridgeProps) {
         <Box className={isSmallScreen ? "row" : "col-margin"}>
           <Box
             className={
-              selectedCollection === "Teddies by FOTF"
+              (selectedCollection === "Teddies by FOTF" || hasBridgedTeddies)
                 ? "card-selected"
                 : "card"
             }
-            onClick={() => {
+            onClick={() => {if(!hasBridgedTeddies){
               handleOnSelect("Teddies by FOTF");
+            }
             }}
             sx={{
               marginLeft: "auto",
               marginRight: "auto",
               background: "none",
-              maxHeight: "375px",
-              maxWidth: "350px",
+              // maxHeight: "375px",
+              // maxWidth: "350px",
             }}
           >
             <Box sx={{ width: "100%", height: "100%", position: "relative" }}>
@@ -419,17 +453,26 @@ function PolygonBridgeInitial(props: BridgeProps) {
               ) : (
                 <Box>
                   {teddyNFTs!.length > 0 ? (
-                    <ThirdwebNftMedia
-                      metadata={teddyNFTs![0].metadata}
-                      style={{
-                        maxHeight: "280px",
-                        maxWidth: "280px",
-                        borderRadius: "10px",
-                        objectFit: "cover",
-                        width: "280px",
-                        height: "280px",
-                      }}
+                    <Box>
+                    {teddyNFTs![0].metadata.name!=="Failed to load NFT metadata" ?
+                      <ThirdwebNftMedia
+                        metadata={teddyNFTs![0].metadata}
+                        style={{
+                          maxHeight: "280px",
+                          maxWidth: "280px",
+                          borderRadius: "10px",
+                          objectFit: "cover",
+                          width: "280px",
+                          height: "280px",
+                        }}
+                      />
+                      : <img
+                      src={fotfLogo}
+                      className={"teddyStakedPlaceholder"}
+                      alt="Placeholder Logo - All Teddies are Bridged"
                     />
+                  }
+                  </Box>
                   ) : (
                     <Box>
                       {stakedTeddiesIDs!.length > 0 ? (
@@ -444,6 +487,9 @@ function PolygonBridgeInitial(props: BridgeProps) {
                     </Box>
                   )}
                 </Box>
+              )}
+              {hasBridgedTeddies && (
+                <p className="title-selected">Bridge Complete</p>
               )}
               {selectedCollection === "Teddies by FOTF" && (
                 <p className="title-selected">Bridge</p>
@@ -465,17 +511,24 @@ function PolygonBridgeInitial(props: BridgeProps) {
         <Box className={isSmallScreen ? "row" : "col-margin"}>
           <Box
             className={
-              selectedCollection === "AI Teds" ? "card-selected" : "card"
+              (selectedCollection === "AI Teds" || hasBridgedAITeds) ? "card-selected" : "card"
             }
-            onClick={() => {
+            // className={
+            //   (selectedCollection === "AI Teds") ? "card-selected" : "card"
+            // }
+            // onClick={() => {
+            //   handleOnSelect("AI Teds");
+            
+            onClick={() => {if(!hasBridgedAITeds){
               handleOnSelect("AI Teds");
+            }
             }}
             sx={{
               marginLeft: "auto",
               marginRight: "auto",
               background: "none",
-              maxHeight: "375px",
-              maxWidth: "350px",
+              // maxHeight: "375px",
+              // maxWidth: "350px",
             }}
           >
             <Box sx={{ width: "100%", height: "100%", position: "relative" }}>
@@ -489,17 +542,26 @@ function PolygonBridgeInitial(props: BridgeProps) {
               ) : (
                 <Box>
                   {aiTedNFTs!.length > 0 ? (
-                    <ThirdwebNftMedia
-                      metadata={aiTedNFTs![0].metadata}
-                      style={{
-                        maxHeight: "280px",
-                        maxWidth: "280px",
-                        borderRadius: "10px",
-                        objectFit: "cover",
-                        width: "280px",
-                        height: "280px",
-                      }}
+                    <Box>
+                    {aiTedNFTs![0].metadata.name!=="Failed to load NFT metadata" ?
+                      <ThirdwebNftMedia
+                        metadata={aiTedNFTs![0].metadata}
+                        style={{
+                          maxHeight: "280px",
+                          maxWidth: "280px",
+                          borderRadius: "10px",
+                          objectFit: "cover",
+                          width: "280px",
+                          height: "280px",
+                        }}
+                      />
+                      :  <img
+                      src={fotfLogo}
+                      className={"teddyStakedPlaceholder"}
+                      alt="Placeholder Logo - All AI Teds are Bridged"
                     />
+                      }
+                      </Box>
                   ) : (
                     <Skeleton
                       variant="rectangular"
@@ -509,6 +571,9 @@ function PolygonBridgeInitial(props: BridgeProps) {
                     />
                   )}
                 </Box>
+              )}
+              {hasBridgedAITeds && (
+                <p className="title-selected">Bridge Complete</p>
               )}
               {selectedCollection === "AI Teds" && (
                 <p className="title-selected">Bridge</p>
@@ -548,7 +613,7 @@ function PolygonBridgeInitial(props: BridgeProps) {
           disabled={selectedCollection === ""}
           onClick={() => handleAdvance()}
         >
-          <span className="top-padding">Continue With Bridge</span>{" "}
+          <span>Continue With Bridge</span>{" "}
           <ArrowRightIcon
             sx={{ alignItems: "center", justifyContent: "center" }}
           />

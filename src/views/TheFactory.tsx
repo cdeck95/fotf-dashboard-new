@@ -51,6 +51,7 @@ import { MainnetNetwork } from "../components/MainnetNetwork";
 import ExpandLessOutlinedIcon from '@mui/icons-material/ExpandLessOutlined';
 import ExpandMoreOutlinedIcon from '@mui/icons-material/ExpandMoreOutlined';
 import { TokenProps } from "../components/AssetOverviewSidebar";
+import ErrorDialog from "../components/ErrorDialog";
 
 // interface TheFactoryProps {
 //   allOwnedNFTs: allOwnedNFTs;
@@ -83,6 +84,8 @@ function TheFactory(props: TokenProps) {
   console.log(`Large:  ${isLarge}`);
   console.log(`XL:  ${isXL}`);
   console.log(`Is 1920:  ${isFullScreen}`);
+
+  const isDisabled = true;
 
   // const { tokens, isLoading, error, honeyBalance } = LoadAllAccountDetails();
   // const allOwnedNFTs = props.allOwnedNFTs;
@@ -187,6 +190,10 @@ function TheFactory(props: TokenProps) {
   const [isTransferredFilter, setIsTransferredFilter] = useState(false);
   const [isLongestHeldFilter, setIsLongestHeldFilter] = useState(false);
 
+  const [isTedFilter, setIsTedFilter] = useState(false);
+  const [isTeddyFilter, setIsTeddyFilter] = useState(false);
+  const [isAIFilter, setIsAIFilter] = useState(false);
+
   const [selectedTeds, setSelectedTeds] = useState<any>([]);
   const [selectedTeddies, setSelectedTeddies] = useState<any>([]);
   const [selectedAITeds, setSelectedAITeds] = useState<any>([]);
@@ -226,6 +233,21 @@ function TheFactory(props: TokenProps) {
         setIsActiveFilter(false);
         setIsTransferredFilter(false);
         setIsLongestHeldFilter(!isLongestHeldFilter);
+        break;
+      case "Ted":
+        setIsTedFilter(!isTedFilter);
+        setIsTeddyFilter(false);
+        setIsAIFilter(false);
+        break;
+      case "Teddy":
+        setIsTedFilter(false);
+        setIsTeddyFilter(!isTeddyFilter);
+        setIsAIFilter(false);
+        break;
+      case "AI":
+        setIsTedFilter(false);
+        setIsTeddyFilter(false);
+        setIsAIFilter(!isAIFilter);
         break;
       default:
         setIsActiveFilter(false);
@@ -346,10 +368,64 @@ function TheFactory(props: TokenProps) {
     setSearchInput("");
   }
 
-  const filteredNFTs = AllTokens?.filter((e) =>
-    e.metadata.id!.includes(searchInput)
-  );
-  console.log(filteredNFTs);
+  // const filteredNFTs = AllTokens?.filter((e) =>
+  //   e.metadata.id!.includes(searchInput)
+  // );
+  // console.log(filteredNFTs);
+
+  const [filteredNFTsWithCategory, setFilteredNFTsWithCategory] = useState<NFT[]>([]);
+
+  useEffect(() => {
+    if(isAIFilter || isTeddyFilter || isTedFilter) {
+      if(isAIFilter) {
+        setFilteredNFTsWithCategory(aiTedNFTs!.filter((e) =>
+        e.metadata.id!.includes(searchInput)
+      ));
+      } else if (isTeddyFilter) {
+        setFilteredNFTsWithCategory(teddyNFTs!.filter((e) =>
+        e.metadata.id!.includes(searchInput)
+      ));
+      } else if (isTedFilter) {
+        setFilteredNFTsWithCategory(tedNFTs!.filter((e) =>
+        e.metadata.id!.includes(searchInput)
+      ));
+      } else {
+        setFilteredNFTsWithCategory(AllTokens?.filter((e) =>
+        e.metadata.id!.includes(searchInput)
+      ));
+      }
+    } else {
+      setFilteredNFTsWithCategory(AllTokens?.filter((e) =>
+      e.metadata.id!.includes(searchInput)
+    ));
+    }
+  }, [isAIFilter, isTeddyFilter, isTedFilter, aiTedNFTs, searchInput, teddyNFTs, tedNFTs, AllTokens]);
+
+  const [showError, setShowError] = useState(false);
+  const [errorCode, setErrorCode] = useState(0);
+
+  const handleErrorClose = () => {
+    setShowError(false);
+  };
+
+
+  function burn(selectedTokens: NFT[]) {
+    console.log("burn for hny clicked");
+    if(isDisabled) {
+      setShowError(true);
+      setErrorCode(4);
+      return;
+    }  
+  }
+
+  function burnForOneOfOne(selectedTokens: NFT[]) {
+    console.log("burn 1 of 1 clicked");
+    if(isDisabled) {
+      setShowError(true);
+      setErrorCode(4);
+      return;
+    }
+  }
 
   //////////////////////////////////////////////
 
@@ -405,6 +481,33 @@ function TheFactory(props: TokenProps) {
           </Typography>
         </Box>
       </Backdrop>
+
+      <ErrorDialog
+        open={showError}
+        handleClose={handleErrorClose}
+        errorCode={errorCode}
+        collection={"The Factory"}
+      />
+
+      {/* <Backdrop
+        sx={{
+          color: "#fff",
+          zIndex: (theme) => theme.zIndex.drawer + 1,
+          marginLeft: leftDrawerWidth,
+          marginRight: rightDrawerWidth,
+        }}
+        open={isDisabled}
+        onClick={handleClose}
+      >
+        <Box sx={{ borderRadius: "10px", backgroundColor: "white" }}>
+          <Typography sx={{ padding: "20px", color: "Black" }}>
+            The Factory is currently disabled.
+          </Typography>
+          <Typography sx={{ padding: "20px", color: "Black" }}>
+            Please come back later.
+          </Typography>
+        </Box>
+      </Backdrop> */}
       {address && (
         <Box className={isSmallScreen ? "header-mobile" : "header"}>
           <Box className={isSmallScreen ? "header-row-mobile" : "header-row"}>
@@ -420,6 +523,35 @@ function TheFactory(props: TokenProps) {
               onChange={handleSearch}
               value={searchInput}
             />
+          </Box>
+          <Box className={isSmallScreen ? "filter-row-mobile" : "filter-row"}>
+            <Button
+              disabled={!address}
+              className={
+                isTedFilter ? "filter-button-selected" : "filter-button"
+              }
+              onClick={() => setFilter("Ted")}
+            >
+              Fury Teds
+            </Button>
+            <Button
+              disabled={!address}
+              className={
+                isTeddyFilter ? "filter-button-selected" : "filter-button"
+              }
+              onClick={() => setFilter("Teddy")}
+            >
+              Teddy by FOTF
+            </Button>
+            <Button
+              disabled={!address}
+              className={
+                isAIFilter ? "filter-button-selected" : "filter-button"
+              }
+              onClick={() => setFilter("AI")}
+            >
+              AI Teds
+            </Button>
           </Box>
           {/* <Box className={isSmallScreen ? "filter-row-mobile" : "filter-row"}>
             <Button
@@ -488,7 +620,7 @@ function TheFactory(props: TokenProps) {
                   gap={25}
                   rowHeight={450}
                 >
-                  {filteredNFTs.map((token: NFT) => (
+                  {filteredNFTsWithCategory.map((token: NFT) => (
                     <Box
                       key={token.metadata.id}
                       className={
@@ -613,11 +745,11 @@ function TheFactory(props: TokenProps) {
               className="burn-box"
               sx={{ display: "flex", flexDirection: "row" }}
             >
-              <Button className="burn-btn" disabled={!isOneOfEachSelected}>
+              <Button className="burn-btn" disabled={selectedTokens.length === 0} onClick={() => burn(selectedTokens)}>
                 Burn {selectedTokens.length} for{" "}
                 {parseInt(burnRewards).toLocaleString()} $HNY
               </Button>
-              <Button className="burn-btn" disabled={!is10Selected}>
+              <Button className="burn-btn" disabled={!is10Selected || !isOneOfEachSelected} onClick={() => burnForOneOfOne(selectedTokens)}>
                 Burn {selectedTokens.length} +{" "}
                 {(1000000 - parseInt(burnRewards)).toLocaleString()} $HNY for
                 Custom 1/1
@@ -702,12 +834,13 @@ function TheFactory(props: TokenProps) {
             <Box className="burn-box-mobile">
               <Button
                 className="burn-btn-mobile "
-                disabled={!isOneOfEachSelected}
+                disabled={selectedTokens.length === 0}
+                onClick={() => burn(selectedTokens)}
               >
                 Burn {selectedTokens.length} for{" "}
                 {parseInt(burnRewards).toLocaleString()} $HNY
               </Button>
-              <Button className="burn-btn-mobile " disabled={!is10Selected}>
+              <Button className="burn-btn-mobile " disabled={!is10Selected || !isOneOfEachSelected} onClick={() => burnForOneOfOne(selectedTokens)}>
                 Burn {selectedTokens.length} +{" "}
                 {(1000000 - parseInt(burnRewards)).toLocaleString()} $HNY for
                 Custom 1/1
