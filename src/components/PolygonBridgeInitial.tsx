@@ -83,43 +83,25 @@ function PolygonBridgeInitial(props: BridgeProps) {
   // console.log(error);
   // console.log(honeyBalance);
 
-  const { maticBalance, needsFunds, setNeedsFunds, CanIBridgeTeds, CanIBridgeTedsFlag, CanIBridgeTedsAmount, CanIBridgeTeddies, CanIBridgeAITeds, tokens: polygonTokens } = LoadPolygonAccountDetails();
+  const { maticBalance, needsFunds, setNeedsFunds, CanIBridgeTeds, CanIBridgeTedsFlag, CanIBridgeTedsAmount, CanIBridgeTeddies, CanIBridgeTeddiesFlag, CanIBridgeTeddiesAmount, CanIBridgeAITeds, CanIBridgeAITedsFlag, CanIBridgeAITedsAmount, tokens: polygonTokens } = LoadPolygonAccountDetails();
 
   console.log(CanIBridgeTeds!());
   console.log(CanIBridgeTedsFlag);
   console.log(CanIBridgeTedsAmount.toString());
-  console.log(CanIBridgeTeddies);
-  console.log(CanIBridgeAITeds);
+
+  console.log(CanIBridgeTeddies!());
+  console.log(CanIBridgeTeddiesFlag);
+  console.log(CanIBridgeTeddiesAmount.toString());
+
+  console.log(CanIBridgeAITeds!());
+  console.log(CanIBridgeAITedsFlag);
+  console.log(CanIBridgeAITedsAmount.toString());
+
+  
 
   const [hasBridgedTeds, setHasBridgedTeds] = useState(false);
   const [hasBridgedTeddies, setHasBridgedTeddies] = useState(false);
   const [hasBridgedAITeds, setHasBridgedAITeds] = useState(false);
-
-  // useEffect(() => {
-  //   console.log(polygonTokens);
-  //   // if(polygonTokens.Teds?.tokens){
-  //   //   if(polygonTokens.Teds?.tokens.length! > 0) {
-  //   //     setHasBridgedTeds(true);
-  //   //   }
-  //   // }
-
-  //   // if(polygonTokens.Teddies?.tokens){
-  //   //   if(polygonTokens.Teddies?.tokens.length! > 0) {
-  //   //     setHasBridgedTeddies(true);
-  //   //   }
-  //   // }
-
-  //   if(polygonTokens.AITeds?.tokens){
-  //     if(polygonTokens.AITeds?.tokens.length! > 0) {
-  //       setHasBridgedAITeds(true);
-  //     }
-  //   } 
-
-    
-
-    
-  // }, []);
-  
 
   console.log(hasBridgedTeds);
   console.log(hasBridgedTeddies);
@@ -276,7 +258,7 @@ function PolygonBridgeInitial(props: BridgeProps) {
         setCollectionForError("Teddies by FOTF");
         return;
        } 
-        else if (collection === "Teddies by FOTF" && !CanIBridgeTeddies) {
+        else if (collection === "Teddies by FOTF" && !CanIBridgeTeddiesFlag) {
         console.log("Not approved for Bridging Teddies by FOTF");
         setShowError(true);        
         setErrorCode(5);
@@ -297,7 +279,7 @@ function PolygonBridgeInitial(props: BridgeProps) {
         setCollectionForError("AI Teds");
         return;
       }
-      else if (collection === "AI Teds" && !CanIBridgeAITeds) {
+      else if (collection === "AI Teds" && !CanIBridgeAITedsFlag) {
         console.log("Not approved for Bridging AI Teds");
         setShowError(true);        
         setErrorCode(5);

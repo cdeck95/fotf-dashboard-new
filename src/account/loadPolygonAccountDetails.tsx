@@ -46,8 +46,12 @@ import {
     CanIBridgeTedsFlag: boolean;
     CanIBridgeTedsAmount: BigNumber;
     CanIBridgeTeds?: Function;
-    CanIBridgeTeddies: boolean;
-    CanIBridgeAITeds: boolean;
+    CanIBridgeTeddiesFlag: boolean;
+    CanIBridgeTeddiesAmount: BigNumber;
+    CanIBridgeTeddies?: Function;
+    CanIBridgeAITedsFlag: boolean;
+    CanIBridgeAITedsAmount: BigNumber;
+    CanIBridgeAITeds?: Function;
     hasBridgedTeds: boolean;
     hasBridgedTeddies: boolean;
     hasBridgedAITeds: boolean;
@@ -69,8 +73,10 @@ import {
     needsFunds: false,
     CanIBridgeTedsFlag: false,
     CanIBridgeTedsAmount: BigNumber.from(0),
-    CanIBridgeTeddies: false,
-    CanIBridgeAITeds: false,
+    CanIBridgeTeddiesFlag: false,
+    CanIBridgeTeddiesAmount: BigNumber.from(0),
+    CanIBridgeAITedsFlag: false,
+    CanIBridgeAITedsAmount: BigNumber.from(0),
     hasBridgedTeds: false,
     hasBridgedTeddies: false,
     hasBridgedAITeds: false,
@@ -254,14 +260,9 @@ import {
           allOwnedNFTs.CanIBridgeTedsAmount = canIBridge[1];
         } catch (e) {
           console.log(e);
-          
         }
       }, [address, allOwnedNFTs, tedPolygonContract]);
       
-      allOwnedNFTs.CanIBridgeTeds = CanIBridgeTeds;
-      // allOwnedNFTs.CanIBridgeTeds = CanIBridgeTeds();
-      // console.log(CanIBridgeTeds());
-
       const CanIBridgeTeddies = useCallback(async () => {
         try {
           const canIBridge = await teddiesPolygonContract?.call(
@@ -270,10 +271,10 @@ import {
             [address]
           );
           console.log(canIBridge);
-          allOwnedNFTs.CanIBridgeTeddies = canIBridge;
+          allOwnedNFTs.CanIBridgeTeddiesFlag = canIBridge[0];
+          allOwnedNFTs.CanIBridgeTeddiesAmount = canIBridge[1];
         } catch (e) {
           console.log(e);
-          allOwnedNFTs.CanIBridgeTeddies = false
         }
       }, [address, allOwnedNFTs, teddiesPolygonContract]);
 
@@ -285,12 +286,16 @@ import {
             [address]
           );
           console.log(canIBridge);
-          allOwnedNFTs.CanIBridgeAITeds = canIBridge;
+          allOwnedNFTs.CanIBridgeAITedsFlag = canIBridge[0];
+          allOwnedNFTs.CanIBridgeAITedsAmount = canIBridge[1];
         } catch (e) {
           console.log(e);
-          allOwnedNFTs.CanIBridgeAITeds = false
         }
       }, [address, aiTedsPolygonContract, allOwnedNFTs]);     
+
+      allOwnedNFTs.CanIBridgeTeds = CanIBridgeTeds;
+      allOwnedNFTs.CanIBridgeTeddies = CanIBridgeTeddies;
+      allOwnedNFTs.CanIBridgeAITeds = CanIBridgeAITeds;
       
     return allOwnedNFTs;
   }

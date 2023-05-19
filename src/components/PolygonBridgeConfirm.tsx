@@ -270,7 +270,16 @@ function PolygonBridgeConfirm(props: BridgeConfirmProps) {
         setCollectionCount(teddyCount);
         // BRIDGE FIRST
         const bridgeResponseTeddies = await bridgeTeddies!();
-        console.log(bridgeResponseTeddies);
+        const eventsTeddies = bridgeResponseTeddies["receipt"]["events"];
+        const TokensMintedTeddies: BigNumber[] = eventsTeddies[events.length -2]["args"]["tokenIds"];
+        console.log(TokensMintedTeddies);
+
+        TokensMintedTeddies.forEach((id) => {
+          console.log(id.toString());
+          returnedBridgeIDs.push(id.toString());
+        });
+
+        console.log(returnedBridgeIDs);
         if(bridgeResponseTeddies === null){
           setErrorCode(500);
           setShowError(true);
@@ -295,7 +304,16 @@ function PolygonBridgeConfirm(props: BridgeConfirmProps) {
         setCollectionCount(aiTedNFTs?.length!);
         // BRIDGE FIRST
         const bridgeResponseAITeds = await bridgeAITeds!();
-        console.log(bridgeResponseAITeds);
+        const eventsAITeds = bridgeResponseAITeds["receipt"]["events"];
+        const TokensMintedAITeds: BigNumber[] = eventsAITeds[events.length -2]["args"]["tokenIds"];
+        console.log(TokensMintedAITeds);
+
+        TokensMintedAITeds.forEach((id) => {
+          console.log(id.toString());
+          returnedBridgeIDs.push(id.toString());
+        });
+
+        console.log(returnedBridgeIDs);
         if(bridgeResponseAITeds === null){
           setErrorCode(500);
           setShowError(true);
