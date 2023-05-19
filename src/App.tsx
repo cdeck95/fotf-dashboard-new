@@ -293,7 +293,7 @@ function App() {
         >
           {address ? (
             <Routes>
-              <Route path="/" element={<Dashboard tokens={tokens}
+              {/* <Route path="/" element={<Dashboard tokens={tokens}
                     error={error}
                     isLoadingTed={isLoadingTed}
                     isLoadingTeddy={isLoadingTeddy}
@@ -303,7 +303,8 @@ function App() {
                     isLoadingOneOfOne={isLoadingOneOfOne}
                     honeyBalance={honeyBalance}
                     leftNavOpen={navOpen}
-                    rightNavOpen={rightNavOpen} />} />
+                    rightNavOpen={rightNavOpen} />} /> */}
+              <Route path="/" element={<Navigate to="/Bridge"/>} />
               <Route path="/HoneyExchange" element={<HoneyExchange />} />
               <Route path="/TeddyStaking" element={<TeddyStaking />} />
               <Route path="/TedClaims" element={<TedClaims />} />{" "}
