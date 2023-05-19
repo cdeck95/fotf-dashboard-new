@@ -115,7 +115,8 @@ function LeftDrawer(props: NavProps) {
         setIsBridgePage(true);
         break;
       default:
-        setActivePage("Dashboard");
+        setActivePage("PolygonBridge");
+        setIsBridgePage(true);
         break;
     }
   }, [isMobile, isMediumLarge]);
