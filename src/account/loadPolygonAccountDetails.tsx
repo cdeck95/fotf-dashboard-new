@@ -147,14 +147,14 @@ import {
     allOwnedNFTs.isLoadingTed = isLoadingTed;
     allOwnedNFTs.errorTed = errorTed;
 
-    tedNFTs?.forEach(async (nft) => {
-      const response = await fetch(`https://api.opensea.io/api/v1/asset/0x047Be3F987854136eC872932c24a26Dcd0fD3a42/${nft.metadata.id}/?force_update=true`, {
-        method: 'GET'
-        });
-        console.log(response.status);
-        console.log(response.statusText);
-        console.log(response.body);
-     });  
+    // tedNFTs?.forEach(async (nft) => {
+    //   const response = await fetch(`https://api.opensea.io/api/v1/asset/0x047Be3F987854136eC872932c24a26Dcd0fD3a42/${nft.metadata.id}/?force_update=true`, {
+    //     method: 'GET'
+    //     });
+    //     console.log(response.status);
+    //     console.log(response.statusText);
+    //     console.log(response.body);
+    //  });  
 
     /////////////// Load Polygon Teddies ///////////////////////
 
@@ -167,14 +167,14 @@ import {
     allOwnedNFTs.isLoadingTeddy = isLoadingTeddy;
     allOwnedNFTs.errorTeddy = errorTeddy;
 
-    teddyNFTs?.forEach(async (nft) => {
-      const response = await fetch(`https://api.opensea.io/api/v1/asset/0x747cC82CDDF9fE91ae69C2f723844d8E31D31e26/${nft.metadata.id}/?force_update=true`, {
-        method: 'GET'
-        });
-        console.log(response.status);
-        console.log(response.statusText);
-        console.log(response.body);
-     });  
+    // teddyNFTs?.forEach(async (nft) => {
+    //   const response = await fetch(`https://api.opensea.io/api/v1/asset/0x747cC82CDDF9fE91ae69C2f723844d8E31D31e26/${nft.metadata.id}/?force_update=true`, {
+    //     method: 'GET'
+    //     });
+    //     console.log(response.status);
+    //     console.log(response.statusText);
+    //     console.log(response.body);
+    //  });  
 
     /////////////// Load Polygon AI Teds ///////////////////////
 
@@ -187,14 +187,14 @@ import {
     allOwnedNFTs.isLoadingAI = isLoadingAI;
     allOwnedNFTs.errorAI = errorAI;
 
-    aiTedNFTs?.forEach(async (nft) => {
-      const response = await fetch(`https://api.opensea.io/api/v1/asset/0xDAA7Ba5cFd5f3A46E8180F19B5c930130e156723/${nft.metadata.id}/?force_update=true`, {
-        method: 'GET'
-        });
-        console.log(response.status);
-        console.log(response.statusText);
-        console.log(response.body);
-     });  
+    // aiTedNFTs?.forEach(async (nft) => {
+    //   const response = await fetch(`https://api.opensea.io/api/v1/asset/0xdaa7ba5cfd5f3a46e8180f19b5c930130e156723/${nft.metadata.id}/?force_update=true`, {
+    //     method: 'GET'
+    //     });
+    //     console.log(response.status);
+    //     console.log(response.statusText);
+    //     console.log(response.body);
+    //  });  
     
     const [maticBalance, setMaticBalance] = useState<string>();
     const [needsFunds, setNeedsFunds] = useState<boolean>(false);
