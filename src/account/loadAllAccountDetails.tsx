@@ -182,6 +182,7 @@ export function LoadAllAccountDetails(): allOwnedNFTs {
     error: errorTed,
     isLoading: isLoadingTed,
   } = useOwnedNFTs(contract_FOTF, address);
+  console.log(tedNFTs);
 
   allOwnedNFTs.isLoadingTed = isLoadingTed;
 

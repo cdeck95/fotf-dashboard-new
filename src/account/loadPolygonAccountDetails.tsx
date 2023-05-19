@@ -43,14 +43,16 @@ import {
     errorAI: any;
     maticBalance: string;
     needsFunds: boolean;
-    CanIBridgeTeds: boolean;
+    CanIBridgeTedsFlag: boolean;
+    CanIBridgeTedsAmount: BigNumber;
+    CanIBridgeTeds?: Function;
     CanIBridgeTeddies: boolean;
     CanIBridgeAITeds: boolean;
     hasBridgedTeds: boolean;
     hasBridgedTeddies: boolean;
     hasBridgedAITeds: boolean;
     setNeedsFunds?: React.Dispatch<React.SetStateAction<boolean>>;
-    testbridgeTeds?: Function;
+    // testbridgeTeds?: Function;
     bridgeTeds?: Function;
     bridgeTeddies?: Function;
     bridgeAITeds?: Function;
@@ -65,7 +67,8 @@ import {
     errorAI: false,
     maticBalance: "0",
     needsFunds: false,
-    CanIBridgeTeds: false,
+    CanIBridgeTedsFlag: false,
+    CanIBridgeTedsAmount: BigNumber.from(0),
     CanIBridgeTeddies: false,
     CanIBridgeAITeds: false,
     hasBridgedTeds: false,
@@ -88,10 +91,8 @@ import {
   };
   
   const TED_POLYGON_CONTRACT = "0x047Be3F987854136eC872932c24a26Dcd0fD3a42";
-
-  //these arent good anymore
-  const TEDDIES_POLYGON_CONTRACT = "0xBA598EC6E18293AcB8e0b2c40856E2f40c5b42C7";
-  const AITEDS_POLYGON_CONTRACT = "0x47D142602960a3C7a61FF4D44F4d5471fdc16869";
+  const TEDDIES_POLYGON_CONTRACT = "0x747cC82CDDF9fE91ae69C2f723844d8E31D31e26";
+  const AITEDS_POLYGON_CONTRACT = "0xDAA7Ba5cFd5f3A46E8180F19B5c930130e156723";
   /////
   
   
@@ -198,18 +199,18 @@ import {
           }
     }
 
-    async function testbridgeTeds (){
-      try {
-          const bridgeResults = await TEST_tedPolygonContract?.call(
-            "fotfbridge"
-          );
-          console.log(bridgeResults);
-          return bridgeResults;
-        } catch (e) {
-          console.log(e);
-          return null;
-        }
-  }
+  //   async function testbridgeTeds (){
+  //     try {
+  //         const bridgeResults = await TEST_tedPolygonContract?.call(
+  //           "fotfbridge"
+  //         );
+  //         console.log(bridgeResults);
+  //         return bridgeResults;
+  //       } catch (e) {
+  //         console.log(e);
+  //         return null;
+  //       }
+  // }
 
     async function bridgeTeddies (){
         try {
@@ -236,7 +237,7 @@ import {
             return null;
           }
     }
-    allOwnedNFTs.testbridgeTeds = testbridgeTeds;
+    // allOwnedNFTs.testbridgeTeds = testbridgeTeds;
     allOwnedNFTs.bridgeTeds = bridgeTeds;
     allOwnedNFTs.bridgeTeddies = bridgeTeddies;
     allOwnedNFTs.bridgeAITeds = bridgeAITeds;
@@ -249,13 +250,15 @@ import {
             [address]
           );
           console.log(canIBridge);
-          allOwnedNFTs.CanIBridgeTeds = canIBridge;
+          allOwnedNFTs.CanIBridgeTedsFlag = canIBridge[0];
+          allOwnedNFTs.CanIBridgeTedsAmount = canIBridge[1];
         } catch (e) {
           console.log(e);
           
         }
       }, [address, allOwnedNFTs, tedPolygonContract]);
       
+      allOwnedNFTs.CanIBridgeTeds = CanIBridgeTeds;
       // allOwnedNFTs.CanIBridgeTeds = CanIBridgeTeds();
       // console.log(CanIBridgeTeds());
 

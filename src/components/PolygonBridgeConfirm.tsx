@@ -88,9 +88,9 @@ function PolygonBridgeConfirm(props: BridgeConfirmProps) {
   const [isSmallScreen, setSmallScreen] = useState(false);
   const [collectionCount, setCollectionCount] = useState(0);
 
-  const { maticBalance, needsFunds, setNeedsFunds, bridgeTeds, testbridgeTeds, bridgeTeddies, bridgeAITeds, CanIBridgeTeds, CanIBridgeTeddies, CanIBridgeAITeds, hasBridgedTeds, hasBridgedTeddies, hasBridgedAITeds } = LoadPolygonAccountDetails();
+  const { maticBalance, needsFunds, setNeedsFunds, bridgeTeds, bridgeTeddies, bridgeAITeds, CanIBridgeTeds, CanIBridgeTeddies, CanIBridgeAITeds, hasBridgedTeds, hasBridgedTeddies, hasBridgedAITeds } = LoadPolygonAccountDetails();
 
-  console.log(CanIBridgeTeds);
+  console.log(CanIBridgeTeds!());
   console.log(CanIBridgeTeddies);
   console.log(CanIBridgeAITeds);
 

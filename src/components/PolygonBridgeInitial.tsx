@@ -83,15 +83,43 @@ function PolygonBridgeInitial(props: BridgeProps) {
   // console.log(error);
   // console.log(honeyBalance);
 
-  const { maticBalance, needsFunds, setNeedsFunds, CanIBridgeTeds, CanIBridgeTeddies, CanIBridgeAITeds } = LoadPolygonAccountDetails();
+  const { maticBalance, needsFunds, setNeedsFunds, CanIBridgeTeds, CanIBridgeTedsFlag, CanIBridgeTedsAmount, CanIBridgeTeddies, CanIBridgeAITeds, tokens: polygonTokens } = LoadPolygonAccountDetails();
 
-  console.log(CanIBridgeTeds);
+  console.log(CanIBridgeTeds!());
+  console.log(CanIBridgeTedsFlag);
+  console.log(CanIBridgeTedsAmount.toString());
   console.log(CanIBridgeTeddies);
   console.log(CanIBridgeAITeds);
 
   const [hasBridgedTeds, setHasBridgedTeds] = useState(false);
   const [hasBridgedTeddies, setHasBridgedTeddies] = useState(false);
   const [hasBridgedAITeds, setHasBridgedAITeds] = useState(false);
+
+  // useEffect(() => {
+  //   console.log(polygonTokens);
+  //   // if(polygonTokens.Teds?.tokens){
+  //   //   if(polygonTokens.Teds?.tokens.length! > 0) {
+  //   //     setHasBridgedTeds(true);
+  //   //   }
+  //   // }
+
+  //   // if(polygonTokens.Teddies?.tokens){
+  //   //   if(polygonTokens.Teddies?.tokens.length! > 0) {
+  //   //     setHasBridgedTeddies(true);
+  //   //   }
+  //   // }
+
+  //   if(polygonTokens.AITeds?.tokens){
+  //     if(polygonTokens.AITeds?.tokens.length! > 0) {
+  //       setHasBridgedAITeds(true);
+  //     }
+  //   } 
+
+    
+
+    
+  // }, []);
+  
 
   console.log(hasBridgedTeds);
   console.log(hasBridgedTeddies);
@@ -150,11 +178,11 @@ function PolygonBridgeInitial(props: BridgeProps) {
         setHasTeds(false);
       } else {
         setHasTeds(true);
-        // if(tedNFTs![0].metadata.description?.includes("Polygon")) {
-        //   setHasBridgedTeds(true);
-        // } else {
-        //   setHasBridgedTeds(false);
-        // }
+        if(polygonTokens.Teds?.tokens){
+          if(polygonTokens.Teds?.tokens.length! > 0) {
+            setHasBridgedTeds(true);
+          }
+        }
       }
     }
 
@@ -163,12 +191,11 @@ function PolygonBridgeInitial(props: BridgeProps) {
       setHasTeddies(false);
     } else {
       setHasTeddies(true);
-      // if(teddyNFTs![0].metadata.description?.includes("Polygon")) {
-      //   setHasBridgedTeddies(true);
-      //   //get the json file and parse it from AWS if all staked?
-      // } else {
-      //   setHasBridgedTeddies(false);
-      // }
+      if(polygonTokens.Teddies?.tokens){
+        if(polygonTokens.Teddies?.tokens.length! > 0) {
+          setHasBridgedTeddies(true);
+        }
+      }
     }
 
     if (!aiTedNFTs) {
@@ -178,17 +205,17 @@ function PolygonBridgeInitial(props: BridgeProps) {
         setHasAITeds(false);
       } else {
         setHasAITeds(true);
-        // if(aiTedNFTs![0].metadata.description?.includes("Polygon")) {
-        //   setHasBridgedAITeds(true);
-        // } else {
-        //   setHasBridgedAITeds(false);
-        // }
+        if(polygonTokens.AITeds?.tokens){
+          if(polygonTokens.AITeds?.tokens.length! > 0) {
+            setHasBridgedAITeds(true);
+          }
+        } 
       }
     }
 
     
 
-  }, [aiTedNFTs, stakedTeddiesIDs, tedNFTs, teddyNFTs]);
+  }, [aiTedNFTs, polygonTokens.AITeds?.tokens, polygonTokens.Teddies?.tokens, polygonTokens.Teds?.tokens, stakedTeddiesIDs, tedNFTs, teddyNFTs]);
 
   // useEffect(() => {
   //   try {
@@ -228,13 +255,13 @@ function PolygonBridgeInitial(props: BridgeProps) {
         setCollectionForError("Fury Teds");
         return;
        } 
-      // else if (collection === "Fury Teds" && !CanIBridgeTeds) {
-      //   console.log("Not approved for Bridging Teds");
-      //   setShowError(true);        
-      //   setErrorCode(5);
-      //   setCollectionForError("Fury Teds");
-      //   return;
-      // }
+      else if (collection === "Fury Teds" && !CanIBridgeTedsFlag) {
+        console.log("Not approved for Bridging Teds");
+        setShowError(true);        
+        setErrorCode(5);
+        setCollectionForError("Fury Teds");
+        return;
+      }
 
       if (collection === "Teddies by FOTF" && (isLoadingTeddy || isLoadingStaked)) {
         console.log("still loading Teddies");
