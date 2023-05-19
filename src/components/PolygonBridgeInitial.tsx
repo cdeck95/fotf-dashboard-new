@@ -237,13 +237,13 @@ function PolygonBridgeInitial(props: BridgeProps) {
         setCollectionForError("Fury Teds");
         return;
        } 
-      else if (collection === "Fury Teds" && !CanIBridgeTedsFlag) {
-        console.log("Not approved for Bridging Teds");
-        setShowError(true);        
-        setErrorCode(5);
-        setCollectionForError("Fury Teds");
-        return;
-      }
+      // else if (collection === "Fury Teds" && !CanIBridgeTedsFlag) {
+      //   console.log("Not approved for Bridging Teds");
+      //   setShowError(true);        
+      //   setErrorCode(5);
+      //   setCollectionForError("Fury Teds");
+      //   return;
+      // }
 
       if (collection === "Teddies by FOTF" && (isLoadingTeddy || isLoadingStaked)) {
         console.log("still loading Teddies");
@@ -258,13 +258,13 @@ function PolygonBridgeInitial(props: BridgeProps) {
         setCollectionForError("Teddies by FOTF");
         return;
        } 
-        else if (collection === "Teddies by FOTF" && !CanIBridgeTeddiesFlag) {
-        console.log("Not approved for Bridging Teddies by FOTF");
-        setShowError(true);        
-        setErrorCode(5);
-        setCollectionForError("Teddies by FOTF");
-        return;
-      }
+      //   else if (collection === "Teddies by FOTF" && !CanIBridgeTeddiesFlag) {
+      //   console.log("Not approved for Bridging Teddies by FOTF");
+      //   setShowError(true);        
+      //   setErrorCode(5);
+      //   setCollectionForError("Teddies by FOTF");
+      //   return;
+      // }
 
       if (collection === "AI Teds" && isLoadingAI) {
         console.log("Still loading AI Teds");
@@ -279,13 +279,13 @@ function PolygonBridgeInitial(props: BridgeProps) {
         setCollectionForError("AI Teds");
         return;
       }
-      else if (collection === "AI Teds" && !CanIBridgeAITedsFlag) {
-        console.log("Not approved for Bridging AI Teds");
-        setShowError(true);        
-        setErrorCode(5);
-        setCollectionForError("AI Teds");
-        return;
-      }
+      // else if (collection === "AI Teds" && !CanIBridgeAITedsFlag) {
+      //   console.log("Not approved for Bridging AI Teds");
+      //   setShowError(true);        
+      //   setErrorCode(5);
+      //   setCollectionForError("AI Teds");
+      //   return;
+      // }
       setSelectedCollection(collection);
       setCollection(collection);
     }
