@@ -50,6 +50,7 @@ import {
     hasBridgedTeddies: boolean;
     hasBridgedAITeds: boolean;
     setNeedsFunds?: React.Dispatch<React.SetStateAction<boolean>>;
+    testbridgeTeds?: Function;
     bridgeTeds?: Function;
     bridgeTeddies?: Function;
     bridgeAITeds?: Function;
@@ -86,9 +87,15 @@ import {
     },
   };
   
-  const TED_POLYGON_CONTRACT = "0xDBA8DE90A8DE915868916c84608B4E9369493f27";
+  const TED_POLYGON_CONTRACT = "0x047Be3F987854136eC872932c24a26Dcd0fD3a42";
+
+  //these arent good anymore
   const TEDDIES_POLYGON_CONTRACT = "0xBA598EC6E18293AcB8e0b2c40856E2f40c5b42C7";
   const AITEDS_POLYGON_CONTRACT = "0x47D142602960a3C7a61FF4D44F4d5471fdc16869";
+  /////
+  
+  
+  const TED_TEST_CONTRACT = "0xe33149c3002e23d06871aa338ba3E9Dea759270B";
   
   /////////////// Load All NFTs ///////////////////////
   
@@ -101,6 +108,9 @@ import {
 
     const {contract: tedPolygonContract } = useContract(TED_POLYGON_CONTRACT);
     console.log(tedPolygonContract);
+
+    const {contract: TEST_tedPolygonContract } = useContract(TED_TEST_CONTRACT);
+    console.log(TEST_tedPolygonContract);
 
     const {contract:  teddiesPolygonContract } = useContract(TEDDIES_POLYGON_CONTRACT);
     console.log(teddiesPolygonContract);
@@ -188,6 +198,19 @@ import {
           }
     }
 
+    async function testbridgeTeds (){
+      try {
+          const bridgeResults = await TEST_tedPolygonContract?.call(
+            "fotfbridge"
+          );
+          console.log(bridgeResults);
+          return bridgeResults;
+        } catch (e) {
+          console.log(e);
+          return null;
+        }
+  }
+
     async function bridgeTeddies (){
         try {
             const bridgeResults = await teddiesPolygonContract?.call(
@@ -213,7 +236,7 @@ import {
             return null;
           }
     }
-
+    allOwnedNFTs.testbridgeTeds = testbridgeTeds;
     allOwnedNFTs.bridgeTeds = bridgeTeds;
     allOwnedNFTs.bridgeTeddies = bridgeTeddies;
     allOwnedNFTs.bridgeAITeds = bridgeAITeds;
@@ -229,9 +252,12 @@ import {
           allOwnedNFTs.CanIBridgeTeds = canIBridge;
         } catch (e) {
           console.log(e);
-          allOwnedNFTs.CanIBridgeTeds = false
+          
         }
       }, [address, allOwnedNFTs, tedPolygonContract]);
+      
+      // allOwnedNFTs.CanIBridgeTeds = CanIBridgeTeds();
+      // console.log(CanIBridgeTeds());
 
       const CanIBridgeTeddies = useCallback(async () => {
         try {
@@ -261,11 +287,7 @@ import {
           console.log(e);
           allOwnedNFTs.CanIBridgeAITeds = false
         }
-      }, [address, aiTedsPolygonContract, allOwnedNFTs]);
-
-      //implement has bridged
-
-     
+      }, [address, aiTedsPolygonContract, allOwnedNFTs]);     
       
     return allOwnedNFTs;
   }

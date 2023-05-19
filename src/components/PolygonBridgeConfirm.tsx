@@ -25,7 +25,7 @@ import ConnectWalletPage from "../components/ConnectWalletPage";
 import ArrowLeftIcon from "@mui/icons-material/ArrowLeft";
 import ArrowRightIcon from "@mui/icons-material/ArrowRight";
 import { PolygonNetwork } from "./PolygonNetwork";
-import { BaseContract, ethers } from "ethers";
+import { BaseContract, BigNumber, ethers } from "ethers";
 import MaticDialog from "./MaticDialog";
 import ErrorDialog from "./ErrorDialog";
 import { SmartContract } from "@thirdweb-dev/sdk";
@@ -88,7 +88,7 @@ function PolygonBridgeConfirm(props: BridgeConfirmProps) {
   const [isSmallScreen, setSmallScreen] = useState(false);
   const [collectionCount, setCollectionCount] = useState(0);
 
-  const { maticBalance, needsFunds, setNeedsFunds, bridgeTeds, bridgeTeddies, bridgeAITeds, CanIBridgeTeds, CanIBridgeTeddies, CanIBridgeAITeds, hasBridgedTeds, hasBridgedTeddies, hasBridgedAITeds } = LoadPolygonAccountDetails();
+  const { maticBalance, needsFunds, setNeedsFunds, bridgeTeds, testbridgeTeds, bridgeTeddies, bridgeAITeds, CanIBridgeTeds, CanIBridgeTeddies, CanIBridgeAITeds, hasBridgedTeds, hasBridgedTeddies, hasBridgedAITeds } = LoadPolygonAccountDetails();
 
   console.log(CanIBridgeTeds);
   console.log(CanIBridgeTeddies);
@@ -174,19 +174,19 @@ function PolygonBridgeConfirm(props: BridgeConfirmProps) {
     //   setCollectionForError("Fury Teds");
     // }
   
-    // if (collection === "Teddies by FOTF" && !CanIBridgeTeddies) {
-    //     console.log("Not approved for Bridging Teddies by FOTF");
-    //     setShowError(true);        
-    //     setErrorCode(5);
-    //     setCollectionForError("Teddies by FOTF");
-    // }
+    if (collection === "Teddies by FOTF" && !CanIBridgeTeddies) {
+        console.log("Not approved for Bridging Teddies by FOTF");
+        setShowError(true);        
+        setErrorCode(5);
+        setCollectionForError("Teddies by FOTF");
+    }
   
-    // if (collection === "AI Teds" && !CanIBridgeAITeds) {
-    //   console.log("Not approved for Bridging AI Teds");
-    //   setShowError(true);        
-    //   setErrorCode(5);
-    //   setCollectionForError("AI Teds");
-    // }
+    if (collection === "AI Teds" && !CanIBridgeAITeds) {
+      console.log("Not approved for Bridging AI Teds");
+      setShowError(true);        
+      setErrorCode(5);
+      setCollectionForError("AI Teds");
+    }
   }, [CanIBridgeAITeds, CanIBridgeTeddies, CanIBridgeTeds, collection]);  
 
   
@@ -231,7 +231,7 @@ function PolygonBridgeConfirm(props: BridgeConfirmProps) {
 
     const pairedBridgeIDs: IDictionary[] = [];
      
-    var returnedBridgeIDs = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+    var returnedBridgeIDs: string[] = [];
     var bridgeCount = 0;
 
     switch (collection) {
@@ -239,7 +239,19 @@ function PolygonBridgeConfirm(props: BridgeConfirmProps) {
         setCollectionCount(tedNFTs?.length!);
         // BRIDGE FIRST
         const bridgeResponseTeds = await bridgeTeds!();
+        //const bridgeResponseTeds = await testbridgeTeds!();
         console.log(bridgeResponseTeds);
+        const events = bridgeResponseTeds["receipt"]["events"];
+        const TokensMinted: BigNumber[] = events[events.length -2]["args"]["tokenIds"];
+        console.log(TokensMinted);
+
+        TokensMinted.forEach((id) => {
+          console.log(id.toString());
+          returnedBridgeIDs.push(id.toString());
+        });
+
+        console.log(returnedBridgeIDs);
+
         if(bridgeResponseTeds === null){
           setErrorCode(500);
           setShowError(true);
@@ -300,7 +312,9 @@ function PolygonBridgeConfirm(props: BridgeConfirmProps) {
       default:
         console.log("No collection selected");
         break;
-      }
+    }
+    setIsLoading(false);
+
   }
 
   //////////////////////////////////////////////
