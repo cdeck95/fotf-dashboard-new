@@ -238,9 +238,19 @@ import {
             );
             console.log(bridgeResults);
             return bridgeResults;
-          } catch (e) {
+          } catch (e:any) {
             console.log(e);
-            return null;
+            console.log(e.message);
+            if (e.message.includes("Reason: user rejected transaction")){
+              return "User denied transaction signature.";
+            } else if (e.message.includes("Reason: Address has already bridged tokens")){
+              return "You have already bridged Teds";
+            } else if (e.message.includes("Reason: Address is not whitelisted")){
+              return "You are not whitelisted to bridge Teds";
+            } else {
+              alert("Something went wrong, please try again");
+              return null;
+            } 
           }
     }
 
@@ -251,9 +261,20 @@ import {
           );
           console.log(bridgeResults);
           return bridgeResults;
-        } catch (e) {
+        } catch (e: any) {
           console.log(e);
-          return null;
+          console.log(e.message);
+          if (e.message.includes("Reason: user rejected transaction")){
+            return "User denied transaction signature.";
+          } else if (e.message.includes("Reason: Address has already bridged tokens")){
+            return "You have already bridged Teds";
+          } else if (e.message.includes("Reason: Address is not whitelisted")){
+            return "You are not whitelisted to bridge Teds";
+          } else {
+            alert("Something went wrong, please try again");
+            return e.message;
+          } 
+          
         }
   }
 
@@ -264,9 +285,19 @@ import {
         );
         console.log(bridgeResults);
         return bridgeResults;
-      } catch (e) {
+      } catch (e: any) {
         console.log(e);
-        return null;
+        console.log(e.message);
+        if (e.message.includes("Reason: user rejected transaction")){
+          return "User denied transaction signature.";
+        } else if (e.message.includes("Reason: Address has already bridged tokens")){
+          return "You have already bridged Teddies";
+        } else if (e.message.includes("Reason: Address is not whitelisted")){
+          return "You are not whitelisted to bridge Teddies";
+        } else {
+          alert("Something went wrong, please try again");
+          return null;
+        } 
       }
 }
 
@@ -277,9 +308,19 @@ async function testbridgeAITeds (){
       );
       console.log(bridgeResults);
       return bridgeResults;
-    } catch (e) {
+    } catch (e: any) {
       console.log(e);
-      return null;
+      console.log(e.message);
+        if (e.message.includes("Reason: user rejected transaction")){
+          return "User denied transaction signature.";
+        } else if (e.message.includes("Reason: Address has already bridged tokens")){
+          return "You have already bridged AI Teds";
+        } else if (e.message.includes("Reason: Address is not whitelisted")){
+          return "You are not whitelisted to bridge AI Teds";
+        } else {
+          alert("Something went wrong, please try again");
+          return null;
+        } 
     }
 }
 
@@ -290,9 +331,19 @@ async function testbridgeAITeds (){
             );
             console.log(bridgeResults);
             return bridgeResults;
-          } catch (e) {
+          } catch (e: any) {
             console.log(e);
-            return null;
+            console.log(e.message);
+            if (e.message.includes("Reason: user rejected transaction")){
+              return "User denied transaction signature.";
+            } else if (e.message.includes("Reason: Address has already bridged tokens")){
+              return "You have already bridged Teddies";
+            } else if (e.message.includes("Reason: Address is not whitelisted")){
+              return "You are not whitelisted to bridge Teddies";
+            } else {
+              alert("Something went wrong, please try again");
+              return null;
+            } 
           }
     }
 
@@ -303,9 +354,19 @@ async function testbridgeAITeds (){
             );
             console.log(bridgeResults);
             return bridgeResults;
-          } catch (e) {
+          } catch (e: any) {
             console.log(e);
-            return null;
+            console.log(e.message);
+            if (e.message.includes("Reason: user rejected transaction")){
+              return "User denied transaction signature.";
+            } else if (e.message.includes("Reason: Address has already bridged tokens")){
+              return "You have already bridged AI Teds";
+            } else if (e.message.includes("Reason: Address is not whitelisted")){
+              return "You are not whitelisted to bridge AI Teds";
+            } else {
+              alert("Something went wrong, please try again");
+              return null;
+            } 
           }
     }
     allOwnedNFTs.testbridgeTeds = testbridgeTeds;
