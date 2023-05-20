@@ -312,9 +312,22 @@ function PermanentDrawerRight(props: NavProps) {
     }
   };
 
+  useEffect(() => {
+    if (!isMobile && isMediumLarge) {
+      setSmallScreen(true);
+    } else {
+      setSmallScreen(isMobile);
+    }
+  }, [isMobile, isMediumLarge]);
+
+  const [isSmallScreen, setSmallScreen] = useState(false);
+
+
+  const zIndex = (navOpen && isSmallScreen) ? "3 !important" : "0 !important";
+
   return (
     <Box
-      sx={{ display: "flex", justifyContent: "space-between", zIndex: "100" }}
+      sx={{ display: "flex", justifyContent: "space-between", zIndex: zIndex }}
     >
       <CssBaseline />
       <Box

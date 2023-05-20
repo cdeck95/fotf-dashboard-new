@@ -37,6 +37,8 @@ import { SmartContract } from "@thirdweb-dev/sdk";
 import LoadingDialog from "./LoadingDialog";
 import BridgeSuccessDialog from "./BridgeSuccessDialog";
 import { LoadPolygonAccountDetails } from "../account/loadPolygonAccountDetails";
+import  teddyPlaceholder from "../assets/teddyLogoForPlaceholders.png";
+
 
 interface BridgeConfirmProps {
   setCollection: Function;
@@ -85,14 +87,14 @@ function PolygonBridgeConfirm(props: BridgeConfirmProps) {
   const isMismatched = useNetworkMismatch(); // Detect if user is connected to the wrong network
   const [showMismatch, setShowMismatch] = useState(false);
 
-  var teddyCount = 0;
-  if (stakedTeddiesIDs && teddyNFTs) {
-    teddyCount = teddyNFTs?.length + stakedTeddiesIDs?.length;
-  } else if (teddyNFTs) {
-    teddyCount = teddyNFTs?.length;
-  } else if (stakedTeddiesIDs) {
-    teddyCount = stakedTeddiesIDs?.length;
-  }
+  // var teddyCount = 0;
+  // if (stakedTeddiesIDs && teddyNFTs) {
+  //   teddyCount = teddyNFTs?.length + stakedTeddiesIDs?.length;
+  // } else if (teddyNFTs) {
+  //   teddyCount = teddyNFTs?.length;
+  // } else if (stakedTeddiesIDs) {
+  //   teddyCount = stakedTeddiesIDs?.length;
+  // }
 
   const theme = useTheme();
   const isMobile = !useMediaQuery(theme.breakpoints.up("md"));
@@ -116,11 +118,17 @@ function PolygonBridgeConfirm(props: BridgeConfirmProps) {
     hasBridgedTeds,
     hasBridgedTeddies,
     hasBridgedAITeds,
+    CanIBridgeTeddiesFlag,
+    CanIBridgeTeddiesAmount,
   } = LoadPolygonAccountDetails();
 
   // console.log(CanIBridgeTeds!());
   // console.log(CanIBridgeTeddies!());
   // console.log(CanIBridgeAITeds!());
+
+  console.log(CanIBridgeTeddies!());
+  console.log(CanIBridgeTeddiesFlag);
+  console.log(CanIBridgeTeddiesAmount.toString());
 
   const leftDrawerWidth = isSmallScreen ? "0px" : "240px";
   const rightDrawerWidth = isSmallScreen ? "0px" : "340px";
@@ -170,13 +178,13 @@ function PolygonBridgeConfirm(props: BridgeConfirmProps) {
         return;
       }
     } else if (collection === "Teddies by FOTF") {
-      if (teddyCount === 0) {
+      if (parseInt(CanIBridgeTeddiesAmount.toString()) === 0) {
         console.log("No Tedies");
         setShowError(true);
         setErrorCode(2);
         return;
       }
-      setCollectionCount(teddyCount);
+      setCollectionCount(parseInt(CanIBridgeTeddiesAmount.toString())!);
     } else if (collection === "AI Teds") {
       if (aiTedNFTs?.length === 0) {
         console.log("No AI Teds");
@@ -186,7 +194,7 @@ function PolygonBridgeConfirm(props: BridgeConfirmProps) {
       }
       setCollectionCount(aiTedNFTs?.length!);
     }
-  }, [aiTedNFTs?.length, collection, tedNFTs?.length, teddyCount]);
+  }, [CanIBridgeTeddiesAmount, aiTedNFTs?.length, collection, tedNFTs?.length]);
 
   useEffect(() => {
     // Check if the user is connected to the wrong network
@@ -340,7 +348,7 @@ function PolygonBridgeConfirm(props: BridgeConfirmProps) {
         break;
       case "Teddies by FOTF":
         try {
-          setCollectionCount(teddyCount);
+          setCollectionCount(parseInt(CanIBridgeTeddiesAmount.toString()));
           // BRIDGE FIRST
           //const bridgeResponseTeddies = await testbridgeTeddies!();
           const bridgeResponseTeddies = await bridgeTeddies!();
@@ -567,23 +575,28 @@ function PolygonBridgeConfirm(props: BridgeConfirmProps) {
         {collection === "Teddies by FOTF" && teddyNFTs && (
           <Box className={isSmallScreen ? "column" : "row-even"}>
             {teddyNFTs.length > 0 ? (
-              <ThirdwebNftMedia
-                metadata={teddyNFTs![0].metadata}
-                style={{
-                  maxHeight: "280px",
-                  maxWidth: "280px",
-                  borderRadius: "10px",
-                  objectFit: "cover",
-                  width: "280px",
-                  height: "280px",
-                }}
-              />
+              <img
+              src={teddyPlaceholder}
+              className={"teddyStakedPlaceholder"}
+              alt="Placeholder Logo - All Teddies are Bridged"
+            />
+              // <ThirdwebNftMedia
+              //   metadata={teddyNFTs![0].metadata}
+              //   style={{
+              //     maxHeight: "280px",
+              //     maxWidth: "280px",
+              //     borderRadius: "10px",
+              //     objectFit: "cover",
+              //     width: "280px",
+              //     height: "280px",
+              //   }}
+              // />
             ) : (
               <Skeleton variant="rectangular" width={280} height={280} />
             )}
 
             <Typography className="desc-text-largest">
-              <span className="desc-text-largest-accent">{teddyCount}</span>{" "}
+              <span className="desc-text-largest-accent">{CanIBridgeTeddiesAmount.toString()}</span>{" "}
               Teddies
             </Typography>
           </Box>
@@ -648,6 +661,7 @@ function PolygonBridgeConfirm(props: BridgeConfirmProps) {
             collection === "" ||
             (collection === "Fury Teds" && hasBridgedTeds) ||
             (collection === "Teddies by FOTF" && hasBridgedTeddies) ||
+            (collection === "Teddies by FOTF" && !teddyNFTs) ||
             (collection === "AI Teds" && hasBridgedAITeds)
           }
           onClick={() => handleBridge()}

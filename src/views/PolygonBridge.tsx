@@ -122,7 +122,7 @@ function PolygonBridge(props: TokenProps) {
               }}
             >
               {tokens ? (
-                <Box sx={{ width: "100%", height: "100%", display: "flex", zIndex: "1001" }}>
+                <Box sx={{ width: "100%", height: "100%", display: "flex", zIndex: "2" }}>
                    <ThirdwebProvider activeChain={Polygon}
                     // <ThirdwebProvider activeChain={Mumbai}
                       supportedChains={[Ethereum, Polygon]}>
