@@ -661,6 +661,7 @@ function PolygonBridgeConfirm(props: BridgeConfirmProps) {
             collection === "" ||
             (collection === "Fury Teds" && hasBridgedTeds) ||
             (collection === "Teddies by FOTF" && hasBridgedTeddies) ||
+            (collection === "Teddies by FOTF" && !teddyNFTs) ||
             (collection === "AI Teds" && hasBridgedAITeds)
           }
           onClick={() => handleBridge()}
