@@ -90,8 +90,8 @@ function MaticDialog(props: DialogProps) {
           <IconButton
             color="inherit"
             onClick={() => handleClose()}
-            size="large"
-          >
+            size="large" 
+            >
             <CloseIcon />
           </IconButton>
 

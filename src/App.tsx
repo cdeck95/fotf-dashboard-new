@@ -194,7 +194,8 @@ function App() {
  
     switch (window.location.pathname) {
       case "/":
-        setPageTitle("Dashboard");
+        setPageTitle("Polygon Bridge");
+        setIsBridgePage(true);
         break;
       case "/TheFactory":
         setPageTitle("The Factory");
