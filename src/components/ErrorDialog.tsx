@@ -44,6 +44,13 @@ function ErrorDialog(props: FailureDialogProps) {
           return "The Factory is currently disabled. Please check back later.";
       case 5:
         return `Your wallet is not currently approved for bridging ${collection}. Please make sure you have delisted all ${collection} from any marketplaces and open a ticket within the FOTF Discord.`;
+      case 6:
+        return `The transaction was rejected by the user.`;
+      case 7:
+        return `You have already bridged ${collection}. Please open a ticket within the FOTF Discord if you feel this is a mistake.`;
+      //case 8 spits the MM rejection straight into the dialog
+      case 8:
+        return `${collection}`;
       default:
         return "Something went wrong. We are not sure exactly what. Please refresh the page. If this continues to happen, please open a ticket within the FOTF Discord.";
     }

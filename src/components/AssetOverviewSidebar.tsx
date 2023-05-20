@@ -75,7 +75,7 @@ function AssetOverviewSidebar(props: TokenProps) {
           <Typography className="aseet-type">Teds</Typography>
         </Box>
         <Box className="col-no-space">
-          {isLoadingTeddy || isLoadingStaked 
+          {isLoadingTeddy && isLoadingStaked 
             ? <CircularProgress size="1rem" sx={{margin: "auto"}}/>
             : <Typography className="asset-numbers">{teddyCount}</Typography>
           }

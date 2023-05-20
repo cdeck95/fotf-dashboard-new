@@ -7,7 +7,12 @@ import {
   useMediaQuery,
   useTheme,
 } from "@mui/material";
-import { ThirdwebNftMedia, UseContractResult, useNetwork, useNetworkMismatch } from "@thirdweb-dev/react";
+import {
+  ThirdwebNftMedia,
+  UseContractResult,
+  useNetwork,
+  useNetworkMismatch,
+} from "@thirdweb-dev/react";
 import { useTitle } from "../hooks/useTitle";
 import { useAddress } from "@thirdweb-dev/react";
 import Backdrop from "@mui/material/Backdrop";
@@ -43,22 +48,29 @@ interface BridgeConfirmProps {
 }
 
 function timeout(delay: number) {
-  return new Promise( res => setTimeout(res, delay) );
+  return new Promise((res) => setTimeout(res, delay));
 }
 
 function PolygonBridgeConfirm(props: BridgeConfirmProps) {
   useTitle("FOTF | Confirm Bridge");
   // const [isSheetOpen, setSheetOpen] = useState(false);
   // const { tokens, isLoading, error, honeyBalance } = LoadAllAccountDetails();
-  const { setCollection, setAdvance, collection, tokens, leftNavOpen, rightNavOpen } = props;
+  const {
+    setCollection,
+    setAdvance,
+    collection,
+    tokens,
+    leftNavOpen,
+    rightNavOpen,
+  } = props;
   // console.log(tokens);
   // console.log(isLoading);
   // console.log(error);
   // console.log(honeyBalance);
 
   const [isLoading, setIsLoading] = useState(false);
-  const [success, setSuccess] =  useState(false);
-  const [failure, setFailure] =  useState(false);
+  const [success, setSuccess] = useState(false);
+  const [failure, setFailure] = useState(false);
 
   const AllTokens = tokens.AllTokens.tokens;
   const tedNFTs = tokens.Teds?.tokens;
@@ -88,12 +100,27 @@ function PolygonBridgeConfirm(props: BridgeConfirmProps) {
   const [isSmallScreen, setSmallScreen] = useState(false);
   const [collectionCount, setCollectionCount] = useState(0);
 
-  const { maticBalance, needsFunds, setNeedsFunds, bridgeTeds, bridgeTeddies, bridgeAITeds, testbridgeTeds, testbridgeTeddies, testbridgeAITeds, CanIBridgeTeds, CanIBridgeTeddies, CanIBridgeAITeds, hasBridgedTeds, hasBridgedTeddies, hasBridgedAITeds } = LoadPolygonAccountDetails();
+  const {
+    maticBalance,
+    needsFunds,
+    setNeedsFunds,
+    bridgeTeds,
+    bridgeTeddies,
+    bridgeAITeds,
+    testbridgeTeds,
+    testbridgeTeddies,
+    testbridgeAITeds,
+    CanIBridgeTeds,
+    CanIBridgeTeddies,
+    CanIBridgeAITeds,
+    hasBridgedTeds,
+    hasBridgedTeddies,
+    hasBridgedAITeds,
+  } = LoadPolygonAccountDetails();
 
   // console.log(CanIBridgeTeds!());
   // console.log(CanIBridgeTeddies!());
   // console.log(CanIBridgeAITeds!());
-
 
   const leftDrawerWidth = isSmallScreen ? "0px" : "240px";
   const rightDrawerWidth = isSmallScreen ? "0px" : "340px";
@@ -113,12 +140,22 @@ function PolygonBridgeConfirm(props: BridgeConfirmProps) {
     } else {
       setSmallScreen(false);
     }
-    if (isMismatched && (!isSmallScreen || (isSmallScreen && !rightNavOpen && !leftNavOpen))){
+    if (
+      isMismatched &&
+      (!isSmallScreen || (isSmallScreen && !rightNavOpen && !leftNavOpen))
+    ) {
       setShowMismatch(true);
     } else {
       setShowMismatch(false);
     }
-  }, [isMediumLarge, isMismatched, isMobile, isSmallScreen, leftNavOpen, rightNavOpen]);
+  }, [
+    isMediumLarge,
+    isMismatched,
+    isMobile,
+    isSmallScreen,
+    leftNavOpen,
+    rightNavOpen,
+  ]);
 
   const [showError, setShowError] = useState(false);
   const [errorCode, setErrorCode] = useState(0);
@@ -132,7 +169,7 @@ function PolygonBridgeConfirm(props: BridgeConfirmProps) {
         setErrorCode(2);
         return;
       }
-    } else if (collection === "Teddies by FOTF") { 
+    } else if (collection === "Teddies by FOTF") {
       if (teddyCount === 0) {
         console.log("No Tedies");
         setShowError(true);
@@ -151,12 +188,12 @@ function PolygonBridgeConfirm(props: BridgeConfirmProps) {
     }
   }, [aiTedNFTs?.length, collection, tedNFTs?.length, teddyCount]);
 
-   useEffect(() => {
-      // Check if the user is connected to the wrong network
-      if (isMismatched) {
-        console.log("Mismatched network detected. Switching to Polygon...");
-      }
-    }, [address, isMismatched]); // This above block gets run every time "address" changes (e.g. when the user connects)
+  useEffect(() => {
+    // Check if the user is connected to the wrong network
+    if (isMismatched) {
+      console.log("Mismatched network detected. Switching to Polygon...");
+    }
+  }, [address, isMismatched]); // This above block gets run every time "address" changes (e.g. when the user connects)
 
   //////////// OnSelect Functions ///////////////////////////
 
@@ -169,60 +206,60 @@ function PolygonBridgeConfirm(props: BridgeConfirmProps) {
   useEffect(() => {
     // if (collection === "Fury Teds" && !CanIBridgeTeds) {
     //   console.log("Not approved for Bridging Fury Teds");
-    //   setShowError(true);        
+    //   setShowError(true);
     //   setErrorCode(5);
     //   setCollectionForError("Fury Teds");
     // }
-  
     // if (collection === "Teddies by FOTF" && !CanIBridgeTeddies) {
     //     console.log("Not approved for Bridging Teddies by FOTF");
-    //     setShowError(true);        
+    //     setShowError(true);
     //     setErrorCode(5);
     //     setCollectionForError("Teddies by FOTF");
     // }
-  
     // if (collection === "AI Teds" && !CanIBridgeAITeds) {
     //   console.log("Not approved for Bridging AI Teds");
-    //   setShowError(true);        
+    //   setShowError(true);
     //   setErrorCode(5);
     //   setCollectionForError("AI Teds");
-   // }
-  }, [CanIBridgeAITeds, CanIBridgeTeddies, CanIBridgeTeds, collection]);  
+    // }
+  }, [CanIBridgeAITeds, CanIBridgeTeddies, CanIBridgeTeds, collection]);
 
-  
   function handleErrorClose(): void {
     setAdvance(false);
   }
 
   const handleLoadingClosed = () => {
     setIsLoading(false);
-  }
+  };
 
-  async function handleBridgeCleanup (urlParam: string, pairedBridgeIDs?: IDictionary[]) {
+  async function handleBridgeCleanup(
+    urlParam: string,
+    pairedBridgeIDs?: IDictionary[]
+  ) {
     console.log(pairedBridgeIDs);
     const json = JSON.stringify(pairedBridgeIDs, null, 2);
     console.log(json);
     try {
-        const response = await fetch(`https://h7ke8qc4ng.execute-api.us-east-1.amazonaws.com/Prod/${urlParam}`, {
-            method: 'POST',
-            body: json
-        })
-        const responseStatus = await response.status;
-        console.log(response.status);
-        if (responseStatus !== 200) {
-          setErrorCode(responseStatus);
-          setShowError(true);
-          setIsLoading(false);
-          return;
-        } else {
-          setSuccess(true);
-          setIsLoading(false);
-        }
-    } catch (error){
-        console.log(error);
-        setIsLoading(false);
-        setErrorCode(500);
+      const response = await fetch(`https://h7ke8qc4ng.execute-api.us-east-1.amazonaws.com/Prod/${urlParam}`, {
+          method: 'POST',
+          body: json
+      })
+      const responseStatus = await response.status;
+      console.log(response.status);
+      if (responseStatus !== 200) {
+        setErrorCode(responseStatus);
         setShowError(true);
+        setIsLoading(false);
+        return;
+      } else {
+        setSuccess(true);
+        setIsLoading(false);
+      }
+    } catch (error) {
+      console.log(error);
+      setIsLoading(false);
+      setErrorCode(500);
+      setShowError(true);
     }
   }
 
@@ -230,7 +267,7 @@ function PolygonBridgeConfirm(props: BridgeConfirmProps) {
     setIsLoading(true);
 
     const pairedBridgeIDs: IDictionary[] = [];
-     
+
     var returnedBridgeIDs: string[] = [];
     var bridgeCount = 0;
 
@@ -238,111 +275,230 @@ function PolygonBridgeConfirm(props: BridgeConfirmProps) {
       case "Fury Teds":
         setCollectionCount(tedNFTs?.length!);
         // BRIDGE FIRST
-        const bridgeResponseTeds = await bridgeTeds!();
-        //const bridgeResponseTeds = await testbridgeTeds!();
-        console.log(bridgeResponseTeds);
-        const events = bridgeResponseTeds["receipt"]["events"];
-        const TokensMinted: BigNumber[] = events[events.length -2]["args"]["tokenIds"];
-        console.log(TokensMinted);
+        
+        try {
+          //const bridgeResponseTeds = await testbridgeTeds!();
+          const bridgeResponseTeds = await bridgeTeds!();
+          console.log(bridgeResponseTeds);
+          if (bridgeResponseTeds === null) {
+            setErrorCode(500);
+            setShowError(true);
+            setIsLoading(false);
+            return;
+          } else if (
+            bridgeResponseTeds === "You are not whitelisted to bridge Teds"
+          ) {
+            setErrorCode(5);
+            setShowError(true);
+            setCollectionForError("Fury Teds");
+            setIsLoading(false);
+            return;
+          } else if (
+            bridgeResponseTeds === "User denied transaction signature."
+          ) {
+            setIsLoading(false);
+            setErrorCode(6);
+            setShowError(true);
+            return;
+          } else if (bridgeResponseTeds === "You have already bridged Teds") {
+            setIsLoading(false);
+            setErrorCode(7);
+            setShowError(true);
+            setCollectionForError("Fury Teds");
+            return;
+          } else {
+            setCollectionForError(bridgeResponseTeds);
+          }
+          const events = bridgeResponseTeds["receipt"]["events"];
+          const TokensMinted: BigNumber[] =
+            events[events.length - 2]["args"]["tokenIds"];
+          console.log(TokensMinted);
 
-        TokensMinted.forEach((id) => {
-          console.log(id.toString());
-          returnedBridgeIDs.push(id.toString());
-        });
+          TokensMinted.forEach((id) => {
+            console.log(id.toString());
+            returnedBridgeIDs.push(id.toString());
+          });
 
-        console.log(returnedBridgeIDs);
+          console.log(returnedBridgeIDs);
 
-        if(bridgeResponseTeds === null){
-          setErrorCode(500);
-          setShowError(true);
+          //get tokenIDs being minted on Polygon
+          tedNFTs?.forEach((token) => {
+            console.log(token.metadata.id);
+            pairedBridgeIDs.push({
+              oldTokenID: token.metadata.id,
+              newPolygonID: returnedBridgeIDs[bridgeCount].toString(),
+            });
+            bridgeCount++;
+          });
+          handleBridgeCleanup("bridgeTeds", pairedBridgeIDs);
+        } catch (error) {
+          console.log(error);
           setIsLoading(false);
-          return;
+          setErrorCode(8);
+          setShowError(true);
         }
-        //get tokenIDs being minted on Polygon
-        tedNFTs?.forEach((token) => {
-          console.log(token.metadata.id);
-          pairedBridgeIDs.push({oldTokenID: token.metadata.id, newPolygonID: returnedBridgeIDs[bridgeCount].toString()});
-          bridgeCount++;
-        });
-        handleBridgeCleanup("bridgeTeds", pairedBridgeIDs);
         break;
       case "Teddies by FOTF":
-        setCollectionCount(teddyCount);
-        // BRIDGE FIRST
-        //const bridgeResponseTeddies = await testbridgeTeddies!();
-        const bridgeResponseTeddies = await bridgeTeddies!();
-        const eventsTeddies = bridgeResponseTeddies["receipt"]["events"];
-        const TokensMintedTeddies: BigNumber[] = eventsTeddies[eventsTeddies.length -2]["args"]["tokenIds"];
-        console.log(TokensMintedTeddies);
+        try {
+          setCollectionCount(teddyCount);
+          // BRIDGE FIRST
+          //const bridgeResponseTeddies = await testbridgeTeddies!();
+          const bridgeResponseTeddies = await bridgeTeddies!();
 
-        TokensMintedTeddies.forEach((id) => {
-          console.log(id.toString());
-          returnedBridgeIDs.push(id.toString());
-        });
+          if (bridgeResponseTeddies === null) {
+            setErrorCode(500);
+            setShowError(true);
+            setIsLoading(false);
+            return;
+          } else if (bridgeResponseTeddies === "You are not whitelisted to bridge Teddies") {
+            setErrorCode(5);
+            setShowError(true);
+            setCollectionForError("Teddies by FOTF");
+            setIsLoading(false);
+            return;
+          } else if (bridgeResponseTeddies === "User denied transaction signature.") {
+            setIsLoading(false);
+            setErrorCode(6);
+            setShowError(true);
+            return;
+          } else if (bridgeResponseTeddies === "You have already bridged Teddies") {
+            setIsLoading(false);
+            setErrorCode(7);
+            setShowError(true);
+            setCollectionForError("Teddies by FOTF");
+            return;
+          } else {
+            setCollectionForError(bridgeResponseTeddies);
+          }
 
-        console.log(returnedBridgeIDs);
-        if(bridgeResponseTeddies === null){
-          setErrorCode(500);
-          setShowError(true);
+          const eventsTeddies = bridgeResponseTeddies["receipt"]["events"];
+          const TokensMintedTeddies: BigNumber[] =
+            eventsTeddies[eventsTeddies.length - 2]["args"]["tokenIds"];
+          console.log(TokensMintedTeddies);
+
+          TokensMintedTeddies.forEach((id) => {
+            console.log(id.toString());
+            returnedBridgeIDs.push(id.toString());
+          });
+
+          console.log(returnedBridgeIDs);
+          // if(teddyN)
+          teddyNFTs?.forEach((token) => {
+            console.log(token.metadata.id);
+            pairedBridgeIDs.push({
+              oldTokenID: token.metadata.id,
+              newPolygonID: returnedBridgeIDs[bridgeCount].toString(),
+            });
+            bridgeCount++;
+          });
+
+          stakedTeddiesIDs?.forEach((id) => {
+            console.log(id);
+            pairedBridgeIDs.push({
+              oldTokenID: id,
+              newPolygonID: returnedBridgeIDs[bridgeCount].toString(),
+            });
+            bridgeCount++;
+          });
+
+          handleBridgeCleanup("bridgeTeddies", pairedBridgeIDs);
+        } catch (error) {
+          console.log(error);
           setIsLoading(false);
-          return;
+          setErrorCode(8);
+          setShowError(true);
         }
-        // if(teddyN)
-        teddyNFTs?.forEach((token) => {
-          console.log(token.metadata.id);
-          pairedBridgeIDs.push({oldTokenID: token.metadata.id, newPolygonID: returnedBridgeIDs[bridgeCount].toString()});
-          bridgeCount++;
-        });
-
-        stakedTeddiesIDs?.forEach((id) => {
-          console.log(id);
-          pairedBridgeIDs.push({oldTokenID: id, newPolygonID: returnedBridgeIDs[bridgeCount].toString()});
-          bridgeCount++;
-        });
-
-        handleBridgeCleanup("bridgeTeddies", pairedBridgeIDs);
         break;
       case "AI Teds":
-        setCollectionCount(aiTedNFTs?.length!);
-        // BRIDGE FIRST
-        //const bridgeResponseAITeds = await testbridgeAITeds!();
-        const bridgeResponseAITeds = await bridgeAITeds!();
-        const eventsAITeds = bridgeResponseAITeds["receipt"]["events"];
-        const TokensMintedAITeds: BigNumber[] = eventsAITeds[eventsAITeds.length -2]["args"]["tokenIds"];
-        console.log(TokensMintedAITeds);
+        try {
+          setCollectionCount(aiTedNFTs?.length!);
+          // BRIDGE FIRST
+          //const bridgeResponseAITeds = await testbridgeAITeds!();
+          const bridgeResponseAITeds = await bridgeAITeds!();
 
-        TokensMintedAITeds.forEach((id) => {
-          console.log(id.toString());
-          returnedBridgeIDs.push(id.toString());
-        });
+          if (bridgeResponseAITeds === null) {
+            setErrorCode(500);
+            setShowError(true);
+            setIsLoading(false);
+            return;
+          } else if (
+            bridgeResponseAITeds === "You are not whitelisted to bridge AI Teds"
+          ) {
+            setErrorCode(5);
+            setShowError(true);
+            setCollectionForError("AI Teds");
+            setIsLoading(false);
+            return;
+          } else if (
+            bridgeResponseAITeds === "User denied transaction signature."
+          ) {
+            setIsLoading(false);
+            setErrorCode(6);
+            setShowError(true);
+            return;
+          } else if (
+            bridgeResponseAITeds === "You have already bridged AI Teds"
+          ) {
+            setIsLoading(false);
+            setErrorCode(7);
+            setShowError(true);
+            setCollectionForError("AI Teds");
+            return;
+          } else {
+            setIsLoading(false);
+            setErrorCode(8);
+            setShowError(true);
+            setCollectionForError(bridgeResponseAITeds);
+          }
 
-        console.log(returnedBridgeIDs);
-        if(bridgeResponseAITeds === null){
-          setErrorCode(500);
-          setShowError(true);
+          const eventsAITeds = bridgeResponseAITeds["receipt"]["events"];
+          const TokensMintedAITeds: BigNumber[] =
+            eventsAITeds[eventsAITeds.length - 2]["args"]["tokenIds"];
+          console.log(TokensMintedAITeds);
+
+          TokensMintedAITeds.forEach((id) => {
+            console.log(id.toString());
+            returnedBridgeIDs.push(id.toString());
+          });
+
+          console.log(returnedBridgeIDs);
+          aiTedNFTs?.forEach((token) => {
+            console.log(token.metadata.id);
+            pairedBridgeIDs.push({
+              oldTokenID: token.metadata.id,
+              newPolygonID: returnedBridgeIDs[bridgeCount].toString(),
+            });
+            bridgeCount++;
+          });
+          handleBridgeCleanup("bridgeAITeds", pairedBridgeIDs);
+        } catch (error) {
+          console.log(error);
           setIsLoading(false);
-          return;
+          setErrorCode(8);
+          setShowError(true);
         }
-        aiTedNFTs?.forEach((token) => {
-          console.log(token.metadata.id);
-          pairedBridgeIDs.push({oldTokenID: token.metadata.id, newPolygonID: returnedBridgeIDs[bridgeCount].toString()});
-          bridgeCount++;
-        });
-        handleBridgeCleanup("bridgeAITeds", pairedBridgeIDs);
         break;
       default:
         console.log("No collection selected");
         break;
     }
     setIsLoading(false);
-
-  }
+  };
 
   //////////////////////////////////////////////
 
   return (
-    <Box className={isSmallScreen? "polygon-bridge-container-mobile" : "polygon-bridge-container"}>
-      <MaticDialog open={needsFunds && !showMismatch} handleClose={handleMaticClose} />
+    <Box
+      className={
+        isSmallScreen
+          ? "polygon-bridge-container-mobile"
+          : "polygon-bridge-container"
+      }
+    >
+      <MaticDialog
+        open={needsFunds && !showMismatch}
+        handleClose={handleMaticClose}
+      />
       <Box className="row-center">
         <h1 className="Large-Header">Confirm Bridge</h1>
       </Box>
@@ -351,19 +507,31 @@ function PolygonBridgeConfirm(props: BridgeConfirmProps) {
         sx={{ paddingTop: "10px", paddingBottom: "10px" }}
       >
         <Backdrop
-            sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1, opacity: "0.9" }}
-            open={showMismatch}>
-            <Backdrop
-            sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1, opacity: "0.9" }}
-            open={showMismatch}>
-                    {showMismatch && (<PolygonNetwork/>)}
-            </Backdrop>
+          sx={{
+            color: "#fff",
+            zIndex: (theme) => theme.zIndex.drawer + 1,
+            opacity: "0.9",
+          }}
+          open={showMismatch}
+        >
+          <Backdrop
+            sx={{
+              color: "#fff",
+              zIndex: (theme) => theme.zIndex.drawer + 1,
+              opacity: "0.9",
+            }}
+            open={showMismatch}
+          >
+            {showMismatch && <PolygonNetwork />}
+          </Backdrop>
         </Backdrop>
         <Typography className="desc-text">
-          Confirm the total amount of <span className="accent-text">{collection}</span> to be bridged to Polygon. Once a collection is bridged, 
-          your wallet can no longer bridge again (for this collection) and all assets will be moved to Polygon
-          and reverted on the main Ethereum network.
-          <span className="accent-text">This is final.</span> 
+          Confirm the total amount of{" "}
+          <span className="accent-text">{collection}</span> to be bridged to
+          Polygon. Once a collection is bridged, your wallet can no longer
+          bridge again (for this collection) and all assets will be moved to
+          Polygon and reverted on the main Ethereum network.
+          <span className="accent-text">This is final.</span>
         </Typography>
       </Box>
       <Box
@@ -374,11 +542,33 @@ function PolygonBridgeConfirm(props: BridgeConfirmProps) {
           paddingBottom: "10px",
         }}
       >
-        {collection==="Fury Teds" && aiTedNFTs && (
-          
-          <Box className={isSmallScreen? "column" : "row-even"} >
-             <ThirdwebNftMedia
-                metadata={tedNFTs![0].metadata}
+        {collection === "Fury Teds" && aiTedNFTs && (
+          <Box className={isSmallScreen ? "column" : "row-even"}>
+            <ThirdwebNftMedia
+              metadata={tedNFTs![0].metadata}
+              style={{
+                maxHeight: "280px",
+                maxWidth: "280px",
+                borderRadius: "10px",
+                objectFit: "cover",
+                width: "280px",
+                height: "280px",
+              }}
+            />
+            <Typography className="desc-text-largest">
+              <span className="desc-text-largest-accent">
+                {tedNFTs?.length}
+              </span>{" "}
+              Fury Teds
+            </Typography>
+          </Box>
+        )}
+
+        {collection === "Teddies by FOTF" && teddyNFTs && (
+          <Box className={isSmallScreen ? "column" : "row-even"}>
+            {teddyNFTs.length > 0 ? (
+              <ThirdwebNftMedia
+                metadata={teddyNFTs![0].metadata}
                 style={{
                   maxHeight: "280px",
                   maxWidth: "280px",
@@ -388,84 +578,57 @@ function PolygonBridgeConfirm(props: BridgeConfirmProps) {
                   height: "280px",
                 }}
               />
-            <Typography className="desc-text-largest">
-              <span className="desc-text-largest-accent">
-                {tedNFTs?.length}
-              </span>{" "}
-              Fury Teds
-            </Typography>
-          </Box>
-      )}
+            ) : (
+              <Skeleton variant="rectangular" width={280} height={280} />
+            )}
 
-{collection==="Teddies by FOTF" && teddyNFTs && (
-          
-          <Box className={isSmallScreen? "column" : "row-even"} >
-             {teddyNFTs.length > 0 
-              ? (
-                <ThirdwebNftMedia
-                  metadata={teddyNFTs![0].metadata}
-                  style={{
-                    maxHeight: "280px",
-                    maxWidth: "280px",
-                    borderRadius: "10px",
-                    objectFit: "cover",
-                    width: "280px",
-                    height: "280px",
-                  }}/>
-                )
-              : (
-                <Skeleton variant="rectangular" width={280} height={280} /> )
-              } 
-              
             <Typography className="desc-text-largest">
-              <span className="desc-text-largest-accent">
-                {teddyCount}
-              </span>{" "}
+              <span className="desc-text-largest-accent">{teddyCount}</span>{" "}
               Teddies
             </Typography>
           </Box>
-      )}
+        )}
 
-    {collection==="AI Teds" && aiTedNFTs && (
-          
-          <Box className={isSmallScreen? "column" : "row-even"} >
-               <ThirdwebNftMedia
-                  metadata={aiTedNFTs![0].metadata}
-                  style={{
-                    maxHeight: "280px",
-                    maxWidth: "280px",
-                    borderRadius: "10px",
-                    objectFit: "cover",
-                    width: "280px",
-                    height: "280px",
-                  }}
-                />
-              <Typography className="desc-text-largest">
-                <span className="desc-text-largest-accent">
-                  {aiTedNFTs?.length}
-                </span>{" "}
-                AI Teds
-              </Typography>
-            </Box>
+        {collection === "AI Teds" && aiTedNFTs && (
+          <Box className={isSmallScreen ? "column" : "row-even"}>
+            <ThirdwebNftMedia
+              metadata={aiTedNFTs![0].metadata}
+              style={{
+                maxHeight: "280px",
+                maxWidth: "280px",
+                borderRadius: "10px",
+                objectFit: "cover",
+                width: "280px",
+                height: "280px",
+              }}
+            />
+            <Typography className="desc-text-largest">
+              <span className="desc-text-largest-accent">
+                {aiTedNFTs?.length}
+              </span>{" "}
+              AI Teds
+            </Typography>
+          </Box>
         )}
       </Box>
-      <Box className={isSmallScreen? "column" : "row-center"} 
-          sx={{ paddingTop: "10px", paddingBottom: "10px" }}
+      <Box
+        className={isSmallScreen ? "column" : "row-center"}
+        sx={{ paddingTop: "10px", paddingBottom: "10px" }}
       >
         <Typography className="desc-text">
           <span className="accent-text">Note:</span> Please verify the total
-          number of assets before you choose to bridge. If you find any issues please open a
-          support ticket in the{" "}
+          number of assets before you choose to bridge. If you find any issues
+          please open a support ticket in the{" "}
           <a href="https://discord.gg/fotf">
             <span className="underline">FOTF Discord.</span>
           </a>
         </Typography>
       </Box>
-      <Box className={isSmallScreen? "column" : "row-center"}>
+      <Box className={isSmallScreen ? "column" : "row-center"}>
         <Button
-          className={isSmallScreen ? "back-btn-mobile" : "back-btn" }
-          sx={{marginRight: "10px !important", marginLeft: "10px !important"}}
-          variant="contained"          
+          className={isSmallScreen ? "back-btn-mobile" : "back-btn"}
+          sx={{ marginRight: "10px !important", marginLeft: "10px !important" }}
+          variant="contained"
           onClick={() => {
             setAdvance(false);
             setCollection("");
@@ -478,22 +641,40 @@ function PolygonBridgeConfirm(props: BridgeConfirmProps) {
           <span className="top-padding">Back To Collection Picker</span>
         </Button>
         <Button
-          className={isSmallScreen ? "bridge-btn-mobile" : "bridge-btn" }
+          className={isSmallScreen ? "bridge-btn-mobile" : "bridge-btn"}
           variant="contained"
-          sx={{marginRight: "10px !important", marginLeft: "10px !important"}}
-          disabled={(collection === "" || ((collection === "Fury Teds" && hasBridgedTeds) || (collection === "Teddies by FOTF" && hasBridgedTeddies) || (collection === "AI Teds" && hasBridgedAITeds)))}
+          sx={{ marginRight: "10px !important", marginLeft: "10px !important" }}
+          disabled={
+            collection === "" ||
+            (collection === "Fury Teds" && hasBridgedTeds) ||
+            (collection === "Teddies by FOTF" && hasBridgedTeddies) ||
+            (collection === "AI Teds" && hasBridgedAITeds)
+          }
           onClick={() => handleBridge()}
         >
-          <span className="top-padding">Bridge {collectionCount} to Polygon </span>{" "}
+          <span className="top-padding">
+            Bridge {collectionCount} to Polygon{" "}
+          </span>{" "}
           <ArrowRightIcon
             sx={{ alignItems: "center", justifyContent: "center" }}
           />
         </Button>
       </Box>
 
-      <BridgeSuccessDialog open={success} setOpen={setSuccess} setAdvance={setAdvance} collection={collection} collectionCount={collectionCount}/>
+      <BridgeSuccessDialog
+        open={success}
+        setOpen={setSuccess}
+        setAdvance={setAdvance}
+        collection={collection}
+        collectionCount={collectionCount}
+      />
 
-      <LoadingDialog open={isLoading} onClose={handleLoadingClosed} collection={collection} collectionCount={collectionCount}/>
+      <LoadingDialog
+        open={isLoading}
+        onClose={handleLoadingClosed}
+        collection={collection}
+        collectionCount={collectionCount}
+      />
 
       <ErrorDialog
         open={showError}
