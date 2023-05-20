@@ -35,6 +35,7 @@ import MaticDialog from "./MaticDialog";
 import { SmartContract } from "@thirdweb-dev/sdk";
 import fotfLogo from "../assets/fotf_logo_colorized.png";
 import { LoadPolygonAccountDetails } from "../account/loadPolygonAccountDetails";
+import  teddyPlaceholder from "../assets/teddyLogoForPlaceholders.png";
 
 interface BridgeProps {
   setCollection: Function;
@@ -251,7 +252,21 @@ function PolygonBridgeInitial(props: BridgeProps) {
       //   setErrorCode(2);
       //   setCollectionForError("Teddies by FOTF");
       //   return;
-      // } 
+      // }
+      if (collection === "Teddies by FOTF" && CanIBridgeTeddiesAmount === undefined) {
+        console.log("still loading Teddies");
+        setShowError(true);
+        setErrorCode(2);
+        setCollectionForError("Teddies by FOTF");
+        return;
+       } 
+      if (collection === "Teddies by FOTF" && CanIBridgeTeddiesAmount?.toString() === "0") {
+        console.log("No Teddies");
+        setShowError(true);
+        setErrorCode(3);
+        setCollectionForError("Teddies by FOTF");
+        return;
+       } 
       // if (collection === "Teddies by FOTF" && !hasTeddies) {
       //   console.log("No Teddies");
       //   setShowError(true);
@@ -426,6 +441,11 @@ function PolygonBridgeInitial(props: BridgeProps) {
 
         <Box className={isSmallScreen ? "row" : "col-margin"}>
           <Box
+            // className={
+            //   (selectedCollection === "Teddies by FOTF")
+            //     ? "card-selected"
+            //     : "card"
+            // }
             className={
               (selectedCollection === "Teddies by FOTF" || hasBridgedTeddies)
                 ? "card-selected"
@@ -433,8 +453,8 @@ function PolygonBridgeInitial(props: BridgeProps) {
             }
             onClick={() => {if(!hasBridgedTeddies){
               handleOnSelect("Teddies by FOTF");
-            }
-            }}
+            }}}
+            // onClick={() => {handleOnSelect("Teddies by FOTF")}}
             sx={{
               marginLeft: "auto",
               marginRight: "auto",
@@ -444,7 +464,8 @@ function PolygonBridgeInitial(props: BridgeProps) {
             }}
           >
             <Box sx={{ width: "100%", height: "100%", position: "relative" }}>
-              {isLoadingTeddy ? (
+              {!CanIBridgeTeddiesAmount ? (
+                // {isLoadingTeddy ? (
                 <Skeleton
                   variant="rectangular"
                   width={280}
@@ -454,7 +475,7 @@ function PolygonBridgeInitial(props: BridgeProps) {
               ) : (
                 <Box>
                   {/* {teddyNFTs!.length > 0 ? ( */}
-                    {parseInt(CanIBridgeTeddiesAmount.toString()) > 0 ? (
+                    {parseInt(CanIBridgeTeddiesAmount!.toString()) > 0 ? (
                     <Box>
                     {/* {teddyNFTs![0].metadata.name!=="Failed to load NFT metadata" ?
                       <ThirdwebNftMedia
@@ -470,7 +491,7 @@ function PolygonBridgeInitial(props: BridgeProps) {
                       />
                       :  */}
                       <img
-                      src={fotfLogo}
+                      src={teddyPlaceholder}
                       className={"teddyStakedPlaceholder"}
                       alt="Placeholder Logo - All Teddies are Bridged"
                     />
@@ -485,7 +506,12 @@ function PolygonBridgeInitial(props: BridgeProps) {
                     //       alt="Placeholder Logo - All Teddies are Staked"
                     //     />
                     //   ) : (
-                        <Box></Box>
+                        <Box><Skeleton
+                        variant="rectangular"
+                        width={280}
+                        height={280}
+                        sx={{ borderRadius: "10px" }}
+                      /></Box>
                       // )}
                     // </Box>
                   )}
@@ -501,7 +527,7 @@ function PolygonBridgeInitial(props: BridgeProps) {
             <Typography className="desc-text-larger">
               <span className="desc-text-larger-accent">
                 {/* {isLoadingTeddy && isLoadingStaked ? ( */}
-                  {!CanIBridgeTeddiesAmount ? (
+                  {CanIBridgeTeddiesAmount?.toString() === "0" ? (
                   <CircularProgress size="1rem" />
                 ) : (
                   // teddyCount
