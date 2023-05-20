@@ -160,11 +160,11 @@ function PolygonBridgeInitial(props: BridgeProps) {
         setHasTeds(false);
       } else {
         setHasTeds(true);
-        // if(polygonTokens.Teds?.tokens){
-        //   if(polygonTokens.Teds?.tokens.length! > 0) {
-        //     setHasBridgedTeds(true);
-        //   }
-        // }
+        if(polygonTokens.Teds?.tokens){
+          if(polygonTokens.Teds?.tokens.length! > 0) {
+            setHasBridgedTeds(true);
+          }
+        }
       }
     }
 
@@ -173,11 +173,11 @@ function PolygonBridgeInitial(props: BridgeProps) {
       setHasTeddies(false);
     } else {
       setHasTeddies(true);
-      // if(polygonTokens.Teddies?.tokens){
-      //   if(polygonTokens.Teddies?.tokens.length! > 0) {
-      //     setHasBridgedTeddies(true);
-      //   }
-      // }
+      if(polygonTokens.Teddies?.tokens){
+        if(polygonTokens.Teddies?.tokens.length! > 0) {
+          setHasBridgedTeddies(true);
+        }
+      }
     }
 
     if (!aiTedNFTs) {
@@ -187,11 +187,11 @@ function PolygonBridgeInitial(props: BridgeProps) {
         setHasAITeds(false);
       } else {
         setHasAITeds(true);
-        // if(polygonTokens.AITeds?.tokens){
-        //   if(polygonTokens.AITeds?.tokens.length! > 0) {
-        //     setHasBridgedAITeds(true);
-        //   }
-        // } 
+        if(polygonTokens.AITeds?.tokens){
+          if(polygonTokens.AITeds?.tokens.length! > 0) {
+            setHasBridgedAITeds(true);
+          }
+        } 
       }
     }
 
@@ -497,7 +497,7 @@ function PolygonBridgeInitial(props: BridgeProps) {
             </Box>
             <Typography className="desc-text-larger">
               <span className="desc-text-larger-accent">
-                {isLoadingTeddy || isLoadingStaked ? (
+                {isLoadingTeddy && isLoadingStaked ? (
                   <CircularProgress size="1rem" />
                 ) : (
                   teddyCount
