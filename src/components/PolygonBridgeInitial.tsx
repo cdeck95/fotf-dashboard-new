@@ -89,9 +89,9 @@ function PolygonBridgeInitial(props: BridgeProps) {
   // console.log(CanIBridgeTedsFlag);
   // console.log(CanIBridgeTedsAmount.toString());
 
-  // console.log(CanIBridgeTeddies!());
-  // console.log(CanIBridgeTeddiesFlag);
-  // console.log(CanIBridgeTeddiesAmount.toString());
+  console.log(CanIBridgeTeddies!());
+  console.log(CanIBridgeTeddiesFlag);
+  console.log(CanIBridgeTeddiesAmount.toString());
 
   // console.log(CanIBridgeAITeds!());
   // console.log(CanIBridgeAITedsFlag);
@@ -109,23 +109,23 @@ function PolygonBridgeInitial(props: BridgeProps) {
 
   const AllTokens = tokens.AllTokens.tokens;
   const tedNFTs = tokens.Teds?.tokens;
-  const teddyNFTs = tokens.Teddies?.tokens;
+  // const teddyNFTs = tokens.Teddies?.tokens;
   //const aiTedNFTs: string | any[] = [];
   const aiTedNFTs = tokens.AITeds?.tokens;
-  const stakedTeddiesIDs = tokens.StakedTeddiesIDs?.tokens;
+  // const stakedTeddiesIDs = tokens.StakedTeddiesIDs?.tokens;
 
   const [hasTeds, setHasTeds] = useState(false);
   const [hasTeddies, setHasTeddies] = useState(false);
   const [hasAITeds, setHasAITeds] = useState(false);
 
-  var teddyCount = 0;
-  if (stakedTeddiesIDs && teddyNFTs) {
-    teddyCount = teddyNFTs?.length + stakedTeddiesIDs?.length;
-  } else if (teddyNFTs) {
-    teddyCount = teddyNFTs?.length;
-  } else if (stakedTeddiesIDs) {
-    teddyCount = stakedTeddiesIDs?.length;
-  }
+  // var teddyCount = 0;
+  // if (stakedTeddiesIDs && teddyNFTs) {
+  //   teddyCount = teddyNFTs?.length + stakedTeddiesIDs?.length;
+  // } else if (teddyNFTs) {
+  //   teddyCount = teddyNFTs?.length;
+  // } else if (stakedTeddiesIDs) {
+  //   teddyCount = stakedTeddiesIDs?.length;
+  // }
   const leftDrawerWidth = isSmallScreen ? "0px" : "240px";
   const rightDrawerWidth = isSmallScreen ? "0px" : "340px";
 
@@ -168,17 +168,17 @@ function PolygonBridgeInitial(props: BridgeProps) {
       }
     }
 
-    if (!teddyNFTs && !stakedTeddiesIDs) {
-      console.log("No Teddies");
-      setHasTeddies(false);
-    } else {
-      setHasTeddies(true);
+    // if (!teddyNFTs && !stakedTeddiesIDs) {
+    //   console.log("No Teddies");
+    //   setHasTeddies(false);
+    // } else {
+    //   setHasTeddies(true);
       if(polygonTokens.Teddies?.tokens){
         if(polygonTokens.Teddies?.tokens.length! > 0) {
           setHasBridgedTeddies(true);
         }
       }
-    }
+    // }
 
     if (!aiTedNFTs) {
       console.log("No AI Teds");
@@ -197,7 +197,7 @@ function PolygonBridgeInitial(props: BridgeProps) {
 
     
 
-  }, [aiTedNFTs, polygonTokens.AITeds?.tokens, polygonTokens.Teddies?.tokens, polygonTokens.Teds?.tokens, stakedTeddiesIDs, tedNFTs, teddyNFTs]);
+  }, [aiTedNFTs, polygonTokens.AITeds?.tokens, polygonTokens.Teddies?.tokens, polygonTokens.Teds?.tokens, tedNFTs]);
 
   // useEffect(() => {
   //   try {
@@ -245,19 +245,20 @@ function PolygonBridgeInitial(props: BridgeProps) {
       //   return;
       // }
 
-      if (collection === "Teddies by FOTF" && (isLoadingTeddy || isLoadingStaked)) {
-        console.log("still loading Teddies");
-        setShowError(true);
-        setErrorCode(2);
-        setCollectionForError("Teddies by FOTF");
-        return;
-      } else if (collection === "Teddies by FOTF" && !hasTeddies) {
-        console.log("No Teddies");
-        setShowError(true);
-        setErrorCode(3);
-        setCollectionForError("Teddies by FOTF");
-        return;
-       } 
+      // if (collection === "Teddies by FOTF" && (isLoadingTeddy || isLoadingStaked)) {
+      //   console.log("still loading Teddies");
+      //   setShowError(true);
+      //   setErrorCode(2);
+      //   setCollectionForError("Teddies by FOTF");
+      //   return;
+      // } 
+      // if (collection === "Teddies by FOTF" && !hasTeddies) {
+      //   console.log("No Teddies");
+      //   setShowError(true);
+      //   setErrorCode(3);
+      //   setCollectionForError("Teddies by FOTF");
+      //   return;
+      //  } 
       //   else if (collection === "Teddies by FOTF" && !CanIBridgeTeddiesFlag) {
       //   console.log("Not approved for Bridging Teddies by FOTF");
       //   setShowError(true);        
@@ -452,9 +453,10 @@ function PolygonBridgeInitial(props: BridgeProps) {
                 />
               ) : (
                 <Box>
-                  {teddyNFTs!.length > 0 ? (
+                  {/* {teddyNFTs!.length > 0 ? ( */}
+                    {parseInt(CanIBridgeTeddiesAmount.toString()) > 0 ? (
                     <Box>
-                    {teddyNFTs![0].metadata.name!=="Failed to load NFT metadata" ?
+                    {/* {teddyNFTs![0].metadata.name!=="Failed to load NFT metadata" ?
                       <ThirdwebNftMedia
                         metadata={teddyNFTs![0].metadata}
                         style={{
@@ -466,25 +468,26 @@ function PolygonBridgeInitial(props: BridgeProps) {
                           height: "280px",
                         }}
                       />
-                      : <img
+                      :  */}
+                      <img
                       src={fotfLogo}
                       className={"teddyStakedPlaceholder"}
                       alt="Placeholder Logo - All Teddies are Bridged"
                     />
-                  }
+                  {/* } */}
                   </Box>
                   ) : (
-                    <Box>
-                      {stakedTeddiesIDs!.length > 0 ? (
-                        <img
-                          src={fotfLogo}
-                          className={"teddyStakedPlaceholder"}
-                          alt="Placeholder Logo - All Teddies are Staked"
-                        />
-                      ) : (
+                    // <Box>
+                    //   {stakedTeddiesIDs!.length > 0 ? (
+                    //     <img
+                    //       src={fotfLogo}
+                    //       className={"teddyStakedPlaceholder"}
+                    //       alt="Placeholder Logo - All Teddies are Staked"
+                    //     />
+                    //   ) : (
                         <Box></Box>
-                      )}
-                    </Box>
+                      // )}
+                    // </Box>
                   )}
                 </Box>
               )}
@@ -497,10 +500,12 @@ function PolygonBridgeInitial(props: BridgeProps) {
             </Box>
             <Typography className="desc-text-larger">
               <span className="desc-text-larger-accent">
-                {isLoadingTeddy && isLoadingStaked ? (
+                {/* {isLoadingTeddy && isLoadingStaked ? ( */}
+                  {!CanIBridgeTeddiesAmount ? (
                   <CircularProgress size="1rem" />
                 ) : (
-                  teddyCount
+                  // teddyCount
+                  CanIBridgeTeddiesAmount.toString()
                 )}
               </span>{" "}
               Teddies

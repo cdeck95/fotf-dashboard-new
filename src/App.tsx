@@ -249,7 +249,7 @@ function App() {
               backgroundColor: "Black",
               height: "60px",
               width: "100%",
-              zIndex: "1 !important",
+              zIndex: "2 !important",
             }}
           >
             <Box
@@ -259,7 +259,7 @@ function App() {
                 justifyContent: "center",
                 alignItems: "center",
                 textAlign: "center",
-                zIndex: "1 !important",
+                zIndex: "2 !important",
               }}
             >
               {address && <Typography
@@ -271,7 +271,7 @@ function App() {
                   alignItems: "center",
                   textAlign: "center",
                   fontSize: "2rem",
-                  zIndex: "1 !important",
+                  zIndex: "2 !important",
                 }}
               >
                {pageTitle}
@@ -361,7 +361,7 @@ function App() {
                 top: "5px",
                 left: "5px",
                 backgroundColor: "transparent",
-                zIndex: "1 !important",
+                zIndex: "2",
               }}
             >
               {address && !isBridgePage && (
@@ -397,7 +397,7 @@ function App() {
                 top: "5px",
                 right: "5px",
                 backgroundColor: "transparent",
-                zIndex: "1 !important",
+                zIndex: "2 !important",
               }}
             >
               {!navOpen && (
@@ -406,7 +406,7 @@ function App() {
                   aria-label="open right drawer"
                   onClick={() => handleRightNavOpen()}
                   size="large"
-                  sx={{ zIndex: "1" }}
+                  sx={{ zIndex: "2" }}
                 >
                   <MenuIcon sx={{ color: "White" }} />
                 </IconButton>
