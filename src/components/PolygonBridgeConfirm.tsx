@@ -240,21 +240,21 @@ function PolygonBridgeConfirm(props: BridgeConfirmProps) {
     const json = JSON.stringify(pairedBridgeIDs, null, 2);
     console.log(json);
     try {
-      // const response = await fetch(`https://h7ke8qc4ng.execute-api.us-east-1.amazonaws.com/Prod/${urlParam}`, {
-      //     method: 'POST',
-      //     body: json
-      // })
-      // const responseStatus = await response.status;
-      // console.log(response.status);
-      // if (responseStatus !== 200) {
-      //   setErrorCode(responseStatus);
-      //   setShowError(true);
-      //   setIsLoading(false);
-      //   return;
-      // } else {
-      //   setSuccess(true);
-      //   setIsLoading(false);
-      // }
+      const response = await fetch(`https://h7ke8qc4ng.execute-api.us-east-1.amazonaws.com/Prod/${urlParam}`, {
+          method: 'POST',
+          body: json
+      })
+      const responseStatus = await response.status;
+      console.log(response.status);
+      if (responseStatus !== 200) {
+        setErrorCode(responseStatus);
+        setShowError(true);
+        setIsLoading(false);
+        return;
+      } else {
+        setSuccess(true);
+        setIsLoading(false);
+      }
     } catch (error) {
       console.log(error);
       setIsLoading(false);
@@ -275,9 +275,10 @@ function PolygonBridgeConfirm(props: BridgeConfirmProps) {
       case "Fury Teds":
         setCollectionCount(tedNFTs?.length!);
         // BRIDGE FIRST
-        //const bridgeResponseTeds = await bridgeTeds!();
+        
         try {
-          const bridgeResponseTeds = await testbridgeTeds!();
+          //const bridgeResponseTeds = await testbridgeTeds!();
+          const bridgeResponseTeds = await bridgeTeds!();
           console.log(bridgeResponseTeds);
           if (bridgeResponseTeds === null) {
             setErrorCode(500);
@@ -341,8 +342,8 @@ function PolygonBridgeConfirm(props: BridgeConfirmProps) {
         try {
           setCollectionCount(teddyCount);
           // BRIDGE FIRST
-          const bridgeResponseTeddies = await testbridgeTeddies!();
-          //const bridgeResponseTeddies = await bridgeTeddies!();
+          //const bridgeResponseTeddies = await testbridgeTeddies!();
+          const bridgeResponseTeddies = await bridgeTeddies!();
 
           if (bridgeResponseTeddies === null) {
             setErrorCode(500);
@@ -412,8 +413,8 @@ function PolygonBridgeConfirm(props: BridgeConfirmProps) {
         try {
           setCollectionCount(aiTedNFTs?.length!);
           // BRIDGE FIRST
-          const bridgeResponseAITeds = await testbridgeAITeds!();
-          //const bridgeResponseAITeds = await bridgeAITeds!();
+          //const bridgeResponseAITeds = await testbridgeAITeds!();
+          const bridgeResponseAITeds = await bridgeAITeds!();
 
           if (bridgeResponseAITeds === null) {
             setErrorCode(500);
