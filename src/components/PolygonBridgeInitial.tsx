@@ -497,7 +497,7 @@ function PolygonBridgeInitial(props: BridgeProps) {
             </Box>
             <Typography className="desc-text-larger">
               <span className="desc-text-larger-accent">
-                {isLoadingTeddy || isLoadingStaked ? (
+                {isLoadingTeddy && isLoadingStaked ? (
                   <CircularProgress size="1rem" />
                 ) : (
                   teddyCount
