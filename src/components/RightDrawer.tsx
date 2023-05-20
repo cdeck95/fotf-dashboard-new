@@ -314,7 +314,7 @@ function PermanentDrawerRight(props: NavProps) {
 
   return (
     <Box
-      sx={{ display: "flex", justifyContent: "space-between", zIndex: "100" }}
+      sx={{ display: "flex", justifyContent: "space-between", zIndex: "1" }}
     >
       <CssBaseline />
       <Box
