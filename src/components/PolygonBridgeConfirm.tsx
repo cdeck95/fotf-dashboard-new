@@ -288,7 +288,7 @@ function PolygonBridgeConfirm(props: BridgeConfirmProps) {
           //const bridgeResponseTeds = await testbridgeTeds!();
           const bridgeResponseTeds = await bridgeTeds!();
           console.log(bridgeResponseTeds);
-          if (bridgeResponseTeds === null) {
+          if (bridgeResponseTeds === null || bridgeResponseTeds === undefined) {
             setErrorCode(500);
             setShowError(true);
             setIsLoading(false);
@@ -353,7 +353,7 @@ function PolygonBridgeConfirm(props: BridgeConfirmProps) {
           //const bridgeResponseTeddies = await testbridgeTeddies!();
           const bridgeResponseTeddies = await bridgeTeddies!();
 
-          if (bridgeResponseTeddies === null) {
+          if (bridgeResponseTeddies === null || bridgeResponseTeddies === undefined) {
             setErrorCode(500);
             setShowError(true);
             setIsLoading(false);
@@ -424,7 +424,7 @@ function PolygonBridgeConfirm(props: BridgeConfirmProps) {
           //const bridgeResponseAITeds = await testbridgeAITeds!();
           const bridgeResponseAITeds = await bridgeAITeds!();
 
-          if (bridgeResponseAITeds === null) {
+          if (bridgeResponseAITeds === null || bridgeResponseAITeds === undefined) {
             setErrorCode(500);
             setShowError(true);
             setIsLoading(false);
