@@ -249,7 +249,7 @@ import {
               return "You are not whitelisted to bridge Teds";
             } else {
               alert("Something went wrong, please try again");
-              return null;
+              return e.message;
             } 
           }
     }
@@ -296,7 +296,7 @@ import {
           return "You are not whitelisted to bridge Teddies";
         } else {
           alert("Something went wrong, please try again");
-          return null;
+          return e.message;
         } 
       }
 }
