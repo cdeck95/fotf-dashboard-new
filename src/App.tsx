@@ -54,16 +54,6 @@ export const LeftDrawerWidth = 260;
 
 function App() {
   useTitle("FOTF | Dashboard");
-  const themeMui = useTheme();
-  const isMobile = !useMediaQuery(themeMui.breakpoints.up("md"));
-  const isMediumLarge = useMediaQuery(themeMui.breakpoints.down("lg"));
-  const [isSmallScreen, setSmallScreen] = useState(false);
-
-  const sdk = useSDK();
-  const provider = sdk?.getProvider();
-  const address = useAddress(); // Get connected wallet address
-  const [, switchNetwork] = useNetwork(); // Switch to desired chain
-  const isMismatched = useNetworkMismatch(); // Detect if user is connected to the wrong network
   const primaryColor = getComputedStyle(
     document.documentElement
   ).getPropertyValue("--primary-color");
@@ -76,62 +66,6 @@ function App() {
   const accentColor = getComputedStyle(
     document.documentElement
   ).getPropertyValue("--accent-color");
-
-  const [navOpen, setNavOpen] = useState(true);
-  const [rightNavOpen, setRightNavOpen] = useState(true);
-  const [isBridgePage, setIsBridgePage] = useState(false);
-  const [allOwnedNFTsArray, setAllOwnedNFTsArray] = useState<any>([]);
-
-  const tokenProps = LoadAllAccountDetails();
-
-  const {
-    tokens,
-    isLoadingTed,
-    isLoadingTeddy,
-    isLoadingStaked,
-    isLoadingAI,
-    isLoadingBirthCerts,
-    isLoadingOneOfOne,
-    error,
-    honeyBalance,
-  } = tokenProps;
-
-  console.log(tokens);
-  console.log(isLoadingTed);
-  console.log(error);
-  console.log(honeyBalance);
-
-  const handleOpen = (): void => {
-    setNavOpen(true);
-    console.log(navOpen);
-    console.log("setNavOpen is true");
-  };
-
-  const handleRightNavOpen = (): void => {
-    setRightNavOpen(true);
-    console.log(rightNavOpen);
-    console.log("setRightNavOpen is true");
-  };
-
-  useEffect(() => {
-    if (address) {
-      // LoadAllAccountDetails();
-      //setAllOwnedNFTsArray(LoadAllAccountDetails());
-    }
-  }, [address]);
-
-  useEffect(() => {
-    if (!isMobile && isMediumLarge) {
-      setNavOpen(false);
-      setRightNavOpen(false);
-      setSmallScreen(true);
-    } else {
-      setNavOpen(!isMobile);
-      setRightNavOpen(!isMobile);
-      setSmallScreen(isMobile);
-    }
-  }, [isMobile, isMediumLarge]);
-
   const theme = createTheme({
     typography: {
       fontFamily: ["Bebas Neue", "Roboto", "Helvetica", "Arial"].join(","),
@@ -188,6 +122,78 @@ function App() {
     },
   });
 
+  //const themeMui = useTheme();
+  //const isMobile = !useMediaQuery(themeMui.breakpoints.up("md"));
+  const isMobile = !useMediaQuery(theme.breakpoints.up("md"));
+
+   const isMediumLarge = useMediaQuery(theme.breakpoints.down("lg"));
+
+  // const isMediumLarge = useMediaQuery(themeMui.breakpoints.down("lg"));
+  const [isSmallScreen, setSmallScreen] = useState(false);
+
+  const sdk = useSDK();
+  const provider = sdk?.getProvider();
+  const address = useAddress(); // Get connected wallet address
+  const [, switchNetwork] = useNetwork(); // Switch to desired chain
+  const isMismatched = useNetworkMismatch(); // Detect if user is connected to the wrong network
+  
+
+  const [navOpen, setNavOpen] = useState(true);
+  const [rightNavOpen, setRightNavOpen] = useState(true);
+  const [isBridgePage, setIsBridgePage] = useState(false);
+  const [allOwnedNFTsArray, setAllOwnedNFTsArray] = useState<any>([]);
+
+  const tokenProps = LoadAllAccountDetails();
+
+  const {
+    tokens,
+    isLoadingTed,
+    isLoadingTeddy,
+    isLoadingStaked,
+    isLoadingAI,
+    isLoadingBirthCerts,
+    isLoadingOneOfOne,
+    error,
+    honeyBalance,
+  } = tokenProps;
+
+  console.log(tokens);
+  console.log(isLoadingTed);
+  console.log(error);
+  console.log(honeyBalance);
+
+  const handleOpen = (): void => {
+    setNavOpen(true);
+    console.log(navOpen);
+    console.log("setNavOpen is true");
+  };
+
+  const handleRightNavOpen = (): void => {
+    setRightNavOpen(true);
+    console.log(rightNavOpen);
+    console.log("setRightNavOpen is true");
+  };
+
+  useEffect(() => {
+    if (address) {
+      // LoadAllAccountDetails();
+      //setAllOwnedNFTsArray(LoadAllAccountDetails());
+    }
+  }, [address]);
+
+  useEffect(() => {
+    if (!isMobile && isMediumLarge) {
+      setNavOpen(false);
+      setRightNavOpen(false);
+      setSmallScreen(true);
+    } else {
+      setNavOpen(!isMobile);
+      setRightNavOpen(!isMobile);
+      setSmallScreen(isMobile);
+    }
+  }, [isMobile, isMediumLarge]);
+
+  
   const [pageTitle, setPageTitle] = useState("");
 
   useEffect(() => { 
