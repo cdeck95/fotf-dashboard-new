@@ -19,10 +19,10 @@ import "../styles/TheFactory.css";
 
 interface NFTListProps {
   tokens: NFT[];
-  searchText: string;
-  stakedIDs: string[];
-  selectedTokens: NFT[];
-  setSelectedTokens: React.Dispatch<SetStateAction<NFT[]>>;
+  // searchText: string;
+  // stakedIDs: string[];
+  // selectedTokens: NFT[];
+  // setSelectedTokens: React.Dispatch<SetStateAction<NFT[]>>;
 }
 
 function NFTList(props: NFTListProps) {
@@ -42,9 +42,7 @@ function NFTList(props: NFTListProps) {
   console.log(`XL:  ${isXL}`);
   console.log(`Is 1920:  ${isFullScreen}`);
 
-  const { tokens, searchText, stakedIDs, selectedTokens, setSelectedTokens } = props;
-
-  // const [selectedTokensArray, setSelectedTokensArray] = useState<string[]>();
+  const { tokens } = props;
 
   const [columns, setColumns] = useState(3);
 
@@ -74,46 +72,10 @@ function NFTList(props: NFTListProps) {
     }
   }, [isMobile, isSmall, isMedium, isMediumLarge, isLarge, isXL, isFullScreen]);
 
-  const add = (token: NFT) => {
-    console.log("adding...");
-    handleOnSelect(token);
-  };
-
-  const star = () => {
-    console.log("staring...");
-  };
-
-  const filteredNFTs = tokens?.filter((e) =>
-    e.metadata.id!.includes(searchText)
-  );
-  console.log(filteredNFTs);
-
   function handleOnSelect(token: NFT) {
-    // if(selectedTokens?.includes(token)) {
-    //   const index = selectedTokens?.indexOf(token);
-    //   if (index !== undefined) {
-    //     selectedTokens?.splice(index, 1);
-    //   }
-    //   setSelectedTokens(selectedTokens);
-    //   console.log("removed token");
-    //   console.log(selectedTokens);
-    //   return;
-    // }
-    selectedTokens.push(token);
-    setSelectedTokens(selectedTokens);
-    console.log("pushed token");
-    console.log(selectedTokens);
+    console.log("clicked token");
+    console.log(token);
   }
-
-
-  //  props.stakedIDs.forEach((tokenID: string) => {
-  //   console.log(tokenID);
-  //   const stakedTeddy = LoadStakedTeddy(tokenID);
-  //   console.log(stakedTeddy);
-  //   teddyNFTs?.push(stakedTeddy!);
-  //   // //maybe i need to pass this array of IDs into a subcomponent that will return the NFT?
-    
-  // });
 
   return (
     <ImageList
@@ -129,55 +91,31 @@ function NFTList(props: NFTListProps) {
       }}
       cols={columns}
       gap={25}
-      rowHeight={450}
+      rowHeight={200}
     >
-      {filteredNFTs.map((token: NFT) => (
+      {tokens.map((token: NFT) => (
         <Box
           key={token.metadata.id}
-          className={
-            selectedTokens?.includes(token) ? "card-selected" : "card"
-          }
+          className="card-dashboard"
           sx={{
             marginLeft: "auto",
             marginRight: "auto",
             background: "none",
-            maxHeight: "375px",
-            maxWidth: "350px",
+            maxHeight: "200px",
+            maxWidth: "200px",
           }}
-          onClick={() => add(token)}
         >
-          {/* <StarBorderIcon
-            onClick={star}
-            sx={{ position: "absolute", top: "10px", right: "10px" }}
-          /> */}
-           <Box sx={{
-            position: "relative",
-          }}  >
           <ThirdwebNftMedia
             metadata={token.metadata}
             style={{
-              maxHeight: "280px",
-              maxWidth: "280px",
+              maxHeight: "180px",
+              maxWidth: "180px",
               borderRadius: "10px",
               objectFit: "cover",
-              width: "280px",
-              height: "280px",
+              width: "180px",
+              height: "180px",
             }}
           />
-
-          {selectedTokens?.includes(token) && (
-            <p className="title-selected">Burn</p>
-          )}
-          </Box>
-          <Box className="column-container" sx={{ marginBottom: "10px" }}>
-            <div className="large-left-column">
-              <h3 className="metadata-title">{token.metadata.name}</h3>
-              <h4 className="metadata">Last Transfer: 03/11/2023</h4>
-            </div>
-            <div className="small-right-column">
-              <ControlPointIcon onClick={() => add(token)} fontSize="small" />
-            </div>
-          </Box>
         </Box>
       ))}
     </ImageList>

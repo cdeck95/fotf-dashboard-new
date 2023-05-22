@@ -84,6 +84,15 @@ body {
   align-items: center;
 }
 
+.row-space-between-dashboard {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 100%;
+  align-items: center;
+  height: 30%;
+}
+
 .header {
   padding-top: 10px;
 }
@@ -134,9 +143,22 @@ body {
 
 .page-header{
   display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  font-size: 2.5rem !important;
+  font-family: 'Bebas Neue';
+  color: #000000;
+  margin-top: 5px;
+  margin-left: 10px;
+  margin-bottom: 5px;
+  margin-right: 10px;
+}
+
+.page-header-large{
+  display: flex;
   justify-content: center;
   align-items: center;
-  font-size: 2.5rem;
+  font-size: 5rem !important;
   font-family: 'Bebas Neue';
   color: #000000;
   margin-top: 5px;
@@ -294,6 +316,21 @@ body {
   margin-bottom: 0px;
   width: 100%;
   max-width: 1380px;
+}
+
+.column {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+.column-between {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+  width: 100%;
+  padding-right: 5px;
+  padding-left: 5px;
 }
 
 .asset-numbers {
@@ -468,11 +505,11 @@ body {
 
 .inner-container {
   width: 100%;
-  height: 100%;
+  height: 100dvh;
   margin: 0;
-  padding-bottom: 0;
-  padding-left: 10px;
-  padding-right: 10px;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
 }
 
 .factory-inner-container {
@@ -606,6 +643,13 @@ body {
   width: 100%;
   margin: 0;
   padding: 0;
+}
+
+.row-left {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  width: 100%;
 }
 
 .bold-text {
