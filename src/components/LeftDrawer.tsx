@@ -115,8 +115,7 @@ function LeftDrawer(props: NavProps) {
         setIsBridgePage(true);
         break;
       default:
-        setActivePage("PolygonBridge");
-        setIsBridgePage(true);
+        setActivePage("Dashboard");
         break;
     }
   }, [isMobile, isMediumLarge]);
@@ -203,8 +202,10 @@ function LeftDrawer(props: NavProps) {
           width: drawerWidth,
           flexShrink: 0,
           whiteSpace: "nowrap",
+          // "& .MuiDrawer-root": { width: 200, zIndex: -1 },
           "& .MuiDrawer-paper": {
             width: drawerWidth,
+            // zIndex: -1,
             overflowY: "hidden",
             overflowX: "hidden",
             border: "none",
@@ -458,7 +459,7 @@ function LeftDrawer(props: NavProps) {
             </Typography>
           </Box>
         </Box>
-        <Backdrop
+        {!address && <Backdrop
           sx={{
             color: "#fff",
             width: drawerWidth,
@@ -469,8 +470,8 @@ function LeftDrawer(props: NavProps) {
           onClick={handleClose}
         >
           {/* <CircularProgress color="inherit" /> */}
-        </Backdrop>
-        <Backdrop
+        </Backdrop>}
+        {isBridgePage && <Backdrop
           sx={{
             color: "#fff",
             width: drawerWidth,
@@ -481,7 +482,7 @@ function LeftDrawer(props: NavProps) {
           onClick={handleClose}
         >
           {/* <CircularProgress color="inherit" /> */}
-        </Backdrop>
+        </Backdrop>}
       </Drawer>
     </Box>
   );

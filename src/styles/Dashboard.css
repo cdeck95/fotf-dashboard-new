@@ -197,7 +197,8 @@
     position: relative;
     display: flex;
     flex-direction: column; 
-    /* filter: grayscale(70%); */
+    /* filter: grayscale(90%); */
+    filter: brightness(30%);
   }
 
   /* .title-selected {
@@ -383,7 +384,7 @@
   }
 
   .burn-box {
-    width: 550px;
+    /* width: 550px; */
     align-items: center;
     justify-content: flex-start;
     height: 70px;

@@ -27,8 +27,9 @@ const root = createRoot(container!);
     <BrowserRouter>
     {/* walletConnect() */}
       <ThirdwebProvider supportedWallets={[metamaskWallet(), coinbaseWallet(), walletConnect(), localWallet(), safeWallet()]}
-        activeChain={Ethereum}
-        supportedChains={[Polygon, Ethereum]}>
+        activeChain={Polygon}
+        supportedChains={[Polygon, Ethereum]}
+        key={"polygonThirdWebProvider"}>
         <App />
       </ThirdwebProvider>
     </BrowserRouter>

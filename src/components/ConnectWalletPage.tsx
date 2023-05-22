@@ -24,7 +24,7 @@ function ConnectWalletPage() {
         sx={{
           height: "100%",
           display: "flex",
-          zIndex: "1 !important",
+          // zIndex: "1 !important",
           justifyContent: "center",
           alignItems: "center",
           width: "100%",
