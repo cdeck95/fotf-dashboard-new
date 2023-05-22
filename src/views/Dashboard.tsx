@@ -20,13 +20,24 @@ import RightDrawer from "../components/RightDrawer";
 import { Home } from "@mui/icons-material";
 import { Routes, Route } from "react-router-dom";
 import ConnectWalletPage from "../components/ConnectWalletPage";
-import { LoadAllAccountDetails } from "../account/loadAllAccountDetails";
+import { LoadETHAccountDetails } from "../account/loadETHAccountDetails";
 import { MainnetNetwork } from "../components/MainnetNetwork";
 import { TokenProps } from "../components/AssetOverviewSidebar";
+import { PolygonAccountDetails } from "../account/loadPolygonAccountDetails";
+import { PolygonNetwork } from "../components/PolygonNetwork";
 
-function Dashboard(props: TokenProps) {
+export interface PolygonProps {
+  tokenProps: PolygonAccountDetails;
+  leftNavOpen: boolean;
+  rightNavOpen: boolean;
+}
+
+function Dashboard(props: PolygonProps) {
   useTitle("FOTF | Dashboard");
-  const { tokens, error, isLoadingAI, isLoadingBirthCerts, isLoadingOneOfOne, isLoadingStaked, isLoadingTed, isLoadingTeddy, honeyBalance, leftNavOpen, rightNavOpen} = props;
+  //const { tokens, error, isLoadingAI, isLoadingBirthCerts, isLoadingOneOfOne, isLoadingStaked, isLoadingTed, isLoadingTeddy, honeyBalance, leftNavOpen, rightNavOpen} = props;
+  
+  const { leftNavOpen, rightNavOpen } = props;
+  const { tokens, isLoadingTed, isLoadingTeddy, isLoadingAI, errorTed, errorTeddy, errorAI, maticBalance, needsFunds } = props.tokenProps;
   const theme = useTheme();
   const isMobile = !useMediaQuery(theme.breakpoints.up("md"));
   const isMediumLarge = useMediaQuery(theme.breakpoints.down("lg"));
@@ -67,13 +78,14 @@ function Dashboard(props: TokenProps) {
             width: "100%",
           }}
         >
-          {showMismatch && (<MainnetNetwork/>)}
-          <Backdrop
+          {showMismatch && (<PolygonNetwork/>)}
+          {showMismatch && <Backdrop
             sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
             open={showMismatch}
           >
             {/* <CircularProgress color="inherit" /> */}
           </Backdrop>
+          }
           <h1 className={isMobile ? "comingSoon-Mobile" : "comingSoon"}>
             Dashboard
           </h1>

@@ -66,18 +66,21 @@ body {
   flex-direction: row;
   justify-content: center;
   align-items: center;
+  width: 100%;
 }
 
 .row-no-center{
   display: flex;
   flex-direction: row;
   align-items: center;
+  width: 100%;
 }
 
 .row-space-between {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+  width: 100%;
   align-items: center;
 }
 

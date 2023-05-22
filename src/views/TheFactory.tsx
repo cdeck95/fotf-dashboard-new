@@ -37,29 +37,26 @@ import { BaseContract, BigNumber, ethers } from "ethers";
 import { NumericFormat } from "react-number-format";
 import NFTList from "../components/NFTList";
 import "../styles/Dashboard.css";
+import "../styles/TheFactory.css";
 import StarBorderIcon from "@mui/icons-material/StarBorder";
 import StarIcon from "@mui/icons-material/Star";
 import ControlPointIcon from "@mui/icons-material/ControlPoint";
 import {
-  LoadAllAccountDetails,
+  LoadETHAccountDetails,
   allOwnedNFTs,
-} from "../account/loadAllAccountDetails";
+} from "../account/loadETHAccountDetails";
 import ConnectWalletPage from "../components/ConnectWalletPage";
 import Sheet from "react-modal-sheet";
-import { LoadStakedTeddy } from "../account/loadStakedTeddy";
 import { MainnetNetwork } from "../components/MainnetNetwork";
 import ExpandLessOutlinedIcon from '@mui/icons-material/ExpandLessOutlined';
 import ExpandMoreOutlinedIcon from '@mui/icons-material/ExpandMoreOutlined';
 import { TokenProps } from "../components/AssetOverviewSidebar";
 import ErrorDialog from "../components/ErrorDialog";
+import { PolygonProps } from "./Dashboard";
 
-// interface TheFactoryProps {
-//   allOwnedNFTs: allOwnedNFTs;
-//   leftNavOpen: boolean;
-//   rightNavOpen: boolean;
-// }
+const IS_DISABLED = true;
 
-function TheFactory(props: TokenProps) {
+function TheFactory(props: PolygonProps) {
   useTitle("FOTF | The Factory");
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
@@ -85,37 +82,24 @@ function TheFactory(props: TokenProps) {
   console.log(`XL:  ${isXL}`);
   console.log(`Is 1920:  ${isFullScreen}`);
 
-  const isDisabled = true;
-
-  // const { tokens, isLoading, error, honeyBalance } = LoadAllAccountDetails();
-  // const allOwnedNFTs = props.allOwnedNFTs;
-  const {
-    tokens,
-    isLoadingTed,
-    isLoadingAI,
-    isLoadingBirthCerts,
-    isLoadingOneOfOne,
-    isLoadingStaked,
-    isLoadingTeddy,
-    error,
-    honeyBalance,
-    leftNavOpen,
-    rightNavOpen
-  } = props;
-  // const {tokens, isLoading, error, honeyBalance } = allOwnedNFTs;
+  const { leftNavOpen, rightNavOpen } = props;
+  const { tokens, isLoadingTed, isLoadingTeddy, isLoadingAI, errorTed, errorTeddy, errorAI, maticBalance, needsFunds } = props.tokenProps;
   console.log(tokens);
   console.log(isLoadingTed);
-  console.log(error);
-  console.log(honeyBalance);
+  console.log(isLoadingTeddy);
+  console.log(isLoadingAI);
+  console.log(errorTed);
+  console.log(errorTeddy);
+  console.log(errorAI);
+  console.log(maticBalance);
+  console.log(needsFunds);
 
   const isLoading =
-    isLoadingTed || isLoadingAI || isLoadingStaked || isLoadingTeddy;
+    isLoadingTed || isLoadingAI || isLoadingTeddy;
 
-  const AllTokens = tokens.AllTokens.tokens;
   const tedNFTs = tokens.Teds?.tokens;
   const teddyNFTs = tokens.Teddies?.tokens;
   const aiTedNFTs = tokens.AITeds?.tokens;
-  const stakedTeddiesIDs = tokens.StakedTeddiesIDs?.tokens;
 
   const [columns, setColumns] = useState(3);
 
@@ -175,16 +159,11 @@ function TheFactory(props: TokenProps) {
     }
   }
 
-  // stakedTeddiesIDs.forEach((tokenID: string) => {
-  //   console.log(tokenID);
-  //   const stakedTeddy = LoadStakedTeddy(tokenID);
-  //   console.log(stakedTeddy);
-  //   teddyNFTs?.push(stakedTeddy!);
-  //   AllTokens.push
-  // });
-
   const leftDrawerWidth = isSmallScreen ? "0px" : "260px";
   const rightDrawerWidth = isSmallScreen ? "0px" : "340px";
+
+  const leftDrawerWidthWithPadding = isSmallScreen ? "0px" : "280px";
+  const rightDrawerWidthWithPadding = isSmallScreen ? "0px" : "360px";
 
   const [isActiveFilter, setIsActiveFilter] = useState(false);
   const [isTransferredFilter, setIsTransferredFilter] = useState(false);
@@ -321,12 +300,12 @@ function TheFactory(props: TokenProps) {
     const tedNFTs = tokens.Teds?.tokens;
     const teddyNFTs = tokens.Teddies?.tokens;
     const aiTedNFTs = tokens.AITeds?.tokens;
-    const stakedTeddiesIDs = tokens.StakedTeddiesIDs?.tokens;
+    // const stakedTeddiesIDs = tokens.StakedTeddiesIDs?.tokens;
 
     if (!isLoading) {
       if (
         tedNFTs!.length > 0 &&
-        (teddyNFTs!.length > 0 || stakedTeddiesIDs!.length > 0) &&
+        (teddyNFTs!.length > 0) &&
         aiTedNFTs!.length > 0
       ) {
         setOwnershipVerified(true);
@@ -343,6 +322,7 @@ function TheFactory(props: TokenProps) {
   }
 
   const [searchInput, setSearchInput] = useState("");
+  const [filteredNFTsWithCategory, setFilteredNFTsWithCategory] = useState<NFT[]>([]);
 
   const handleSearch = (e: {
     preventDefault: () => void;
@@ -352,54 +332,41 @@ function TheFactory(props: TokenProps) {
     setSearchInput(e.target.value);
   };
 
-  try {
-    if (searchInput.length > 0) {
-      if (searchInput.match("[0-9]+")) {
-        AllTokens.filter((token: NFT) => {
-          console.log(token.metadata.id.match(searchInput));
-          return token.metadata.id.match(searchInput);
-        });
-      } else {
-        //filter on attributes
-      }
-    }
-  } catch (error) {
-    console.log(error);
-    setSearchInput("");
-  }
+  
+  
 
-  // const filteredNFTs = AllTokens?.filter((e) =>
-  //   e.metadata.id!.includes(searchInput)
-  // );
-  // console.log(filteredNFTs);
-
-  const [filteredNFTsWithCategory, setFilteredNFTsWithCategory] = useState<NFT[]>([]);
+  const [filteredNFTs, setFilteredNFTs] = useState<NFT[]>([]);
 
   useEffect(() => {
-    if(isAIFilter || isTeddyFilter || isTedFilter) {
-      if(isAIFilter) {
-        setFilteredNFTsWithCategory(aiTedNFTs!.filter((e) =>
-        e.metadata.id!.includes(searchInput)
-      ));
-      } else if (isTeddyFilter) {
-        setFilteredNFTsWithCategory(teddyNFTs!.filter((e) =>
-        e.metadata.id!.includes(searchInput)
-      ));
-      } else if (isTedFilter) {
-        setFilteredNFTsWithCategory(tedNFTs!.filter((e) =>
-        e.metadata.id!.includes(searchInput)
-      ));
-      } else {
-        setFilteredNFTsWithCategory(AllTokens?.filter((e) =>
-        e.metadata.id!.includes(searchInput)
-      ));
-      }
+    const allOwnedNFTs: NFT[] = [];
+
+    if(isAIFilter){
+      aiTedNFTs?.forEach((nft) => {
+        allOwnedNFTs.push(nft);
+      }); 
+    } else if(isTedFilter){
+      tedNFTs?.forEach((nft) => {
+        allOwnedNFTs.push(nft);
+      });
+    } else if(isTeddyFilter){
+      teddyNFTs?.forEach((nft) => {
+        allOwnedNFTs.push(nft);
+      });
     } else {
-      setFilteredNFTsWithCategory(AllTokens?.filter((e) =>
-      e.metadata.id!.includes(searchInput)
-    ));
+      tedNFTs?.forEach((nft) => {
+        allOwnedNFTs.push(nft);
+      });
+      teddyNFTs?.forEach((nft) => {
+        allOwnedNFTs.push(nft);
+      });
+      aiTedNFTs?.forEach((nft) => {
+        allOwnedNFTs.push(nft);
+      }); 
     }
-  }, [isAIFilter, isTeddyFilter, isTedFilter, aiTedNFTs, searchInput, teddyNFTs, tedNFTs, AllTokens]);
+    setFilteredNFTs(allOwnedNFTs?.filter((e) => e.metadata.id!.includes(searchInput)));
+  }, [aiTedNFTs, isAIFilter, isTeddyFilter, isTedFilter, searchInput, teddyNFTs, tedNFTs]);
+  
+  console.log(filteredNFTs);
 
   const [showError, setShowError] = useState(false);
   const [errorCode, setErrorCode] = useState(0);
@@ -411,7 +378,7 @@ function TheFactory(props: TokenProps) {
 
   function burn(selectedTokens: NFT[]) {
     console.log("burn for hny clicked");
-    if(isDisabled) {
+    if(IS_DISABLED) {
       setShowError(true);
       setErrorCode(4);
       return;
@@ -420,7 +387,7 @@ function TheFactory(props: TokenProps) {
 
   function burnForOneOfOne(selectedTokens: NFT[]) {
     console.log("burn 1 of 1 clicked");
-    if(isDisabled) {
+    if(IS_DISABLED) {
       setShowError(true);
       setErrorCode(4);
       return;
@@ -435,10 +402,10 @@ function TheFactory(props: TokenProps) {
         isSmallScreen
           ? "factory-inner-container-mobile"
           : "factory-inner-container"
-      }
+      } sx={{zIndex: "1 !important", position: "relative"}}
     >
       {/* {showMismatch &&  */}
-      <Backdrop
+      {showMismatch && <Backdrop
         sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
         open={showMismatch}
       >
@@ -449,8 +416,9 @@ function TheFactory(props: TokenProps) {
         <MainnetNetwork />
         </Backdrop>
       </Backdrop>
+    }
 
-      <Backdrop
+  {isLoading && !showMismatch && <Backdrop
         sx={{
           color: "#fff",
           zIndex: (theme) => theme.zIndex.drawer + 1,
@@ -461,8 +429,9 @@ function TheFactory(props: TokenProps) {
       >
         <CircularProgress color="inherit" />
       </Backdrop>
+}
 
-      <Backdrop
+{!ownershipVerified && !isLoading && !isMismatched && <Backdrop
         sx={{
           color: "#fff",
           zIndex: (theme) => theme.zIndex.drawer + 1,
@@ -481,6 +450,7 @@ function TheFactory(props: TokenProps) {
           </Typography>
         </Box>
       </Backdrop>
+}
 
       <ErrorDialog
         open={showError}
@@ -586,7 +556,7 @@ function TheFactory(props: TokenProps) {
       )}
       {address ? (
         <div>
-          {error ? (
+          {errorAI && errorTed && errorTeddy ? (
             <div>
               <p>NFT not found - error</p>
             </div>
@@ -594,13 +564,13 @@ function TheFactory(props: TokenProps) {
             <Box
               className="gallery"
               sx={{
-                zIndex: "0",
+                // zIndex: "0 !important",
                 paddingLeft: "10px",
                 paddingBottom: "110px",
                 backgroundColor: "white",
                 paddingRight: "10px",
                 overflowX: "hidden",
-                overflowY: "auto",
+                overflowY: "hidden"
               }}
             >
               {tokens ? (
@@ -615,14 +585,16 @@ function TheFactory(props: TokenProps) {
                     overflowX: "hidden",
                     overflowY: "auto",
                     backgroundColor: "white",
+                    // zIndex: "0 !important",
                   }}
                   cols={columns}
                   gap={25}
                   rowHeight={450}
                 >
-                  {filteredNFTsWithCategory.map((token: NFT) => (
+                  {/* {filteredNFTsWithCategory.map((token: NFT) => ( */}
+                   {filteredNFTs.map((token: NFT) => (
                     <Box
-                      key={token.metadata.id}
+                      key={token.metadata.name}
                       className={
                         selectedTokens?.includes(token)
                           ? "card-selected"
@@ -688,25 +660,25 @@ function TheFactory(props: TokenProps) {
               ) : (
                 <p>Loading...</p>
               )}
+              
             </Box>
           )}
-        </div>
-      ) : (
-        <ConnectWalletPage />
-      )}
-      {address && !isSmallScreen && (
+        
+        {address && !isSmallScreen && !isLarge && (
         <Box
           sx={{
             position: "fixed",
             paddingLeft: "20px",
-            paddingRight: "20px",
             bottom: "0px",
+            left: leftDrawerWidth,
+            right: rightDrawerWidth,
             height: "70px",
-            width: "100%",
+            zIndex: (theme: { zIndex: { drawer: number } }) =>
+              theme.zIndex.drawer - 1,
             backgroundColor: "#FED100",
           }}
         >
-          <Box className="row-no-center">
+          <Box className="row-space-between">
             <Box
               className="selected-box"
               sx={{ display: "flex", flexDirection: "row" }}
@@ -757,19 +729,21 @@ function TheFactory(props: TokenProps) {
             </Box>
           </Box>
         </Box>
-      )}
-
-      {isSmallScreen && (
+         )}
+         {(isSmallScreen || isLarge) && (
         <Box
           sx={{
             position: "fixed",
             paddingLeft: "20px",
             paddingRight: "20px",
+            marginLeft: leftDrawerWidth,
+            marginRight: rightDrawerWidth,
             bottom: "0px",
+            left: "0px",
             height: "70px",
-            width: "100%",
+            width: "100dvw",
             backgroundColor: "#FED100",
-            zIndex: "1",
+            // zIndex: "1",
             display: "flex",
             flexDirection: "row",
             justifyContent: "space-between",
@@ -787,6 +761,10 @@ function TheFactory(props: TokenProps) {
           </Typography>
           <ExpandMoreOutlinedIcon/>
         </Box>
+      )}
+        </div>
+      ) : (
+        <ConnectWalletPage />
       )}
 
       <Sheet

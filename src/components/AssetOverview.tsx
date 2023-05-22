@@ -3,29 +3,29 @@ import { useTitle } from "../hooks/useTitle";
 import "../styles/Dashboard.css";
 import { useAddress } from "@thirdweb-dev/react";
 import { useSDK } from "@thirdweb-dev/react";
-import { LoadAllAccountDetails } from "../account/loadAllAccountDetails";
+import { LoadETHAccountDetails } from "../account/loadETHAccountDetails";
 
 function AssetOverview() {
-  const { tokens, isLoadingTed, error, honeyBalance } = LoadAllAccountDetails();
+  const { tokens, isLoadingOneOfOne, isLoadingBirthCerts, errorBirthCerts, errorOneOfOne, honeyBalance } = LoadETHAccountDetails();
   console.log(tokens);
-  console.log(isLoadingTed);
-  console.log(error);
+  console.log(isLoadingOneOfOne);
+  console.log(isLoadingBirthCerts);
+  console.log(errorBirthCerts);
+  console.log(errorOneOfOne);
   console.log(honeyBalance);
 
   const allOwnedNFTs = tokens.AllTokens.tokens;
-  const tedNFTs = tokens.Teds?.tokens;
-  const teddyNFTs = tokens.Teddies?.tokens;
-  const aiTedNFTs = tokens.AITeds?.tokens;
-  const stakedTeddies = tokens.StakedTeddiesIDs?.tokens;
+  const birthCertNFTs = tokens.BirthCertificates?.tokens;
+  const oneOfOneNFTs = tokens.OneofOnes?.tokens;
 
-  var teddyCount = 0;
-  if (stakedTeddies && teddyNFTs) {
-    teddyCount  = teddyNFTs?.length + stakedTeddies?.length;
-  } else if (teddyNFTs) {
-    teddyCount = teddyNFTs?.length;
-  } else if (stakedTeddies) {
-    teddyCount = stakedTeddies?.length;
-  }
+  // var teddyCount = 0;
+  // if (stakedTeddies && teddyNFTs) {
+  //   teddyCount  = teddyNFTs?.length + stakedTeddies?.length;
+  // } else if (teddyNFTs) {
+  //   teddyCount = teddyNFTs?.length;
+  // } else if (stakedTeddies) {
+  //   teddyCount = stakedTeddies?.length;
+  // }
   
   return (
     <Box
