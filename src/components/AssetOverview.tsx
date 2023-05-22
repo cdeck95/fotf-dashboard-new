@@ -12,30 +12,37 @@ import {
 } from "@thirdweb-dev/react";
 import { useSDK } from "@thirdweb-dev/react";
 import { LoadETHAccountDetails } from "../account/loadETHAccountDetails";
-import { PolygonProps } from "../views/Dashboard";
+import { PolygonProps, PolygonPropsNoNav } from "../views/Dashboard";
 import { Ethereum, Polygon, Mumbai } from "@thirdweb-dev/chains";
 import AssetOverviewDashboard from "./AssetOverviewDashboard";
+import AssetOverviewSidebar from "./AssetOverviewSidebar";
+import { PolygonAccountDetails } from "../account/loadPolygonAccountDetails";
 
-function AssetOverview(props: PolygonProps) {
+interface AssetOverviewPropsTop {
+  tokenProps: PolygonAccountDetails;
+  forSidebar: boolean;
+}
+
+function AssetOverview(props: AssetOverviewPropsTop) {
+
+  const { tokenProps, forSidebar } = props;
+  const ethTokenProps = LoadETHAccountDetails(); 
+
   return (
-    <ThirdwebProvider
-      key={"ethThirdWebProvider"}
-      supportedWallets={[
-        metamaskWallet(),
-        coinbaseWallet(),
-        walletConnect(),
-        localWallet(),
-        safeWallet(),
-      ]}
-      activeChain={Ethereum}
-      supportedChains={[Polygon, Ethereum]}
-    >
-      <AssetOverviewDashboard
-        tokenProps={props.tokenProps}
-        leftNavOpen={props.leftNavOpen}
-        rightNavOpen={props.rightNavOpen}
-      />
-    </ThirdwebProvider>
+    <Box  sx={{height: "auto", width: "auto"}}>
+      {forSidebar ? (
+        <AssetOverviewSidebar
+        tokenProps={tokenProps}
+        ethTokenProps={ethTokenProps}/>
+      )
+      : (
+        <AssetOverviewDashboard
+        tokenProps={tokenProps}
+        ethTokenProps={ethTokenProps}/>
+      )}
+    </Box>
+   
+      
   );
 }
 

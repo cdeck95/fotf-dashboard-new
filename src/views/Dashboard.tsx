@@ -37,6 +37,9 @@ import AssetOverview from "../components/AssetOverview";
 import { Ethereum, Polygon } from "@thirdweb-dev/chains";
 import HoneyEarnings from "../components/HoneyEarnings";
 import FuryTedsDashboard from "../components/FuryTedsDashboard";
+import TeddiesDashboard from "../components/TeddiesDashboard";
+import HoneyDashboard from "../components/HoneyDashboard";
+import Plushy from "../components/Plushy";
 
 export interface PolygonProps {
   tokenProps: PolygonAccountDetails;
@@ -112,13 +115,14 @@ function Dashboard(props: PolygonProps) {
             justifyContent: "center",
             alignItems: "center",
             width: "100%",
+            zIndex: "1 !important"
           }}
         >
           <Box className="dashboard-inner-container">
-            <Box className="row-left" sx={{height: "10%"}}>
-              <Typography className="page-header">Dashboard</Typography>
+            <Box className="row-left" sx={{height: "fit-content"}}>
+              <Typography className="page-header-small">Dashboard</Typography>
             </Box>
-            <Box className="row-space-between-dashboard">
+            <Box className="first-row-space-around-dashboard">
             <ThirdwebProvider
                 key={"ethThirdWebProviderDashboard"}
                 supportedWallets={[
@@ -132,20 +136,19 @@ function Dashboard(props: PolygonProps) {
                 supportedChains={[Polygon, Ethereum]}
               >
                 <HoneyEarnings />
-              </ThirdwebProvider>
-              <AssetOverview
-                tokenProps={props.tokenProps}
-                leftNavOpen={leftNavOpen}
-                rightNavOpen={rightNavOpen}
-              />
+                <AssetOverview
+                  tokenProps={props.tokenProps}
+                  forSidebar={false}
+                />
+               </ThirdwebProvider>
             </Box>
-            <Box className="row-space-between-dashboard">
+            <Box className="row-space-around-dashboard">
               <FuryTedsDashboard tokenProps={props.tokenProps} />
-              <h4>Teddy Staking</h4>
+              <TeddiesDashboard tokenProps={props.tokenProps} />
             </Box>
-            <Box className="row-space-between-dashboard">
-              <h4>Quick purchases</h4>
-              <h4>Plushies</h4>
+            <Box className="row-space-around-dashboard">
+              <HoneyDashboard/>
+              <Plushy/>
             </Box>
           </Box>
         </Box>
