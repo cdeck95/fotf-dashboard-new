@@ -427,7 +427,8 @@ function PermanentDrawerRight(props: NavProps) {
           </Box>
           <Box className="row-even">{blogContent}</Box>
         </Box>
-        {showAssetOverview &&  <AssetOverviewSidebar tokenProps={props.tokenProps} leftNavOpen={navOpen} rightNavOpen={navOpen}/>}        <Box className="info-card">
+        {showAssetOverview &&  <AssetOverview tokenProps={props.tokenProps} forSidebar={true}/>}        
+        <Box className="info-card">
           <Box className="row-between">
             <div className="info-card__title">Our Partners</div>
             <Button

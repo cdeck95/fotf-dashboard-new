@@ -16,26 +16,26 @@ import { PolygonProps, PolygonPropsNoNav } from "../views/Dashboard";
 import NFTList from "./NFTList";
 import LoadingDialog from "./LoadingDialog";
 
-function FuryTedsDashboard(props: PolygonPropsNoNav) {
+function TeddiesDashboard(props: PolygonPropsNoNav) {
 
-    const tedNFTs = props.tokenProps.tokens.Teds?.tokens;
-    const isLoadingTed = props.tokenProps.isLoadingTed;
+    const teddyNFTs = props.tokenProps.tokens.Teddies?.tokens;
+    const isLoadingTeddy = props.tokenProps.isLoadingTeddy;
 
     return (
         <Box sx={{width: "50%", height: "100%", paddingLeft: "5px", paddingRight: "5px"}}>
             <Typography className="page-header">
-                Fury Teds
+                Teddy Staking
             </Typography>
             <Box className="row-space-between" sx={{ height: "200px" }}>
-                <NFTList tokens={tedNFTs!} isLoading={isLoadingTed} />
+                <NFTList tokens={teddyNFTs!} isLoading={isLoadingTeddy} />
             </Box>  
             <Box className="row-center">
                 <Button className="dashboard-button" variant="contained" color="primary">
-                    Head to Fury Ted $HNY Claim
+                    Head to Teddy Staking
                 </Button>
             </Box>  
         </Box>
     );
 }
 
-export default FuryTedsDashboard;
+export default TeddiesDashboard;

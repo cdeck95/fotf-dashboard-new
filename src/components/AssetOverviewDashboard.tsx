@@ -9,6 +9,7 @@ import { LoadETHAccountDetails, tokens } from "../account/loadETHAccountDetails"
 import { PolygonProps } from "../views/Dashboard";
 import { useEffect, useState } from "react";
 import { Ethereum, Polygon, Mumbai } from "@thirdweb-dev/chains";
+import { PolygonAccountDetails } from "../account/loadPolygonAccountDetails";
 
 
 export interface TokenProps {
@@ -25,10 +26,24 @@ export interface TokenProps {
   rightNavOpen: boolean;
 }
 
-function AssetOverviewDashboard(props: PolygonProps) {
+export interface EthProps {
+  tokens: tokens;
+  errorOneOfOne: boolean;
+  errorBirthCerts: boolean;
+  isLoadingOneOfOne: boolean;
+  isLoadingBirthCerts: boolean;
+  honeyBalance: string;
+}
+
+export interface AssetOverviewProps {
+  tokenProps: PolygonAccountDetails;
+  ethTokenProps: EthProps;
+}
+
+function AssetOverviewDashboard(props: AssetOverviewProps) {
   //const { tokens, isLoadingTed, isLoadingTeddy, isLoadingStaked, isLoadingAI, isLoadingBirthCerts, isLoadingOneOfOne, error, honeyBalance } = props
   const { tokens, isLoadingTed, isLoadingTeddy, isLoadingAI, errorTed, errorTeddy, errorAI, maticBalance, needsFunds } = props.tokenProps;
-  const { leftNavOpen, rightNavOpen } = props;
+
   console.log(tokens);
   console.log(isLoadingTed);
   console.log(isLoadingTeddy);
@@ -39,17 +54,19 @@ function AssetOverviewDashboard(props: PolygonProps) {
   console.log(maticBalance);
   console.log(needsFunds);
 
-  const {honeyBalance, isLoadingOneOfOne, isLoadingBirthCerts, tokens: ethTokens } = LoadETHAccountDetails(); 
+  const {honeyBalance, isLoadingOneOfOne, isLoadingBirthCerts, tokens: ethTokens, errorBirthCerts, errorOneOfOne} = props.ethTokenProps;
   console.log(honeyBalance);
   console.log(isLoadingOneOfOne);
   console.log(isLoadingBirthCerts);
   console.log(ethTokens);
-
+  console.log(errorBirthCerts);
+  console.log(errorOneOfOne);
 
   const tedNFTs = tokens.Teds?.tokens;
   const teddyNFTs = tokens.Teddies?.tokens;
   const aiTedNFTs = tokens.AITeds?.tokens;
-  // const traitTokens = tokens.TraitSwapTokens?.tokens;
+  //const traitTokens = tokens.TraitSwapTokens?.tokens;
+  const traitTokens: NFT[] = [];
 
   const oneOfOnes = ethTokens.OneofOnes?.tokens;
   const birthCerts = ethTokens.BirthCertificates?.tokens;
@@ -61,22 +78,24 @@ function AssetOverviewDashboard(props: PolygonProps) {
   useEffect(() => {
 
     var tokenCountTmp = 0;
-  //  var allOwnedNFTTmp: NFT[] = [];
 
-    tedNFTs?.forEach((nft) => {
-     // allOwnedNFTTmp.push(nft);
-      tokenCountTmp++;
-    });
+    if(tedNFTs){
+      tedNFTs?.forEach((nft) => {
+        tokenCountTmp++;
+      });
+    } 
 
-    teddyNFTs?.forEach((nft) => {
-     // allOwnedNFTTmp.push(nft);
-      tokenCountTmp++;
-    });
+    if(teddyNFTs){
+      teddyNFTs?.forEach((nft) => {
+        tokenCountTmp++;
+      });
+    }
 
-    aiTedNFTs?.forEach((nft) => {
-    //  allOwnedNFTTmp.push(nft);
-      tokenCountTmp++;
-    }); 
+    if(aiTedNFTs){
+      aiTedNFTs?.forEach((nft) => {
+        tokenCountTmp++;
+      }); 
+    }
 
     if (oneOfOnes) {
       tokenCountTmp = tokenCountTmp + oneOfOnes?.length;
@@ -86,72 +105,78 @@ function AssetOverviewDashboard(props: PolygonProps) {
       tokenCountTmp = tokenCountTmp + birthCerts?.length;
     }
 
+    if (traitTokens) {
+      tokenCountTmp = tokenCountTmp + traitTokens?.length;
+    }
+
     setTokenCount(tokenCountTmp);
-   // setAllOwnedNFTs(allOwnedNFTTmp);
 
-     // if (traitTokens) {
-  //   tokenCount = tokenCount + traitTokens?.length;
-  // }
-
-  }, [tedNFTs, teddyNFTs, aiTedNFTs, oneOfOnes, birthCerts]);
+  }, [tedNFTs, teddyNFTs, aiTedNFTs, oneOfOnes, birthCerts, traitTokens]);
  
  
 
   return (
-  <Box className="info-card">
+  <Box className="info-card-dashboard">
         <Box className="row-between">
-          <Box className="info-card__title">Asset Overview</Box>
+            <Typography className="page-header-small">
+                Asset Overview
+            </Typography>
           <Typography className="learnMore">
             {tokenCount} total tokens
           </Typography>
         </Box>
         <Box className="row-around">
-          <Box className="col-no-space">
+          <Box className="col-large-dashboard">
+            <Typography className="honeyBalanceBlack-dashboard">{honeyBalance}</Typography>
+            <Typography className="honeyBalance-dashboard"> $HNY</Typography>
+          </Box>
+          <Box className="col-margin">
             {isLoadingTed 
               ? <CircularProgress size="1rem" sx={{margin: "auto"}}/>
-              : <Typography className="asset-numbers">{tedNFTs?.length}</Typography>
+              : <Typography className="asset-numbers-dashboard">{tedNFTs?.length}</Typography>
             }
-            <Typography className="aseet-type">Teds</Typography>
+            <Typography className="asset-type-dashboard">{tedNFTs?.length === 1 ? "Ted" : "Teds"}</Typography>
           </Box>
-          <Box className="col-no-space">
+          <Box className="col-margin">
             {isLoadingTeddy 
               ? <CircularProgress size="1rem" sx={{margin: "auto"}}/>
-              : <Typography className="asset-numbers">{teddyNFTs?.length}</Typography>
+              : <Typography className="asset-numbers-dashboard">{teddyNFTs?.length}</Typography>
             }
-            <Typography className="aseet-type">Teddies</Typography>
+            <Typography className="asset-type-dashboard">{teddyNFTs?.length === 1 ? "Teddy" : "Teddies"}</Typography>
           </Box>
-          <Box className="col-no-space">
-            {isLoadingAI
-              ? <CircularProgress size="1rem" sx={{margin: "auto"}}/>
-              : <Typography className="asset-numbers">{aiTedNFTs?.length}</Typography>
-            }
-            <Typography className="aseet-type">AI Teds</Typography>
-          </Box>
+          
         </Box>
-        <Box className="row-center-margin">
+        {/* <Box className="row-center-margin">
           <Typography className="honeyBalanceBlack">{honeyBalance}</Typography>
           <Typography className="honeyBalance"> $HNY</Typography>
-        </Box>
+        </Box> */}
         <Box className="row-around">
-          <Box className="col-no-space">
+          <Box className="col-margin">
+            {isLoadingAI
+              ? <CircularProgress size="1rem" sx={{margin: "auto"}}/>
+              : <Typography className="asset-numbers-dashboard">{aiTedNFTs?.length}</Typography>
+            }
+            <Typography className="asset-type-dashboard">{aiTedNFTs?.length === 1 ? "AI Ted" : "AI Teds"}</Typography>
+          </Box>
+          <Box className="col-margin">
           {isLoadingOneOfOne
               ? <CircularProgress size="1rem" sx={{margin: "auto"}}/>
-              : <Typography className="asset-numbers"> {oneOfOnes?.length}</Typography>
+              : <Typography className="asset-numbers-dashboard"> {oneOfOnes?.length}</Typography>
           }
-            <Typography className="aseet-type">One of Ones</Typography>
+            <Typography className="asset-type-dashboard">{oneOfOnes?.length === 1 ? "One of One" : "One of Ones"}</Typography>
           </Box>
-          <Box className="col-no-space">
+          <Box className="col-margin">
           {isLoadingBirthCerts
               ? <CircularProgress size="1rem" sx={{margin: "auto"}}/>
-              : <Typography className="asset-numbers"> {birthCerts?.length}</Typography>
+              : <Typography className="asset-numbers-dashboard"> {birthCerts?.length}</Typography>
           }
-            <Typography className="aseet-type">Birth Certificates</Typography>
+            <Typography className="asset-type-dashboard">{birthCerts?.length === 1 ? "Birth Certificate" : "Birth Certificates"}</Typography>
           </Box>
-          <Box className="col-no-space">
-            <Typography className="asset-numbers">
-              {/* {traitTokens?.length} */} 0
+          <Box className="col-margin">
+            <Typography className="asset-numbers-dashboard">
+              {traitTokens?.length}
             </Typography>
-            <Typography className="aseet-type">Trait Tokens</Typography>
+            <Typography className="asset-type-dashboard">{traitTokens?.length === 1 ? "Trait Token" : "Trait Tokens"}</Typography>
           </Box>
         </Box>
       </Box>
