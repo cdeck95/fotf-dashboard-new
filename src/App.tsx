@@ -25,7 +25,7 @@ import Backdrop from "@mui/material/Backdrop";
 import CircularProgress from "@mui/material/CircularProgress";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { useSDK } from "@thirdweb-dev/react";
-import { Routes, Route, Navigate } from "react-router-dom";
+import { Routes, Route, Navigate, useLocation } from "react-router-dom";
 import TheFactory from "./views/TheFactory";
 import Dashboard from "./views/Dashboard";
 
@@ -197,13 +197,13 @@ function App() {
       setSmallScreen(isMobile);
     }
   }, [isMobile, isMediumLarge]);
-
   
+  const location = useLocation();  
   const [pageTitle, setPageTitle] = useState("");
 
   useEffect(() => { 
  
-    switch (window.location.pathname) {
+    switch (location.pathname) {
       case "/":
         setPageTitle("Dashboard");
         break;
@@ -239,12 +239,7 @@ function App() {
       default:
         setPageTitle("Error");
     }
-    // if(window.location.pathname === "/Bridge" || window.location.pathname === "/bridge"){
-     
-    // } else {
-    //   setIsBridgePage(false);
-    // }
-  }, []);
+  }, [location.pathname]);
 
   
 
@@ -259,7 +254,7 @@ function App() {
               backgroundColor: "Black",
               height: "60px",
               width: "100%",
-              // zIndex: "2 !important",
+              zIndex: "2 !important",
             }}
           >
             <Box
@@ -269,7 +264,7 @@ function App() {
                 justifyContent: "center",
                 alignItems: "center",
                 textAlign: "center",
-                // zIndex: "2 !important",
+                zIndex: "2 !important",
               }}
             >
               {address && <Typography
@@ -281,7 +276,7 @@ function App() {
                   alignItems: "center",
                   textAlign: "center",
                   fontSize: "2rem",
-                  // zIndex: "2 !important",
+                  zIndex: "2 !important",
                 }}
               >
                {pageTitle}
@@ -351,7 +346,7 @@ function App() {
                 top: "5px",
                 left: "5px",
                 backgroundColor: "transparent",
-                // zIndex: "2",
+                zIndex: "2 !important",
               }}
             >
               {address && !isBridgePage && (
@@ -388,7 +383,7 @@ function App() {
                 top: "5px",
                 right: "5px",
                 backgroundColor: "transparent",
-                // zIndex: "2 !important",
+                zIndex: "2 !important",
               }}
             >
               {!navOpen && (
@@ -397,7 +392,7 @@ function App() {
                   aria-label="open right drawer"
                   onClick={() => handleRightNavOpen()}
                   size="large"
-                  // sx={{ zIndex: "2" }}
+                  sx={{ zIndex: "2 !important" }}
                 >
                   <MenuIcon sx={{ color: "White" }} />
                 </IconButton>
