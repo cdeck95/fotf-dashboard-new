@@ -643,9 +643,9 @@ function TheFactory(props: PolygonProps) {
                           <h3 className="metadata-title">
                             {token.metadata.name}
                           </h3>
-                          <h4 className="metadata">
+                          {/* <h4 className="metadata">
                             Last Transfer: 03/11/2023
-                          </h4>
+                          </h4> */}
                         </div>
                         <div className="small-right-column">
                           <ControlPointIcon
