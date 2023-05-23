@@ -332,6 +332,49 @@
   width: 32%;
 }
 
+.column-center-dashboard {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  height: 100%;
+  width: 32%;
+}
+
+.honey-earnings-dashboard {
+  display: flex;
+  font-size: 3rem !important;
+  margin: 0;
+  padding: 0;
+  margin-block-start: 0em;
+  margin-block-end: 0em;
+}
+
+.perDay {
+  display: flex;
+  font-size: .8rem;
+  text-align: right;
+  margin: 0;
+  padding: 0;
+  margin-block-start: 0em;
+  margin-block-end: 0em;
+  /* align-items: end; */
+}
+
+.honey-earnings-title {
+  display: flex;
+  font-size: 1.2rem !important;
+  font-weight: 500;
+  margin: 0;
+  padding: 0;
+  padding-bottom: 15px;
+  margin-block-start: 0em;
+  margin-block-end: 0em;
+  text-align: center;
+  justify-content: center;
+}
+
 .honeyImage {
   width: 175px;
   height: 175px;
@@ -341,7 +384,7 @@
 
 .plushyImage {
   width: 250px;
-  height: 250px;
+  height: 280px;
   margin: auto;
   object-fit: cover;
 }
@@ -425,7 +468,7 @@
 .half-col {
   height: 100%;
   width: 50%;
-  min-height: 270px;
+  min-height: 310px;
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;

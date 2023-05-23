@@ -1,4 +1,4 @@
-import { Box, Button, Typography } from "@mui/material";
+import { Box, Button, Chip, Divider, Typography } from "@mui/material";
 import { useTitle } from "../hooks/useTitle";
 import "../styles/Dashboard.css";
 import {
@@ -28,27 +28,30 @@ function HoneyEarnings() {
                 My Earnings
             </Typography>
             <Box className="row-space-between">
-                <Box className="column-between-dashboard">
-                    <Typography>
-                        7,500 $HNY Per Day 
+                <Box className="column-center-dashboard">
+                    <Divider sx={{ paddingBottom: "15px", opacity: "0"}}><Chip label="" /></Divider>
+                    <Typography className="honey-earnings-dashboard">
+                        <span className="accent-text">7,500</span><br/><span className="perDay"> Per Day</span> 
                     </Typography>
                     <Button className="dashboard-button" variant="contained" color="primary">
                         Visit The Factory
                     </Button>
                 </Box>
-                <Box className="column-between-dashboard">
-                    <Typography>
-                        Teddies by FOTF<br/>
-                        4,500 $HNY Per Day 
+                <Box className="column-center-dashboard">
+                    {/* <Typography className="honey-earnings-title"> Teddies by FOTF </Typography> */}
+                    <Divider sx={{ paddingBottom: "15px"}}><Chip label="Teddies by FOTF" /></Divider>
+                    <Typography className="honey-earnings-dashboard">
+                        4,500<br/><span className="perDay"> Per Day</span> 
                     </Typography>
                     <Button className="dashboard-button" variant="contained" color="primary">
                         Stake Your Teddies
                     </Button>
                 </Box>
-                <Box className="column-between-dashboard">
-                    <Typography>
-                        Fury Teds<br/>
-                        3,000 $HNY Per Day 
+                <Box className="column-center-dashboard">
+                    {/* <Typography className="honey-earnings-title"> Fury Teds </Typography> */}
+                    <Divider sx={{ paddingBottom: "15px"}}><Chip label="Fury Teds" /></Divider>
+                    <Typography className="honey-earnings-dashboard">
+                        3,000<br/><span className="perDay"> Per Day</span> 
                     </Typography>
                     <Button className="dashboard-button" variant="contained" color="primary">
                         Purchase Fury Teds
