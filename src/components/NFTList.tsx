@@ -2,6 +2,7 @@ import * as React from "react";
 import {
   Box,
   ImageList,
+  Skeleton,
   createTheme,
   useMediaQuery,
   useTheme,
@@ -14,15 +15,16 @@ import { ThirdwebNftMedia } from "@thirdweb-dev/react";
 import "../styles/Dashboard.css";
 import "../styles/Bridge.css";
 import { LoadStakedTeddy } from "../account/loadStakedTeddy";
-import { SetStateAction, useState } from "react";
+import { SetStateAction, useEffect, useState } from "react";
 import "../styles/TheFactory.css";
 
 interface NFTListProps {
   tokens: NFT[];
-  searchText: string;
-  stakedIDs: string[];
-  selectedTokens: NFT[];
-  setSelectedTokens: React.Dispatch<SetStateAction<NFT[]>>;
+  isLoading: boolean;
+  // searchText: string;
+  // stakedIDs: string[];
+  // selectedTokens: NFT[];
+  // setSelectedTokens: React.Dispatch<SetStateAction<NFT[]>>;
 }
 
 function NFTList(props: NFTListProps) {
@@ -42,145 +44,117 @@ function NFTList(props: NFTListProps) {
   console.log(`XL:  ${isXL}`);
   console.log(`Is 1920:  ${isFullScreen}`);
 
-  const { tokens, searchText, stakedIDs, selectedTokens, setSelectedTokens } = props;
+  const { tokens, isLoading } = props;
+  const [noTokens, setNoTokens] = useState(true);
+  const columns = 3;
 
-  // const [selectedTokensArray, setSelectedTokensArray] = useState<string[]>();
+  var numberOfTokens = 0;
 
-  const [columns, setColumns] = useState(3);
+  if(tokens !== undefined){
+    numberOfTokens = tokens.length;
+  }
+  
+  const startIndex = Math.floor(Math.random() * ((numberOfTokens - 3) - 0 + 1)) + 0;
+  const endIndex = startIndex + 3;
 
-  React.useEffect(() => {
-    if (isMobile) {
-      if (isSmall) {
-        setColumns(1);
-      } else {
-        setColumns(2);
-      }
+  useEffect(() => {
+    if (tokens === undefined) {
+      setNoTokens(true);
     } else {
-      if (isSmall) {
-        setColumns(1);
-      } else if (isMedium) {
-        setColumns(1);
-      } else if (isMediumLarge) {
-        setColumns(2);
-      } else if (isLarge) {
-        setColumns(2);
-      } else if (isXL && !isFullScreen) {
-        setColumns(3);
-      } else if (isFullScreen) {
-        setColumns(4);
-      } else {
-        setColumns(3);
-      }
+      setNoTokens(false);
     }
-  }, [isMobile, isSmall, isMedium, isMediumLarge, isLarge, isXL, isFullScreen]);
-
-  const add = (token: NFT) => {
-    console.log("adding...");
-    handleOnSelect(token);
-  };
-
-  const star = () => {
-    console.log("staring...");
-  };
-
-  const filteredNFTs = tokens?.filter((e) =>
-    e.metadata.id!.includes(searchText)
-  );
-  console.log(filteredNFTs);
+  }, [tokens]);
 
   function handleOnSelect(token: NFT) {
-    // if(selectedTokens?.includes(token)) {
-    //   const index = selectedTokens?.indexOf(token);
-    //   if (index !== undefined) {
-    //     selectedTokens?.splice(index, 1);
-    //   }
-    //   setSelectedTokens(selectedTokens);
-    //   console.log("removed token");
-    //   console.log(selectedTokens);
-    //   return;
-    // }
-    selectedTokens.push(token);
-    setSelectedTokens(selectedTokens);
-    console.log("pushed token");
-    console.log(selectedTokens);
+    console.log("clicked token");
+    console.log(token);
   }
 
-
-  //  props.stakedIDs.forEach((tokenID: string) => {
-  //   console.log(tokenID);
-  //   const stakedTeddy = LoadStakedTeddy(tokenID);
-  //   console.log(stakedTeddy);
-  //   teddyNFTs?.push(stakedTeddy!);
-  //   // //maybe i need to pass this array of IDs into a subcomponent that will return the NFT?
-    
-  // });
+  const skeltonMap:number[] = [1, 2, 3];
 
   return (
-    <ImageList
-      sx={{
-        justifyContent: "center",
-        width: "100%",
-        height: "100%",
-        paddingLeft: "10px",
-        paddingRight: "10px",
-        overflowX: "hidden",
-        overflowY: "auto",
-        backgroundColor: "white",
-      }}
-      cols={columns}
-      gap={25}
-      rowHeight={450}
-    >
-      {filteredNFTs.map((token: NFT) => (
-        <Box
-          key={token.metadata.id}
-          className={
-            selectedTokens?.includes(token) ? "card-selected" : "card"
-          }
-          sx={{
-            marginLeft: "auto",
-            marginRight: "auto",
-            background: "none",
-            maxHeight: "375px",
-            maxWidth: "350px",
-          }}
-          onClick={() => add(token)}
-        >
-          {/* <StarBorderIcon
-            onClick={star}
-            sx={{ position: "absolute", top: "10px", right: "10px" }}
-          /> */}
-           <Box sx={{
-            position: "relative",
-          }}  >
-          <ThirdwebNftMedia
-            metadata={token.metadata}
-            style={{
-              maxHeight: "280px",
-              maxWidth: "280px",
-              borderRadius: "10px",
-              objectFit: "cover",
-              width: "280px",
-              height: "280px",
+    <Box sx={{ width: "100%", height: "100%" }}>
+      {isLoading ? (
+        <ImageList
+        sx={{
+          justifyContent: "center",
+          width: "100%",
+          height: "100%",
+          overflowX: "hidden",
+          overflowY: "hidden",
+          backgroundColor: "white",
+        }}
+        cols={columns}
+        gap={10}
+        rowHeight={160}
+      >
+        {skeltonMap.map((e: number) => (
+          <Box
+            key={e}
+            className="card-dashboard"
+            sx={{
+              marginLeft: "auto",
+              marginRight: "auto",
+              background: "none",
+              maxHeight: "160px",
+              maxWidth: "160px",
+              borderRadius: "10px"
             }}
-          />
-
-          {selectedTokens?.includes(token) && (
-            <p className="title-selected">Burn</p>
+          >
+            <Skeleton variant="rectangular" width={160} height={160} />
+          </Box>
+        ))}
+      </ImageList>
+        
+      ) : (
+        <Box sx={{ width: "100%", height: "100%" }}>
+          {noTokens ? (
+            <Box></Box>
+          ) : (
+            <ImageList
+              sx={{
+                justifyContent: "flex-start",
+                width: "100%",
+                height: "100%",
+                overflowX: "auto",
+                overflowY: "hidden",
+                backgroundColor: "white",
+                display: 'flex',
+                flexDirection: 'row',
+                
+              }}
+              cols={columns}
+              gap={10}
+              rowHeight={160}
+            >
+              {tokens.slice(startIndex,endIndex).map((token: NFT) => (
+                <Box
+                  key={token.metadata.id}
+                  className="card-dashboard"
+                  sx={{
+                    background: "none",
+                    maxHeight: "160px",
+                    maxWidth: "160px",
+                  }}
+                >
+                  <ThirdwebNftMedia
+                    metadata={token.metadata}
+                    style={{
+                      maxHeight: "160px",
+                      maxWidth: "160px",
+                      borderRadius: "10px",
+                      objectFit: "cover",
+                      width: "160px",
+                      height: "160px",
+                    }}
+                  />
+                </Box>
+              ))}
+            </ImageList>
           )}
-          </Box>
-          <Box className="column-container" sx={{ marginBottom: "10px" }}>
-            <div className="large-left-column">
-              <h3 className="metadata-title">{token.metadata.name}</h3>
-              <h4 className="metadata">Last Transfer: 03/11/2023</h4>
-            </div>
-            <div className="small-right-column">
-              <ControlPointIcon onClick={() => add(token)} fontSize="small" />
-            </div>
-          </Box>
         </Box>
-      ))}
-    </ImageList>
+      )}
+    </Box>
   );
 }
 

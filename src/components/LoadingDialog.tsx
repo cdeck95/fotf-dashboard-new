@@ -25,10 +25,11 @@ export interface LoadingDialogProps {
   onClose: () => void;
   collection: string;
   collectionCount: number;
+  loadingCode: number;
 }
 
 function LoadingDialog(props: LoadingDialogProps) {
-  const { onClose, open, collection, collectionCount} = props;
+  const { onClose, open, collection, collectionCount, loadingCode} = props;
   const [isDoneLoading, setIsDoneLoading] = useState(false);
   const navigate = useNavigate();
 
@@ -36,18 +37,16 @@ function LoadingDialog(props: LoadingDialogProps) {
     onClose();
   };
 
-//   useEffect(() => {
-//     doTimeout();
-//   }, []);
-
-//   async function doTimeout(){
-//     await new Promise(resolve => setTimeout(resolve, 1000));
-//     setIsDoneLoading(true);
-//     handleClose();
-//   }
-
-  
- 
+  const loadingText = () => {
+    switch (loadingCode) {
+      case 1:
+        return `We are hard at work bridging your ${collectionCount} ${collection}... hang tight!`;
+      case 2:
+        return `Minting ${collectionCount} ${collection} ... hang tight!`;
+      default:
+        return "Loading... hang tight!";
+    }
+  }; 
   
   return (
     <Box sx={{borderRadius:"0px"}}>
@@ -75,28 +74,10 @@ function LoadingDialog(props: LoadingDialogProps) {
         </DialogTitle>
         <DialogContent>
           <DialogContentText sx={{ marginTop: "10px", fontSize: "24px", fontFamily: "Bebas Neue"}} id="alert-dialog-slide-description">
-          We are hard at work bridging your {collectionCount} {collection}... hang tight!
+           {loadingText()}
           </DialogContentText>
           <LinearProgress color="success" sx={{ marginTop: "5px"}}/>
         </DialogContent>
-        <DialogActions>
-{/*             
-          <Button variant="contained" disabled={isDoneLoading} sx={{
-            fontFamily: "Bebas Neue",
-            fontSize: "24px",
-            marginBottom: "5px",
-            backgroundColor: "green",
-            
-            color: "white",
-            "&:hover": {
-              backgroundColor: "white",
-              color: "green",
-              borderColor: "green",
-              borderWidth: "1px",
-              borderStyle: "solid"
-            }
-          }}onClick={handleClose}></Button> */}
-        </DialogActions>
       </Dialog>
     </Box>
   )

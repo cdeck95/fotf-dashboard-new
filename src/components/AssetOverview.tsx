@@ -1,40 +1,49 @@
 import { Box } from "@mui/material";
 import { useTitle } from "../hooks/useTitle";
 import "../styles/Dashboard.css";
-import { useAddress } from "@thirdweb-dev/react";
+import {
+  ThirdwebProvider,
+  coinbaseWallet,
+  localWallet,
+  metamaskWallet,
+  safeWallet,
+  useAddress,
+  walletConnect,
+} from "@thirdweb-dev/react";
 import { useSDK } from "@thirdweb-dev/react";
-import { LoadAllAccountDetails } from "../account/loadAllAccountDetails";
+import { LoadETHAccountDetails } from "../account/loadETHAccountDetails";
+import { PolygonProps, PolygonPropsNoNav } from "../views/Dashboard";
+import { Ethereum, Polygon, Mumbai } from "@thirdweb-dev/chains";
+import AssetOverviewDashboard from "./AssetOverviewDashboard";
+import AssetOverviewSidebar from "./AssetOverviewSidebar";
+import { PolygonAccountDetails } from "../account/loadPolygonAccountDetails";
 
-function AssetOverview() {
-  const { tokens, isLoadingTed, error, honeyBalance } = LoadAllAccountDetails();
-  console.log(tokens);
-  console.log(isLoadingTed);
-  console.log(error);
-  console.log(honeyBalance);
+interface AssetOverviewPropsTop {
+  tokenProps: PolygonAccountDetails;
+  forSidebar: boolean;
+}
 
-  const allOwnedNFTs = tokens.AllTokens.tokens;
-  const tedNFTs = tokens.Teds?.tokens;
-  const teddyNFTs = tokens.Teddies?.tokens;
-  const aiTedNFTs = tokens.AITeds?.tokens;
-  const stakedTeddies = tokens.StakedTeddiesIDs?.tokens;
+function AssetOverview(props: AssetOverviewPropsTop) {
 
-  var teddyCount = 0;
-  if (stakedTeddies && teddyNFTs) {
-    teddyCount  = teddyNFTs?.length + stakedTeddies?.length;
-  } else if (teddyNFTs) {
-    teddyCount = teddyNFTs?.length;
-  } else if (stakedTeddies) {
-    teddyCount = stakedTeddies?.length;
-  }
-  
+  const { tokenProps, forSidebar } = props;
+  const ethTokenProps = LoadETHAccountDetails(); 
+  console.log(ethTokenProps);
+
   return (
-    <Box
-      sx={{ display: "flex", justifyContent: "center", alignItems: "center" }}
-    >
-      <h1 className="comingSoon">
-        <span className="comingSoonBlack">Coming</span> Soon
-      </h1>
+    <Box  sx={{height: "auto", width: "auto"}}>
+      {forSidebar ? (
+        <AssetOverviewSidebar
+        tokenProps={tokenProps}
+        ethTokenProps={ethTokenProps}/>
+      )
+      : (
+        <AssetOverviewDashboard
+        tokenProps={tokenProps}
+        ethTokenProps={ethTokenProps}/>
+      )}
     </Box>
+   
+      
   );
 }
 

@@ -41,7 +41,7 @@ function ErrorDialog(props: FailureDialogProps) {
       case 3:
         return `Seems like you don’t have any ${collection} so there’s no need to bridge them. Don’t worry though, after the bridge closes you’ll be able to get your hands on some right here in the app. Stay tuned for that!`;
       case 4:
-          return "The Factory is currently disabled. Please check back later.";
+          return `${collection} is currently disabled. Please check back later.`;
       case 5:
         return `Your wallet is not currently approved for bridging ${collection}. Please make sure you have delisted all ${collection} from any marketplaces and open a ticket within the FOTF Discord.`;
       case 6:
@@ -51,6 +51,8 @@ function ErrorDialog(props: FailureDialogProps) {
       //case 8 spits the MM rejection straight into the dialog
       case 8:
         return `${collection}`;
+      case 9:
+        return `We could not find this token in your wallet. Please refresh and try again. If this continues to happen, please open a ticket within the FOTF Discord.`;
       default:
         return "Something went wrong. We are not sure exactly what. Please refresh the page. If this continues to happen, please open a ticket within the FOTF Discord.";
     }

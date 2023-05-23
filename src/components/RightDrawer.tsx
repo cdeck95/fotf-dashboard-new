@@ -3,7 +3,7 @@ import Box from "@mui/material/Box";
 import Drawer from "@mui/material/Drawer";
 import CssBaseline from "@mui/material/CssBaseline";
 import Toolbar from "@mui/material/Toolbar";
-import { ConnectWallet, useAddress, useNetwork, useNetworkMismatch } from "@thirdweb-dev/react";
+import { ConnectWallet, ThirdwebProvider, coinbaseWallet, localWallet, metamaskWallet, safeWallet, useAddress, useNetwork, useNetworkMismatch, walletConnect } from "@thirdweb-dev/react";
 import {
   Button,
   IconButton,
@@ -34,20 +34,14 @@ import notificationIcon from "../assets/icons8-notification-100.png";
 import NotificationsNoneOutlinedIcon from "@mui/icons-material/NotificationsNoneOutlined";
 import AssetOverview from "./AssetOverview";
 import AssetOverviewSidebar, { TokenProps } from "./AssetOverviewSidebar";
-import { tokens } from "../account/loadAllAccountDetails";
+import { tokens } from "../account/loadETHAccountDetails";
+import { PolygonAccountDetails } from "../account/loadPolygonAccountDetails";
+import { Ethereum, Polygon } from "@thirdweb-dev/chains";
 
 type NavProps = {
   setNavOpen: Function;
   navOpen: boolean;
-  error: boolean;
-  isLoadingTed: boolean,
-  isLoadingTeddy: boolean,
-  isLoadingAI: boolean,
-  isLoadingBirthCerts: boolean,
-  isLoadingOneOfOne: boolean,
-  isLoadingStaked: boolean,
-  honeyBalance: string;
-  tokens: tokens;
+  tokenProps: PolygonAccountDetails
 };
 
 const primaryColor = getComputedStyle(
@@ -86,8 +80,9 @@ function PermanentDrawerRight(props: NavProps) {
 
   // const tokenProps = props.tokenProps;
 
-  const { tokens, error, isLoadingAI, isLoadingBirthCerts, isLoadingOneOfOne, isLoadingStaked, isLoadingTed, isLoadingTeddy, honeyBalance} = props;
+  //const { tokens, error, isLoadingAI, isLoadingBirthCerts, isLoadingOneOfOne, isLoadingStaked, isLoadingTed, isLoadingTeddy, honeyBalance} = props;
   
+  const { tokens, isLoadingTed, isLoadingTeddy, isLoadingAI, errorTed, errorTeddy, errorAI, maticBalance, needsFunds } = props.tokenProps;
 
   // setNavOpen(true);
 
@@ -323,7 +318,9 @@ function PermanentDrawerRight(props: NavProps) {
   const [isSmallScreen, setSmallScreen] = useState(false);
 
 
-  const zIndex = (navOpen && isSmallScreen) ? "3 !important" : "0 !important";
+  const zIndex = (isSmallScreen) ? "2 !important" : "0 !important";
+  //const zIndex = (navOpen && isSmallScreen) ? "1 !important" : "0 !important";
+
 
   return (
     <Box
@@ -338,13 +335,16 @@ function PermanentDrawerRight(props: NavProps) {
           p: 3,
           display: "flex",
           justifyContent: "space-between",
+          zIndex: "10000 !important"
         }}
       ></Box>
       <Drawer
         sx={{
           width: navOpen ? drawerWidth : 0,
           flexShrink: 0,
+          zIndex: "10000 !important",
           whiteSpace: "nowrap",
+          "& .MuiDrawer-root": { width: drawerWidth, zIndex: zIndex },
           "& .MuiDrawer-paper": {
             width: drawerWidth,
             overflowY: "hidden",
@@ -428,7 +428,22 @@ function PermanentDrawerRight(props: NavProps) {
           </Box>
           <Box className="row-even">{blogContent}</Box>
         </Box>
-        {showAssetOverview && <AssetOverviewSidebar tokens={tokens} error={error} isLoadingTed={isLoadingTed}  isLoadingTeddy={isLoadingTeddy} isLoadingStaked={isLoadingStaked} isLoadingAI={isLoadingAI} isLoadingBirthCerts={isLoadingBirthCerts} isLoadingOneOfOne={isLoadingOneOfOne} honeyBalance={honeyBalance} leftNavOpen={navOpen} rightNavOpen={navOpen}/>}
+        {showAssetOverview &&  
+          <ThirdwebProvider
+          key={"ethThirdWebProviderSidebar"}
+          supportedWallets={[
+            metamaskWallet(),
+            coinbaseWallet(),
+            walletConnect(),
+            localWallet(),
+            safeWallet(),
+          ]}
+          activeChain={Ethereum}
+          supportedChains={[Polygon, Ethereum]}
+        >
+            <AssetOverview tokenProps={props.tokenProps} forSidebar={true}/>
+          </ThirdwebProvider>
+        }        
         <Box className="info-card">
           <Box className="row-between">
             <div className="info-card__title">Our Partners</div>

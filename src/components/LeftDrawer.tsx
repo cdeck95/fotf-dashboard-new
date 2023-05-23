@@ -13,7 +13,7 @@ import ListItemText from "@mui/material/ListItemText";
 import "../styles/globals.css";
 import fotfAppLogo from "../assets/FOTF_App.png";
 import theHubLogo from "../assets/hub_icon.png";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { Backdrop, IconButton, useMediaQuery, useTheme } from "@mui/material";
 import GridViewOutlinedIcon from "@mui/icons-material/GridViewOutlined";
 import DescriptionOutlinedIcon from "@mui/icons-material/DescriptionOutlined";
@@ -31,6 +31,10 @@ import { useEffect, useState } from "react";
 import { useAddress, useSDK } from "@thirdweb-dev/react";
 import { LeftDrawerWidth } from "../App";
 import ConnectingAirportsOutlinedIcon from '@mui/icons-material/ConnectingAirportsOutlined';
+import LocalOfferOutlinedIcon from '@mui/icons-material/LocalOfferOutlined';
+import CycloneOutlinedIcon from '@mui/icons-material/CycloneOutlined';
+import ChildFriendlyOutlinedIcon from '@mui/icons-material/ChildFriendlyOutlined';
+import CatchingPokemonOutlinedIcon from '@mui/icons-material/CatchingPokemonOutlined';
 
 type NavProps = {
   setNavOpen: Function;
@@ -79,31 +83,41 @@ function LeftDrawer(props: NavProps) {
   };
 
   const [isBridgePage, setIsBridgePage] = useState(false);
+  const location = useLocation();  
 
   useEffect(() => {
     if (!isMobile && isMediumLarge) {
       setSmallScreen(true);
     } else {
-      setSmallScreen(isMobile);
+      setSmallScreen(isMobile); 
     }
-
-    switch (window.location.pathname) {
-      case "/TheFactory":
+    const lowercasePath = location.pathname.toLowerCase();
+    switch (lowercasePath) {
+      case "/thefactory":
         setActivePage("TheFactory");
         break;
-      case "/HoneyExchange":
+      case "/honeyexchange":
         setActivePage("HoneyExchange");
         break;
-      case "BuildATeddy":
+      case "/buildateddy":
         setActivePage("BuildATeddy");
         break;
-      case "/TeddyStaking":
-        setActivePage("TeddyStaking");
+      case "/tedmint":
+        setActivePage("TedMint");
         break;
-      case "/TedClaims":
+      case "/teddymint":
+        setActivePage("TeddyMint");
+        break;
+      case "/aitedmint":
+        setActivePage("AITedMint");
+        break;
+      case "/teddyclaims":
+        setActivePage("TeddyClaims");
+        break;
+      case "/tedclaims":
         setActivePage("TedClaims");
         break;
-      case "/TraitSwapTeds":
+      case "/traitswapteds":
         setActivePage("TraitSwapTeds");
         break;
       // case "/Bridge":
@@ -118,7 +132,7 @@ function LeftDrawer(props: NavProps) {
         setActivePage("Dashboard");
         break;
     }
-  }, [isMobile, isMediumLarge]);
+  }, [isMobile, isMediumLarge, location.pathname]);
 
  
 
@@ -148,14 +162,29 @@ function LeftDrawer(props: NavProps) {
         setActivePage("HoneyExchange");
         handleMobileClick();
         break;
+      case "TedMint":
+        navigate("/TedMint");
+        setActivePage("TedMint");
+        handleMobileClick();
+        break;
+      case "TeddyMint":
+        navigate("/TeddyMint");
+        setActivePage("TeddyMint");
+        handleMobileClick();
+        break;
+      case "AITedMint":
+        navigate("/AITedMint");
+        setActivePage("AITedMint");
+        handleMobileClick();
+        break;
       case "TedClaims":
         navigate("/TedClaims");
         setActivePage("TedClaims");
         handleMobileClick();
         break;
-      case "TeddyStaking":
-        navigate("/TeddyStaking");
-        setActivePage("TeddyStaking");
+      case "TeddyClaims":
+        navigate("/TeddyClaims");
+        setActivePage("TeddyClaims");
         handleMobileClick();
         break;
       case "BuildATeddy":
@@ -202,8 +231,10 @@ function LeftDrawer(props: NavProps) {
           width: drawerWidth,
           flexShrink: 0,
           whiteSpace: "nowrap",
+          // "& .MuiDrawer-root": { width: 200, zIndex: -1 },
           "& .MuiDrawer-paper": {
             width: drawerWidth,
+            // zIndex: -1,
             overflowY: "hidden",
             overflowX: "hidden",
             border: "none",
@@ -296,6 +327,48 @@ function LeftDrawer(props: NavProps) {
         </List>
         <Divider />
         <Typography sx={{ marginTop: "10px", paddingLeft: "18px" }}>
+          Minting
+        </Typography>
+        <List>
+          <ListItem
+            key={"TedMint"}
+            disablePadding
+            onClick={() => loadPage("TedMint")}
+          >
+            <ListItemButton selected={activePage === "TedMint"}>
+              <ListItemIcon>
+                <CatchingPokemonOutlinedIcon fontSize="small" />
+              </ListItemIcon>
+              <ListItemText primary={"Fury Ted Mint"} />
+            </ListItemButton>
+          </ListItem>
+          <ListItem
+            key={"TeddyMint"}
+            disablePadding
+            onClick={() => loadPage("TeddyMint")}
+          >
+            <ListItemButton selected={activePage === "TeddyMint"}>
+              <ListItemIcon>
+                <ChildFriendlyOutlinedIcon fontSize="small" />
+              </ListItemIcon>
+              <ListItemText primary={"Teddy Mint"} />
+            </ListItemButton>
+          </ListItem>
+          <ListItem
+            key={"AITedMint"}
+            disablePadding
+            onClick={() => loadPage("AITedMint")}
+          >
+            <ListItemButton selected={activePage === "AITedMint"}>
+              <ListItemIcon>
+                <CycloneOutlinedIcon fontSize="small" />
+              </ListItemIcon>
+              <ListItemText primary={"AI Ted Mint"} />
+            </ListItemButton>
+          </ListItem>
+        </List>
+        <Divider />
+        <Typography sx={{ marginTop: "10px", paddingLeft: "18px" }}>
           Economy
         </Typography>
         <List>
@@ -312,18 +385,6 @@ function LeftDrawer(props: NavProps) {
             </ListItemButton>
           </ListItem>
           <ListItem
-            key={"TeddyStaking"}
-            disablePadding
-            onClick={() => loadPage("TeddyStaking")}
-          >
-            <ListItemButton selected={activePage === "TeddyStaking"}>
-              <ListItemIcon>
-                <SwapHorizOutlinedIcon fontSize="small" />
-              </ListItemIcon>
-              <ListItemText primary={"Teddy Staking"} />
-            </ListItemButton>
-          </ListItem>
-          <ListItem
             key={"TedClaims"}
             disablePadding
             onClick={() => loadPage("TedClaims")}
@@ -335,13 +396,26 @@ function LeftDrawer(props: NavProps) {
               <ListItemText primary={"Ted Claims"} />
             </ListItemButton>
           </ListItem>
+          <ListItem
+            key={"TeddyClaims"}
+            disablePadding
+            onClick={() => loadPage("TeddyClaims")}
+          >
+            <ListItemButton selected={activePage === "TeddyClaims"}>
+              <ListItemIcon>
+                <SwapHorizOutlinedIcon fontSize="small" />
+              </ListItemIcon>
+              <ListItemText primary={"Teddy Claims"} />
+            </ListItemButton>
+          </ListItem>
+          
         </List>
         <Divider />
         <Typography sx={{ marginTop: "10px", paddingLeft: "18px" }}>
           Utility
         </Typography>
         <List>
-          <ListItem
+          {/* <ListItem
             key={"BuildATeddy"}
             disablePadding
             onClick={() => loadPage("BuildATeddy")}
@@ -352,8 +426,8 @@ function LeftDrawer(props: NavProps) {
               </ListItemIcon>
               <ListItemText primary={"Build A Teddy"} />
             </ListItemButton>
-          </ListItem>
-          <ListItem
+          </ListItem> */}
+          {/* <ListItem
             key={"TraitSwapTeds"}
             disablePadding
             onClick={() => loadPage("TraitSwapTeds")}
@@ -363,6 +437,18 @@ function LeftDrawer(props: NavProps) {
                 <EditOutlinedIcon fontSize="small" />
               </ListItemIcon>
               <ListItemText primary={"Trait Swap Teds"} />
+            </ListItemButton>
+          </ListItem> */}
+          <ListItem
+            key={"TheFactory"}
+            disablePadding
+            onClick={() => loadPage("TheFactory")}
+          >
+            <ListItemButton selected={activePage === "TheFactory"}>
+              <ListItemIcon>
+                <PrecisionManufacturingOutlinedIcon fontSize="small" />
+              </ListItemIcon>
+              <ListItemText primary={"The Factory"} />
             </ListItemButton>
           </ListItem>
           <ListItem
@@ -375,18 +461,6 @@ function LeftDrawer(props: NavProps) {
                 <ImageOutlinedIcon fontSize="small" />
               </ListItemIcon>
               <ListItemText primary={"Graphic Templates"} />
-            </ListItemButton>
-          </ListItem>
-          <ListItem
-            key={"TheFactory"}
-            disablePadding
-            onClick={() => loadPage("TheFactory")}
-          >
-            <ListItemButton selected={activePage === "TheFactory"}>
-              <ListItemIcon>
-                <PrecisionManufacturingOutlinedIcon fontSize="small" />
-              </ListItemIcon>
-              <ListItemText primary={"The Factory"} />
             </ListItemButton>
           </ListItem>
           {/* <ListItem
@@ -457,7 +531,7 @@ function LeftDrawer(props: NavProps) {
             </Typography>
           </Box>
         </Box>
-        <Backdrop
+        {!address && <Backdrop
           sx={{
             color: "#fff",
             width: drawerWidth,
@@ -468,8 +542,8 @@ function LeftDrawer(props: NavProps) {
           onClick={handleClose}
         >
           {/* <CircularProgress color="inherit" /> */}
-        </Backdrop>
-        <Backdrop
+        </Backdrop>}
+        {isBridgePage && <Backdrop
           sx={{
             color: "#fff",
             width: drawerWidth,
@@ -480,7 +554,7 @@ function LeftDrawer(props: NavProps) {
           onClick={handleClose}
         >
           {/* <CircularProgress color="inherit" /> */}
-        </Backdrop>
+        </Backdrop>}
       </Drawer>
     </Box>
   );

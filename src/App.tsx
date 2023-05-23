@@ -25,7 +25,7 @@ import Backdrop from "@mui/material/Backdrop";
 import CircularProgress from "@mui/material/CircularProgress";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { useSDK } from "@thirdweb-dev/react";
-import { Routes, Route, Navigate } from "react-router-dom";
+import { Routes, Route, Navigate, useLocation } from "react-router-dom";
 import TheFactory from "./views/TheFactory";
 import Dashboard from "./views/Dashboard";
 
@@ -36,18 +36,22 @@ import BuildATeddy from "./views/BuildATeddy";
 import TraitSwapTeds from "./views/TraitSwapTeds";
 import HoneyExchange from "./views/HoneyExchange";
 import TedClaims from "./views/TedClaims";
-import TeddyStaking from "./views/TeddyStaking";
+import TeddyClaims from "./views/TeddyClaims";
 import MenuIcon from "@mui/icons-material/Menu";
 import {
-  LoadAllAccountDetails,
+  LoadETHAccountDetails,
   allOwnedNFTs,
   initialState,
-} from "./account/loadAllAccountDetails";
+} from "./account/loadETHAccountDetails";
 import GraphicTemplates from "./views/GraphicTemplates";
 import ConnectWalletPage from "./components/ConnectWalletPage";
 import PolygonBridge from "./views/PolygonBridge";
 import { MainnetNetwork } from "./components/MainnetNetwork";
 import { Ethereum, Polygon } from "@thirdweb-dev/chains";
+import { LoadPolygonAccountDetails } from "./account/loadPolygonAccountDetails";
+import AITedMint from "./views/AITedMint";
+import TedMint from "./views/TedMint";
+import TeddyMint from "./views/TeddyMint";
 
 export const LeftDrawerWidthPX = "260px";
 export const LeftDrawerWidth = 260;
@@ -66,6 +70,7 @@ function App() {
   const accentColor = getComputedStyle(
     document.documentElement
   ).getPropertyValue("--accent-color");
+  
   const theme = createTheme({
     typography: {
       fontFamily: ["Bebas Neue", "Roboto", "Helvetica", "Arial"].join(","),
@@ -123,12 +128,10 @@ function App() {
   });
 
   //const themeMui = useTheme();
+  //const isMediumLarge = useMediaQuery(themeMui.breakpoints.down("lg"));
   //const isMobile = !useMediaQuery(themeMui.breakpoints.up("md"));
   const isMobile = !useMediaQuery(theme.breakpoints.up("md"));
-
-   const isMediumLarge = useMediaQuery(theme.breakpoints.down("lg"));
-
-  // const isMediumLarge = useMediaQuery(themeMui.breakpoints.down("lg"));
+  const isMediumLarge = useMediaQuery(theme.breakpoints.down("lg"));
   const [isSmallScreen, setSmallScreen] = useState(false);
 
   const sdk = useSDK();
@@ -137,30 +140,35 @@ function App() {
   const [, switchNetwork] = useNetwork(); // Switch to desired chain
   const isMismatched = useNetworkMismatch(); // Detect if user is connected to the wrong network
   
-
   const [navOpen, setNavOpen] = useState(true);
   const [rightNavOpen, setRightNavOpen] = useState(true);
   const [isBridgePage, setIsBridgePage] = useState(false);
   const [allOwnedNFTsArray, setAllOwnedNFTsArray] = useState<any>([]);
 
-  const tokenProps = LoadAllAccountDetails();
+  // const ethTokenProps = LoadETHAccountDetails();
 
-  const {
-    tokens,
-    isLoadingTed,
-    isLoadingTeddy,
-    isLoadingStaked,
-    isLoadingAI,
-    isLoadingBirthCerts,
-    isLoadingOneOfOne,
-    error,
-    honeyBalance,
-  } = tokenProps;
+  const polygonTokenProps = LoadPolygonAccountDetails();
 
-  console.log(tokens);
-  console.log(isLoadingTed);
-  console.log(error);
-  console.log(honeyBalance);
+  // const {
+  //   tokens,
+  //   // isLoadingTed,
+  //   // isLoadingTeddy,
+  //   // isLoadingStaked,
+  //   // isLoadingAI,
+  //   isLoadingBirthCerts,
+  //   isLoadingOneOfOne,
+  //   errorBirthCerts,
+  //   errorOneOfOne,
+  //   // error,
+  //   honeyBalance,
+  // } = tokenProps;
+
+  // console.log(tokens);
+  // console.log(isLoadingBirthCerts);
+  // console.log(isLoadingOneOfOne);
+  // console.log(errorBirthCerts);
+  // console.log(errorOneOfOne);
+  // console.log(honeyBalance);
 
   const handleOpen = (): void => {
     setNavOpen(true);
@@ -192,60 +200,61 @@ function App() {
       setSmallScreen(isMobile);
     }
   }, [isMobile, isMediumLarge]);
-
   
+  const location = useLocation();  
   const [pageTitle, setPageTitle] = useState("");
 
   useEffect(() => { 
+
+    const lowercasePath = location.pathname.toLowerCase();
  
-    switch (window.location.pathname) {
+    switch (lowercasePath) {
       case "/":
-        setPageTitle("Polygon Bridge");
-        setIsBridgePage(true);
+        setPageTitle("Dashboard");
         break;
-      case "/TheFactory":
+      case "/thefactory":
         setPageTitle("The Factory");
         break;
-      case "/BuildATeddy":
+      case "/buildateddy":
         setPageTitle("Build A Teddy");
         break;
-      case "/TraitSwapTeds":
+      case "/traitswapteds":
         setPageTitle("Trait Swap Teds");
         break;
-      case "/GraphicTemplates":
+      case "/graphictemplates":
         setPageTitle("Graphic Templates");
         break;
-      case "/HoneyExchange":
+      case "/honeyexchange":
         setPageTitle("Honey Exchange");
         break;
-      case "/TeddyStaking":
-        setPageTitle("Teddy Staking");
+      case "/tedmint":
+        setPageTitle("Ted Mint");
         break;
-      case "/TedClaims":
+      case "/teddymint":
+        setPageTitle("Teddy Mint");
+        break;
+      case "/aitedmint":
+        setPageTitle("AI Ted Mint");
+        break;
+      case "/teddyclaims":
+        setPageTitle("Teddy Claims");
+        break;
+      case "/tedclaims":
         setPageTitle("Ted Claims");
         break;
-      // case "/Bridge":
-      //   setPageTitle("Polygon Bridge");
-      //   setIsBridgePage(true);
-      //   break;
       // case "/bridge":
       //   setPageTitle("Polygon Bridge");
       //   setIsBridgePage(true);
       //   break;
       default:
-        setPageTitle("Error");
+        setPageTitle("404 - Page not found");
     }
-    // if(window.location.pathname === "/Bridge" || window.location.pathname === "/bridge"){
-     
-    // } else {
-    //   setIsBridgePage(false);
-    // }
-  }, []);
+  }, [location.pathname]);
 
   
 
   return (
-    <Box className="app-container" sx={{ position: "relative" }}>
+    <Box className="app-container" sx={{ position: "relative", overflowY: "auto" }}>
       <ThemeProvider theme={theme}>
         {isSmallScreen && (
           <Box
@@ -300,51 +309,24 @@ function App() {
         >
           {address ? (
             <Routes>
-              <Route path="/" element={<Dashboard tokens={tokens}
-                    error={error}
-                    isLoadingTed={isLoadingTed}
-                    isLoadingTeddy={isLoadingTeddy}
-                    isLoadingStaked={isLoadingStaked}
-                    isLoadingAI={isLoadingAI}
-                    isLoadingBirthCerts={isLoadingBirthCerts}
-                    isLoadingOneOfOne={isLoadingOneOfOne}
-                    honeyBalance={honeyBalance}
-                    leftNavOpen={navOpen}
-                    rightNavOpen={rightNavOpen} />} />
+              <Route path="/" element={<Dashboard tokenProps={polygonTokenProps} leftNavOpen={navOpen} rightNavOpen={rightNavOpen}/>} />
               <Route path="/HoneyExchange" element={<HoneyExchange />} />
-              <Route path="/TeddyStaking" element={<TeddyStaking />} />
+              <Route path="/TeddyClaims" element={<TeddyClaims />} />
               <Route path="/TedClaims" element={<TedClaims />} />{" "}
+              <Route path="/TedMint" element={<TedMint />} />{" "}
+              <Route path="/TeddyMint" element={<TeddyMint />} />{" "}
+              <Route path="/AITedMint" element={<AITedMint />} />{" "}
               {/* <Route
                 path="/Bridge"
                 element={
                   <PolygonBridge
-                    tokens={tokens}
-                    error={error}
-                    isLoadingTed={isLoadingTed}
-                    isLoadingTeddy={isLoadingTeddy}
-                    isLoadingStaked={isLoadingStaked}
-                    isLoadingAI={isLoadingAI}
-                    isLoadingBirthCerts={isLoadingBirthCerts}
-                    isLoadingOneOfOne={isLoadingOneOfOne}
-                    honeyBalance={honeyBalance}
-                    leftNavOpen={navOpen}
-                    rightNavOpen={rightNavOpen}
+                    tokenProps={polygonTokenProps} leftNavOpen={navOpen} rightNavOpen={rightNavOpen} 
                   />
                 }
               /> */}
               <Route
                 path="/TheFactory"
-                element={<TheFactory tokens={tokens}
-                error={error}
-                isLoadingTed={isLoadingTed}
-                isLoadingTeddy={isLoadingTeddy}
-                isLoadingStaked={isLoadingStaked}
-                isLoadingAI={isLoadingAI}
-                isLoadingBirthCerts={isLoadingBirthCerts}
-                isLoadingOneOfOne={isLoadingOneOfOne}
-                honeyBalance={honeyBalance}
-                leftNavOpen={navOpen}
-                rightNavOpen={rightNavOpen} />}
+                element={<TheFactory tokenProps={polygonTokenProps} leftNavOpen={navOpen} rightNavOpen={rightNavOpen}  />}
               />
               <Route path="/BuildATeddy" element={<BuildATeddy />} />
               <Route path="/TraitSwapTeds" element={<TraitSwapTeds />} />
@@ -366,7 +348,7 @@ function App() {
                 top: "5px",
                 left: "5px",
                 backgroundColor: "transparent",
-                zIndex: "2",
+                zIndex: "2 !important",
               }}
             >
               {address && !isBridgePage && (
@@ -383,17 +365,18 @@ function App() {
           )}
           {rightNavOpen ? (
             <RightDrawer
+              tokenProps={polygonTokenProps}
               navOpen={rightNavOpen}
               setNavOpen={setRightNavOpen}
-              tokens={tokens}
-              error={error}
-              isLoadingTed={isLoadingTed}
-              isLoadingTeddy={isLoadingTeddy}
-              isLoadingStaked={isLoadingStaked}
-              isLoadingAI={isLoadingAI}
-              isLoadingBirthCerts={isLoadingBirthCerts}
-              isLoadingOneOfOne={isLoadingOneOfOne}
-              honeyBalance={honeyBalance}
+              // tokens={tokens}
+              // error={error}
+              // isLoadingTed={isLoadingTed}
+              // isLoadingTeddy={isLoadingTeddy}
+              // isLoadingStaked={isLoadingStaked}
+              // isLoadingAI={isLoadingAI}
+              // isLoadingBirthCerts={isLoadingBirthCerts}
+              // isLoadingOneOfOne={isLoadingOneOfOne}
+              // honeyBalance={honeyBalance}
             />
           ) : (
             <Box
@@ -411,7 +394,7 @@ function App() {
                   aria-label="open right drawer"
                   onClick={() => handleRightNavOpen()}
                   size="large"
-                  sx={{ zIndex: "2" }}
+                  sx={{ zIndex: "2 !important" }}
                 >
                   <MenuIcon sx={{ color: "White" }} />
                 </IconButton>
