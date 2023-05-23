@@ -1,0 +1,40 @@
+.mint-image {
+    aspect-ratio: 1/1;
+    height: 400px;
+    object-fit: contain;
+    object-position: center;
+}
+
+.mint-image-mobile {
+    aspect-ratio: 1/1;
+    height: 300px;
+    object-fit: contain;
+    object-position: center;
+}
+
+.col-mint {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    margin: 0%;
+    padding: 0%;
+    height: 100%;
+    width: 50%;
+    min-height: 400px;
+}
+
+.col-mint-mobile {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    margin: 0%;
+    padding: 0%;
+    width: 100%;
+    min-height: 200px;
+}
+
+.mint-button {
+    width: 75%;
+}
