@@ -37,7 +37,7 @@ function Plushy() {
                 <Typography className="small-text">
                     Who doesn't love a Teddy Bear? Stitched with large eyes, large face, tiny ears, non-toxic soft and silky plush fabric, soft huggable body and machine washable.
                 </Typography>
-                <Button className="dashboard-button" variant="contained" color="primary">
+                <Button className="dashboard-button" variant="contained" color="primary" onClick={() => window.open("https://shopfotf.com/")}>
                     Get Your Plushy
                 </Button>
             </Box>

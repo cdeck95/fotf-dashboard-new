@@ -13,7 +13,7 @@ import ListItemText from "@mui/material/ListItemText";
 import "../styles/globals.css";
 import fotfAppLogo from "../assets/FOTF_App.png";
 import theHubLogo from "../assets/hub_icon.png";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { Backdrop, IconButton, useMediaQuery, useTheme } from "@mui/material";
 import GridViewOutlinedIcon from "@mui/icons-material/GridViewOutlined";
 import DescriptionOutlinedIcon from "@mui/icons-material/DescriptionOutlined";
@@ -80,36 +80,42 @@ function LeftDrawer(props: NavProps) {
   };
 
   const [isBridgePage, setIsBridgePage] = useState(false);
+  const location = useLocation();  
 
   useEffect(() => {
     if (!isMobile && isMediumLarge) {
       setSmallScreen(true);
     } else {
-      setSmallScreen(isMobile);
+      setSmallScreen(isMobile); 
     }
-
-    switch (window.location.pathname) {
-      case "/TheFactory":
+    const lowercasePath = location.pathname.toLowerCase();
+    switch (lowercasePath) {
+      case "/thefactory":
         setActivePage("TheFactory");
         break;
-      case "/HoneyExchange":
+      case "/honeyexchange":
         setActivePage("HoneyExchange");
         break;
-      case "BuildATeddy":
+      case "/buildateddy":
         setActivePage("BuildATeddy");
         break;
-      case "/TeddyStaking":
-        setActivePage("TeddyStaking");
+      case "/tedmint":
+        setActivePage("TedMint");
         break;
-      case "/TedClaims":
+      case "/teddymint":
+        setActivePage("TeddyMint");
+        break;
+      case "/aitedmint":
+        setActivePage("AITedMint");
+        break;
+      case "/teddyclaims":
+        setActivePage("TeddyClaims");
+        break;
+      case "/tedclaims":
         setActivePage("TedClaims");
         break;
-      case "/TraitSwapTeds":
+      case "/traitswapteds":
         setActivePage("TraitSwapTeds");
-        break;
-      case "/Bridge":
-        setActivePage("PolygonBridge");
-        setIsBridgePage(true);
         break;
       case "/bridge":
         setActivePage("PolygonBridge");
@@ -119,7 +125,7 @@ function LeftDrawer(props: NavProps) {
         setActivePage("Dashboard");
         break;
     }
-  }, [isMobile, isMediumLarge]);
+  }, [isMobile, isMediumLarge, location.pathname]);
 
  
 

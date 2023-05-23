@@ -47,33 +47,15 @@ function NFTList(props: NFTListProps) {
   const { tokens, isLoading } = props;
   const [noTokens, setNoTokens] = useState(true);
   const columns = 3;
-  //const [columns, setColumns] = useState(3);
 
-  // useEffect(() => {
-  //   if (isMobile) {
-  //     if (isSmall) {
-  //       setColumns(1);
-  //     } else {
-  //       setColumns(2);
-  //     }
-  //   } else {
-  //     if (isSmall) {
-  //       setColumns(1);
-  //     } else if (isMedium) {
-  //       setColumns(1);
-  //     } else if (isMediumLarge) {
-  //       setColumns(2);
-  //     } else if (isLarge) {
-  //       setColumns(2);
-  //     } else if (isXL && !isFullScreen) {
-  //       setColumns(3);
-  //     } else if (isFullScreen) {
-  //       setColumns(4);
-  //     } else {
-  //       setColumns(3);
-  //     }
-  //   }
-  // }, [isMobile, isSmall, isMedium, isMediumLarge, isLarge, isXL, isFullScreen]);
+  var numberOfTokens = 0;
+
+  if(tokens !== undefined){
+    numberOfTokens = tokens.length;
+  }
+  
+  const startIndex = Math.floor(Math.random() * ((numberOfTokens - 3) - 0 + 1)) + 0;
+  const endIndex = startIndex + 3;
 
   useEffect(() => {
     if (tokens === undefined) {
@@ -116,6 +98,7 @@ function NFTList(props: NFTListProps) {
               background: "none",
               maxHeight: "160px",
               maxWidth: "160px",
+              borderRadius: "10px"
             }}
           >
             <Skeleton variant="rectangular" width={160} height={160} />
@@ -144,7 +127,7 @@ function NFTList(props: NFTListProps) {
               gap={10}
               rowHeight={160}
             >
-              {tokens.slice(0,3).map((token: NFT) => (
+              {tokens.slice(startIndex,endIndex).map((token: NFT) => (
                 <Box
                   key={token.metadata.id}
                   className="card-dashboard"
@@ -157,8 +140,8 @@ function NFTList(props: NFTListProps) {
                   <ThirdwebNftMedia
                     metadata={token.metadata}
                     style={{
-                      maxHeight: "180px",
-                      maxWidth: "180px",
+                      maxHeight: "160px",
+                      maxWidth: "160px",
                       borderRadius: "10px",
                       objectFit: "cover",
                       width: "160px",

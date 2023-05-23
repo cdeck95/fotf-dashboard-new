@@ -13,6 +13,7 @@ import {
 import { useSDK } from "@thirdweb-dev/react";
 import { LoadETHAccountDetails } from "../account/loadETHAccountDetails";
 import { PolygonProps } from "../views/Dashboard";
+import { useNavigate } from "react-router-dom";
 
 function HoneyEarnings() {
 
@@ -21,6 +22,8 @@ function HoneyEarnings() {
     console.log(isLoadingOneOfOne);
     console.log(isLoadingBirthCerts);
     console.log(ethTokens);
+
+    const navigate = useNavigate();
 
     return (
         <Box sx={{width: "50%", height: "auto"}}>
@@ -33,7 +36,7 @@ function HoneyEarnings() {
                     <Typography className="honey-earnings-dashboard" sx={{ paddingBottom: "15px"}}>
                         <span className="accent-text">7,500</span><br/><span className="perDay"> Per Day</span> 
                     </Typography>
-                    <Button className="dashboard-button" variant="contained" color="primary" sx={{ marginTop: "5px"}}>
+                    <Button className="dashboard-button" variant="contained" color="primary" sx={{ marginTop: "5px"}} onClick={() => navigate("/TheFactory")}>
                         Visit The Factory
                     </Button>
                 </Box>
@@ -43,7 +46,7 @@ function HoneyEarnings() {
                     <Typography className="honey-earnings-dashboard" sx={{ paddingBottom: "15px"}}>
                         4,500<br/><span className="perDay"> Per Day</span> 
                     </Typography>
-                    <Button className="dashboard-button" variant="contained" color="primary" sx={{ marginTop: "5px"}}>
+                    <Button className="dashboard-button" variant="contained" color="primary" sx={{ marginTop: "5px"}} onClick={() => navigate("/TeddyClaims")}>
                         Stake Your Teddies
                     </Button>
                 </Box>
@@ -53,7 +56,7 @@ function HoneyEarnings() {
                     <Typography className="honey-earnings-dashboard" sx={{ paddingBottom: "15px"}}>
                         3,000<br/><span className="perDay"> Per Day</span> 
                     </Typography>
-                    <Button className="dashboard-button" variant="contained" color="primary" sx={{ marginTop: "5px"}}>
+                    <Button className="dashboard-button" variant="contained" color="primary" sx={{ marginTop: "5px"}} onClick={() => navigate("/TedClaims")}>
                         Purchase Fury Teds
                     </Button>
                 </Box>

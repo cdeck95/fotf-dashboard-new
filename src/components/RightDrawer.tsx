@@ -318,7 +318,7 @@ function PermanentDrawerRight(props: NavProps) {
   const [isSmallScreen, setSmallScreen] = useState(false);
 
 
-  const zIndex = (isSmallScreen) ? "1 !important" : "0 !important";
+  const zIndex = (isSmallScreen) ? "2 !important" : "0 !important";
   //const zIndex = (navOpen && isSmallScreen) ? "1 !important" : "0 !important";
 
 
