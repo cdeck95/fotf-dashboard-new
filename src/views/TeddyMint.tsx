@@ -14,6 +14,7 @@ import { PolygonNetwork } from "../components/PolygonNetwork";
 import teddyPlaceholderImage from "../assets/teddyLogoForPlaceholders.png"
 import "../styles/mint.css";
 import SuccessDialog from "../components/SuccessDialog";
+import { BigNumber } from "ethers";
 
 const COLLECTION_FOR_MINT = "Teddies by FOTF";
 const DESCRIPTION_FOR_MINT = () => {
@@ -91,7 +92,7 @@ function TeddyMint() {
     const mint = async () => {
         try {
             const tx = await teddiesPolygonContract?.call(
-            "mint"
+            "mint", [BigNumber.from(counter)]
             );
             console.log(tx);
             return tx;
@@ -123,7 +124,7 @@ return (
       handleClose={handleMaticClose}
     />
     {!isSmallScreen && <Box className="row-center">
-      <h1 className="Large-Header">Mint {COLLECTION_FOR_MINT}</h1>
+      <h1 className="Large-Header">Mint <span className="accent-text">{COLLECTION_FOR_MINT}</span></h1>
     </Box>}
     <Box
       className="row-center"
@@ -147,7 +148,7 @@ return (
                   <Button disabled>{counter}</Button>
                   <Button onClick={() => handleIncrement()}>+</Button>
               </ButtonGroup>
-              <Button className="mint-button">
+              <Button className="mint-button" disabled={counter===0} onClick={() => mint()}>
                   Mint {counter} {COLLECTION_FOR_MINT}
               </Button>
           </Box>
