@@ -1,6 +1,7 @@
 import {
   Box,
   Button,
+  Chip,
   ImageList,
   Typography,
   useMediaQuery,
@@ -53,8 +54,12 @@ import ExpandMoreOutlinedIcon from '@mui/icons-material/ExpandMoreOutlined';
 import { TokenProps } from "../components/AssetOverviewSidebar";
 import ErrorDialog from "../components/ErrorDialog";
 import { PolygonProps } from "./Dashboard";
+import TedClaims from "./TedClaims";
 
 const IS_DISABLED = true;
+const tedsContract = "tedsContract";
+const teddiesContract = "teddiesContract";
+const aiTedsContract = "aiTedsContract";
 
 function TheFactory(props: PolygonProps) {
   useTitle("FOTF | The Factory");
@@ -101,6 +106,40 @@ function TheFactory(props: PolygonProps) {
   const teddyNFTs = tokens.Teddies?.tokens;
   const aiTedNFTs = tokens.AITeds?.tokens;
 
+  const leftDrawerWidth = isSmallScreen ? "0px" : "260px";
+  const rightDrawerWidth = isSmallScreen ? "0px" : "340px";
+
+  const leftDrawerWidthWithPadding = isSmallScreen ? "0px" : "280px";
+  const rightDrawerWidthWithPadding = isSmallScreen ? "0px" : "360px";
+
+  const [isActiveFilter, setIsActiveFilter] = useState(false);
+  const [isTransferredFilter, setIsTransferredFilter] = useState(false);
+  const [isLongestHeldFilter, setIsLongestHeldFilter] = useState(false);
+
+  const [isTedFilter, setIsTedFilter] = useState(false);
+  const [isTeddyFilter, setIsTeddyFilter] = useState(false);
+  const [isAIFilter, setIsAIFilter] = useState(false);
+
+  const [selectedTeds, setSelectedTeds] = useState<any>([]);
+  const [selectedTeddies, setSelectedTeddies] = useState<any>([]);
+  const [selectedAITeds, setSelectedAITeds] = useState<any>([]);
+
+  const [ownershipVerified, setOwnershipVerified] = useState(true);
+  const [selectedTokens, setSelectedTokens] = useState<NFT[]>([]);
+  const [selectedTokensIDs, setSelectedTokensIDs] = useState<number[]>([]);
+  const [selectedTokenContracts, setSelectedTokenContracts] = useState<string[]>([]);
+  const [is10Selected, setIs10Selected] = useState<boolean>(false);
+  const [isOneOfEachSelected, setIsOneOfEachSelected] =
+    useState<boolean>(false);
+  const [burnRewards, setBurnRewards] = useState<string>("0");
+
+  console.log(selectedTokensIDs);
+  console.log(selectedTokenContracts);
+
+  const tedBurnWorth = 5000;
+  const teddyBurnWorth = 6500;
+  const aiTedBurnWorth = 50000;
+
   const [columns, setColumns] = useState(3);
 
   useEffect(() => {
@@ -146,47 +185,38 @@ function TheFactory(props: PolygonProps) {
         splicedArray.splice(index, 1);
         console.log(splicedArray);
         setSelectedTokens(splicedArray);
+
+        const splicedArrayIDs = [...selectedTokensIDs];
+        splicedArrayIDs.splice(index, 1);
+        console.log(splicedArrayIDs);
+        setSelectedTokensIDs(splicedArrayIDs);
+
+        const splicedArrayOfContracts = [...selectedTokenContracts];
+        splicedArrayOfContracts.splice(index, 1);
+        console.log(splicedArrayOfContracts);
+        setSelectedTokenContracts(splicedArrayOfContracts);
       }
       // setSelectedTokens(selectedTokens);
-      console.log("removed token");
-      console.log(selectedTokens);
+      console.log("removed token, tokenID & contract");
       return;
     } else {
+      if(tedNFTs?.includes(token)){
+        setSelectedTokenContracts([...selectedTokenContracts, tedsContract]);
+      } else if(teddyNFTs?.includes(token)){
+        setSelectedTokenContracts([...selectedTokenContracts, teddiesContract]);
+      } else if(aiTedNFTs?.includes(token)){
+        setSelectedTokenContracts([...selectedTokenContracts, aiTedsContract]);
+      } else {
+        console.log("Selected token not found in owned arrays, aborting")
+        setShowError(true);
+        setErrorCode(9);
+        return;
+      }
+      setSelectedTokensIDs([...selectedTokensIDs, parseInt(token.metadata.id!)])
       setSelectedTokens([...selectedTokens, token]);
-      //setSelectedTokens(selectedTokens);
-      console.log("pushed token");
-      console.log(selectedTokens);
+      console.log("pushed token, token ID & contract");
     }
   }
-
-  const leftDrawerWidth = isSmallScreen ? "0px" : "260px";
-  const rightDrawerWidth = isSmallScreen ? "0px" : "340px";
-
-  const leftDrawerWidthWithPadding = isSmallScreen ? "0px" : "280px";
-  const rightDrawerWidthWithPadding = isSmallScreen ? "0px" : "360px";
-
-  const [isActiveFilter, setIsActiveFilter] = useState(false);
-  const [isTransferredFilter, setIsTransferredFilter] = useState(false);
-  const [isLongestHeldFilter, setIsLongestHeldFilter] = useState(false);
-
-  const [isTedFilter, setIsTedFilter] = useState(false);
-  const [isTeddyFilter, setIsTeddyFilter] = useState(false);
-  const [isAIFilter, setIsAIFilter] = useState(false);
-
-  const [selectedTeds, setSelectedTeds] = useState<any>([]);
-  const [selectedTeddies, setSelectedTeddies] = useState<any>([]);
-  const [selectedAITeds, setSelectedAITeds] = useState<any>([]);
-
-  const [ownershipVerified, setOwnershipVerified] = useState(true);
-  const [selectedTokens, setSelectedTokens] = useState<NFT[]>([]);
-  const [is10Selected, setIs10Selected] = useState<boolean>(false);
-  const [isOneOfEachSelected, setIsOneOfEachSelected] =
-    useState<boolean>(false);
-  const [burnRewards, setBurnRewards] = useState<string>("0");
-
-  const tedBurnWorth = 5000;
-  const teddyBurnWorth = 6500;
-  const aiTedBurnWorth = 50000;
 
   const [open, setOpen] = useState(false);
   const handleClose = () => {
@@ -643,6 +673,18 @@ function TheFactory(props: PolygonProps) {
                           <h3 className="metadata-title">
                             {token.metadata.name}
                           </h3>
+                          {tedNFTs?.includes(token) && (
+                            <Chip label="Fury Teds" color="primary" sx={{maxWidth: "125px"}} variant="outlined"/>
+                          )}
+
+                          {teddyNFTs?.includes(token) && (
+                            <Chip label="Teddies by FOTF" color="secondary" sx={{maxWidth: "125px"}} variant="outlined"/>
+                          )}
+
+                          {aiTedNFTs?.includes(token) && (
+                            <Chip label="AI Teds" color="success" sx={{maxWidth: "125px"}} variant="outlined"/>
+                          )}
+                          
                           {/* <h4 className="metadata">
                             Last Transfer: 03/11/2023
                           </h4> */}
