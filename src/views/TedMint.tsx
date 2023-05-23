@@ -91,9 +91,14 @@ function TedMint() {
 
     const mint = async () => {
         try {
+            const payableAmountPer = BigNumber.from(5).mul(BigNumber.from(10).pow(18));
+            const payableAmount = BigNumber.from(counter).mul(payableAmountPer);
+            //const payableAmount = counter * payableAmountPer;
             const tx = await tedPolygonContract?.call(
-            "mint", [BigNumber.from(counter)]
-            );
+            "mint", [BigNumber.from(counter)],
+            {
+              value: payableAmount
+            });
             console.log(tx);
             return tx;
         } catch (e: any) {
@@ -116,7 +121,7 @@ return (
   <Box
     className={isSmallScreen
         ? "inner-container-mobile"
-        : "inner-container"
+        : "inner-container-mint"
     }
   >
     <MaticDialog

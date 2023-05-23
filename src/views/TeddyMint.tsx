@@ -15,16 +15,16 @@ import teddyPlaceholderImage from "../assets/teddyLogoForPlaceholders.png"
 import "../styles/mint.css";
 import SuccessDialog from "../components/SuccessDialog";
 import { BigNumber } from "ethers";
+import teddyMintLogo from "../assets/teddyMint.gif"
 
 const COLLECTION_FOR_MINT = "Teddies by FOTF";
 const DESCRIPTION_FOR_MINT = () => {
-  return <Typography className="desc-text">Fully generated recreation of the Original 9671 Fury Teds from Fury Of The Fur.
-  <br></br>Artwork created by a community member using Starry AI.
-  <br></br>No Utility. Just Art and Testing.</Typography>
+  return <Typography className="desc-text">The charity initiative of Fury of the Fur Teddies have moved to Polygon with the rest and are ready to take over again.
+  <br></br>50% of all mint proceeds will be donated to charity. Start aging your Teddy today by minting.</Typography>
 } 
 
 function TeddyMint() {
-    useTitle("FOTF | Teddy Mint");
+    useTitle("Mint Teddies - 10 MATIC");
     const theme = useTheme();
     const isMobile = !useMediaQuery(theme.breakpoints.up("md"));
     const isMediumLarge = useMediaQuery(theme.breakpoints.down("lg"));
@@ -91,9 +91,13 @@ function TeddyMint() {
 
     const mint = async () => {
         try {
+            const payableAmountPer = BigNumber.from(10).mul(BigNumber.from(10).pow(18));
+            const payableAmount = BigNumber.from(counter).mul(payableAmountPer);
             const tx = await teddiesPolygonContract?.call(
-            "mint", [BigNumber.from(counter)]
-            );
+            "mint", [BigNumber.from(counter)],
+            {
+              value: payableAmount
+            });
             console.log(tx);
             return tx;
         } catch (e: any) {
@@ -116,7 +120,7 @@ return (
   <Box
     className={isSmallScreen
         ? "inner-container-mobile"
-        : "inner-container"
+        : "inner-container-mint"
     }
   >
     <MaticDialog
@@ -141,7 +145,7 @@ return (
       }}
     >
         <Box className={isSmallScreen ? "column" : "row-even"}>
-          <img src={teddyPlaceholderImage} alt="Teddy Placeholder" className={isSmallScreen ? "mint-image-mobile" : "mint-image"} />
+          <img src={teddyMintLogo} alt="Teddy Placeholder" className={isSmallScreen ? "mint-image-mobile" : "mint-image"} />
           <Box className={isSmallScreen ? "col-mint-mobile" : "col-mint"}>
               <ButtonGroup size="large" aria-label="small outlined button group">
                   <Button disabled={!(counter > 0)} onClick={() => handleDecrement()}>-</Button>

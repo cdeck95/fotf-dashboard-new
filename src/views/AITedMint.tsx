@@ -15,6 +15,7 @@ import teddyPlaceholderImage from "../assets/teddyLogoForPlaceholders.png"
 import "../styles/mint.css";
 import SuccessDialog from "../components/SuccessDialog";
 import { BigNumber } from "ethers";
+import aiTedMintLogo from "../assets/aiTedMint.png";
 
 const COLLECTION_FOR_MINT = "AI Teds";
 const DESCRIPTION_FOR_MINT = () => {
@@ -24,7 +25,7 @@ const DESCRIPTION_FOR_MINT = () => {
 } 
 
 function AITedMint() {
-    useTitle("FOTF | AI Ted Mint");
+    useTitle("Mint AI Teds - 2 MATIC or 100K HNY");
     const theme = useTheme();
     const isMobile = !useMediaQuery(theme.breakpoints.up("md"));
     const isMediumLarge = useMediaQuery(theme.breakpoints.down("lg"));
@@ -91,9 +92,13 @@ function AITedMint() {
 
     const mint = async () => {
         try {
+            const payableAmountPer = BigNumber.from(2).mul(BigNumber.from(10).pow(18));
+            const payableAmount = BigNumber.from(counter).mul(payableAmountPer);
             const tx = await aiTedsPolygonContract?.call(
-            "mint", [BigNumber.from(counter)]
-            );
+            "mint", [BigNumber.from(counter), false],
+            {
+              value: payableAmount
+            });
             console.log(tx);
             return tx;
         } catch (e: any) {
@@ -103,6 +108,9 @@ function AITedMint() {
                 return "User denied transaction signature.";
             } else if (e.message.includes("Reason: Address is not whitelisted")){
                 return `You are not whitelisted to Mint ${COLLECTION_FOR_MINT}`;
+            } else if (e.message.includes("Contract is paused")) {
+                alert("Contract is paused");
+                return;
             } else {
                 alert("Something went wrong, please try again");
                 return e.message;
@@ -116,7 +124,7 @@ function AITedMint() {
     <Box
       className={isSmallScreen
           ? "inner-container-mobile"
-          : "inner-container"
+          : "inner-container-mint"
       }
     >
       <MaticDialog
@@ -141,7 +149,7 @@ function AITedMint() {
         }}
       >
           <Box className={isSmallScreen ? "column" : "row-even"}>
-            <img src={teddyPlaceholderImage} alt="Teddy Placeholder" className={isSmallScreen ? "mint-image-mobile" : "mint-image"} />
+            <img src={aiTedMintLogo} alt="Teddy Placeholder" className={isSmallScreen ? "mint-image-mobile" : "mint-image"} />
             <Box className={isSmallScreen ? "col-mint-mobile" : "col-mint"}>
                 <ButtonGroup size="large" aria-label="small outlined button group">
                     <Button disabled={!(counter > 0)} onClick={() => handleDecrement()}>-</Button>
