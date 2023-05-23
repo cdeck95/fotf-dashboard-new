@@ -104,6 +104,15 @@ function Dashboard(props: PolygonProps) {
     rightNavOpen,
   ]);
 
+  const TedsDailyEarnings = 25;
+  const TeddiesDailyEarnings = 40;
+  
+  const totalFuryTedsEarnings = tokens.Teds === undefined ? 0 : tokens!.Teds?.tokens.length * TedsDailyEarnings;
+  const totalTeddiesEarnings = tokens.Teddies === undefined ? 0 : tokens!.Teddies?.tokens.length * TeddiesDailyEarnings;
+  const totalHNYEarnings = totalFuryTedsEarnings + totalTeddiesEarnings;
+
+
+
   return (
     <Box className="inner-container">
       {address ? (
@@ -135,7 +144,7 @@ function Dashboard(props: PolygonProps) {
                 activeChain={Ethereum}
                 supportedChains={[Polygon, Ethereum]}
               >
-                <HoneyEarnings />
+                <HoneyEarnings totalHNYEarnings={totalHNYEarnings} totalTeddiesEarnings={totalTeddiesEarnings} totalFuryTedsEarnings={totalFuryTedsEarnings}/>
                 <AssetOverview
                   tokenProps={props.tokenProps}
                   forSidebar={false}

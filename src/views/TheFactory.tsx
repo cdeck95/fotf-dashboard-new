@@ -763,7 +763,7 @@ function TheFactory(props: PolygonProps) {
                 Burn {selectedTokens.length} for{" "}
                 {parseInt(burnRewards).toLocaleString()} $HNY
               </Button>
-              <Button className="burn-btn" disabled={!is10Selected || !isOneOfEachSelected} onClick={() => burnForOneOfOne(selectedTokens)}>
+              <Button className="burn-btn" disabled={!isOneOfEachSelected} onClick={() => burnForOneOfOne(selectedTokens)}>
                 Burn {selectedTokens.length} +{" "}
                 {(1000000 - parseInt(burnRewards)).toLocaleString()} $HNY for
                 Custom 1/1
@@ -860,7 +860,7 @@ function TheFactory(props: PolygonProps) {
                 Burn {selectedTokens.length} for{" "}
                 {parseInt(burnRewards).toLocaleString()} $HNY
               </Button>
-              <Button className="burn-btn-mobile " disabled={!is10Selected || !isOneOfEachSelected} onClick={() => burnForOneOfOne(selectedTokens)}>
+              <Button className="burn-btn-mobile " disabled={!isOneOfEachSelected} onClick={() => burnForOneOfOne(selectedTokens)}>
                 Burn {selectedTokens.length} +{" "}
                 {(1000000 - parseInt(burnRewards)).toLocaleString()} $HNY for
                 Custom 1/1
