@@ -31,6 +31,7 @@ import { useEffect, useState } from "react";
 import { useAddress, useSDK } from "@thirdweb-dev/react";
 import { LeftDrawerWidth } from "../App";
 import ConnectingAirportsOutlinedIcon from '@mui/icons-material/ConnectingAirportsOutlined';
+import LocalOfferOutlinedIcon from '@mui/icons-material/LocalOfferOutlined';
 
 type NavProps = {
   setNavOpen: Function;
@@ -146,6 +147,21 @@ function LeftDrawer(props: NavProps) {
       case "HoneyExchange":
         navigate("/HoneyExchange");
         setActivePage("HoneyExchange");
+        handleMobileClick();
+        break;
+      case "TedMint":
+        navigate("/TedMint");
+        setActivePage("TedMint");
+        handleMobileClick();
+        break;
+      case "TeddyMint":
+        navigate("/TeddyMint");
+        setActivePage("TeddyMint");
+        handleMobileClick();
+        break;
+      case "AITedMint":
+        navigate("/AITedMint");
+        setActivePage("AITedMint");
         handleMobileClick();
         break;
       case "TedClaims":
@@ -298,6 +314,48 @@ function LeftDrawer(props: NavProps) {
         </List>
         <Divider />
         <Typography sx={{ marginTop: "10px", paddingLeft: "18px" }}>
+          Minting
+        </Typography>
+        <List>
+          <ListItem
+            key={"TedMint"}
+            disablePadding
+            onClick={() => loadPage("TedMint")}
+          >
+            <ListItemButton selected={activePage === "TedMint"}>
+              <ListItemIcon>
+                <LocalOfferOutlinedIcon fontSize="small" />
+              </ListItemIcon>
+              <ListItemText primary={"Fury Ted Mint"} />
+            </ListItemButton>
+          </ListItem>
+          <ListItem
+            key={"TeddyMint"}
+            disablePadding
+            onClick={() => loadPage("TeddyMint")}
+          >
+            <ListItemButton selected={activePage === "TeddyMint"}>
+              <ListItemIcon>
+                <LocalOfferOutlinedIcon fontSize="small" />
+              </ListItemIcon>
+              <ListItemText primary={"Teddy Mint"} />
+            </ListItemButton>
+          </ListItem>
+          <ListItem
+            key={"AITedMint"}
+            disablePadding
+            onClick={() => loadPage("AITedMint")}
+          >
+            <ListItemButton selected={activePage === "AITedMint"}>
+              <ListItemIcon>
+                <LocalOfferOutlinedIcon fontSize="small" />
+              </ListItemIcon>
+              <ListItemText primary={"AI Ted Mint"} />
+            </ListItemButton>
+          </ListItem>
+        </List>
+        <Divider />
+        <Typography sx={{ marginTop: "10px", paddingLeft: "18px" }}>
           Economy
         </Typography>
         <List>
@@ -343,7 +401,7 @@ function LeftDrawer(props: NavProps) {
           Utility
         </Typography>
         <List>
-          <ListItem
+          {/* <ListItem
             key={"BuildATeddy"}
             disablePadding
             onClick={() => loadPage("BuildATeddy")}
@@ -354,8 +412,8 @@ function LeftDrawer(props: NavProps) {
               </ListItemIcon>
               <ListItemText primary={"Build A Teddy"} />
             </ListItemButton>
-          </ListItem>
-          <ListItem
+          </ListItem> */}
+          {/* <ListItem
             key={"TraitSwapTeds"}
             disablePadding
             onClick={() => loadPage("TraitSwapTeds")}
@@ -365,6 +423,18 @@ function LeftDrawer(props: NavProps) {
                 <EditOutlinedIcon fontSize="small" />
               </ListItemIcon>
               <ListItemText primary={"Trait Swap Teds"} />
+            </ListItemButton>
+          </ListItem> */}
+          <ListItem
+            key={"TheFactory"}
+            disablePadding
+            onClick={() => loadPage("TheFactory")}
+          >
+            <ListItemButton selected={activePage === "TheFactory"}>
+              <ListItemIcon>
+                <PrecisionManufacturingOutlinedIcon fontSize="small" />
+              </ListItemIcon>
+              <ListItemText primary={"The Factory"} />
             </ListItemButton>
           </ListItem>
           <ListItem
@@ -377,18 +447,6 @@ function LeftDrawer(props: NavProps) {
                 <ImageOutlinedIcon fontSize="small" />
               </ListItemIcon>
               <ListItemText primary={"Graphic Templates"} />
-            </ListItemButton>
-          </ListItem>
-          <ListItem
-            key={"TheFactory"}
-            disablePadding
-            onClick={() => loadPage("TheFactory")}
-          >
-            <ListItemButton selected={activePage === "TheFactory"}>
-              <ListItemIcon>
-                <PrecisionManufacturingOutlinedIcon fontSize="small" />
-              </ListItemIcon>
-              <ListItemText primary={"The Factory"} />
             </ListItemButton>
           </ListItem>
           {/* <ListItem
