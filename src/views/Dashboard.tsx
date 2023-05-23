@@ -107,11 +107,31 @@ function Dashboard(props: PolygonProps) {
   const TedsDailyEarnings = 25;
   const TeddiesDailyEarnings = 40;
   
-  const totalFuryTedsEarnings = tokens.Teds === undefined ? 0 : tokens!.Teds?.tokens.length * TedsDailyEarnings;
-  const totalTeddiesEarnings = tokens.Teddies === undefined ? 0 : tokens!.Teddies?.tokens.length * TeddiesDailyEarnings;
+  const [totalFuryTedsEarnings, setTotalFuryTedsEarnings] = useState(0);
+  const [totalTeddiesEarnings, setTotalTeddiesEarnings] = useState(0);
   const totalHNYEarnings = totalFuryTedsEarnings + totalTeddiesEarnings;
 
+  useEffect(() => {
+    if(tokens === undefined) {
+      return;
+    }
+    if (tokens!.Teds === undefined){
+      console.log("no teds");
+    } else {
+      if(tokens!.Teds?.tokens !== undefined) {
+        setTotalFuryTedsEarnings(tokens!.Teds?.tokens.length * TedsDailyEarnings);
+      }
+    }
 
+    if (tokens!.Teddies === undefined){
+      console.log("no teddies");
+    } else {
+      if(tokens!.Teddies?.tokens !== undefined) {
+        setTotalTeddiesEarnings(tokens!.Teddies?.tokens.length * TeddiesDailyEarnings);
+      }
+    }
+    
+  }, [tokens, tokens.Teds, tokens.Teddies, tokens.Teds?.tokens, tokens.Teddies?.tokens]);
 
   return (
     <Box className="inner-container">

@@ -378,18 +378,6 @@ function LeftDrawer(props: NavProps) {
             </ListItemButton>
           </ListItem>
           <ListItem
-            key={"TeddyClaims"}
-            disablePadding
-            onClick={() => loadPage("TeddyClaims")}
-          >
-            <ListItemButton selected={activePage === "TeddyClaims"}>
-              <ListItemIcon>
-                <SwapHorizOutlinedIcon fontSize="small" />
-              </ListItemIcon>
-              <ListItemText primary={"Teddy Claims"} />
-            </ListItemButton>
-          </ListItem>
-          <ListItem
             key={"TedClaims"}
             disablePadding
             onClick={() => loadPage("TedClaims")}
@@ -401,6 +389,19 @@ function LeftDrawer(props: NavProps) {
               <ListItemText primary={"Ted Claims"} />
             </ListItemButton>
           </ListItem>
+          <ListItem
+            key={"TeddyClaims"}
+            disablePadding
+            onClick={() => loadPage("TeddyClaims")}
+          >
+            <ListItemButton selected={activePage === "TeddyClaims"}>
+              <ListItemIcon>
+                <SwapHorizOutlinedIcon fontSize="small" />
+              </ListItemIcon>
+              <ListItemText primary={"Teddy Claims"} />
+            </ListItemButton>
+          </ListItem>
+          
         </List>
         <Divider />
         <Typography sx={{ marginTop: "10px", paddingLeft: "18px" }}>

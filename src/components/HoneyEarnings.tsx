@@ -43,7 +43,7 @@ function HoneyEarnings(props: HoneyEarningsProps) {
                 <Box className="column-between-dashboard">
                     <Divider sx={{ paddingBottom: "31px", paddingTop: "11px", opacity: "0"}}><Chip label="" /></Divider>
                     <Typography className="honey-earnings-dashboard" sx={{ paddingBottom: "15px"}}>
-                        <span className="accent-text">7,500</span><br/><span className="perDay"> Per Day</span> 
+                        <span className="accent-text">{totalHNYEarnings}</span><br/><span className="perDay"> Per Day</span> 
                     </Typography>
                     <Button className="dashboard-button" variant="contained" color="primary" sx={{ marginTop: "5px"}} onClick={() => navigate("/TheFactory")}>
                         Visit The Factory
@@ -53,7 +53,7 @@ function HoneyEarnings(props: HoneyEarningsProps) {
                     {/* <Typography className="honey-earnings-title"> Teddies by FOTF </Typography> */}
                     <Divider sx={{ paddingBottom: "31px", paddingTop: "11px"}}><Chip label="Teddies by FOTF" /></Divider>
                     <Typography className="honey-earnings-dashboard" sx={{ paddingBottom: "15px"}}>
-                        4,500<br/><span className="perDay"> Per Day</span> 
+                        {totalTeddiesEarnings}<br/><span className="perDay"> Per Day</span> 
                     </Typography>
                     <Button className="dashboard-button" variant="contained" color="primary" sx={{ marginTop: "5px"}} onClick={() => navigate("/TeddyClaims")}>
                         Stake Your Teddies
@@ -63,7 +63,7 @@ function HoneyEarnings(props: HoneyEarningsProps) {
                     {/* <Typography className="honey-earnings-title"> Fury Teds </Typography> */}
                     <Divider sx={{ paddingBottom: "31px", paddingTop: "11px"}}><Chip label="Fury Teds" /></Divider>
                     <Typography className="honey-earnings-dashboard" sx={{ paddingBottom: "15px"}}>
-                        3,000<br/><span className="perDay"> Per Day</span> 
+                        {totalFuryTedsEarnings}<br/><span className="perDay"> Per Day</span> 
                     </Typography>
                     <Button className="dashboard-button" variant="contained" color="primary" sx={{ marginTop: "5px"}} onClick={() => navigate("/TedClaims")}>
                         Purchase Fury Teds
