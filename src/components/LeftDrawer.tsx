@@ -32,6 +32,9 @@ import { useAddress, useSDK } from "@thirdweb-dev/react";
 import { LeftDrawerWidth } from "../App";
 import ConnectingAirportsOutlinedIcon from '@mui/icons-material/ConnectingAirportsOutlined';
 import LocalOfferOutlinedIcon from '@mui/icons-material/LocalOfferOutlined';
+import CycloneOutlinedIcon from '@mui/icons-material/CycloneOutlined';
+import ChildFriendlyOutlinedIcon from '@mui/icons-material/ChildFriendlyOutlined';
+import CatchingPokemonOutlinedIcon from '@mui/icons-material/CatchingPokemonOutlined';
 
 type NavProps = {
   setNavOpen: Function;
@@ -330,7 +333,7 @@ function LeftDrawer(props: NavProps) {
           >
             <ListItemButton selected={activePage === "TedMint"}>
               <ListItemIcon>
-                <LocalOfferOutlinedIcon fontSize="small" />
+                <CatchingPokemonOutlinedIcon fontSize="small" />
               </ListItemIcon>
               <ListItemText primary={"Fury Ted Mint"} />
             </ListItemButton>
@@ -342,7 +345,7 @@ function LeftDrawer(props: NavProps) {
           >
             <ListItemButton selected={activePage === "TeddyMint"}>
               <ListItemIcon>
-                <LocalOfferOutlinedIcon fontSize="small" />
+                <ChildFriendlyOutlinedIcon fontSize="small" />
               </ListItemIcon>
               <ListItemText primary={"Teddy Mint"} />
             </ListItemButton>
@@ -354,7 +357,7 @@ function LeftDrawer(props: NavProps) {
           >
             <ListItemButton selected={activePage === "AITedMint"}>
               <ListItemIcon>
-                <LocalOfferOutlinedIcon fontSize="small" />
+                <CycloneOutlinedIcon fontSize="small" />
               </ListItemIcon>
               <ListItemText primary={"AI Ted Mint"} />
             </ListItemButton>
