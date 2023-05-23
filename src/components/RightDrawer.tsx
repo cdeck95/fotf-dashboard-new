@@ -3,7 +3,7 @@ import Box from "@mui/material/Box";
 import Drawer from "@mui/material/Drawer";
 import CssBaseline from "@mui/material/CssBaseline";
 import Toolbar from "@mui/material/Toolbar";
-import { ConnectWallet, useAddress, useNetwork, useNetworkMismatch } from "@thirdweb-dev/react";
+import { ConnectWallet, ThirdwebProvider, coinbaseWallet, localWallet, metamaskWallet, safeWallet, useAddress, useNetwork, useNetworkMismatch, walletConnect } from "@thirdweb-dev/react";
 import {
   Button,
   IconButton,
@@ -36,6 +36,7 @@ import AssetOverview from "./AssetOverview";
 import AssetOverviewSidebar, { TokenProps } from "./AssetOverviewSidebar";
 import { tokens } from "../account/loadETHAccountDetails";
 import { PolygonAccountDetails } from "../account/loadPolygonAccountDetails";
+import { Ethereum, Polygon } from "@thirdweb-dev/chains";
 
 type NavProps = {
   setNavOpen: Function;
@@ -427,7 +428,22 @@ function PermanentDrawerRight(props: NavProps) {
           </Box>
           <Box className="row-even">{blogContent}</Box>
         </Box>
-        {showAssetOverview &&  <AssetOverview tokenProps={props.tokenProps} forSidebar={true}/>}        
+        {showAssetOverview &&  
+          <ThirdwebProvider
+          key={"ethThirdWebProviderSidebar"}
+          supportedWallets={[
+            metamaskWallet(),
+            coinbaseWallet(),
+            walletConnect(),
+            localWallet(),
+            safeWallet(),
+          ]}
+          activeChain={Ethereum}
+          supportedChains={[Polygon, Ethereum]}
+        >
+            <AssetOverview tokenProps={props.tokenProps} forSidebar={true}/>
+          </ThirdwebProvider>
+        }        
         <Box className="info-card">
           <Box className="row-between">
             <div className="info-card__title">Our Partners</div>

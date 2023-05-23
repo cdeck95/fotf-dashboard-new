@@ -27,6 +27,7 @@ function AssetOverview(props: AssetOverviewPropsTop) {
 
   const { tokenProps, forSidebar } = props;
   const ethTokenProps = LoadETHAccountDetails(); 
+  console.log(ethTokenProps);
 
   return (
     <Box  sx={{height: "auto", width: "auto"}}>
