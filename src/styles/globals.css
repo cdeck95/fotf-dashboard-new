@@ -556,6 +556,8 @@ body {
   padding-bottom: 0px;
   display: flex;
   flex-direction: column;
+  max-width: 1380px;
+  justify-content: center;
 }
 
 .inner-container-mobile {

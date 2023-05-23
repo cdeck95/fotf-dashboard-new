@@ -15,13 +15,22 @@ import { LoadETHAccountDetails } from "../account/loadETHAccountDetails";
 import { PolygonProps } from "../views/Dashboard";
 import { useNavigate } from "react-router-dom";
 
-function HoneyEarnings() {
+export interface HoneyEarningsProps {
+    totalFuryTedsEarnings: number;
+    totalTeddiesEarnings: number;
+    totalHNYEarnings: number;
+}
+  
+
+function HoneyEarnings(props: HoneyEarningsProps) {
 
     const {honeyBalance, isLoadingOneOfOne, isLoadingBirthCerts, tokens: ethTokens } = LoadETHAccountDetails(); 
     console.log(honeyBalance);
     console.log(isLoadingOneOfOne);
     console.log(isLoadingBirthCerts);
     console.log(ethTokens);
+
+    const { totalHNYEarnings, totalTeddiesEarnings, totalFuryTedsEarnings } = props;
 
     const navigate = useNavigate();
 
