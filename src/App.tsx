@@ -49,6 +49,9 @@ import PolygonBridge from "./views/PolygonBridge";
 import { MainnetNetwork } from "./components/MainnetNetwork";
 import { Ethereum, Polygon } from "@thirdweb-dev/chains";
 import { LoadPolygonAccountDetails } from "./account/loadPolygonAccountDetails";
+import AITedMint from "./views/AITedMint";
+import TedMint from "./views/TedMint";
+import TeddyMint from "./views/TeddyMint";
 
 export const LeftDrawerWidthPX = "260px";
 export const LeftDrawerWidth = 260;
@@ -202,42 +205,49 @@ function App() {
   const [pageTitle, setPageTitle] = useState("");
 
   useEffect(() => { 
+
+    const lowercasePath = location.pathname.toLowerCase();
  
-    switch (location.pathname) {
+    switch (lowercasePath) {
       case "/":
         setPageTitle("Dashboard");
         break;
-      case "/TheFactory":
+      case "/thefactory":
         setPageTitle("The Factory");
         break;
-      case "/BuildATeddy":
+      case "/buildateddy":
         setPageTitle("Build A Teddy");
         break;
-      case "/TraitSwapTeds":
+      case "/traitswapteds":
         setPageTitle("Trait Swap Teds");
         break;
-      case "/GraphicTemplates":
+      case "/graphictemplates":
         setPageTitle("Graphic Templates");
         break;
-      case "/HoneyExchange":
+      case "/honeyexchange":
         setPageTitle("Honey Exchange");
         break;
-      case "/TeddyStaking":
+      case "/tedmint":
+        setPageTitle("Ted Mint");
+        break;
+      case "/teddymint":
+        setPageTitle("Teddy Mint");
+        break;
+      case "/aitedmint":
+        setPageTitle("AI Ted Mint");
+        break;
+      case "/teddystaking":
         setPageTitle("Teddy Staking");
         break;
-      case "/TedClaims":
+      case "/tedclaims":
         setPageTitle("Ted Claims");
-        break;
-      case "/Bridge":
-        setPageTitle("Polygon Bridge");
-        setIsBridgePage(true);
         break;
       case "/bridge":
         setPageTitle("Polygon Bridge");
         setIsBridgePage(true);
         break;
       default:
-        setPageTitle("Error");
+        setPageTitle("404 - Page not found");
     }
   }, [location.pathname]);
 
@@ -314,6 +324,9 @@ function App() {
               <Route path="/HoneyExchange" element={<HoneyExchange />} />
               <Route path="/TeddyStaking" element={<TeddyStaking />} />
               <Route path="/TedClaims" element={<TedClaims />} />{" "}
+              <Route path="/TedMint" element={<TedMint />} />{" "}
+              <Route path="/TeddyMint" element={<TeddyMint />} />{" "}
+              <Route path="/AITedMint" element={<AITedMint />} />{" "}
               {/* <Route
                 path="/Bridge"
                 element={
