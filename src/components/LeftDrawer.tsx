@@ -106,17 +106,16 @@ function LeftDrawer(props: NavProps) {
       case "/TraitSwapTeds":
         setActivePage("TraitSwapTeds");
         break;
-      case "/Bridge":
-        setActivePage("PolygonBridge");
-        setIsBridgePage(true);
-        break;
-      case "/bridge":
-        setActivePage("PolygonBridge");
-        setIsBridgePage(true);
-        break;
+      // case "/Bridge":
+      //   setActivePage("PolygonBridge");
+      //   setIsBridgePage(true);
+      //   break;
+      // case "/bridge":
+      //   setActivePage("PolygonBridge");
+      //   setIsBridgePage(true);
+      //   break;
       default:
-        setActivePage("PolygonBridge");
-        setIsBridgePage(true);
+        setActivePage("Dashboard");
         break;
     }
   }, [isMobile, isMediumLarge]);

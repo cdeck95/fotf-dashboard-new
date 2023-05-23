@@ -52,6 +52,7 @@ import ExpandLessOutlinedIcon from '@mui/icons-material/ExpandLessOutlined';
 import ExpandMoreOutlinedIcon from '@mui/icons-material/ExpandMoreOutlined';
 import { TokenProps } from "../components/AssetOverviewSidebar";
 import ErrorDialog from "../components/ErrorDialog";
+import ComingSoon from "./ComingSoon";
 
 // interface TheFactoryProps {
 //   allOwnedNFTs: allOwnedNFTs;
@@ -430,428 +431,429 @@ function TheFactory(props: TokenProps) {
   //////////////////////////////////////////////
 
   return (
-    <Box
-      className={
-        isSmallScreen
-          ? "factory-inner-container-mobile"
-          : "factory-inner-container"
-      }
-    >
-      {/* {showMismatch &&  */}
-      <Backdrop
-        sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
-        open={showMismatch}
-      >
-        <Backdrop
-      sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
-      open={showMismatch}
-        >
-        <MainnetNetwork />
-        </Backdrop>
-      </Backdrop>
+    <ComingSoon/>
+    // <Box
+    //   className={
+    //     isSmallScreen
+    //       ? "factory-inner-container-mobile"
+    //       : "factory-inner-container"
+    //   }
+    // >
+    //   {/* {showMismatch &&  */}
+    //   <Backdrop
+    //     sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
+    //     open={showMismatch}
+    //   >
+    //     <Backdrop
+    //   sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
+    //   open={showMismatch}
+    //     >
+    //     <MainnetNetwork />
+    //     </Backdrop>
+    //   </Backdrop>
 
-      <Backdrop
-        sx={{
-          color: "#fff",
-          zIndex: (theme) => theme.zIndex.drawer + 1,
-          marginLeft: leftDrawerWidth,
-          marginRight: rightDrawerWidth,
-        }}
-        open={isLoading && !showMismatch}
-      >
-        <CircularProgress color="inherit" />
-      </Backdrop>
+    //   <Backdrop
+    //     sx={{
+    //       color: "#fff",
+    //       zIndex: (theme) => theme.zIndex.drawer + 1,
+    //       marginLeft: leftDrawerWidth,
+    //       marginRight: rightDrawerWidth,
+    //     }}
+    //     open={isLoading && !showMismatch}
+    //   >
+    //     <CircularProgress color="inherit" />
+    //   </Backdrop>
 
-      <Backdrop
-        sx={{
-          color: "#fff",
-          zIndex: (theme) => theme.zIndex.drawer + 1,
-          marginLeft: leftDrawerWidth,
-          marginRight: rightDrawerWidth,
-        }}
-        open={!ownershipVerified && !isLoading && !isMismatched}
-        onClick={handleClose}
-      >
-        <Box sx={{ borderRadius: "10px", backgroundColor: "white" }}>
-          <Typography sx={{ padding: "20px", color: "Black" }}>
-            You do not own all the required NFTs to access this page.
-          </Typography>
-          <Typography sx={{ padding: "20px", color: "Black" }}>
-            Please visit the Dashboard to view your NFTs.
-          </Typography>
-        </Box>
-      </Backdrop>
+    //   <Backdrop
+    //     sx={{
+    //       color: "#fff",
+    //       zIndex: (theme) => theme.zIndex.drawer + 1,
+    //       marginLeft: leftDrawerWidth,
+    //       marginRight: rightDrawerWidth,
+    //     }}
+    //     open={!ownershipVerified && !isLoading && !isMismatched}
+    //     onClick={handleClose}
+    //   >
+    //     <Box sx={{ borderRadius: "10px", backgroundColor: "white" }}>
+    //       <Typography sx={{ padding: "20px", color: "Black" }}>
+    //         You do not own all the required NFTs to access this page.
+    //       </Typography>
+    //       <Typography sx={{ padding: "20px", color: "Black" }}>
+    //         Please visit the Dashboard to view your NFTs.
+    //       </Typography>
+    //     </Box>
+    //   </Backdrop>
 
-      <ErrorDialog
-        open={showError}
-        handleClose={handleErrorClose}
-        errorCode={errorCode}
-        collection={"The Factory"}
-      />
+    //   <ErrorDialog
+    //     open={showError}
+    //     handleClose={handleErrorClose}
+    //     errorCode={errorCode}
+    //     collection={"The Factory"}
+    //   />
 
-      {/* <Backdrop
-        sx={{
-          color: "#fff",
-          zIndex: (theme) => theme.zIndex.drawer + 1,
-          marginLeft: leftDrawerWidth,
-          marginRight: rightDrawerWidth,
-        }}
-        open={isDisabled}
-        onClick={handleClose}
-      >
-        <Box sx={{ borderRadius: "10px", backgroundColor: "white" }}>
-          <Typography sx={{ padding: "20px", color: "Black" }}>
-            The Factory is currently disabled.
-          </Typography>
-          <Typography sx={{ padding: "20px", color: "Black" }}>
-            Please come back later.
-          </Typography>
-        </Box>
-      </Backdrop> */}
-      {address && (
-        <Box className={isSmallScreen ? "header-mobile" : "header"}>
-          <Box className={isSmallScreen ? "header-row-mobile" : "header-row"}>
-            {!isSmallScreen && <h3 className={isSmallScreen ? "page-header-mobile" : "page-header"} >
-              The Factory
-            </h3> }
-            <input
-              type="text"
-              className={
-                isSmallScreen ? "factory-search-mobile" : "factory-search"
-              }
-              placeholder="Search for Ted, Teddy or AI Token ID"
-              onChange={handleSearch}
-              value={searchInput}
-            />
-          </Box>
-          <Box className={isSmallScreen ? "filter-row-mobile" : "filter-row"}>
-            <Button
-              disabled={!address}
-              className={
-                isTedFilter ? "filter-button-selected" : "filter-button"
-              }
-              onClick={() => setFilter("Ted")}
-            >
-              Fury Teds
-            </Button>
-            <Button
-              disabled={!address}
-              className={
-                isTeddyFilter ? "filter-button-selected" : "filter-button"
-              }
-              onClick={() => setFilter("Teddy")}
-            >
-              Teddy by FOTF
-            </Button>
-            <Button
-              disabled={!address}
-              className={
-                isAIFilter ? "filter-button-selected" : "filter-button"
-              }
-              onClick={() => setFilter("AI")}
-            >
-              AI Teds
-            </Button>
-          </Box>
-          {/* <Box className={isSmallScreen ? "filter-row-mobile" : "filter-row"}>
-            <Button
-              disabled={!address}
-              className={
-                isActiveFilter ? "filter-button-selected" : "filter-button"
-              }
-              onClick={() => setFilter("Active")}
-            >
-              Active NFTs
-            </Button>
-            <Button
-              disabled={!address}
-              className={
-                isTransferredFilter ? "filter-button-selected" : "filter-button"
-              }
-              onClick={() => setFilter("Recent")}
-            >
-              Newest
-            </Button>
-            <Button
-              disabled={!address}
-              className={
-                isLongestHeldFilter ? "filter-button-selected" : "filter-button"
-              }
-              onClick={() => setFilter("Held")}
-            >
-              Longest Held
-            </Button>
-          </Box> */}
-        </Box>
-      )}
-      {address ? (
-        <div>
-          {error ? (
-            <div>
-              <p>NFT not found - error</p>
-            </div>
-          ) : (
-            <Box
-              className="gallery"
-              sx={{
-                zIndex: "0",
-                paddingLeft: "10px",
-                paddingBottom: "110px",
-                backgroundColor: "white",
-                paddingRight: "10px",
-                overflowX: "hidden",
-                overflowY: "auto",
-              }}
-            >
-              {tokens ? (
-                // <NFTList tokens={AllTokens} searchText={searchInput} stakedIDs={stakedTeddiesIDs!} selectedTokens={selectedTokens} setSelectedTokens={setSelectedTokens} />
-                <ImageList
-                  sx={{
-                    justifyContent: "center",
-                    width: "100%",
-                    height: "100%",
-                    paddingLeft: "10px",
-                    paddingRight: "10px",
-                    overflowX: "hidden",
-                    overflowY: "auto",
-                    backgroundColor: "white",
-                  }}
-                  cols={columns}
-                  gap={25}
-                  rowHeight={450}
-                >
-                  {filteredNFTsWithCategory.map((token: NFT) => (
-                    <Box
-                      key={token.metadata.id}
-                      className={
-                        selectedTokens?.includes(token)
-                          ? "card-selected"
-                          : "card"
-                      }
-                      sx={{
-                        marginLeft: "auto",
-                        marginRight: "auto",
-                        background: "none",
-                        maxHeight: "375px",
-                        maxWidth: "350px",
-                      }}
-                    >
-                      {/* <StarBorderIcon
-                      onClick={star}
-                      sx={{ position: "absolute", top: "10px", right: "10px" }}
-                    /> */}
-                      <Box
-                        sx={{
-                          position: "relative",
-                          cursor: "pointer",
-                        }}
-                        onClick={() => add(token)}
-                      >
-                        <ThirdwebNftMedia
-                          metadata={token.metadata}
-                          style={{
-                            maxHeight: "280px",
-                            maxWidth: "280px",
-                            borderRadius: "10px",
-                            objectFit: "cover",
-                            width: "280px",
-                            height: "280px",
-                          }}
-                        />
+    //   {/* <Backdrop
+    //     sx={{
+    //       color: "#fff",
+    //       zIndex: (theme) => theme.zIndex.drawer + 1,
+    //       marginLeft: leftDrawerWidth,
+    //       marginRight: rightDrawerWidth,
+    //     }}
+    //     open={isDisabled}
+    //     onClick={handleClose}
+    //   >
+    //     <Box sx={{ borderRadius: "10px", backgroundColor: "white" }}>
+    //       <Typography sx={{ padding: "20px", color: "Black" }}>
+    //         The Factory is currently disabled.
+    //       </Typography>
+    //       <Typography sx={{ padding: "20px", color: "Black" }}>
+    //         Please come back later.
+    //       </Typography>
+    //     </Box>
+    //   </Backdrop> */}
+    //   {address && (
+    //     <Box className={isSmallScreen ? "header-mobile" : "header"}>
+    //       <Box className={isSmallScreen ? "header-row-mobile" : "header-row"}>
+    //         {!isSmallScreen && <h3 className={isSmallScreen ? "page-header-mobile" : "page-header"} >
+    //           The Factory
+    //         </h3> }
+    //         <input
+    //           type="text"
+    //           className={
+    //             isSmallScreen ? "factory-search-mobile" : "factory-search"
+    //           }
+    //           placeholder="Search for Ted, Teddy or AI Token ID"
+    //           onChange={handleSearch}
+    //           value={searchInput}
+    //         />
+    //       </Box>
+    //       <Box className={isSmallScreen ? "filter-row-mobile" : "filter-row"}>
+    //         <Button
+    //           disabled={!address}
+    //           className={
+    //             isTedFilter ? "filter-button-selected" : "filter-button"
+    //           }
+    //           onClick={() => setFilter("Ted")}
+    //         >
+    //           Fury Teds
+    //         </Button>
+    //         <Button
+    //           disabled={!address}
+    //           className={
+    //             isTeddyFilter ? "filter-button-selected" : "filter-button"
+    //           }
+    //           onClick={() => setFilter("Teddy")}
+    //         >
+    //           Teddy by FOTF
+    //         </Button>
+    //         <Button
+    //           disabled={!address}
+    //           className={
+    //             isAIFilter ? "filter-button-selected" : "filter-button"
+    //           }
+    //           onClick={() => setFilter("AI")}
+    //         >
+    //           AI Teds
+    //         </Button>
+    //       </Box>
+    //       {/* <Box className={isSmallScreen ? "filter-row-mobile" : "filter-row"}>
+    //         <Button
+    //           disabled={!address}
+    //           className={
+    //             isActiveFilter ? "filter-button-selected" : "filter-button"
+    //           }
+    //           onClick={() => setFilter("Active")}
+    //         >
+    //           Active NFTs
+    //         </Button>
+    //         <Button
+    //           disabled={!address}
+    //           className={
+    //             isTransferredFilter ? "filter-button-selected" : "filter-button"
+    //           }
+    //           onClick={() => setFilter("Recent")}
+    //         >
+    //           Newest
+    //         </Button>
+    //         <Button
+    //           disabled={!address}
+    //           className={
+    //             isLongestHeldFilter ? "filter-button-selected" : "filter-button"
+    //           }
+    //           onClick={() => setFilter("Held")}
+    //         >
+    //           Longest Held
+    //         </Button>
+    //       </Box> */}
+    //     </Box>
+    //   )}
+    //   {address ? (
+    //     <div>
+    //       {error ? (
+    //         <div>
+    //           <p>NFT not found - error</p>
+    //         </div>
+    //       ) : (
+    //         <Box
+    //           className="gallery"
+    //           sx={{
+    //             zIndex: "0",
+    //             paddingLeft: "10px",
+    //             paddingBottom: "110px",
+    //             backgroundColor: "white",
+    //             paddingRight: "10px",
+    //             overflowX: "hidden",
+    //             overflowY: "auto",
+    //           }}
+    //         >
+    //           {tokens ? (
+    //             // <NFTList tokens={AllTokens} searchText={searchInput} stakedIDs={stakedTeddiesIDs!} selectedTokens={selectedTokens} setSelectedTokens={setSelectedTokens} />
+    //             <ImageList
+    //               sx={{
+    //                 justifyContent: "center",
+    //                 width: "100%",
+    //                 height: "100%",
+    //                 paddingLeft: "10px",
+    //                 paddingRight: "10px",
+    //                 overflowX: "hidden",
+    //                 overflowY: "auto",
+    //                 backgroundColor: "white",
+    //               }}
+    //               cols={columns}
+    //               gap={25}
+    //               rowHeight={450}
+    //             >
+    //               {filteredNFTsWithCategory.map((token: NFT) => (
+    //                 <Box
+    //                   key={token.metadata.id}
+    //                   className={
+    //                     selectedTokens?.includes(token)
+    //                       ? "card-selected"
+    //                       : "card"
+    //                   }
+    //                   sx={{
+    //                     marginLeft: "auto",
+    //                     marginRight: "auto",
+    //                     background: "none",
+    //                     maxHeight: "375px",
+    //                     maxWidth: "350px",
+    //                   }}
+    //                 >
+    //                   {/* <StarBorderIcon
+    //                   onClick={star}
+    //                   sx={{ position: "absolute", top: "10px", right: "10px" }}
+    //                 /> */}
+    //                   <Box
+    //                     sx={{
+    //                       position: "relative",
+    //                       cursor: "pointer",
+    //                     }}
+    //                     onClick={() => add(token)}
+    //                   >
+    //                     <ThirdwebNftMedia
+    //                       metadata={token.metadata}
+    //                       style={{
+    //                         maxHeight: "280px",
+    //                         maxWidth: "280px",
+    //                         borderRadius: "10px",
+    //                         objectFit: "cover",
+    //                         width: "280px",
+    //                         height: "280px",
+    //                       }}
+    //                     />
 
-                        {selectedTokens?.includes(token) && (
-                          <p className="title-selected">Burn</p>
-                        )}
-                      </Box>
-                      <Box
-                        className="column-container"
-                        sx={{ marginBottom: "10px" }}
-                      >
-                        <div className="large-left-column">
-                          <h3 className="metadata-title">
-                            {token.metadata.name}
-                          </h3>
-                          <h4 className="metadata">
-                            Last Transfer: 03/11/2023
-                          </h4>
-                        </div>
-                        <div className="small-right-column">
-                          <ControlPointIcon
-                            onClick={() => add(token)}
-                            fontSize="small"
-                          />
-                        </div>
-                      </Box>
-                    </Box>
-                  ))}
-                </ImageList>
-              ) : (
-                <p>Loading...</p>
-              )}
-            </Box>
-          )}
-        </div>
-      ) : (
-        <ConnectWalletPage />
-      )}
-      {address && !isSmallScreen && (
-        <Box
-          sx={{
-            position: "fixed",
-            paddingLeft: "20px",
-            paddingRight: "20px",
-            bottom: "0px",
-            height: "70px",
-            width: "100%",
-            backgroundColor: "#FED100",
-          }}
-        >
-          <Box className="row-no-center">
-            <Box
-              className="selected-box"
-              sx={{ display: "flex", flexDirection: "row" }}
-            >
-              <Box className="stats-col">
-                <p className="stats">
-                  {new Intl.NumberFormat("en-US", {
-                    minimumIntegerDigits: 2,
-                  }).format(selectedTeds?.length)}
-                </p>
-                <p className="stats-name"> Fury Teds</p>
-              </Box>
-              <Box className="stats-col">
-                <p className="stats">
-                  {new Intl.NumberFormat("en-US", {
-                    minimumIntegerDigits: 2,
-                  }).format(selectedTeddies?.length)}
-                </p>
-                <p className="stats-name"> Teddy by FOTF</p>
-              </Box>
-              <Box className="stats-col">
-                <p className="stats">
-                  {new Intl.NumberFormat("en-US", {
-                    minimumIntegerDigits: 2,
-                  }).format(selectedAITeds?.length)}
-                </p>
-                <p className="stats-name">
-                  {" "}
-                  AI
-                  <br /> Teds
-                </p>
-              </Box>
-            </Box>
-            {/* <NumericFormat value={honeyBalance} displayType={'text'} thousandSeparator={true} prefix={'$'} suffix={' HNY'} /> */}
-            <Box
-              className="burn-box"
-              sx={{ display: "flex", flexDirection: "row" }}
-            >
-              <Button className="burn-btn" disabled={selectedTokens.length === 0} onClick={() => burn(selectedTokens)}>
-                Burn {selectedTokens.length} for{" "}
-                {parseInt(burnRewards).toLocaleString()} $HNY
-              </Button>
-              <Button className="burn-btn" disabled={!is10Selected || !isOneOfEachSelected} onClick={() => burnForOneOfOne(selectedTokens)}>
-                Burn {selectedTokens.length} +{" "}
-                {(1000000 - parseInt(burnRewards)).toLocaleString()} $HNY for
-                Custom 1/1
-              </Button>
-            </Box>
-          </Box>
-        </Box>
-      )}
+    //                     {selectedTokens?.includes(token) && (
+    //                       <p className="title-selected">Burn</p>
+    //                     )}
+    //                   </Box>
+    //                   <Box
+    //                     className="column-container"
+    //                     sx={{ marginBottom: "10px" }}
+    //                   >
+    //                     <div className="large-left-column">
+    //                       <h3 className="metadata-title">
+    //                         {token.metadata.name}
+    //                       </h3>
+    //                       <h4 className="metadata">
+    //                         Last Transfer: 03/11/2023
+    //                       </h4>
+    //                     </div>
+    //                     <div className="small-right-column">
+    //                       <ControlPointIcon
+    //                         onClick={() => add(token)}
+    //                         fontSize="small"
+    //                       />
+    //                     </div>
+    //                   </Box>
+    //                 </Box>
+    //               ))}
+    //             </ImageList>
+    //           ) : (
+    //             <p>Loading...</p>
+    //           )}
+    //         </Box>
+    //       )}
+    //     </div>
+    //   ) : (
+    //     <ConnectWalletPage />
+    //   )}
+    //   {address && !isSmallScreen && (
+    //     <Box
+    //       sx={{
+    //         position: "fixed",
+    //         paddingLeft: "20px",
+    //         paddingRight: "20px",
+    //         bottom: "0px",
+    //         height: "70px",
+    //         width: "100%",
+    //         backgroundColor: "#FED100",
+    //       }}
+    //     >
+    //       <Box className="row-no-center">
+    //         <Box
+    //           className="selected-box"
+    //           sx={{ display: "flex", flexDirection: "row" }}
+    //         >
+    //           <Box className="stats-col">
+    //             <p className="stats">
+    //               {new Intl.NumberFormat("en-US", {
+    //                 minimumIntegerDigits: 2,
+    //               }).format(selectedTeds?.length)}
+    //             </p>
+    //             <p className="stats-name"> Fury Teds</p>
+    //           </Box>
+    //           <Box className="stats-col">
+    //             <p className="stats">
+    //               {new Intl.NumberFormat("en-US", {
+    //                 minimumIntegerDigits: 2,
+    //               }).format(selectedTeddies?.length)}
+    //             </p>
+    //             <p className="stats-name"> Teddy by FOTF</p>
+    //           </Box>
+    //           <Box className="stats-col">
+    //             <p className="stats">
+    //               {new Intl.NumberFormat("en-US", {
+    //                 minimumIntegerDigits: 2,
+    //               }).format(selectedAITeds?.length)}
+    //             </p>
+    //             <p className="stats-name">
+    //               {" "}
+    //               AI
+    //               <br /> Teds
+    //             </p>
+    //           </Box>
+    //         </Box>
+    //         {/* <NumericFormat value={honeyBalance} displayType={'text'} thousandSeparator={true} prefix={'$'} suffix={' HNY'} /> */}
+    //         <Box
+    //           className="burn-box"
+    //           sx={{ display: "flex", flexDirection: "row" }}
+    //         >
+    //           <Button className="burn-btn" disabled={selectedTokens.length === 0} onClick={() => burn(selectedTokens)}>
+    //             Burn {selectedTokens.length} for{" "}
+    //             {parseInt(burnRewards).toLocaleString()} $HNY
+    //           </Button>
+    //           <Button className="burn-btn" disabled={!is10Selected || !isOneOfEachSelected} onClick={() => burnForOneOfOne(selectedTokens)}>
+    //             Burn {selectedTokens.length} +{" "}
+    //             {(1000000 - parseInt(burnRewards)).toLocaleString()} $HNY for
+    //             Custom 1/1
+    //           </Button>
+    //         </Box>
+    //       </Box>
+    //     </Box>
+    //   )}
 
-      {isSmallScreen && (
-        <Box
-          sx={{
-            position: "fixed",
-            paddingLeft: "20px",
-            paddingRight: "20px",
-            bottom: "0px",
-            height: "70px",
-            width: "100%",
-            backgroundColor: "#FED100",
-            zIndex: "1",
-            display: "flex",
-            flexDirection: "row",
-            justifyContent: "space-between",
-            alignItems: "center",
-            cursor: "pointer",
-            border: "2px solid black",
-          }}
-          onClick={() => setSheetOpen(true)}
-        >
-          <Typography className="factory-sheet-text">
-            {selectedTokens.length === 1
-              ? `Ready to Burn ${selectedTokens.length} token?`
-              : `Ready to Burn ${selectedTokens.length} tokens?`
-            }
-          </Typography>
-          <ExpandMoreOutlinedIcon/>
-        </Box>
-      )}
+    //   {isSmallScreen && (
+    //     <Box
+    //       sx={{
+    //         position: "fixed",
+    //         paddingLeft: "20px",
+    //         paddingRight: "20px",
+    //         bottom: "0px",
+    //         height: "70px",
+    //         width: "100%",
+    //         backgroundColor: "#FED100",
+    //         zIndex: "1",
+    //         display: "flex",
+    //         flexDirection: "row",
+    //         justifyContent: "space-between",
+    //         alignItems: "center",
+    //         cursor: "pointer",
+    //         border: "2px solid black",
+    //       }}
+    //       onClick={() => setSheetOpen(true)}
+    //     >
+    //       <Typography className="factory-sheet-text">
+    //         {selectedTokens.length === 1
+    //           ? `Ready to Burn ${selectedTokens.length} token?`
+    //           : `Ready to Burn ${selectedTokens.length} tokens?`
+    //         }
+    //       </Typography>
+    //       <ExpandMoreOutlinedIcon/>
+    //     </Box>
+    //   )}
 
-      <Sheet
-        rootId="root"
-        isOpen={isSheetOpen && !showMismatch && ownershipVerified && (!isSmallScreen || (isSmallScreen && !rightNavOpen && !leftNavOpen) )}
-        onClose={() => setSheetOpen(false)}
-        detent="content-height"
-      >
-        <Sheet.Container>
-          <Sheet.Header/>
-          <Sheet.Content>
-            <Box
-              className="selected-box-mobile"
-              sx={{ display: "flex", flexDirection: "row" }}>
-              <Box className="stats-col">
-                <p className="stats">
-                  {new Intl.NumberFormat("en-US", {
-                    minimumIntegerDigits: 2,
-                  }).format(selectedTeds?.length)}
-                </p>
-                <p className="stats-name"> Fury Teds</p>
-              </Box>
-              <Box className="stats-col">
-                <p className="stats">
-                  {new Intl.NumberFormat("en-US", {
-                    minimumIntegerDigits: 2,
-                  }).format(selectedTeddies?.length)}
-                </p>
-                <p className="stats-name"> Teddy by FOTF</p>
-              </Box>
-              <Box className="stats-col">
-                <p className="stats">
-                  {new Intl.NumberFormat("en-US", {
-                    minimumIntegerDigits: 2,
-                  }).format(selectedAITeds?.length)}
-                </p>
-                <p className="stats-name">
-                  {" "}
-                  AI
-                  <br /> Teds
-                </p>
-              </Box>
-            </Box>
-            {/* <NumericFormat value={honeyBalance} displayType={'text'} thousandSeparator={true} prefix={'$'} suffix={' HNY'} /> */}
-            <Box className="burn-box-mobile">
-              <Button
-                className="burn-btn-mobile "
-                disabled={selectedTokens.length === 0}
-                onClick={() => burn(selectedTokens)}
-              >
-                Burn {selectedTokens.length} for{" "}
-                {parseInt(burnRewards).toLocaleString()} $HNY
-              </Button>
-              <Button className="burn-btn-mobile " disabled={!is10Selected || !isOneOfEachSelected} onClick={() => burnForOneOfOne(selectedTokens)}>
-                Burn {selectedTokens.length} +{" "}
-                {(1000000 - parseInt(burnRewards)).toLocaleString()} $HNY for
-                Custom 1/1
-              </Button>
-            </Box>
-          </Sheet.Content>
-        </Sheet.Container>
+    //   <Sheet
+    //     rootId="root"
+    //     isOpen={isSheetOpen && !showMismatch && ownershipVerified && (!isSmallScreen || (isSmallScreen && !rightNavOpen && !leftNavOpen) )}
+    //     onClose={() => setSheetOpen(false)}
+    //     detent="content-height"
+    //   >
+    //     <Sheet.Container>
+    //       <Sheet.Header/>
+    //       <Sheet.Content>
+    //         <Box
+    //           className="selected-box-mobile"
+    //           sx={{ display: "flex", flexDirection: "row" }}>
+    //           <Box className="stats-col">
+    //             <p className="stats">
+    //               {new Intl.NumberFormat("en-US", {
+    //                 minimumIntegerDigits: 2,
+    //               }).format(selectedTeds?.length)}
+    //             </p>
+    //             <p className="stats-name"> Fury Teds</p>
+    //           </Box>
+    //           <Box className="stats-col">
+    //             <p className="stats">
+    //               {new Intl.NumberFormat("en-US", {
+    //                 minimumIntegerDigits: 2,
+    //               }).format(selectedTeddies?.length)}
+    //             </p>
+    //             <p className="stats-name"> Teddy by FOTF</p>
+    //           </Box>
+    //           <Box className="stats-col">
+    //             <p className="stats">
+    //               {new Intl.NumberFormat("en-US", {
+    //                 minimumIntegerDigits: 2,
+    //               }).format(selectedAITeds?.length)}
+    //             </p>
+    //             <p className="stats-name">
+    //               {" "}
+    //               AI
+    //               <br /> Teds
+    //             </p>
+    //           </Box>
+    //         </Box>
+    //         {/* <NumericFormat value={honeyBalance} displayType={'text'} thousandSeparator={true} prefix={'$'} suffix={' HNY'} /> */}
+    //         <Box className="burn-box-mobile">
+    //           <Button
+    //             className="burn-btn-mobile "
+    //             disabled={selectedTokens.length === 0}
+    //             onClick={() => burn(selectedTokens)}
+    //           >
+    //             Burn {selectedTokens.length} for{" "}
+    //             {parseInt(burnRewards).toLocaleString()} $HNY
+    //           </Button>
+    //           <Button className="burn-btn-mobile " disabled={!is10Selected || !isOneOfEachSelected} onClick={() => burnForOneOfOne(selectedTokens)}>
+    //             Burn {selectedTokens.length} +{" "}
+    //             {(1000000 - parseInt(burnRewards)).toLocaleString()} $HNY for
+    //             Custom 1/1
+    //           </Button>
+    //         </Box>
+    //       </Sheet.Content>
+    //     </Sheet.Container>
 
-        <Sheet.Backdrop />
-      </Sheet>
-    </Box>
+    //     <Sheet.Backdrop />
+    //   </Sheet>
+    // </Box>
   );
 }
 

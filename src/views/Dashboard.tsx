@@ -23,6 +23,7 @@ import ConnectWalletPage from "../components/ConnectWalletPage";
 import { LoadAllAccountDetails } from "../account/loadAllAccountDetails";
 import { MainnetNetwork } from "../components/MainnetNetwork";
 import { TokenProps } from "../components/AssetOverviewSidebar";
+import ComingSoon from "./ComingSoon";
 
 function Dashboard(props: TokenProps) {
   useTitle("FOTF | Dashboard");
@@ -57,27 +58,7 @@ function Dashboard(props: TokenProps) {
   return (
     <Box className="inner-container">
       {address ? (
-        <Box
-          sx={{
-            height: "100%",
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "center",
-            alignItems: "center",
-            width: "100%",
-          }}
-        >
-          {showMismatch && (<MainnetNetwork/>)}
-          <Backdrop
-            sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
-            open={showMismatch}
-          >
-            {/* <CircularProgress color="inherit" /> */}
-          </Backdrop>
-          <h1 className={isMobile ? "comingSoon-Mobile" : "comingSoon"}>
-            Dashboard
-          </h1>
-        </Box>
+        <ComingSoon/>
       ) : (
         <ConnectWalletPage />
       )}

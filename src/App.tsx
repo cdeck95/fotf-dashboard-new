@@ -224,14 +224,14 @@ function App() {
       case "/TedClaims":
         setPageTitle("Ted Claims");
         break;
-      case "/Bridge":
-        setPageTitle("Polygon Bridge");
-        setIsBridgePage(true);
-        break;
-      case "/bridge":
-        setPageTitle("Polygon Bridge");
-        setIsBridgePage(true);
-        break;
+      // case "/Bridge":
+      //   setPageTitle("Polygon Bridge");
+      //   setIsBridgePage(true);
+      //   break;
+      // case "/bridge":
+      //   setPageTitle("Polygon Bridge");
+      //   setIsBridgePage(true);
+      //   break;
       default:
         setPageTitle("Error");
     }
@@ -300,7 +300,7 @@ function App() {
         >
           {address ? (
             <Routes>
-              {/* <Route path="/" element={<Dashboard tokens={tokens}
+              <Route path="/" element={<Dashboard tokens={tokens}
                     error={error}
                     isLoadingTed={isLoadingTed}
                     isLoadingTeddy={isLoadingTeddy}
@@ -310,12 +310,11 @@ function App() {
                     isLoadingOneOfOne={isLoadingOneOfOne}
                     honeyBalance={honeyBalance}
                     leftNavOpen={navOpen}
-                    rightNavOpen={rightNavOpen} />} /> */}
-              <Route path="/" element={<Navigate to="/Bridge"/>} />
+                    rightNavOpen={rightNavOpen} />} />
               <Route path="/HoneyExchange" element={<HoneyExchange />} />
               <Route path="/TeddyStaking" element={<TeddyStaking />} />
               <Route path="/TedClaims" element={<TedClaims />} />{" "}
-              <Route
+              {/* <Route
                 path="/Bridge"
                 element={
                   <PolygonBridge
@@ -332,7 +331,7 @@ function App() {
                     rightNavOpen={rightNavOpen}
                   />
                 }
-              />
+              /> */}
               <Route
                 path="/TheFactory"
                 element={<TheFactory tokens={tokens}
