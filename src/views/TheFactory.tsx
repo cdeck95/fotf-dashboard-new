@@ -136,8 +136,8 @@ function TheFactory(props: PolygonProps) {
   console.log(selectedTokensIDs);
   console.log(selectedTokenContracts);
 
-  const tedBurnWorth = 5000;
-  const teddyBurnWorth = 6500;
+  const tedBurnWorth = 125000;
+  const teddyBurnWorth = 250000;
   const aiTedBurnWorth = 50000;
 
   const [columns, setColumns] = useState(3);
@@ -765,7 +765,7 @@ function TheFactory(props: PolygonProps) {
               </Button>
               <Button className="burn-btn" disabled={!isOneOfEachSelected} onClick={() => burnForOneOfOne(selectedTokens)}>
                 Burn {selectedTokens.length} +{" "}
-                {(1000000 - parseInt(burnRewards)).toLocaleString()} $HNY for
+                {(15000000 - parseInt(burnRewards)).toLocaleString()} $HNY for
                 Custom 1/1
               </Button>
             </Box>
@@ -862,7 +862,7 @@ function TheFactory(props: PolygonProps) {
               </Button>
               <Button className="burn-btn-mobile " disabled={!isOneOfEachSelected} onClick={() => burnForOneOfOne(selectedTokens)}>
                 Burn {selectedTokens.length} +{" "}
-                {(1000000 - parseInt(burnRewards)).toLocaleString()} $HNY for
+                {(15000000 - parseInt(burnRewards)).toLocaleString()} $HNY for
                 Custom 1/1
               </Button>
             </Box>
