@@ -15,12 +15,15 @@ import { LoadETHAccountDetails } from "../account/loadETHAccountDetails";
 import { PolygonProps, PolygonPropsNoNav } from "../views/Dashboard";
 import NFTList from "./NFTList";
 import LoadingDialog from "./LoadingDialog";
+import { useNavigate } from "react-router-dom";
 
 function FuryTedsDashboard(props: PolygonPropsNoNav) {
 
     const tedNFTs = props.tokenProps.tokens.Teds?.tokens;
     const isLoadingTed = props.tokenProps.isLoadingTed;
 
+    const navigate = useNavigate();
+    
     return (
         <Box sx={{width: "50%", height: "100%", paddingLeft: "5px", paddingRight: "5px"}}>
             <Typography className="page-header-dashboard">
@@ -30,7 +33,7 @@ function FuryTedsDashboard(props: PolygonPropsNoNav) {
                 <NFTList tokens={tedNFTs!} isLoading={isLoadingTed} />
             </Box>  
             <Box className="row-center">
-                <Button className="dashboard-button" variant="contained" color="primary">
+                <Button className="dashboard-button" variant="contained" color="primary" onClick={() => navigate("/TeddyClaims")}>
                     Head to Fury Ted $HNY Claim
                 </Button>
             </Box>  
