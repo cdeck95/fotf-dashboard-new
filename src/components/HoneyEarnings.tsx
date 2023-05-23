@@ -28,32 +28,32 @@ function HoneyEarnings() {
                 My Earnings
             </Typography>
             <Box className="row-space-between">
-                <Box className="column-center-dashboard">
-                    <Divider sx={{ paddingBottom: "15px", opacity: "0"}}><Chip label="" /></Divider>
-                    <Typography className="honey-earnings-dashboard">
+                <Box className="column-between-dashboard">
+                    <Divider sx={{ paddingBottom: "31px", paddingTop: "11px", opacity: "0"}}><Chip label="" /></Divider>
+                    <Typography className="honey-earnings-dashboard" sx={{ paddingBottom: "15px"}}>
                         <span className="accent-text">7,500</span><br/><span className="perDay"> Per Day</span> 
                     </Typography>
-                    <Button className="dashboard-button" variant="contained" color="primary">
+                    <Button className="dashboard-button" variant="contained" color="primary" sx={{ marginTop: "5px"}}>
                         Visit The Factory
                     </Button>
                 </Box>
-                <Box className="column-center-dashboard">
+                <Box className="column-between-dashboard">
                     {/* <Typography className="honey-earnings-title"> Teddies by FOTF </Typography> */}
-                    <Divider sx={{ paddingBottom: "15px"}}><Chip label="Teddies by FOTF" /></Divider>
-                    <Typography className="honey-earnings-dashboard">
+                    <Divider sx={{ paddingBottom: "31px", paddingTop: "11px"}}><Chip label="Teddies by FOTF" /></Divider>
+                    <Typography className="honey-earnings-dashboard" sx={{ paddingBottom: "15px"}}>
                         4,500<br/><span className="perDay"> Per Day</span> 
                     </Typography>
-                    <Button className="dashboard-button" variant="contained" color="primary">
+                    <Button className="dashboard-button" variant="contained" color="primary" sx={{ marginTop: "5px"}}>
                         Stake Your Teddies
                     </Button>
                 </Box>
-                <Box className="column-center-dashboard">
+                <Box className="column-between-dashboard">
                     {/* <Typography className="honey-earnings-title"> Fury Teds </Typography> */}
-                    <Divider sx={{ paddingBottom: "15px"}}><Chip label="Fury Teds" /></Divider>
-                    <Typography className="honey-earnings-dashboard">
+                    <Divider sx={{ paddingBottom: "31px", paddingTop: "11px"}}><Chip label="Fury Teds" /></Divider>
+                    <Typography className="honey-earnings-dashboard" sx={{ paddingBottom: "15px"}}>
                         3,000<br/><span className="perDay"> Per Day</span> 
                     </Typography>
-                    <Button className="dashboard-button" variant="contained" color="primary">
+                    <Button className="dashboard-button" variant="contained" color="primary" sx={{ marginTop: "5px"}}>
                         Purchase Fury Teds
                     </Button>
                 </Box>

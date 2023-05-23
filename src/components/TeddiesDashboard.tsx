@@ -23,10 +23,10 @@ function TeddiesDashboard(props: PolygonPropsNoNav) {
 
     return (
         <Box sx={{width: "50%", height: "100%", paddingLeft: "5px", paddingRight: "5px"}}>
-            <Typography className="page-header">
+            <Typography className="page-header-dashboard">
                 Teddy Staking
             </Typography>
-            <Box className="row-space-between" sx={{ height: "200px" }}>
+            <Box className="row-space-between" sx={{ height: "180px", marginBottom: "10px" }}>
                 <NFTList tokens={teddyNFTs!} isLoading={isLoadingTeddy} />
             </Box>  
             <Box className="row-center">

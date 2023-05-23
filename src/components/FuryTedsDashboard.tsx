@@ -23,10 +23,10 @@ function FuryTedsDashboard(props: PolygonPropsNoNav) {
 
     return (
         <Box sx={{width: "50%", height: "100%", paddingLeft: "5px", paddingRight: "5px"}}>
-            <Typography className="page-header">
+            <Typography className="page-header-dashboard">
                 Fury Teds
             </Typography>
-            <Box className="row-space-between" sx={{ height: "200px" }}>
+            <Box className="row-space-between" sx={{ height: "180px", marginBottom: "10px" }}>
                 <NFTList tokens={tedNFTs!} isLoading={isLoadingTed} />
             </Box>  
             <Box className="row-center">

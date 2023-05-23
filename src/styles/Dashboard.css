@@ -328,6 +328,8 @@
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  align-items: center;
+  text-align: center;
   height: 100%;
   width: 32%;
 }
@@ -344,11 +346,22 @@
 
 .honey-earnings-dashboard {
   display: flex;
-  font-size: 3rem !important;
+  font-size: 3.75rem !important;
   margin: 0;
   padding: 0;
   margin-block-start: 0em;
   margin-block-end: 0em;
+}
+
+.page-header-dashboard{
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  font-size: 2rem !important;
+  font-family: 'Bebas Neue';
+  color: #000000;
+  margin: 0;
+  padding: 0;
 }
 
 .perDay {
@@ -384,7 +397,8 @@
 
 .plushyImage {
   width: 250px;
-  height: 280px;
+  height: 245px;
+  margin-bottom: 10px;
   margin: auto;
   object-fit: cover;
 }
@@ -468,7 +482,7 @@
 .half-col {
   height: 100%;
   width: 50%;
-  min-height: 310px;
+  min-height: 265px;
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
