@@ -240,16 +240,16 @@
   margin: 0%;
 }
 
-.card-dashboard:hover,
+/* .card-dashboard:hover,
 .card-dashboard:focus,
 .card-dashboard:active {
   background-color: white !important;
   color: #FED100;
-  /* transition: color 0.15s ease, border-color 0.15s ease; */
-}
+  /* transition: color 0.15s ease, border-color 0.15s ease; 
+} */
 
 
-.card-dashboard img:hover,
+/* .card-dashboard img:hover,
 .card-dashboard img:focus,
 .card-dashboard img:active {
   background-color: white !important;
@@ -257,7 +257,7 @@
   border: 3px solid transparent;
   border-color: #FED100;
   transition: color 0.15s ease, border-color 0.15s ease;
-}
+} */
 
 .card-dashboard-selected img {
   /* box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px, rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset; */

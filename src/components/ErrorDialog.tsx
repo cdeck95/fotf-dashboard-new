@@ -51,6 +51,8 @@ function ErrorDialog(props: FailureDialogProps) {
       //case 8 spits the MM rejection straight into the dialog
       case 8:
         return `${collection}`;
+      case 9:
+        return `We could not find this token in your wallet. Please refresh and try again. If this continues to happen, please open a ticket within the FOTF Discord.`;
       default:
         return "Something went wrong. We are not sure exactly what. Please refresh the page. If this continues to happen, please open a ticket within the FOTF Discord.";
     }

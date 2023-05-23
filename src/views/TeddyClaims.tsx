@@ -5,8 +5,8 @@ import { useAddress } from "@thirdweb-dev/react";
 import { useSDK } from "@thirdweb-dev/react";
 import ComingSoon from "./ComingSoon";
 
-function TeddyStaking() {
-  useTitle("FOTF | Teddy Staking");
+function TeddyClaims() {
+  useTitle("FOTF | Teddy Claims");
   //const theme = useTheme();
   //const isMobile = !useMediaQuery(theme.breakpoints.up("md"));
   const sdk = useSDK();
@@ -20,4 +20,4 @@ function TeddyStaking() {
   );
 }
 
-export default TeddyStaking;
+export default TeddyClaims;

@@ -36,7 +36,7 @@ import BuildATeddy from "./views/BuildATeddy";
 import TraitSwapTeds from "./views/TraitSwapTeds";
 import HoneyExchange from "./views/HoneyExchange";
 import TedClaims from "./views/TedClaims";
-import TeddyStaking from "./views/TeddyStaking";
+import TeddyClaims from "./views/TeddyClaims";
 import MenuIcon from "@mui/icons-material/Menu";
 import {
   LoadETHAccountDetails,
@@ -236,8 +236,8 @@ function App() {
       case "/aitedmint":
         setPageTitle("AI Ted Mint");
         break;
-      case "/teddystaking":
-        setPageTitle("Teddy Staking");
+      case "/teddyclaims":
+        setPageTitle("Teddy Claims");
         break;
       case "/tedclaims":
         setPageTitle("Ted Claims");
@@ -322,7 +322,7 @@ function App() {
                     rightNavOpen={rightNavOpen} />} /> */}
               <Route path="/" element={<Dashboard tokenProps={polygonTokenProps} leftNavOpen={navOpen} rightNavOpen={rightNavOpen}/>} />
               <Route path="/HoneyExchange" element={<HoneyExchange />} />
-              <Route path="/TeddyStaking" element={<TeddyStaking />} />
+              <Route path="/TeddyClaims" element={<TeddyClaims />} />
               <Route path="/TedClaims" element={<TedClaims />} />{" "}
               <Route path="/TedMint" element={<TedMint />} />{" "}
               <Route path="/TeddyMint" element={<TeddyMint />} />{" "}

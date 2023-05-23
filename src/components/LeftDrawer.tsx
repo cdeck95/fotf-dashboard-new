@@ -169,9 +169,9 @@ function LeftDrawer(props: NavProps) {
         setActivePage("TedClaims");
         handleMobileClick();
         break;
-      case "TeddyStaking":
-        navigate("/TeddyStaking");
-        setActivePage("TeddyStaking");
+      case "TeddyClaims":
+        navigate("/TeddyClaims");
+        setActivePage("TeddyClaims");
         handleMobileClick();
         break;
       case "BuildATeddy":
@@ -372,15 +372,15 @@ function LeftDrawer(props: NavProps) {
             </ListItemButton>
           </ListItem>
           <ListItem
-            key={"TeddyStaking"}
+            key={"TeddyClaims"}
             disablePadding
-            onClick={() => loadPage("TeddyStaking")}
+            onClick={() => loadPage("TeddyClaims")}
           >
-            <ListItemButton selected={activePage === "TeddyStaking"}>
+            <ListItemButton selected={activePage === "TeddyClaims"}>
               <ListItemIcon>
                 <SwapHorizOutlinedIcon fontSize="small" />
               </ListItemIcon>
-              <ListItemText primary={"Teddy Staking"} />
+              <ListItemText primary={"Teddy Claims"} />
             </ListItemButton>
           </ListItem>
           <ListItem
