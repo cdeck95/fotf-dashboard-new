@@ -55,6 +55,7 @@ import { TokenProps } from "../components/AssetOverviewSidebar";
 import ErrorDialog from "../components/ErrorDialog";
 import { PolygonProps } from "./Dashboard";
 import TedClaims from "./TedClaims";
+import ComingSoon from "./ComingSoon";
 
 const IS_DISABLED = true;
 const tedsContract = "tedsContract";

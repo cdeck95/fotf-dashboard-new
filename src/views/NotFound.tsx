@@ -22,20 +22,16 @@ function App() {
           padding: "5%",
         }}
       >
-        <img
+        {/* <img
           src={accessDeniedImage}
           alt="access denied"
           className={
             isMobile ? "accessDeniedImage-mobile" : "accessDeniedImage"
           }
-        />
-        <h1 className={isMobile ? "comingSoon-Mobile" : "comingSoon"}>
-          <span
-            className={isMobile ? "comingSoonBlack-Mobile" : "comingSoonBlack"}
-          >
-            Connect Your
-          </span>{" "}
-          Wallet
+        /> */}
+        <h1 className={isMobile ? "comingSoon-Mobile" : "comingSoon"}> 404 Error{" "} 
+          <span className={isMobile ? "comingSoonBlack-Mobile" : "comingSoonBlack"}>
+             - Page Not Found </span>
         </h1>
       </Box>
     </Box>

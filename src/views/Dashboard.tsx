@@ -40,6 +40,7 @@ import FuryTedsDashboard from "../components/FuryTedsDashboard";
 import TeddiesDashboard from "../components/TeddiesDashboard";
 import HoneyDashboard from "../components/HoneyDashboard";
 import Plushy from "../components/Plushy";
+import ComingSoon from "./ComingSoon";
 
 export interface PolygonProps {
   tokenProps: PolygonAccountDetails;

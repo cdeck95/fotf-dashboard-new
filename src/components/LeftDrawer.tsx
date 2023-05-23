@@ -120,10 +120,14 @@ function LeftDrawer(props: NavProps) {
       case "/traitswapteds":
         setActivePage("TraitSwapTeds");
         break;
-      case "/bridge":
-        setActivePage("PolygonBridge");
-        setIsBridgePage(true);
-        break;
+      // case "/Bridge":
+      //   setActivePage("PolygonBridge");
+      //   setIsBridgePage(true);
+      //   break;
+      // case "/bridge":
+      //   setActivePage("PolygonBridge");
+      //   setIsBridgePage(true);
+      //   break;
       default:
         setActivePage("Dashboard");
         break;

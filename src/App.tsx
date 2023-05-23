@@ -242,10 +242,10 @@ function App() {
       case "/tedclaims":
         setPageTitle("Ted Claims");
         break;
-      case "/bridge":
-        setPageTitle("Polygon Bridge");
-        setIsBridgePage(true);
-        break;
+      // case "/bridge":
+      //   setPageTitle("Polygon Bridge");
+      //   setIsBridgePage(true);
+      //   break;
       default:
         setPageTitle("404 - Page not found");
     }
@@ -309,17 +309,6 @@ function App() {
         >
           {address ? (
             <Routes>
-              {/* <Route path="/" element={<Dashboard tokens={tokens}
-                    error={error}
-                    isLoadingTed={isLoadingTed}
-                    isLoadingTeddy={isLoadingTeddy}
-                    isLoadingStaked={isLoadingStaked}
-                    isLoadingAI={isLoadingAI}
-                    isLoadingBirthCerts={isLoadingBirthCerts}
-                    isLoadingOneOfOne={isLoadingOneOfOne}
-                    honeyBalance={honeyBalance}
-                    leftNavOpen={navOpen}
-                    rightNavOpen={rightNavOpen} />} /> */}
               <Route path="/" element={<Dashboard tokenProps={polygonTokenProps} leftNavOpen={navOpen} rightNavOpen={rightNavOpen}/>} />
               <Route path="/HoneyExchange" element={<HoneyExchange />} />
               <Route path="/TeddyClaims" element={<TeddyClaims />} />
