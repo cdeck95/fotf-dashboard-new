@@ -15,16 +15,16 @@ import teddyPlaceholderImage from "../assets/teddyLogoForPlaceholders.png"
 import "../styles/mint.css";
 import SuccessDialog from "../components/SuccessDialog";
 import { BigNumber } from "ethers";
+import tedMintLogo from "../assets/tedMint.png"
 
 const COLLECTION_FOR_MINT = "Fury Teds";
 const DESCRIPTION_FOR_MINT = () => {
-  return <Typography className="desc-text">Fully generated recreation of the Original 9671 Fury Teds from Fury Of The Fur.
-  <br></br>Artwork created by a community member using Starry AI.
-  <br></br>No Utility. Just Art and Testing.</Typography>
+  return <Typography className="desc-text">Who says a teddy bear can’t be bad ass? Fury Teds have moved to Polygon and have been reimagined. 
+  <br></br>Earn Honey, burn for extra honey, or just complete your collection now.</Typography>
 } 
 
 function TedMint() {
-    useTitle("FOTF | Ted Mint");
+    useTitle("Mint Fury Teds - 5 MATIC");
     const theme = useTheme();
     const isMobile = !useMediaQuery(theme.breakpoints.up("md"));
     const isMediumLarge = useMediaQuery(theme.breakpoints.down("lg"));
@@ -141,7 +141,7 @@ return (
       }}
     >
         <Box className={isSmallScreen ? "column" : "row-even"}>
-          <img src={teddyPlaceholderImage} alt="Teddy Placeholder" className={isSmallScreen ? "mint-image-mobile" : "mint-image"} />
+          <img src={tedMintLogo} alt="Teddy Placeholder" className={isSmallScreen ? "mint-image-mobile" : "mint-image"} />
           <Box className={isSmallScreen ? "col-mint-mobile" : "col-mint"}>
               <ButtonGroup size="large" aria-label="small outlined button group">
                   <Button disabled={!(counter > 0)} onClick={() => handleDecrement()}>-</Button>
