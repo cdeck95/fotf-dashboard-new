@@ -38,3 +38,52 @@
 .mint-button {
     width: 75%;
 }
+.page-header-mint{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 2.2rem !important;
+    font-family: 'Bebas Neue';
+    color: #000000;
+  }
+
+.toggle-container {
+    width: 150px;
+    background-color: #000;
+    cursor: pointer;
+    user-select: none;
+    border-radius: 3px;
+    padding: 2px;
+    height: 38px;
+    position: relative;
+  }
+  
+  .dialog-button {
+    font-size: 20px;
+    line-height: 20px;
+    font-weight: bold;
+    cursor: pointer;
+    background-color: #002b49;
+    color: white;
+    padding: 6px 10px;
+    border-radius: 14px;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    min-width: 75px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 75px;
+    min-width: unset;
+    border-radius: 3px;
+    box-sizing: border-box;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.25);
+    position: absolute;
+    left: 75px;
+    transition: all 0.3s ease;
+  }
+  
+  .disabled {
+    background-color: #707070;
+    left: 2px;
+  }
+  
