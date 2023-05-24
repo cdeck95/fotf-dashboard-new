@@ -25,11 +25,11 @@ function FuryTedsDashboard(props: PolygonPropsNoNav) {
     const navigate = useNavigate();
     
     return (
-        <Box sx={{width: "50%", height: "100%", paddingLeft: "5px", paddingRight: "5px"}}>
+        <Box sx={{width: "100%", height: "100%", paddingLeft: "5px", paddingRight: "5px"}}>
             <Typography className="page-header-dashboard">
                 Fury Teds
             </Typography>
-            <Box className="row-space-between" sx={{ height: "180px", marginBottom: "10px" }}>
+            <Box className="row-space-between" sx={{ height: "180px" }}>
                 <NFTList tokens={tedNFTs!} isLoading={isLoadingTed} />
             </Box>  
             <Box className="row-center">

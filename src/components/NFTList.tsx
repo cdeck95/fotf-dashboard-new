@@ -34,7 +34,7 @@ function NFTList(props: NFTListProps) {
   const isMedium = useMediaQuery(theme.breakpoints.down("md"));
   const isMediumLarge = useMediaQuery(theme.breakpoints.down("lg"));
   const isLarge = useMediaQuery(theme.breakpoints.between("lg", "xl"));
-  const isXL = useMediaQuery(theme.breakpoints.up("xl"));
+  const isXL = useMediaQuery(theme.breakpoints.down("xl"));
   const isFullScreen = useMediaQuery(theme.breakpoints.up(1800));
   console.log(`Mobile:  ${isMobile}`);
   console.log(`Small:  ${isSmall}`);
@@ -46,7 +46,7 @@ function NFTList(props: NFTListProps) {
 
   const { tokens, isLoading } = props;
   const [noTokens, setNoTokens] = useState(true);
-  const columns = 3;
+  const columns = isXL? 4 : 3;
 
   var numberOfTokens = 0;
 
@@ -54,8 +54,8 @@ function NFTList(props: NFTListProps) {
     numberOfTokens = tokens.length;
   }
   
-  const startIndex = Math.floor(Math.random() * ((numberOfTokens - 3) - 0 + 1)) + 0;
-  const endIndex = startIndex + 3;
+  const startIndex = Math.floor(Math.random() * ((numberOfTokens - columns) - 0 + 1)) + 0;
+  const endIndex = startIndex + columns;
 
   useEffect(() => {
     if (tokens === undefined) {
@@ -73,7 +73,8 @@ function NFTList(props: NFTListProps) {
   const skeltonMap:number[] = [1, 2, 3];
 
   return (
-    <Box sx={{ width: "100%", height: "100%" }}>
+    <Box sx={{ width: "100%", height: "100%", marginLeft: "auto",
+    marginRight: "auto", alignItems: "center", display: "flex", justifyContent: "center" }}>
       {isLoading ? (
         <ImageList
         sx={{
@@ -82,6 +83,8 @@ function NFTList(props: NFTListProps) {
           height: "100%",
           overflowX: "hidden",
           overflowY: "hidden",
+          marginLeft: "auto",
+          marginRight: "auto",
           backgroundColor: "white",
         }}
         cols={columns}
@@ -118,6 +121,10 @@ function NFTList(props: NFTListProps) {
                 height: "100%",
                 overflowX: "auto",
                 overflowY: "hidden",
+                marginLeft: "auto",
+                marginRight: "auto",
+                marginTop: "0px",
+                marginBottom: "0px",
                 backgroundColor: "white",
                 display: 'flex',
                 flexDirection: 'row',

@@ -30,7 +30,7 @@ function AssetOverview(props: AssetOverviewPropsTop) {
   console.log(ethTokenProps);
 
   return (
-    <Box  sx={{height: "auto", width: "auto"}}>
+    <Box  sx={{height: "auto", width: "auto", paddingLeft: "5px", paddingRight: "5px"}}>
       {forSidebar ? (
         <AssetOverviewSidebar
         tokenProps={tokenProps}

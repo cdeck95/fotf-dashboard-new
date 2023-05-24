@@ -20,7 +20,7 @@ import plushy from "../assets/plushy.jpg";
 function Plushy() {
 
     return (
-        <Box className="row-between">
+        <Box className="row-between" sx={{width: "100%", height: "100%", paddingLeft: "5px", paddingRight: "5px"}}>
             <Box className="half-col">
                 <img src={plushy} alt="Plushies" className="plushyImage"/>
             </Box>
