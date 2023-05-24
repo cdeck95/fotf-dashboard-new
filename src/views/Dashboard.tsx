@@ -1,4 +1,10 @@
-import { Box, ImageList, Typography, useMediaQuery, useTheme } from "@mui/material";
+import {
+  Box,
+  ImageList,
+  Typography,
+  useMediaQuery,
+  useTheme,
+} from "@mui/material";
 import {
   ConnectWallet,
   ThirdwebNftMedia,
@@ -107,80 +113,113 @@ function Dashboard(props: PolygonProps) {
 
   const TedsDailyEarnings = 25;
   const TeddiesDailyEarnings = 40;
-  
+
   const [totalFuryTedsEarnings, setTotalFuryTedsEarnings] = useState(0);
   const [totalTeddiesEarnings, setTotalTeddiesEarnings] = useState(0);
   const totalHNYEarnings = totalFuryTedsEarnings + totalTeddiesEarnings;
 
   useEffect(() => {
-    if(tokens === undefined) {
+    if (tokens === undefined) {
       return;
     }
-    if (tokens!.Teds === undefined){
+    if (tokens!.Teds === undefined) {
       console.log("no teds");
     } else {
-      if(tokens!.Teds?.tokens !== undefined) {
-        setTotalFuryTedsEarnings(tokens!.Teds?.tokens.length * TedsDailyEarnings);
+      if (tokens!.Teds?.tokens !== undefined) {
+        setTotalFuryTedsEarnings(
+          tokens!.Teds?.tokens.length * TedsDailyEarnings
+        );
       }
     }
 
-    if (tokens!.Teddies === undefined){
+    if (tokens!.Teddies === undefined) {
       console.log("no teddies");
     } else {
-      if(tokens!.Teddies?.tokens !== undefined) {
-        setTotalTeddiesEarnings(tokens!.Teddies?.tokens.length * TeddiesDailyEarnings);
+      if (tokens!.Teddies?.tokens !== undefined) {
+        setTotalTeddiesEarnings(
+          tokens!.Teddies?.tokens.length * TeddiesDailyEarnings
+        );
       }
     }
-    
-  }, [tokens, tokens.Teds, tokens.Teddies, tokens.Teds?.tokens, tokens.Teddies?.tokens]);
+  }, [
+    tokens,
+    tokens.Teds,
+    tokens.Teddies,
+    tokens.Teds?.tokens,
+    tokens.Teddies?.tokens,
+  ]);
 
   return (
     <Box className="inner-container">
       {address ? (
-        <Box
-          sx={{
-            height: "100dvh",
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "center",
-            alignItems: "center",
-            width: "100%",
-            zIndex: "1 !important"
-          }}
-        >
-          <Box className="dashboard-inner-container">
-            <Box className="row-left" sx={{height: "fit-content"}}>
-              <Typography className="page-header-small">Dashboard</Typography>
+        <Box>
+          {isMobile ? (
+            <ComingSoon />
+          ) : (
+            <Box
+              sx={{
+                height: "100dvh",
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "center",
+                alignItems: "center",
+                width: "100%",
+                zIndex: "1 !important",
+              }}
+            >
+              <Box className="dashboard-inner-container">
+                <Box className="row-left" sx={{ height: "fit-content" }}>
+                  <Typography className="page-header-small">
+                    Dashboard
+                  </Typography>
+                </Box>
+                <Box className="first-row-space-around-dashboard">
+                  <ThirdwebProvider
+                    key={"ethThirdWebProviderDashboard"}
+                    supportedWallets={[
+                      metamaskWallet(),
+                      coinbaseWallet(),
+                      walletConnect(),
+                      localWallet(),
+                      safeWallet(),
+                    ]}
+                    activeChain={Ethereum}
+                    supportedChains={[Polygon, Ethereum]}
+                  >
+                    <Box className="col-large-dashboard">
+                      <HoneyEarnings
+                        totalHNYEarnings={totalHNYEarnings}
+                        totalTeddiesEarnings={totalTeddiesEarnings}
+                        totalFuryTedsEarnings={totalFuryTedsEarnings}
+                      />
+                    </Box>
+                    <Box className="col-large-dashboard">
+                      <AssetOverview
+                        tokenProps={props.tokenProps}
+                        forSidebar={false}
+                      />
+                    </Box>
+                  </ThirdwebProvider>
+                </Box>
+                <Box className="row-space-around-dashboard">
+                  <Box className="col-large-dashboard">
+                    <FuryTedsDashboard tokenProps={props.tokenProps} />
+                  </Box>
+                  <Box className="col-large-dashboard">
+                    <TeddiesDashboard tokenProps={props.tokenProps} />
+                  </Box>
+                </Box>
+                <Box className="row-space-around-dashboard">
+                  <Box className="col-large-dashboard">
+                    <HoneyDashboard />
+                  </Box>
+                  <Box className="col-large-dashboard">
+                    <Plushy />
+                  </Box>
+                </Box>
+              </Box>
             </Box>
-            <Box className="first-row-space-around-dashboard">
-            <ThirdwebProvider
-                key={"ethThirdWebProviderDashboard"}
-                supportedWallets={[
-                  metamaskWallet(),
-                  coinbaseWallet(),
-                  walletConnect(),
-                  localWallet(),
-                  safeWallet(),
-                ]}
-                activeChain={Ethereum}
-                supportedChains={[Polygon, Ethereum]}
-              >
-                <HoneyEarnings totalHNYEarnings={totalHNYEarnings} totalTeddiesEarnings={totalTeddiesEarnings} totalFuryTedsEarnings={totalFuryTedsEarnings}/>
-                <AssetOverview
-                  tokenProps={props.tokenProps}
-                  forSidebar={false}
-                />
-               </ThirdwebProvider>
-            </Box>
-            <Box className="row-space-around-dashboard">
-              <FuryTedsDashboard tokenProps={props.tokenProps} />
-              <TeddiesDashboard tokenProps={props.tokenProps} />
-            </Box>
-            <Box className="row-space-around-dashboard">
-              <HoneyDashboard/>
-              <Plushy/>
-            </Box>
-          </Box>
+          )}
         </Box>
       ) : (
         <ConnectWalletPage />
