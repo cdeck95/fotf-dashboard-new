@@ -174,7 +174,9 @@ function AITedMint() {
         className="row-center"
         sx={{ paddingTop: "10px", paddingBottom: "10px" }}
       >
-        <Typography className="desc-text">2 MATIC or 100K HNY</Typography>
+        <Typography className="desc-text"><span className="accent-text">Cost:</span> 2 MATIC 
+        {/* or 100K HNY */}
+        </Typography>
       </Box>
 
       <Box
@@ -195,7 +197,7 @@ function AITedMint() {
 
            <Box className={isSmallScreen ? "row" : "row"}>
           {/* <Box className={isSmallScreen ? "col-mint-mobile" : "col-mint"}> */}
-              <Box className={isSmallScreen ? "col-mint-mobile" : "col-mint"}>
+              {/* <Box className={isSmallScreen ? "col-mint-mobile" : "col-mint"}>
                 <Box className="row-around">
                   <Typography className="page-header-mint">Mint with {" "} <span className="accent-text">&nbsp;$HNY? </span></Typography>
                   <ToggleButton
@@ -208,7 +210,7 @@ function AITedMint() {
                     </Box>
                   </ToggleButton>
                 </Box>
-              </Box>
+              </Box> */}
               <Box className={isSmallScreen ? "col-mint-mobile" : "col-mint"}>
                 <ButtonGroup size="large" aria-label="small outlined button group">
                   <Button
