@@ -145,26 +145,9 @@ function Dashboard(props: PolygonProps) {
   ]);
 
   return (
-    <Box className="inner-container" sx={{zIndex: "1 !important", position: "relative"}}>
-      {/* {showMismatch && (
-        <Backdrop
-          sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
-          open={showMismatch}
-        >
-        <Backdrop
-          sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
-          open={showMismatch}
-        >
-          <PolygonNetwork />
-
-        </Backdrop>
-        </Backdrop>
-      )} */}
+    <Box className={isSmallScreen? "inner-container-mobile" : "inner-container"} sx={{zIndex: "1 !important", position: "relative"}}>
       {address ? (
         <Box>
-          {isMobile ? (
-            <ComingSoon />
-          ) : (
             <Box
               sx={{
                 height: "100dvh",
@@ -174,15 +157,16 @@ function Dashboard(props: PolygonProps) {
                 alignItems: "center",
                 width: "100%",
                 zIndex: "1 !important",
+                overflowY: "auto",
               }}
             >
               <Box className="dashboard-inner-container">
                 <Box className="row-left" sx={{ height: "fit-content" }}>
-                  <Typography className="page-header-small">
+                  {!isSmallScreen && <Typography className="page-header-small">
                     Dashboard
-                  </Typography>
+                  </Typography>}
                 </Box>
-                <Box className="first-row-space-around-dashboard">
+                <Box className={isSmallScreen? "column-center-full-container" : "first-row-space-around-dashboard"}>
                   <ThirdwebProvider
                     key={"ethThirdWebProviderDashboard"}
                     supportedWallets={[
@@ -195,40 +179,39 @@ function Dashboard(props: PolygonProps) {
                     activeChain={Ethereum}
                     supportedChains={[Polygon, Ethereum]}
                   >
-                    <Box className="col-large-dashboard">
+                    <Box className={isSmallScreen? "column-center-full" : "col-large-dashboard"}>
                       <HoneyEarnings
                         totalHNYEarnings={totalHNYEarnings}
                         totalTeddiesEarnings={totalTeddiesEarnings}
                         totalFuryTedsEarnings={totalFuryTedsEarnings}
                       />
                     </Box>
-                    <Box className="col-large-dashboard">
+                    <Box className={isSmallScreen? "column-center-full" : "col-large-dashboard"}>
                       <AssetOverview
                         tokenProps={props.tokenProps}
-                        forSidebar={false}
+                        forSidebar={isSmallScreen? true : false}
                       />
                     </Box>
                   </ThirdwebProvider>
                 </Box>
-                <Box className="row-space-around-dashboard">
-                  <Box className="col-large-dashboard">
+                <Box className={isSmallScreen? "column-center-full-container" : "row-space-around-dashboard"}>
+                  <Box className={isSmallScreen? "column-center-full" : "col-large-dashboard"}>
                     <FuryTedsDashboard tokenProps={props.tokenProps} />
                   </Box>
-                  <Box className="col-large-dashboard">
+                  <Box className={isSmallScreen? "column-center-full" : "col-large-dashboard"}>
                     <TeddiesDashboard tokenProps={props.tokenProps} />
                   </Box>
                 </Box>
-                <Box className="row-space-around-dashboard">
-                  <Box className="col-large-dashboard">
+                <Box className={isSmallScreen? "column-center-full-container" : "row-space-around-dashboard"}>
+                  <Box className={isSmallScreen? "column-center-full" : "col-large-dashboard"}>
                     <HoneyDashboard />
                   </Box>
-                  <Box className="col-large-dashboard">
+                  <Box className={isSmallScreen? "column-center-full" : "col-large-dashboard"}>
                     <Plushy />
                   </Box>
                 </Box>
               </Box>
             </Box>
-          )}
         </Box>
       ) : (
         <ConnectWalletPage />

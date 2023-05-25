@@ -395,6 +395,13 @@
   object-fit: contain;
 }
 
+.honeyImage-mobile {
+  width: 100px;
+  height: 100px;
+  margin: auto;
+  object-fit: contain;
+}
+
 .plushyImage {
   width: 250px;
   height: 245px;
@@ -402,6 +409,17 @@
   margin: auto;
   object-fit: cover;
 }
+
+.plushyImage-mobile {
+  width: 170px;
+  height: 100%;
+  /* margin-bottom: 10px; */
+  margin: auto;
+  padding: 2.5px;
+  border-radius: 10px;
+  object-fit: cover;
+}
+
 
 .small-text {
   font-size: .75rem !important;

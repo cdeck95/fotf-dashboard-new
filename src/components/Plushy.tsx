@@ -1,4 +1,4 @@
-import { Box, Button, CircularProgress, Skeleton, Typography } from "@mui/material";
+import { Box, Button, CircularProgress, Skeleton, Typography, useMediaQuery, useTheme } from "@mui/material";
 import { useTitle } from "../hooks/useTitle";
 import "../styles/Dashboard.css";
 import {
@@ -16,16 +16,42 @@ import { PolygonProps, PolygonPropsNoNav } from "../views/Dashboard";
 import NFTList from "./NFTList";
 import LoadingDialog from "./LoadingDialog";
 import plushy from "../assets/plushy.jpg";
+import { useState, useEffect } from "react";
 
 function Plushy() {
 
+    const theme = useTheme();
+    const isMobile = !useMediaQuery(theme.breakpoints.up("md"));
+    const isSmall = useMediaQuery(theme.breakpoints.down("sm"));
+    const isMedium = useMediaQuery(theme.breakpoints.down("md"));
+    const isMediumLarge = useMediaQuery(theme.breakpoints.down("lg"));
+    const isLarge = useMediaQuery(theme.breakpoints.between("lg", "xl"));
+    const isXL = !useMediaQuery(theme.breakpoints.down("xl"));
+    const isFullScreen = useMediaQuery(theme.breakpoints.up(1800));
+    const [isSmallScreen, setSmallScreen] = useState(false);
+    console.log(`Mobile:  ${isMobile}`);
+    console.log(`Small:  ${isSmall}`);
+    console.log(`Medium:  ${isMedium}`);
+    console.log(`Medium-Large:  ${isMediumLarge}`);
+    console.log(`Large:  ${isLarge}`);
+    console.log(`XL:  ${isXL}`);
+    console.log(`Is 1920:  ${isFullScreen}`);
+
+    useEffect(() => {
+        if (!isMobile && isMediumLarge) {
+          setSmallScreen(true);
+        } else {
+          setSmallScreen(isMobile);
+        }
+      }, [isMobile, isMediumLarge, isSmallScreen]);
+
     return (
-        <Box className="row-between" sx={{width: "100%", height: "100%", paddingLeft: "5px", paddingRight: "5px"}}>
+        <Box className="row-between" sx={{height: "auto", width: "100%", padding: "10px", backgroundColor: "#fff", borderRadius: "10px"}}>
             <Box className="half-col">
-                <img src={plushy} alt="Plushies" className="plushyImage"/>
+                <img src={plushy} alt="Plushies" className={isSmallScreen ? "plushyImage-mobile" : "plushyImage"}/>
             </Box>
-            <Box className="half-col">
-                <Typography className="page-header-small"> 
+            <Box className="half-col" sx={{paddingLeft: "5px"}}>
+                <Typography className={isSmallScreen ? "page-header-small-mobile" : "page-header-small"}> 
                     Ted Plushy Launch
                 </Typography>
                 <Typography>
