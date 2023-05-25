@@ -228,7 +228,7 @@ function LeftDrawer(props: NavProps) {
   };
 
   return (
-    <Box sx={{ display: "flex" }}>
+    <Box sx={{ display: "flex", margin: "0px !important", padding: "0px !important" }}>
       <CssBaseline />
       <Drawer
         sx={{
@@ -241,6 +241,7 @@ function LeftDrawer(props: NavProps) {
             // zIndex: -1,
             overflowY: "hidden",
             overflowX: "hidden",
+            margin: "0px !important", padding: "0px !important",
             border: "none",
             flexShrink: 0,
             "& .MuiDrawer-paper": {

@@ -29,7 +29,7 @@ export interface TokenProps {
 
 function AssetOverviewSidebar(props: AssetOverviewProps) {
   //const { tokens, isLoadingTed, isLoadingTeddy, isLoadingStaked, isLoadingAI, isLoadingBirthCerts, isLoadingOneOfOne, error, honeyBalance } = props
-  const { tokens, isLoadingTed, isLoadingTeddy, isLoadingAI, errorTed, errorTeddy, errorAI, maticBalance, needsFunds } = props.tokenProps;
+  const { honeyBalance, honeyContract, isLoadingHoney, isLoadingHoneyContract, tokens, isLoadingTed, isLoadingTeddy, isLoadingAI, errorTed, errorTeddy, errorAI, maticBalance, needsFunds } = props.tokenProps;
   //const { leftNavOpen, rightNavOpen } = props.tokenProps;
   console.log(tokens);
   console.log(isLoadingTed);
@@ -40,9 +40,12 @@ function AssetOverviewSidebar(props: AssetOverviewProps) {
   console.log(errorAI);
   console.log(maticBalance);
   console.log(needsFunds);
-
-  const {honeyBalance, isLoadingOneOfOne, isLoadingBirthCerts, tokens: ethTokens, errorBirthCerts, errorOneOfOne} = props.ethTokenProps;
   console.log(honeyBalance);
+  console.log(isLoadingHoney);
+  console.log(isLoadingHoneyContract);
+  console.log(honeyContract);
+
+  const { isLoadingOneOfOne, isLoadingBirthCerts, tokens: ethTokens, errorBirthCerts, errorOneOfOne} = props.ethTokenProps;
   console.log(isLoadingOneOfOne);
   console.log(isLoadingBirthCerts);
   console.log(ethTokens);
@@ -102,7 +105,7 @@ function AssetOverviewSidebar(props: AssetOverviewProps) {
  
 
   return (
-  <Box className="info-card">
+  <Box className="info-card" sx={{padding: "0px", margin: "0px"}}>
         <Box className="row-between">
           <Box className="info-card__title">Asset Overview</Box>
           <Typography className="learnMore">
@@ -133,7 +136,10 @@ function AssetOverviewSidebar(props: AssetOverviewProps) {
           </Box>
         </Box>
         <Box className="row-center-margin">
-          <Typography className="honeyBalanceBlack">{honeyBalance}</Typography>
+          {isLoadingHoney || isLoadingHoneyContract
+              ? <CircularProgress size="1rem" sx={{margin: "auto"}}/>
+              : <Typography className="honeyBalanceBlack">{honeyBalance}</Typography>
+            }
           <Typography className="honeyBalance"> $HNY</Typography>
         </Box>
         <Box className="row-around">

@@ -10,6 +10,7 @@ import { PolygonProps } from "../views/Dashboard";
 import { useEffect, useState } from "react";
 import { Ethereum, Polygon, Mumbai } from "@thirdweb-dev/chains";
 import { PolygonAccountDetails } from "../account/loadPolygonAccountDetails";
+import { Console } from "console";
 
 
 export interface TokenProps {
@@ -32,7 +33,7 @@ export interface EthProps {
   errorBirthCerts: boolean;
   isLoadingOneOfOne: boolean;
   isLoadingBirthCerts: boolean;
-  honeyBalance: string;
+  // honeyBalance: string;
 }
 
 export interface AssetOverviewProps {
@@ -42,7 +43,7 @@ export interface AssetOverviewProps {
 
 function AssetOverviewDashboard(props: AssetOverviewProps) {
   //const { tokens, isLoadingTed, isLoadingTeddy, isLoadingStaked, isLoadingAI, isLoadingBirthCerts, isLoadingOneOfOne, error, honeyBalance } = props
-  const { tokens, isLoadingTed, isLoadingTeddy, isLoadingAI, errorTed, errorTeddy, errorAI, maticBalance, needsFunds } = props.tokenProps;
+  const { honeyBalance, isLoadingHoney, isLoadingHoneyContract, honeyContract, tokens, isLoadingTed, isLoadingTeddy, isLoadingAI, errorTed, errorTeddy, errorAI, maticBalance, needsFunds } = props.tokenProps;
 
   console.log(tokens);
   console.log(isLoadingTed);
@@ -53,9 +54,13 @@ function AssetOverviewDashboard(props: AssetOverviewProps) {
   console.log(errorAI);
   console.log(maticBalance);
   console.log(needsFunds);
-
-  const {honeyBalance, isLoadingOneOfOne, isLoadingBirthCerts, tokens: ethTokens, errorBirthCerts, errorOneOfOne} = props.ethTokenProps;
   console.log(honeyBalance);
+  console.log(isLoadingHoney);
+  console.log(isLoadingHoneyContract);
+  console.log(honeyContract);
+
+  const { isLoadingOneOfOne, isLoadingBirthCerts, tokens: ethTokens, errorBirthCerts, errorOneOfOne} = props.ethTokenProps;
+  
   console.log(isLoadingOneOfOne);
   console.log(isLoadingBirthCerts);
   console.log(ethTokens);
@@ -127,7 +132,10 @@ function AssetOverviewDashboard(props: AssetOverviewProps) {
         </Box>
         <Box className="row-around">
           <Box className="col-large-dashboard">
-            <Typography className="honeyBalanceBlack-dashboard">{honeyBalance}</Typography>
+          {isLoadingHoney || isLoadingHoneyContract
+              ? <CircularProgress size="1rem" sx={{margin: "auto"}}/>
+              : <Typography className="honeyBalanceBlack-dashboard">{honeyBalance}</Typography>
+            }
             <Typography className="honeyBalance-dashboard"> $HNY</Typography>
           </Box>
           <Box className="col-margin">

@@ -499,7 +499,7 @@ body {
   display: flex;
   flex-direction: column;
   margin-left: 10px;
-  margin-right: 10px;
+  /* margin-right: 10px; */
   height: 100%;
   justify-content: center;
 }
@@ -690,11 +690,11 @@ body {
   border-radius: 10px;
   justify-content: left;
   flex-direction: column;
-  margin-left: 10px;
-  margin-right: 10px;
-  margin-top: 5px;
-  margin-bottom: 5px;
-  padding-top: 5px;
+  /* margin-left: 10px;
+  margin-right: 10px; */
+  margin-top: 10px;
+  margin-bottom: 10px;
+  /* padding-top: 5px; */
 }
 
 .info-card__title {
