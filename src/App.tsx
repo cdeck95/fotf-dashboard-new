@@ -187,11 +187,12 @@ function App() {
   };
 
   useEffect(() => {
-    if (address) {
-      // LoadAllAccountDetails();
-      //setAllOwnedNFTsArray(LoadAllAccountDetails());
+    if (isMismatched && (!isSmallScreen || (isSmallScreen && !rightNavOpen && !leftNavOpen))){
+      setShowMismatch(true);
+    } else {
+      setShowMismatch(false);
     }
-  }, [address]);
+  }, [address, isMismatched, isSmallScreen, leftNavOpen, rightNavOpen]);
 
   useEffect(() => {
     if (!isMobile && isMediumLarge) {
@@ -203,12 +204,8 @@ function App() {
       setRightNavOpen(!isMobile);
       setSmallScreen(isMobile);
     }
-    if (isMismatched && (!isSmallScreen || (isSmallScreen && !rightNavOpen && !leftNavOpen))){
-      setShowMismatch(true);
-    } else {
-      setShowMismatch(false);
-    }
-  }, [isMobile, isMediumLarge, isMismatched, isSmallScreen, rightNavOpen, leftNavOpen]);
+    
+  }, [isMobile, isMediumLarge, isMismatched, isSmallScreen]);
   
   const location = useLocation();  
   const [pageTitle, setPageTitle] = useState("");
@@ -325,10 +322,11 @@ function App() {
             paddingRight: rightNavOpen ? "340px" : "0px",
             marginTop: isSmallScreen ? "60px" : "20px",
             backgroundColor: "white",
-            height: "100%",
+            height: "100% !important",
             width: "100dvw",
             display: "flex",
             flexDirection: "column",
+            overflowY: "auto",
           }}
         >
           {address ? (

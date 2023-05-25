@@ -29,13 +29,14 @@ interface NFTListProps {
 
 function NFTList(props: NFTListProps) {
   const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down("md"));
+  const isMobile = !useMediaQuery(theme.breakpoints.up("md"));
   const isSmall = useMediaQuery(theme.breakpoints.down("sm"));
   const isMedium = useMediaQuery(theme.breakpoints.down("md"));
   const isMediumLarge = useMediaQuery(theme.breakpoints.down("lg"));
   const isLarge = useMediaQuery(theme.breakpoints.between("lg", "xl"));
-  const isXL = useMediaQuery(theme.breakpoints.down("xl"));
+  const isXL = !useMediaQuery(theme.breakpoints.down("xl"));
   const isFullScreen = useMediaQuery(theme.breakpoints.up(1800));
+  const [isSmallScreen, setSmallScreen] = useState(false);
   console.log(`Mobile:  ${isMobile}`);
   console.log(`Small:  ${isSmall}`);
   console.log(`Medium:  ${isMedium}`);
@@ -46,7 +47,7 @@ function NFTList(props: NFTListProps) {
 
   const { tokens, isLoading } = props;
   const [noTokens, setNoTokens] = useState(true);
-  const columns = isXL? 4 : 3;
+  const columns = isFullScreen? 4 : 3;
 
   var numberOfTokens = 0;
 
@@ -70,7 +71,15 @@ function NFTList(props: NFTListProps) {
     console.log(token);
   }
 
-  const skeltonMap:number[] = [1, 2, 3];
+  useEffect(() => {
+    if (!isMobile && isMediumLarge) {
+      setSmallScreen(true);
+    } else {
+      setSmallScreen(isMobile);
+    }
+  }, [isMobile, isMediumLarge, isSmallScreen]);
+
+  const skeltonMap:number[] = isSmallScreen ? [1, 2] : [1, 2, 3];
 
   return (
     <Box sx={{ width: "100%", height: "100%", marginLeft: "auto",
@@ -90,7 +99,7 @@ function NFTList(props: NFTListProps) {
         cols={columns}
         gap={10}
         rowHeight={160}
-      >
+      > 
         {skeltonMap.map((e: number) => (
           <Box
             key={e}
@@ -108,7 +117,6 @@ function NFTList(props: NFTListProps) {
           </Box>
         ))}
       </ImageList>
-        
       ) : (
         <Box sx={{ width: "100%", height: "100%" }}>
           {noTokens ? (

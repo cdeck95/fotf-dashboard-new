@@ -69,6 +69,17 @@ body {
   width: 100%;
 }
 
+.row-center-full {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: auto;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
 .row-no-center{
   display: flex;
   flex-direction: row;
@@ -182,6 +193,20 @@ body {
   margin-bottom: 5px;
   margin-right: 10px;
 }
+
+.page-header-small-mobile{
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  font-size: 1.5rem !important;
+  font-family: 'Bebas Neue';
+  color: #000000;
+  margin-top: 5px;
+  margin-left: 10px;
+  margin-bottom: 5px;
+  margin-right: 10px;
+}
+
 
 .page-header{
   display: flex;
@@ -365,6 +390,32 @@ body {
   flex-direction: column;
   height: 100%;
 }
+
+.column-center-full-container {
+  display: flex;
+  flex-direction: column;
+  height: auto;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--sidebar-background-color);
+  border-radius: 10px;
+}
+
+.column-center-full {
+  display: flex;
+  flex-direction: column;
+  height: auto;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+  /* margin-top: 10px; */
+  margin-bottom: 20px;
+  /* padding-bottom: 20px; */
+  /* background-color: #fff; */
+  border-radius: 10px;
+}
+
 .column-between {
   display: flex;
   flex-direction: column;
@@ -585,6 +636,7 @@ body {
   padding-bottom: 0px;
   display: flex;
   flex-direction: column;
+  background-color: var(--sidebar-background-color);
 }
 
 .factory-inner-container {
