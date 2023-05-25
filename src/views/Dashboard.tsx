@@ -107,7 +107,7 @@ function Dashboard(props: PolygonProps) {
   }, [isMediumLarge, isMobile, isSmallScreen, leftNavOpen, rightNavOpen]);
 
   const TedsDailyEarnings = 25;
-  const TeddiesDailyEarnings = 40;
+  const TeddiesDailyEarnings = 35;
 
   const [totalFuryTedsEarnings, setTotalFuryTedsEarnings] = useState(0);
   const [totalTeddiesEarnings, setTotalTeddiesEarnings] = useState(0);
