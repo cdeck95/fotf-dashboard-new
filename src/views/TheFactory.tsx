@@ -56,11 +56,9 @@ import ErrorDialog from "../components/ErrorDialog";
 import { PolygonProps } from "./Dashboard";
 import TedClaims from "./TedClaims";
 import ComingSoon from "./ComingSoon";
+import { TED_POLYGON_CONTRACT, TEDDIES_POLYGON_CONTRACT, AITEDS_POLYGON_CONTRACT } from "../account/loadPolygonAccountDetails";
 
 const IS_DISABLED = true;
-const tedsContract = "tedsContract";
-const teddiesContract = "teddiesContract";
-const aiTedsContract = "aiTedsContract";
 
 function TheFactory(props: PolygonProps) {
   useTitle("FOTF | The Factory");
@@ -76,10 +74,11 @@ function TheFactory(props: PolygonProps) {
   const sdk = useSDK();
   const provider = sdk?.getProvider();
   const address = useAddress(); // Get connected wallet address
-  const [, switchNetwork] = useNetwork(); // Switch to desired chain
-  const isMismatched = useNetworkMismatch(); // Detect if user is connected to the wrong network
+  // const [, switchNetwork] = useNetwork(); // Switch to desired chain
+  // const isMismatched = useNetworkMismatch(); // Detect if user is connected to the wrong network
+  // const [showMismatch, setShowMismatch] = useState(false);
+
   const [isSheetOpen, setSheetOpen] = useState(false);
-  const [showMismatch, setShowMismatch] = useState(false);
   console.log(`Mobile:  ${isMobile}`);
   console.log(`Small:  ${isSmall}`);
   console.log(`Medium:  ${isMedium}`);
@@ -90,6 +89,7 @@ function TheFactory(props: PolygonProps) {
 
   const { leftNavOpen, rightNavOpen } = props;
   const { tokens, isLoadingTed, isLoadingTeddy, isLoadingAI, errorTed, errorTeddy, errorAI, maticBalance, needsFunds } = props.tokenProps;
+  const showMismatch = props.showMismatch;
   console.log(tokens);
   console.log(isLoadingTed);
   console.log(isLoadingTeddy);
@@ -202,11 +202,11 @@ function TheFactory(props: PolygonProps) {
       return;
     } else {
       if(tedNFTs?.includes(token)){
-        setSelectedTokenContracts([...selectedTokenContracts, tedsContract]);
+        setSelectedTokenContracts([...selectedTokenContracts, TED_POLYGON_CONTRACT]);
       } else if(teddyNFTs?.includes(token)){
-        setSelectedTokenContracts([...selectedTokenContracts, teddiesContract]);
+        setSelectedTokenContracts([...selectedTokenContracts, TEDDIES_POLYGON_CONTRACT]);
       } else if(aiTedNFTs?.includes(token)){
-        setSelectedTokenContracts([...selectedTokenContracts, aiTedsContract]);
+        setSelectedTokenContracts([...selectedTokenContracts, AITEDS_POLYGON_CONTRACT]);
       } else {
         console.log("Selected token not found in owned arrays, aborting")
         setShowError(true);
@@ -276,12 +276,12 @@ function TheFactory(props: PolygonProps) {
       setSheetOpen(false);
     }
 
-    if (isMismatched && (!isSmallScreen || (isSmallScreen && !rightNavOpen && !leftNavOpen))){
-      setShowMismatch(true);
-    } else {
-      setShowMismatch(false);
-    }
-  }, [isMediumLarge, isMismatched, isMobile, isSmallScreen, leftNavOpen, rightNavOpen]);
+    // if (isMismatched && (!isSmallScreen || (isSmallScreen && !rightNavOpen && !leftNavOpen))){
+    //   setShowMismatch(true);
+    // } else {
+    //   setShowMismatch(false);
+    // }
+  }, [isMediumLarge, isMobile, isSmallScreen, leftNavOpen, rightNavOpen]);
 
   useEffect(() => {
     if (selectedTokens.length >= 10) {
@@ -435,21 +435,21 @@ function TheFactory(props: PolygonProps) {
           : "factory-inner-container"
       } sx={{zIndex: "1 !important", position: "relative"}}
     >
-      {/* {showMismatch &&  */}
-      {showMismatch && <Backdrop
-        sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
-        open={showMismatch}
+{/* 
+  {isLoading && <Backdrop
+        sx={{
+          color: "#fff",
+          zIndex: (theme) => theme.zIndex.drawer + 1,
+          marginLeft: leftDrawerWidth,
+          marginRight: rightDrawerWidth,
+        }}
+        open={isLoading}
       >
-        <Backdrop
-      sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
-      open={showMismatch}
-        >
-        <MainnetNetwork />
-        </Backdrop>
+        <CircularProgress color="inherit" />
       </Backdrop>
-    }
+} */}
 
-  {isLoading && !showMismatch && <Backdrop
+{isLoading && !showMismatch && <Backdrop
         sx={{
           color: "#fff",
           zIndex: (theme) => theme.zIndex.drawer + 1,
@@ -462,14 +462,14 @@ function TheFactory(props: PolygonProps) {
       </Backdrop>
 }
 
-{!ownershipVerified && !isLoading && !isMismatched && <Backdrop
+{!ownershipVerified && !isLoading && !showMismatch && <Backdrop
         sx={{
           color: "#fff",
           zIndex: (theme) => theme.zIndex.drawer + 1,
           marginLeft: leftDrawerWidth,
           marginRight: rightDrawerWidth,
         }}
-        open={!ownershipVerified && !isLoading && !isMismatched}
+        open={!ownershipVerified && !isLoading}
         onClick={handleClose}
       >
         <Box sx={{ borderRadius: "10px", backgroundColor: "white" }}>

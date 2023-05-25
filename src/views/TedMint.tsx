@@ -23,7 +23,11 @@ const DESCRIPTION_FOR_MINT = () => {
   <br></br>Earn Honey, burn for extra honey, or just complete your collection now.</Typography>
 } 
 
-function TedMint() {
+export interface MintProps {
+  showMismatch: boolean;
+}
+
+function TedMint(props: MintProps) {
     useTitle("Mint Fury Teds - 5 MATIC");
     const theme = useTheme();
     const isMobile = !useMediaQuery(theme.breakpoints.up("md"));
@@ -34,6 +38,7 @@ function TedMint() {
     const sdk = useSDK();
     const provider = sdk?.getProvider();
     const address = useAddress();
+    const showMismatch = props.showMismatch;
 
     const {contract: tedPolygonContract, isLoading: isLoadingContract, error } = useContract(TED_POLYGON_CONTRACT);
     console.log(tedPolygonContract);
@@ -124,7 +129,7 @@ return (
         : "inner-container-mint"
     }
   >
-    {isLoadingContract && <Backdrop
+    {isLoadingContract && !showMismatch && <Backdrop
         sx={{
           color: "#fff",
           zIndex: (theme) => theme.zIndex.drawer + 1,
