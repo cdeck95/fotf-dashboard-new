@@ -152,6 +152,8 @@ function App() {
   // const ethTokenProps = LoadETHAccountDetails();
 
   const polygonTokenProps = LoadPolygonAccountDetails();
+  // const {contract: tedPolygonContract, isLoading: isLoadingContract, error } = useContract(TED_POLYGON_CONTRACT);
+  //   console.log(tedPolygonContract);
 
   // const {
   //   tokens,
@@ -336,9 +338,9 @@ function App() {
               <Route path="/HoneyExchange" element={<HoneyExchange />} />
               <Route path="/TeddyClaims" element={<TeddyClaims />} />
               <Route path="/TedClaims" element={<TedClaims />} />{" "}
-              <Route path="/TedMint" element={<TedMint  showMismatch={showMismatch} />} />{" "}
-              <Route path="/TeddyMint" element={<TeddyMint showMismatch={showMismatch} />} />{" "}
-              <Route path="/AITedMint" element={<AITedMint  showMismatch={showMismatch} />} />{" "}
+              <Route path="/TedMint" element={<TedMint  showMismatch={showMismatch} contract={polygonTokenProps.tedContract} isloadingContract={polygonTokenProps.isLoadingTedContract} />} />{" "}
+              <Route path="/TeddyMint" element={<TeddyMint showMismatch={showMismatch} contract={polygonTokenProps.teddyContract} isloadingContract={polygonTokenProps.isLoadingTeddyContract} />} />{" "}
+              <Route path="/AITedMint" element={<AITedMint  showMismatch={showMismatch} contract={polygonTokenProps.aiTedContract} isloadingContract={polygonTokenProps.isLoadingAITedContract} />} />{" "}
               {/* <Route
                 path="/Bridge"
                 element={

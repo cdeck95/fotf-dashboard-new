@@ -1,7 +1,7 @@
 import { Backdrop, Box, Button, ButtonGroup, CircularProgress, Skeleton, Typography, useMediaQuery, useTheme } from "@mui/material";
 import { useTitle } from "../hooks/useTitle";
 import "../styles/Dashboard.css";
-import { ThirdwebNftMedia, useAddress, useClaimedNFTSupply, useContract, useContractMetadata, useUnclaimedNFTSupply } from "@thirdweb-dev/react";
+import { SmartContract, ThirdwebNftMedia, useAddress, useClaimedNFTSupply, useContract, useContractMetadata, useUnclaimedNFTSupply } from "@thirdweb-dev/react";
 import { useSDK } from "@thirdweb-dev/react";
 import ComingSoon from "./ComingSoon";
 import { AITEDS_POLYGON_CONTRACT, TEDDIES_POLYGON_CONTRACT, TED_POLYGON_CONTRACT } from "../account/loadPolygonAccountDetails";
@@ -14,7 +14,7 @@ import { PolygonNetwork } from "../components/PolygonNetwork";
 import teddyPlaceholderImage from "../assets/teddyLogoForPlaceholders.png"
 import "../styles/mint.css";
 import SuccessDialog from "../components/SuccessDialog";
-import { BigNumber } from "ethers";
+import { BaseContract, BigNumber } from "ethers";
 import tedMintLogo from "../assets/tedMint.png"
 
 const COLLECTION_FOR_MINT = "Fury Teds";
@@ -25,6 +25,8 @@ const DESCRIPTION_FOR_MINT = () => {
 
 export interface MintProps {
   showMismatch: boolean;
+  contract: SmartContract<BaseContract> | undefined;
+  isloadingContract: boolean;
 }
 
 function TedMint(props: MintProps) {
@@ -40,8 +42,11 @@ function TedMint(props: MintProps) {
     const address = useAddress();
     const showMismatch = props.showMismatch;
 
-    const {contract: tedPolygonContract, isLoading: isLoadingContract, error } = useContract(TED_POLYGON_CONTRACT);
-    console.log(tedPolygonContract);
+    const contract = props.contract;
+    const isLoadingContract = props.isloadingContract;
+
+    // const {contract: tedPolygonContract, isLoading: isLoadingContract, error } = useContract(TED_POLYGON_CONTRACT);
+    // console.log(tedPolygonContract);
 
     const [isLoading, setIsLoading] = useState(false);
     const [success, setSuccess] = useState(false);
@@ -99,7 +104,7 @@ function TedMint(props: MintProps) {
             const payableAmountPer = BigNumber.from(5).mul(BigNumber.from(10).pow(18));
             const payableAmount = BigNumber.from(counter).mul(payableAmountPer);
             //const payableAmount = counter * payableAmountPer;
-            const tx = await tedPolygonContract?.call(
+            const tx = await contract?.call(
             "mint", [BigNumber.from(counter)],
             {
               value: payableAmount

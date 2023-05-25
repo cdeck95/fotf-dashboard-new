@@ -64,13 +64,16 @@ function AITedMint(props: MintProps) {
   const address = useAddress();
   const showMismatch = props.showMismatch;
 
-  const { contract: honeyContract, isLoading: isLoadingContract, error } = useContract(HONEY_CONTRACT);
+  const { contract: honeyContract, isLoading: isLoadingHoneyContract, error } = useContract(HONEY_CONTRACT);
   console.log(honeyContract)
 
-  const { contract: aiTedsPolygonContract } = useContract(
-    AITEDS_POLYGON_CONTRACT
-  );
-  console.log(aiTedsPolygonContract);
+  const contract = props.contract;
+  const isLoadingContract = props.isloadingContract;
+
+  // const { contract: aiTedsPolygonContract } = useContract(
+  //   AITEDS_POLYGON_CONTRACT
+  // );
+  // console.log(aiTedsPolygonContract);
 
   const [isLoading, setIsLoading] = useState(false);
   const [success, setSuccess] = useState(false);
@@ -135,7 +138,7 @@ function AITedMint(props: MintProps) {
       // const txApprove = await honeyContract?.call("approve", [address, payableAmount]);
       // console.log(txApprove);
       
-      const tx = await aiTedsPolygonContract?.call(
+      const tx = await contract?.call(
         "mint",
         [BigNumber.from(counter), mintWithHNY],
         {
