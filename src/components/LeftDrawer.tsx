@@ -78,9 +78,13 @@ function LeftDrawer(props: NavProps) {
 
   const handleMobileClick = () => {
     if (isMobile) {
+      console.log("mobile click - closing nav")
       setNavOpen(false);
     }
   };
+
+  //console.log("test")
+
 
   const [isBridgePage, setIsBridgePage] = useState(false);
   const location = useLocation();  
