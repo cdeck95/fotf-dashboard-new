@@ -35,6 +35,12 @@ import {
   
   export interface PolygonAccountDetails {
     tokens: tokens;
+    isLoadingTedContract: boolean,
+    isLoadingTeddyContract: boolean,
+    isLoadingAITedContract: boolean,
+    tedContract: SmartContract<BaseContract> | undefined;
+    teddyContract: SmartContract<BaseContract> | undefined;
+    aiTedContract: SmartContract<BaseContract> | undefined;
     isLoadingTed: boolean,
     isLoadingTeddy: boolean,
     isLoadingAI: boolean,
@@ -65,6 +71,12 @@ import {
   }
   
   export const initialState: PolygonAccountDetails = {
+    isLoadingTedContract: false,
+    isLoadingTeddyContract: false,
+    isLoadingAITedContract: false,
+    tedContract: undefined,
+    teddyContract: undefined,
+    aiTedContract: undefined,
     isLoadingTed: false,
     isLoadingTeddy: false,
     isLoadingAI: false,
@@ -118,14 +130,23 @@ import {
     const provider = sdk?.getProvider();
     const address = useAddress();
 
-    const {contract: tedPolygonContract } = useContract(TED_POLYGON_CONTRACT);
+    const {contract: tedPolygonContract, isLoading: isLoadingTedContract} = useContract(TED_POLYGON_CONTRACT);
     console.log(tedPolygonContract);
 
-    const {contract:  teddiesPolygonContract } = useContract(TEDDIES_POLYGON_CONTRACT);
+    allOwnedNFTs.isLoadingTedContract = isLoadingTedContract;
+    allOwnedNFTs.tedContract = tedPolygonContract;
+
+    const {contract:  teddiesPolygonContract, isLoading: isLoadingTeddyContract} = useContract(TEDDIES_POLYGON_CONTRACT);
     console.log(teddiesPolygonContract);
 
-    const {contract:  aiTedsPolygonContract } = useContract(AITEDS_POLYGON_CONTRACT);
+    allOwnedNFTs.isLoadingTeddyContract = isLoadingTeddyContract;
+    allOwnedNFTs.teddyContract = teddiesPolygonContract;
+
+    const {contract:  aiTedsPolygonContract, isLoading: isLoadingAITedContract } = useContract(AITEDS_POLYGON_CONTRACT);
     console.log(aiTedsPolygonContract);
+
+    allOwnedNFTs.isLoadingAITedContract = isLoadingAITedContract;
+    allOwnedNFTs.aiTedContract = aiTedsPolygonContract;
 
     //////////////////////// TEST //////////////////////////
     const {contract: TEST_tedPolygonContract } = useContract(TED_TEST_CONTRACT);

@@ -37,8 +37,11 @@ function TeddyMint(props: MintProps) {
     const address = useAddress();
     const showMismatch = props.showMismatch;
 
-    const {contract:  teddiesPolygonContract, isLoading: isLoadingContract, error } = useContract(TEDDIES_POLYGON_CONTRACT);
-    console.log(teddiesPolygonContract);
+    const contract = props.contract;
+    const isLoadingContract = props.isloadingContract;
+
+    // const {contract:  teddiesPolygonContract, isLoading: isLoadingContract, error } = useContract(TEDDIES_POLYGON_CONTRACT);
+    // console.log(teddiesPolygonContract);
 
     const [isLoading, setIsLoading] = useState(false);
     const [success, setSuccess] = useState(false);
@@ -95,7 +98,7 @@ function TeddyMint(props: MintProps) {
         try {
             const payableAmountPer = BigNumber.from(10).mul(BigNumber.from(10).pow(18));
             const payableAmount = BigNumber.from(counter).mul(payableAmountPer);
-            const tx = await teddiesPolygonContract?.call(
+            const tx = await contract?.call(
             "mint", [BigNumber.from(counter)],
             {
               value: payableAmount
@@ -121,7 +124,7 @@ function TeddyMint(props: MintProps) {
 return (
   <Box
     className={isSmallScreen
-        ? "inner-container-mobile"
+        ? "inner-container-mint-mobile"
         : "inner-container-mint"
     }
   >
