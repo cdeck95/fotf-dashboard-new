@@ -321,6 +321,7 @@ function App() {
             paddingLeft: leftNavOpen ? LeftDrawerWidthPX : "0px",
             paddingRight: rightNavOpen ? "340px" : "0px",
             marginTop: isSmallScreen ? "60px" : "20px",
+            // paddingTop: isSmallScreen ? "10px" : "0px",
             backgroundColor: "white",
             height: "100% !important",
             width: "100dvw",

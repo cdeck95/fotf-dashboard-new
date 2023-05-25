@@ -14,7 +14,7 @@ import "../styles/globals.css";
 import fotfAppLogo from "../assets/FOTF_App.png";
 import theHubLogo from "../assets/hub_icon.png";
 import { useLocation, useNavigate } from "react-router-dom";
-import { Backdrop, IconButton, useMediaQuery, useTheme } from "@mui/material";
+import { Backdrop, Chip, IconButton, useMediaQuery, useTheme } from "@mui/material";
 import GridViewOutlinedIcon from "@mui/icons-material/GridViewOutlined";
 import DescriptionOutlinedIcon from "@mui/icons-material/DescriptionOutlined";
 import FileDownloadOutlinedIcon from "@mui/icons-material/FileDownloadOutlined";
@@ -344,6 +344,7 @@ function LeftDrawer(props: NavProps) {
                 <CatchingPokemonOutlinedIcon fontSize="small" />
               </ListItemIcon>
               <ListItemText primary={"Fury Ted Mint"} />
+              <Chip size="small"  label={<Typography sx={{fontSize: "15px"}}> New &#x2728; </Typography>} color="primary" sx={{maxHeight: "40px", maxWidth: "70px", marginRight: "33px", marginBottom: "15px", border: "none"}} variant="outlined"/>
             </ListItemButton>
           </ListItem>
           <ListItem
@@ -356,6 +357,7 @@ function LeftDrawer(props: NavProps) {
                 <ChildFriendlyOutlinedIcon fontSize="small" />
               </ListItemIcon>
               <ListItemText primary={"Teddy Mint"} />
+              <Chip size="small"  label={<Typography sx={{fontSize: "15px"}}> New &#x2728; </Typography>} color="primary" sx={{maxHeight: "40px", maxWidth: "70px", marginRight: "50px", marginBottom: "15px", border: "none"}} variant="outlined"/>
             </ListItemButton>
           </ListItem>
           <ListItem
@@ -368,6 +370,7 @@ function LeftDrawer(props: NavProps) {
                 <CycloneOutlinedIcon fontSize="small" />
               </ListItemIcon>
               <ListItemText primary={"AI Ted Mint"} />
+              <Chip size="small"  label={<Typography sx={{fontSize: "15px"}}> New &#x2728; </Typography>} color="primary" sx={{maxHeight: "40px", maxWidth: "70px", marginRight: "50px", marginBottom: "15px", border: "none"}} variant="outlined"/>
             </ListItemButton>
           </ListItem>
         </List>
