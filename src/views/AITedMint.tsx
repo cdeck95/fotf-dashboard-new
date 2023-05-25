@@ -175,7 +175,7 @@ function AITedMint(props: MintProps) {
   return (
     <Box
       className={
-        isSmallScreen ? "inner-container-mobile" : "inner-container-mint"
+        isSmallScreen ? "inner-container-mint-mobile" : "inner-container-mint"
       }
     >
         {isLoadingContract && !showMismatch && <Backdrop

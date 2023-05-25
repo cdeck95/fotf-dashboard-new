@@ -125,7 +125,7 @@ function TedMint(props: MintProps) {
 return (
   <Box
     className={isSmallScreen
-        ? "inner-container-mobile"
+        ? "inner-container-mint-mobile"
         : "inner-container-mint"
     }
   >
