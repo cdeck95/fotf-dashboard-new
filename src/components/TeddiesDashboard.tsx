@@ -25,9 +25,9 @@ function TeddiesDashboard(props: PolygonPropsNoNav) {
     const navigate = useNavigate();
 
     return (
-        <Box sx={{height: "auto", width: "100%", padding: "10px", backgroundColor: "#fff", borderRadius: "10px"}}>
+        <Box sx={{height: "auto", width: "100%", paddingLeft: "10px", paddingRight: "10px", backgroundColor: "#fff", borderRadius: "10px"}}>
             <Typography className="page-header-dashboard">
-                Teddy Staking
+                Teddies by FOTF
             </Typography>
             <Box className="row-space-between" sx={{ height: "180px" }}>
                 <NFTList tokens={teddyNFTs!} isLoading={isLoadingTeddy} />

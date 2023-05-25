@@ -46,7 +46,7 @@ function Plushy() {
       }, [isMobile, isMediumLarge, isSmallScreen]);
 
     return (
-        <Box className="row-between" sx={{height: "auto", width: "100%", padding: "10px", backgroundColor: "#fff", borderRadius: "10px"}}>
+        <Box className="row-between" sx={{height: "auto", width: "100%", paddingLeft: "10px", paddingRight: "10px", backgroundColor: "#fff", borderRadius: "10px"}}>
             <Box className="half-col">
                 <img src={plushy} alt="Plushies" className={isSmallScreen ? "plushyImage-mobile" : "plushyImage"}/>
             </Box>
@@ -54,10 +54,10 @@ function Plushy() {
                 <Typography className={isSmallScreen ? "page-header-small-mobile" : "page-header-small"}> 
                     Ted Plushy Launch
                 </Typography>
-                <Typography>
+                <Typography sx={{fontSize: "1rem"}}>
                     <span className="accent-text">$44.99</span> Collectors Box Edition Pre-Order
                 </Typography>
-                <Typography>
+                <Typography sx={{fontSize: "1rem"}}>
                     <span className="accent-text">$9.99</span> / Individual Teddy Plushy Pre-Order
                 </Typography>
                 <Typography className="small-text">
