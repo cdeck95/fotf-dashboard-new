@@ -44,7 +44,7 @@ export interface allOwnedNFTs {
   isLoadingOneOfOne: boolean,
   errorBirthCerts: boolean,
   errorOneOfOne: boolean,
-  honeyBalance: string;
+  // honeyBalance: string;
 }
 
 export const initialState: allOwnedNFTs = {
@@ -52,7 +52,7 @@ export const initialState: allOwnedNFTs = {
   isLoadingOneOfOne: false,
   errorBirthCerts: false,
   errorOneOfOne: false,
-  honeyBalance: "0",
+  // honeyBalance: "0",
   tokens: {
     OneofOnes: {
       address: "",
@@ -128,7 +128,7 @@ export function LoadETHAccountDetails(): allOwnedNFTs {
   const [contract_OneOfOne, setContractOneOfOne] =
     useState<SmartContract<BaseContract>>();
 
-  const [honey, setHoney] = useState<string>();
+  // const [honey, setHoney] = useState<string>();
   // const [stakedNFTs, setStakedNFTs] = useState<NFT[]>();
 
   // const {
@@ -403,19 +403,19 @@ export function LoadETHAccountDetails(): allOwnedNFTs {
   //   }
   // }, [sdk]);
 
-  const LoadHoney = useCallback(async () => {
-    try {
-      const data: BigNumber = await contract_REWARDS?.call(
-        "balanceOf", // Name of your function as it is on the smart contract
-        // Arguments to your function, in the same order they are on your smart contract
-        [address]
-      );
-      const honeyTMP = parseFloat(ethers.utils.formatEther(data)).toFixed(3);
-      setHoney(honeyTMP.toString());
-    } catch (e) {
-      console.log(e);
-    }
-  }, [address, contract_REWARDS]);
+  // const LoadHoney = useCallback(async () => {
+  //   try {
+  //     const data: BigNumber = await contract_REWARDS?.call(
+  //       "balanceOf", // Name of your function as it is on the smart contract
+  //       // Arguments to your function, in the same order they are on your smart contract
+  //       [address]
+  //     );
+  //     const honeyTMP = parseFloat(ethers.utils.formatEther(data)).toFixed(3);
+  //     setHoney(honeyTMP.toString());
+  //   } catch (e) {
+  //     console.log(e);
+  //   }
+  // }, [address, contract_REWARDS]);
 
   useEffect(() => {
     try {
@@ -447,9 +447,9 @@ export function LoadETHAccountDetails(): allOwnedNFTs {
       // if (contract_TEDDY && stakedTokenIDs.length === 0) {
       //   LoadStakedTokens();
       // }
-      if (contract_REWARDS) {
-        LoadHoney();
-      }
+      // if (contract_REWARDS) {
+      //   LoadHoney();
+      // }
       // if(stakedTeddys){
       //   setStakedNFTs(stakedTeddys);
       // }
@@ -457,12 +457,12 @@ export function LoadETHAccountDetails(): allOwnedNFTs {
       console.log(e);
       console.log("Error!");
     }
-  }, [sdk, address, contract_REWARDS, contract_BIRTHCERTS, contract_OneOfOne, LoadContractRewards, LoadContractBirthCerts, LoadContractOneOfOne, LoadHoney]);
+  }, [sdk, address, contract_REWARDS, contract_BIRTHCERTS, contract_OneOfOne, LoadContractRewards, LoadContractBirthCerts, LoadContractOneOfOne]);
   
   allOwnedNFTs.tokens = nftArray;
-  if (honey) {
-    allOwnedNFTs.honeyBalance = honey;
-  }
+  // if (honey) {
+  //   allOwnedNFTs.honeyBalance = honey;
+  // }
 
   return allOwnedNFTs;
 }

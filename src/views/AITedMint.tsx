@@ -22,7 +22,7 @@ import {
 } from "@thirdweb-dev/react";
 import { useSDK } from "@thirdweb-dev/react";
 import ComingSoon from "./ComingSoon";
-import { AITEDS_POLYGON_CONTRACT } from "../account/loadPolygonAccountDetails";
+import { AITEDS_POLYGON_CONTRACT, HONEY_CONTRACT } from "../account/loadPolygonAccountDetails";
 import { useEffect, useState } from "react";
 import BridgeSuccessDialog from "../components/BridgeSuccessDialog";
 import ErrorDialog from "../components/ErrorDialog";
@@ -37,7 +37,6 @@ import CheckIcon from '@mui/icons-material/Check';
 import aiTedMintLogo from "../assets/aiTedMint.png";
 import { MintProps } from "./TedMint";
 
-export const HONEY_CONTRACT = "0xd8495F616fDCD9710b76c19Ab81cCf98f12c5A2B";
 
 const COLLECTION_FOR_MINT = "AI Teds";
 const DESCRIPTION_FOR_MINT = () => {
@@ -126,30 +125,53 @@ function AITedMint(props: MintProps) {
     }
   };
 
+  const isApproved = async () => {
+    try {
+      const txApprove = await honeyContract?.call("allowance", [address, HONEY_CONTRACT]);
+      console.log(txApprove);
+      return txApprove;
+    } catch (e: any) {
+      console.log(e);
+      console.log(e.message);
+    }
+  };
+
   const mint = async () => {
     try {
+      setIsLoading(true);
+      const pricePerHoney = mintWithHNY ? 100000 : 2;
+      const payableAmountPerHoney = BigNumber.from(pricePerHoney).mul(
+        BigNumber.from(10).pow(18)
+      );
+      const isApprovedResponse = await isApproved();
+      console.log(isApprovedResponse);
+      if(isApprovedResponse.toString() === "0") {
+        console.log("not approved");
+        const txApprove = await honeyContract?.call("approve", [address, payableAmountPerHoney]);
+        console.log(txApprove);
+      }
 
-      const pricePer = mintWithHNY ? 100000 : 2;
+      const pricePer = mintWithHNY ? 0 : 2;
       const payableAmountPer = BigNumber.from(pricePer).mul(
         BigNumber.from(10).pow(18)
       );
       const payableAmount = BigNumber.from(counter).mul(payableAmountPer);
 
-      // const txApprove = await honeyContract?.call("approve", [address, payableAmount]);
-      // console.log(txApprove);
       
       const tx = await contract?.call(
         "mint",
         [BigNumber.from(counter), mintWithHNY],
         {
-          value: mintWithHNY? pricePer : payableAmount,
+          value: payableAmount,
         }
       );
       console.log(tx);
+      setIsLoading(false);
       return tx;
     } catch (e: any) {
       console.log(e);
       console.log(e.message);
+      setIsLoading(false);
       if (e.message.includes("Reason: user rejected transaction")) {
         alert("User denied transaction signature.");
       } else if (e.message.includes("Reason: Address is not whitelisted")) {
@@ -181,14 +203,14 @@ function AITedMint(props: MintProps) {
         isSmallScreen ? "inner-container-mint-mobile" : "inner-container-mint"
       }
     >
-        {isLoadingContract && !showMismatch && <Backdrop
+        {(isLoadingContract || isLoadingHoneyContract) && !showMismatch && <Backdrop
         sx={{
           color: "#fff",
           zIndex: (theme) => theme.zIndex.drawer + 1,
           marginLeft: leftDrawerWidth,
           marginRight: rightDrawerWidth,
         }}
-        open={isLoadingContract}
+        open={isLoadingContract || isLoadingHoneyContract}
       >
         <CircularProgress color="inherit" />
       </Backdrop>}
@@ -234,7 +256,7 @@ function AITedMint(props: MintProps) {
 
            <Box className={isSmallScreen ? "row" : "row"}>
           {/* <Box className={isSmallScreen ? "col-mint-mobile" : "col-mint"}> */}
-                {/* <Box className="row-around">
+                <Box className="row-around">
                   <Typography className="page-header-mint">Mint with {" "} <span className="accent-text">&nbsp;$HNY? </span></Typography>
                   <ToggleButton
                     value="check"
@@ -242,10 +264,10 @@ function AITedMint(props: MintProps) {
                     onChange={() => setMintWithHNY(!mintWithHNY)}
                     sx={{ marginLeft:"0px", color: "#000", backgroundColor: "#FED100"}}>
                     <Box className="row">
-                      <CheckIcon />
+                     <CheckIcon sx={{opacity:  mintWithHNY? 1 : 0}}/>
                     </Box>
                   </ToggleButton>
-                </Box> */}
+                </Box>
                 <Box className="row-around">
                 <ButtonGroup size="large" aria-label="small outlined button group">
                   <Button

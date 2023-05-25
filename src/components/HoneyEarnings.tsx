@@ -24,11 +24,10 @@ export interface HoneyEarningsProps {
 
 function HoneyEarnings(props: HoneyEarningsProps) {
 
-    const {honeyBalance, isLoadingOneOfOne, isLoadingBirthCerts, tokens: ethTokens } = LoadETHAccountDetails(); 
-    console.log(honeyBalance);
-    console.log(isLoadingOneOfOne);
-    console.log(isLoadingBirthCerts);
-    console.log(ethTokens);
+    // const {isLoadingOneOfOne, isLoadingBirthCerts, tokens: ethTokens } = LoadETHAccountDetails(); 
+    // console.log(isLoadingOneOfOne);
+    // console.log(isLoadingBirthCerts);
+    // console.log(ethTokens);
 
     const { totalHNYEarnings, totalTeddiesEarnings, totalFuryTedsEarnings } = props;
 

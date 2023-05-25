@@ -83,6 +83,8 @@ function App() {
         styleOverrides: {
           root: {
             backgroundColor: sidebarBackgroundColor,
+            paddingLeft: "10px !important",
+            paddingRight: "10px !important",
             overflowX: "hidden",
             overflowY: "hidden",
             "&:hover": {

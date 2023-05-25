@@ -38,16 +38,20 @@ import {
     isLoadingTedContract: boolean,
     isLoadingTeddyContract: boolean,
     isLoadingAITedContract: boolean,
+    isLoadingHoneyContract: boolean,
     tedContract: SmartContract<BaseContract> | undefined;
     teddyContract: SmartContract<BaseContract> | undefined;
     aiTedContract: SmartContract<BaseContract> | undefined;
+    honeyContract: SmartContract<BaseContract> | undefined;
     isLoadingTed: boolean,
     isLoadingTeddy: boolean,
     isLoadingAI: boolean,
+    isLoadingHoney: boolean,
     errorTed: any;
     errorTeddy: any;
     errorAI: any;
     maticBalance: string;
+    honeyBalance: string;
     needsFunds: boolean;
     CanIBridgeTedsFlag: boolean;
     CanIBridgeTedsAmount: BigNumber;
@@ -77,14 +81,18 @@ import {
     tedContract: undefined,
     teddyContract: undefined,
     aiTedContract: undefined,
+    honeyContract: undefined,
+    isLoadingHoneyContract: false,
     isLoadingTed: false,
     isLoadingTeddy: false,
     isLoadingAI: false,
+    isLoadingHoney: false,
     errorTed: false,
     errorTeddy: false,
     errorAI: false,
     maticBalance: "0",
     needsFunds: false,
+    honeyBalance: "0",
     CanIBridgeTedsFlag: false,
     CanIBridgeTedsAmount: BigNumber.from(0),
     CanIBridgeTeddiesFlag: false,
@@ -113,6 +121,8 @@ import {
   export const TED_POLYGON_CONTRACT = "0x047Be3F987854136eC872932c24a26Dcd0fD3a42";
   export const TEDDIES_POLYGON_CONTRACT = "0x747cC82CDDF9fE91ae69C2f723844d8E31D31e26";
   export const AITEDS_POLYGON_CONTRACT = "0xDAA7Ba5cFd5f3A46E8180F19B5c930130e156723";
+  export const HONEY_CONTRACT = "0xd8495F616fDCD9710b76c19Ab81cCf98f12c5A2B";
+
   /////
   
   
@@ -129,6 +139,37 @@ import {
     const sdk = useSDK();
     const provider = sdk?.getProvider();
     const address = useAddress();
+    const [honey, setHoney] = useState<string>();
+
+    const {contract: honeyPolygonContract, isLoading: isLoadingHoneyContract} = useContract(HONEY_CONTRACT);
+    console.log(honeyPolygonContract);
+
+    allOwnedNFTs.isLoadingHoneyContract = isLoadingHoneyContract;
+    allOwnedNFTs.honeyContract = honeyPolygonContract;
+
+    const LoadHoney = useCallback(async () => {
+      try {
+        const data: BigNumber = await honeyPolygonContract?.call(
+          "balanceOf", // Name of your function as it is on the smart contract
+          // Arguments to your function, in the same order they are on your smart contract
+          [address]
+        );
+        const honeyTMP = parseFloat(ethers.utils.formatEther(data)).toFixed(3);
+        setHoney(honeyTMP.toString());
+      } catch (e) {
+        console.log(e);
+      }
+    }, [address, honeyPolygonContract]);
+
+    useEffect(() => {
+      if (honeyPolygonContract) {
+        LoadHoney();
+      }
+    }, [LoadHoney, honeyPolygonContract]);
+
+    if (honey) {
+      allOwnedNFTs.honeyBalance = honey;
+    }
 
     const {contract: tedPolygonContract, isLoading: isLoadingTedContract} = useContract(TED_POLYGON_CONTRACT);
     console.log(tedPolygonContract);

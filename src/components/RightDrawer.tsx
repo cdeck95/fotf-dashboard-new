@@ -82,7 +82,7 @@ function PermanentDrawerRight(props: NavProps) {
 
   //const { tokens, error, isLoadingAI, isLoadingBirthCerts, isLoadingOneOfOne, isLoadingStaked, isLoadingTed, isLoadingTeddy, honeyBalance} = props;
   
-  const { tokens, isLoadingTed, isLoadingTeddy, isLoadingAI, errorTed, errorTeddy, errorAI, maticBalance, needsFunds } = props.tokenProps;
+  const { tokens, isLoadingTed, isLoadingTeddy, isLoadingAI, errorTed, errorTeddy, errorAI, maticBalance, needsFunds, honeyBalance, honeyContract, isLoadingHoney, isLoadingHoneyContract } = props.tokenProps;
 
   // setNavOpen(true);
 
