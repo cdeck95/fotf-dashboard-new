@@ -143,13 +143,13 @@ function AITedMint(props: MintProps) {
       const payableAmountPerHoney = BigNumber.from(pricePerHoney).mul(
         BigNumber.from(10).pow(18)
       );
-      const isApprovedResponse = await isApproved();
-      console.log(isApprovedResponse);
-      if(isApprovedResponse.toString() === "0") {
-        console.log("not approved");
-        const txApprove = await honeyContract?.call("approve", [address, payableAmountPerHoney]);
-        console.log(txApprove);
-      }
+      // const isApprovedResponse = await isApproved();
+      // console.log(isApprovedResponse);
+      // if(isApprovedResponse.toString() === "0") {
+      //   console.log("not approved");
+      //   const txApprove = await honeyContract?.call("approve", [address, payableAmountPerHoney]);
+      //   console.log(txApprove);
+      // }
 
       const pricePer = mintWithHNY ? 0 : 2;
       const payableAmountPer = BigNumber.from(pricePer).mul(
@@ -255,8 +255,7 @@ function AITedMint(props: MintProps) {
           <Box className={isSmallScreen ? "col-mint-mobile" : "col-mint"}>
 
            <Box className={isSmallScreen ? "row" : "row"}>
-          {/* <Box className={isSmallScreen ? "col-mint-mobile" : "col-mint"}> */}
-                <Box className="row-around">
+                {/* <Box className="row-around">
                   <Typography className="page-header-mint">Mint with {" "} <span className="accent-text">&nbsp;$HNY? </span></Typography>
                   <ToggleButton
                     value="check"
@@ -267,7 +266,7 @@ function AITedMint(props: MintProps) {
                      <CheckIcon sx={{opacity:  mintWithHNY? 1 : 0}}/>
                     </Box>
                   </ToggleButton>
-                </Box>
+                </Box> */}
                 <Box className="row-around">
                 <ButtonGroup size="large" aria-label="small outlined button group">
                   <Button
