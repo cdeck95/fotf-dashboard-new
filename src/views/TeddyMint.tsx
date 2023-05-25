@@ -16,6 +16,7 @@ import "../styles/mint.css";
 import SuccessDialog from "../components/SuccessDialog";
 import { BigNumber } from "ethers";
 import teddyMintLogo from "../assets/teddyMint.gif"
+import { MintProps } from "./TedMint";
 
 const COLLECTION_FOR_MINT = "Teddies by FOTF";
 const DESCRIPTION_FOR_MINT = () => {
@@ -23,7 +24,7 @@ const DESCRIPTION_FOR_MINT = () => {
   <br></br>50% of all mint proceeds will be donated to charity. Start aging your Teddy today by minting.</Typography>
 } 
 
-function TeddyMint() {
+function TeddyMint(props: MintProps) {
     useTitle("Mint Teddies - 10 MATIC");
     const theme = useTheme();
     const isMobile = !useMediaQuery(theme.breakpoints.up("md"));
@@ -34,6 +35,7 @@ function TeddyMint() {
     const sdk = useSDK();
     const provider = sdk?.getProvider();
     const address = useAddress();
+    const showMismatch = props.showMismatch;
 
     const {contract:  teddiesPolygonContract, isLoading: isLoadingContract, error } = useContract(TEDDIES_POLYGON_CONTRACT);
     console.log(teddiesPolygonContract);
@@ -123,7 +125,7 @@ return (
         : "inner-container-mint"
     }
   >
-    {isLoadingContract && <Backdrop
+    {isLoadingContract && !showMismatch && <Backdrop
         sx={{
           color: "#fff",
           zIndex: (theme) => theme.zIndex.drawer + 1,

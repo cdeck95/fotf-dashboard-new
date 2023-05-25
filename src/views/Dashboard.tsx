@@ -52,6 +52,7 @@ export interface PolygonProps {
   tokenProps: PolygonAccountDetails;
   leftNavOpen: boolean;
   rightNavOpen: boolean;
+  showMismatch: boolean;
 }
 
 export interface PolygonPropsNoNav {
@@ -74,6 +75,7 @@ function Dashboard(props: PolygonProps) {
     maticBalance,
     needsFunds,
   } = props.tokenProps;
+  const showMismatch = props.showMismatch;
   const theme = useTheme();
   const isMobile = !useMediaQuery(theme.breakpoints.up("md"));
   const isMediumLarge = useMediaQuery(theme.breakpoints.down("lg"));
@@ -81,9 +83,9 @@ function Dashboard(props: PolygonProps) {
   const sdk = useSDK();
   const provider = sdk?.getProvider();
   const address = useAddress(); // Get connected wallet address
-  const [, switchNetwork] = useNetwork(); // Switch to desired chain
-  const isMismatched = useNetworkMismatch(); // Detect if user is connected to the wrong network
-  const [showMismatch, setShowMismatch] = useState(false);
+  // const [, switchNetwork] = useNetwork(); // Switch to desired chain
+  // const isMismatched = useNetworkMismatch(); // Detect if user is connected to the wrong network
+  // const [showMismatch, setShowMismatch] = useState(false);
 
   // const { tokens, isLoadingTed, error, honeyBalance } = LoadAllAccountDetails();
 
@@ -94,22 +96,15 @@ function Dashboard(props: PolygonProps) {
       setSmallScreen(false);
     }
 
-    if (
-      isMismatched &&
-      (!isSmallScreen || (isSmallScreen && !rightNavOpen && !leftNavOpen))
-    ) {
-      setShowMismatch(true);
-    } else {
-      setShowMismatch(false);
-    }
-  }, [
-    isMediumLarge,
-    isMismatched,
-    isMobile,
-    isSmallScreen,
-    leftNavOpen,
-    rightNavOpen,
-  ]);
+    // if (
+    //   isMismatched &&
+    //   (!isSmallScreen || (isSmallScreen && !rightNavOpen && !leftNavOpen))
+    // ) {
+    //   setShowMismatch(true);
+    // } else {
+    //   setShowMismatch(false);
+    // }
+  }, [isMediumLarge, isMobile, isSmallScreen, leftNavOpen, rightNavOpen]);
 
   const TedsDailyEarnings = 25;
   const TeddiesDailyEarnings = 40;
@@ -151,7 +146,7 @@ function Dashboard(props: PolygonProps) {
 
   return (
     <Box className="inner-container" sx={{zIndex: "1 !important", position: "relative"}}>
-      {showMismatch && (
+      {/* {showMismatch && (
         <Backdrop
           sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
           open={showMismatch}
@@ -164,7 +159,7 @@ function Dashboard(props: PolygonProps) {
 
         </Backdrop>
         </Backdrop>
-      )}
+      )} */}
       {address ? (
         <Box>
           {isMobile ? (

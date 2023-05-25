@@ -52,6 +52,7 @@ import { LoadPolygonAccountDetails } from "./account/loadPolygonAccountDetails";
 import AITedMint from "./views/AITedMint";
 import TedMint from "./views/TedMint";
 import TeddyMint from "./views/TeddyMint";
+import { PolygonNetwork } from "./components/PolygonNetwork";
 
 export const LeftDrawerWidthPX = "260px";
 export const LeftDrawerWidth = 260;
@@ -133,14 +134,17 @@ function App() {
   const isMobile = !useMediaQuery(theme.breakpoints.up("md"));
   const isMediumLarge = useMediaQuery(theme.breakpoints.down("lg"));
   const [isSmallScreen, setSmallScreen] = useState(false);
+  const leftDrawerWidth = isSmallScreen ? "0px" : "260px";
+  const rightDrawerWidth = isSmallScreen ? "0px" : "340px";
 
   const sdk = useSDK();
   const provider = sdk?.getProvider();
   const address = useAddress(); // Get connected wallet address
   const [, switchNetwork] = useNetwork(); // Switch to desired chain
   const isMismatched = useNetworkMismatch(); // Detect if user is connected to the wrong network
+  const [showMismatch, setShowMismatch] = useState(false);
   
-  const [navOpen, setNavOpen] = useState(true);
+  const [leftNavOpen, setLeftNavOpen] = useState(true);
   const [rightNavOpen, setRightNavOpen] = useState(true);
   const [isBridgePage, setIsBridgePage] = useState(false);
   const [allOwnedNFTsArray, setAllOwnedNFTsArray] = useState<any>([]);
@@ -171,8 +175,8 @@ function App() {
   // console.log(honeyBalance);
 
   const handleOpen = (): void => {
-    setNavOpen(true);
-    console.log(navOpen);
+    setLeftNavOpen(true);
+    console.log(leftNavOpen);
     console.log("setNavOpen is true");
   };
 
@@ -191,15 +195,20 @@ function App() {
 
   useEffect(() => {
     if (!isMobile && isMediumLarge) {
-      setNavOpen(false);
+      setLeftNavOpen(false);
       setRightNavOpen(false);
       setSmallScreen(true);
     } else {
-      setNavOpen(!isMobile);
+      setLeftNavOpen(!isMobile);
       setRightNavOpen(!isMobile);
       setSmallScreen(isMobile);
     }
-  }, [isMobile, isMediumLarge]);
+    if (isMismatched && (!isSmallScreen || (isSmallScreen && !rightNavOpen && !leftNavOpen))){
+      setShowMismatch(true);
+    } else {
+      setShowMismatch(false);
+    }
+  }, [isMobile, isMediumLarge, isMismatched, isSmallScreen, rightNavOpen, leftNavOpen]);
   
   const location = useLocation();  
   const [pageTitle, setPageTitle] = useState("");
@@ -256,6 +265,20 @@ function App() {
   return (
     <Box className="app-container" sx={{ position: "relative", overflowY: "auto" }}>
       <ThemeProvider theme={theme}>
+      {showMismatch && <Backdrop
+        sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1, marginLeft: leftDrawerWidth,
+        marginRight: rightDrawerWidth,}}
+        open={showMismatch}
+      >
+        <Backdrop
+      sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1, marginLeft: leftDrawerWidth,
+      marginRight: rightDrawerWidth, }}
+      open={showMismatch}
+        >
+        <PolygonNetwork />
+        </Backdrop>
+      </Backdrop>
+    }
         {isSmallScreen && (
           <Box
             sx={{
@@ -298,7 +321,7 @@ function App() {
 
         <Box
           sx={{
-            paddingLeft: navOpen ? LeftDrawerWidthPX : "0px",
+            paddingLeft: leftNavOpen ? LeftDrawerWidthPX : "0px",
             paddingRight: rightNavOpen ? "340px" : "0px",
             marginTop: isSmallScreen ? "60px" : "20px",
             backgroundColor: "white",
@@ -310,13 +333,13 @@ function App() {
         >
           {address ? (
             <Routes>
-              <Route path="/" element={<Dashboard tokenProps={polygonTokenProps} leftNavOpen={navOpen} rightNavOpen={rightNavOpen}/>} />
+              <Route path="/" element={<Dashboard tokenProps={polygonTokenProps} leftNavOpen={leftNavOpen} rightNavOpen={rightNavOpen} showMismatch={showMismatch}/>} />
               <Route path="/HoneyExchange" element={<HoneyExchange />} />
               <Route path="/TeddyClaims" element={<TeddyClaims />} />
               <Route path="/TedClaims" element={<TedClaims />} />{" "}
-              <Route path="/TedMint" element={<TedMint />} />{" "}
-              <Route path="/TeddyMint" element={<TeddyMint />} />{" "}
-              <Route path="/AITedMint" element={<AITedMint />} />{" "}
+              <Route path="/TedMint" element={<TedMint  showMismatch={showMismatch} />} />{" "}
+              <Route path="/TeddyMint" element={<TeddyMint showMismatch={showMismatch} />} />{" "}
+              <Route path="/AITedMint" element={<AITedMint  showMismatch={showMismatch} />} />{" "}
               {/* <Route
                 path="/Bridge"
                 element={
@@ -327,7 +350,7 @@ function App() {
               /> */}
               <Route
                 path="/TheFactory"
-                element={<TheFactory tokenProps={polygonTokenProps} leftNavOpen={navOpen} rightNavOpen={rightNavOpen}  />}
+                element={<TheFactory tokenProps={polygonTokenProps} leftNavOpen={leftNavOpen} rightNavOpen={rightNavOpen} showMismatch={showMismatch} />}
               />
               <Route path="/BuildATeddy" element={<BuildATeddy />} />
               <Route path="/TraitSwapTeds" element={<TraitSwapTeds />} />
@@ -338,9 +361,9 @@ function App() {
             <ConnectWalletPage />
           )}
 
-          <LeftDrawer navOpen={navOpen} setNavOpen={setNavOpen} />
+          <LeftDrawer navOpen={leftNavOpen} setNavOpen={setLeftNavOpen} />
 
-          {navOpen ? (
+          {leftNavOpen ? (
             <Box></Box>
           ) : (
             <Box
@@ -389,7 +412,7 @@ function App() {
                 zIndex: "2 !important",
               }}
             >
-              {!navOpen && (
+              {!leftNavOpen && (
                 <IconButton
                   color="inherit"
                   aria-label="open right drawer"

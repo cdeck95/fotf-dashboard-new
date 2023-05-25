@@ -35,6 +35,7 @@ import SuccessDialog from "../components/SuccessDialog";
 import { BigNumber } from "ethers";
 import CheckIcon from '@mui/icons-material/Check';
 import aiTedMintLogo from "../assets/aiTedMint.png";
+import { MintProps } from "./TedMint";
 
 export const HONEY_CONTRACT = "0xd8495F616fDCD9710b76c19Ab81cCf98f12c5A2B";
 
@@ -50,7 +51,7 @@ const DESCRIPTION_FOR_MINT = () => {
   );
 };
 
-function AITedMint() {
+function AITedMint(props: MintProps) {
   useTitle("Mint AI Teds - 2 MATIC or 100K HNY");
   const theme = useTheme();
   const isMobile = !useMediaQuery(theme.breakpoints.up("md"));
@@ -61,6 +62,7 @@ function AITedMint() {
   const sdk = useSDK();
   const provider = sdk?.getProvider();
   const address = useAddress();
+  const showMismatch = props.showMismatch;
 
   const { contract: honeyContract, isLoading: isLoadingContract, error } = useContract(HONEY_CONTRACT);
   console.log(honeyContract)
@@ -176,7 +178,7 @@ function AITedMint() {
         isSmallScreen ? "inner-container-mobile" : "inner-container-mint"
       }
     >
-        {isLoadingContract && <Backdrop
+        {isLoadingContract && !showMismatch && <Backdrop
         sx={{
           color: "#fff",
           zIndex: (theme) => theme.zIndex.drawer + 1,
