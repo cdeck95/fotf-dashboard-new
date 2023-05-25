@@ -1,4 +1,4 @@
-import { Backdrop, Box, Button, ButtonGroup, Skeleton, Typography, useMediaQuery, useTheme } from "@mui/material";
+import { Backdrop, Box, Button, ButtonGroup, CircularProgress, Skeleton, Typography, useMediaQuery, useTheme } from "@mui/material";
 import { useTitle } from "../hooks/useTitle";
 import "../styles/Dashboard.css";
 import { ThirdwebNftMedia, useAddress, useClaimedNFTSupply, useContract, useContractMetadata, useUnclaimedNFTSupply } from "@thirdweb-dev/react";
@@ -29,13 +29,13 @@ function TedMint() {
     const isMobile = !useMediaQuery(theme.breakpoints.up("md"));
     const isMediumLarge = useMediaQuery(theme.breakpoints.down("lg"));
     const [isSmallScreen, setSmallScreen] = useState(false);
-    const leftDrawerWidth = isSmallScreen ? "0px" : "240px";
+    const leftDrawerWidth = isSmallScreen ? "0px" : "260px";
     const rightDrawerWidth = isSmallScreen ? "0px" : "340px";
     const sdk = useSDK();
     const provider = sdk?.getProvider();
     const address = useAddress();
 
-    const {contract: tedPolygonContract } = useContract(TED_POLYGON_CONTRACT);
+    const {contract: tedPolygonContract, isLoading: isLoadingContract, error } = useContract(TED_POLYGON_CONTRACT);
     console.log(tedPolygonContract);
 
     const [isLoading, setIsLoading] = useState(false);
@@ -124,6 +124,17 @@ return (
         : "inner-container-mint"
     }
   >
+    {isLoadingContract && <Backdrop
+        sx={{
+          color: "#fff",
+          zIndex: (theme) => theme.zIndex.drawer + 1,
+          marginLeft: leftDrawerWidth,
+          marginRight: rightDrawerWidth,
+        }}
+        open={isLoadingContract}
+      >
+        <CircularProgress color="inherit" />
+      </Backdrop>}
     <MaticDialog
       open={needsFunds}
       handleClose={handleMaticClose}

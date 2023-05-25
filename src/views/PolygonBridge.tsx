@@ -61,7 +61,7 @@ function PolygonBridge(props: TokenProps) {
   // const isMediumLarge = useMediaQuery(theme.breakpoints.down("lg"));
   // const [isSmallScreen, setSmallScreen] = useState(false);
 
-  // const leftDrawerWidth = isSmallScreen ? "0px" : "240px";
+  // const leftDrawerWidth = isSmallScreen ? "0px" : "260px";
   // const rightDrawerWidth = isSmallScreen ? "0px" : "340px";
 
   // const [open, setOpen] = useState(false);

@@ -139,7 +139,7 @@ function PolygonBridgeInitial(props: BridgeProps) {
   // // } else if (stakedTeddiesIDs) {
   // //   teddyCount = stakedTeddiesIDs?.length;
   // // }
-  // const leftDrawerWidth = isSmallScreen ? "0px" : "240px";
+  // const leftDrawerWidth = isSmallScreen ? "0px" : "260px";
   // const rightDrawerWidth = isSmallScreen ? "0px" : "340px";
 
   // const [open, setOpen] = useState(false);

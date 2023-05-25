@@ -150,7 +150,21 @@ function Dashboard(props: PolygonProps) {
   ]);
 
   return (
-    <Box className="inner-container">
+    <Box className="inner-container" sx={{zIndex: "1 !important", position: "relative"}}>
+      {showMismatch && (
+        <Backdrop
+          sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
+          open={showMismatch}
+        >
+        <Backdrop
+          sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
+          open={showMismatch}
+        >
+          <PolygonNetwork />
+
+        </Backdrop>
+        </Backdrop>
+      )}
       {address ? (
         <Box>
           {isMobile ? (
@@ -224,15 +238,7 @@ function Dashboard(props: PolygonProps) {
       ) : (
         <ConnectWalletPage />
       )}
-      {showMismatch && <PolygonNetwork />}
-      {showMismatch && (
-        <Backdrop
-          sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
-          open={showMismatch}
-        >
-          {/* <CircularProgress color="inherit" /> */}
-        </Backdrop>
-      )}
+      
     </Box>
   );
 }
