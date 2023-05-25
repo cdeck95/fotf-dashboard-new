@@ -25,7 +25,7 @@ function FuryTedsDashboard(props: PolygonPropsNoNav) {
     const navigate = useNavigate();
     
     return (
-        <Box sx={{height: "auto", width: "100%", padding: "10px", backgroundColor: "#fff", borderRadius: "10px"}}>
+        <Box sx={{height: "auto", width: "100%", paddingLeft: "10px", paddingRight: "10px", backgroundColor: "#fff", borderRadius: "10px"}}>
             <Typography className="page-header-dashboard">
                 Fury Teds
             </Typography>

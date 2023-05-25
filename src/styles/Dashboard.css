@@ -501,7 +501,7 @@
 .half-col {
   height: 100%;
   width: 50%;
-  min-height: 265px;
+  /* min-height: 265px; */
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;

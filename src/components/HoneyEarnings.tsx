@@ -35,7 +35,7 @@ function HoneyEarnings(props: HoneyEarningsProps) {
     const navigate = useNavigate();
 
     return (
-        <Box sx={{width: "100%", height: "auto", padding: "10px", backgroundColor: "#fff", borderRadius: "10px"}}>
+        <Box sx={{width: "100%", height: "auto", paddingLeft: "10px", paddingRight: "10px", backgroundColor: "#fff", borderRadius: "10px"}}>
             <Typography className="page-header-small">
                 My Earnings
             </Typography>

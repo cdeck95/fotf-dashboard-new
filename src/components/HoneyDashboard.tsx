@@ -88,7 +88,7 @@ function HoneyDashboard() {
 
 
     return (
-        <Box sx={{height: "auto", width: "100%", padding: "10px", backgroundColor: "#fff", borderRadius: "10px"}}>
+        <Box sx={{height: "auto", width: "100%", paddingLeft: "10px", paddingRight: "10px", backgroundColor: "#fff", borderRadius: "10px"}}>
             <Typography className="page-header-small-mobile">
                 Quick Purchase Amounts w/ Bonus
             </Typography>
