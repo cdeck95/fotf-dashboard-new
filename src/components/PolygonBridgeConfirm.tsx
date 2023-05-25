@@ -130,7 +130,7 @@ function PolygonBridgeConfirm(props: BridgeConfirmProps) {
   // console.log(CanIBridgeTeddiesFlag);
   // console.log(CanIBridgeTeddiesAmount.toString());
 
-  // const leftDrawerWidth = isSmallScreen ? "0px" : "240px";
+  // const leftDrawerWidth = isSmallScreen ? "0px" : "260px";
   // const rightDrawerWidth = isSmallScreen ? "0px" : "340px";
 
   // const [open, setOpen] = useState(false);

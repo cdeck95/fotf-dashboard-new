@@ -3,6 +3,7 @@ import {
   Box,
   Button,
   ButtonGroup,
+  CircularProgress,
   Skeleton,
   ToggleButton,
   Typography,
@@ -35,6 +36,8 @@ import { BigNumber } from "ethers";
 import CheckIcon from '@mui/icons-material/Check';
 import aiTedMintLogo from "../assets/aiTedMint.png";
 
+export const HONEY_CONTRACT = "0xd8495F616fDCD9710b76c19Ab81cCf98f12c5A2B";
+
 const COLLECTION_FOR_MINT = "AI Teds";
 const DESCRIPTION_FOR_MINT = () => {
   return (
@@ -53,11 +56,14 @@ function AITedMint() {
   const isMobile = !useMediaQuery(theme.breakpoints.up("md"));
   const isMediumLarge = useMediaQuery(theme.breakpoints.down("lg"));
   const [isSmallScreen, setSmallScreen] = useState(false);
-  const leftDrawerWidth = isSmallScreen ? "0px" : "240px";
+  const leftDrawerWidth = isSmallScreen ? "0px" : "260px";
   const rightDrawerWidth = isSmallScreen ? "0px" : "340px";
   const sdk = useSDK();
   const provider = sdk?.getProvider();
   const address = useAddress();
+
+  const { contract: honeyContract, isLoading: isLoadingContract, error } = useContract(HONEY_CONTRACT);
+  console.log(honeyContract)
 
   const { contract: aiTedsPolygonContract } = useContract(
     AITEDS_POLYGON_CONTRACT
@@ -117,16 +123,21 @@ function AITedMint() {
 
   const mint = async () => {
     try {
+
       const pricePer = mintWithHNY ? 100000 : 2;
       const payableAmountPer = BigNumber.from(pricePer).mul(
         BigNumber.from(10).pow(18)
       );
       const payableAmount = BigNumber.from(counter).mul(payableAmountPer);
+
+      // const txApprove = await honeyContract?.call("approve", [address, payableAmount]);
+      // console.log(txApprove);
+      
       const tx = await aiTedsPolygonContract?.call(
         "mint",
         [BigNumber.from(counter), mintWithHNY],
         {
-          value: payableAmount,
+          value: mintWithHNY? pricePer : payableAmount,
         }
       );
       console.log(tx);
@@ -135,11 +146,20 @@ function AITedMint() {
       console.log(e);
       console.log(e.message);
       if (e.message.includes("Reason: user rejected transaction")) {
-        return "User denied transaction signature.";
+        alert("User denied transaction signature.");
       } else if (e.message.includes("Reason: Address is not whitelisted")) {
         return `You are not whitelisted to Mint ${COLLECTION_FOR_MINT}`;
       } else if (e.message.includes("Contract is paused")) {
         alert("Contract is paused");
+        return;
+      } else if (e.message.includes("ERC20: transfer amount exceeds balance")) {
+        alert("Insufficient funds");
+        return;
+      } else if (e.message.includes("ERC20: transfer amount exceeds allowance")) {
+        alert("Insufficient funds");
+        return;
+      } else if (e.message.includes("ERC721: transfer caller is not owner nor approved")) {
+        alert("You do not own this NFT");
         return;
       } else {
         alert("Something went wrong, please try again");
@@ -156,6 +176,18 @@ function AITedMint() {
         isSmallScreen ? "inner-container-mobile" : "inner-container-mint"
       }
     >
+        {isLoadingContract && <Backdrop
+        sx={{
+          color: "#fff",
+          zIndex: (theme) => theme.zIndex.drawer + 1,
+          marginLeft: leftDrawerWidth,
+          marginRight: rightDrawerWidth,
+        }}
+        open={isLoadingContract}
+      >
+        <CircularProgress color="inherit" />
+      </Backdrop>}
+
       <MaticDialog open={needsFunds} handleClose={handleMaticClose} />
       {!isSmallScreen && (
         <Box className="row-center">
@@ -197,8 +229,7 @@ function AITedMint() {
 
            <Box className={isSmallScreen ? "row" : "row"}>
           {/* <Box className={isSmallScreen ? "col-mint-mobile" : "col-mint"}> */}
-              {/* <Box className={isSmallScreen ? "col-mint-mobile" : "col-mint"}>
-                <Box className="row-around">
+                {/* <Box className="row-around">
                   <Typography className="page-header-mint">Mint with {" "} <span className="accent-text">&nbsp;$HNY? </span></Typography>
                   <ToggleButton
                     value="check"
@@ -209,9 +240,8 @@ function AITedMint() {
                       <CheckIcon />
                     </Box>
                   </ToggleButton>
-                </Box>
-              </Box> */}
-              <Box className={isSmallScreen ? "col-mint-mobile" : "col-mint"}>
+                </Box> */}
+                <Box className="row-around">
                 <ButtonGroup size="large" aria-label="small outlined button group">
                   <Button
                     disabled={!(counter > 0)}
@@ -278,6 +308,7 @@ function AITedMint() {
         collection={COLLECTION_FOR_MINT}
       />
     </Box>
+    
   );
 }
 

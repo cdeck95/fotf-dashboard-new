@@ -55,8 +55,8 @@ function HoneyEarnings(props: HoneyEarningsProps) {
                     <Typography className="honey-earnings-dashboard" sx={{ paddingBottom: "15px"}}>
                         {totalTeddiesEarnings}<br/><span className="perDay"> Per Day</span> 
                     </Typography>
-                    <Button className="dashboard-button" variant="contained" color="primary" sx={{ marginTop: "5px"}} onClick={() => navigate("/TeddyClaims")}>
-                        Stake Your Teddies
+                    <Button className="dashboard-button" variant="contained" color="primary" sx={{ marginTop: "5px"}} onClick={() => navigate("/TeddyMint")}>
+                        Purchase More Teddies
                     </Button>
                 </Box>
                 <Box className="column-between-dashboard">
@@ -65,7 +65,7 @@ function HoneyEarnings(props: HoneyEarningsProps) {
                     <Typography className="honey-earnings-dashboard" sx={{ paddingBottom: "15px"}}>
                         {totalFuryTedsEarnings}<br/><span className="perDay"> Per Day</span> 
                     </Typography>
-                    <Button className="dashboard-button" variant="contained" color="primary" sx={{ marginTop: "5px"}} onClick={() => navigate("/TedClaims")}>
+                    <Button className="dashboard-button" variant="contained" color="primary" sx={{ marginTop: "5px"}} onClick={() => navigate("/TedMint")}>
                         Purchase Fury Teds
                     </Button>
                 </Box>
