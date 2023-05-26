@@ -7756,11 +7756,6 @@ gzip-size@^6.0.0:
   dependencies:
     duplexer "^0.1.2"
 
-hammerjs@^2.0.8:
-  version "2.0.8"
-  resolved "https://registry.yarnpkg.com/hammerjs/-/hammerjs-2.0.8.tgz#04ef77862cff2bb79d30f7692095930222bf60f1"
-  integrity sha512-tSQXBXS/MWQOn/RKckawJ61vvsDpCom87JgxiYdGwHdOa0ht0vzUWDlfioofFCRU0L+6NGDt6XzbgoJvZkMeRQ==
-
 hamt-sharding@^2.0.0:
   version "2.0.1"
   resolved "https://registry.yarnpkg.com/hamt-sharding/-/hamt-sharding-2.0.1.tgz#f45686d0339e74b03b233bee1bde9587727129b6"
@@ -11290,13 +11285,6 @@ react-number-format@^5.1.4:
   integrity sha512-wCh64Z1HCwXcO2dbgkeYIaB+Rmp/fcsH8kAeRtUkc46dv1pIrgDjie2WkOqKBw8YqyqhwNdYgNFNQuuY+iGJ/g==
   dependencies:
     prop-types "^15.7.2"
-
-react-pull-to-refresh@^2.0.1:
-  version "2.0.1"
-  resolved "https://registry.yarnpkg.com/react-pull-to-refresh/-/react-pull-to-refresh-2.0.1.tgz#6016dd8bce278d53b4b61001badac75c911eb87d"
-  integrity sha512-mbNI9r3sBF4X+2fBO8c9CuXDLIywNuoZ24AIGU3Odi+L8C4MpS0tuhMQUSg5cSOuUtDFkE8Z/YnBYixo10QI6Q==
-  dependencies:
-    hammerjs "^2.0.8"
 
 react-qr-code@^2.0.11:
   version "2.0.11"
