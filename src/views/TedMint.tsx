@@ -101,19 +101,22 @@ function TedMint(props: MintProps) {
 
     const mint = async () => {
         try {
-            const payableAmountPer = BigNumber.from(5).mul(BigNumber.from(10).pow(18));
-            const payableAmount = BigNumber.from(counter).mul(payableAmountPer);
-            //const payableAmount = counter * payableAmountPer;
-            const tx = await contract?.call(
-            "mint", [BigNumber.from(counter)],
-            {
-              value: payableAmount
-            });
-            console.log(tx);
-            return tx;
+          setIsLoading(true);
+          const payableAmountPer = BigNumber.from(5).mul(BigNumber.from(10).pow(18));
+          const payableAmount = BigNumber.from(counter).mul(payableAmountPer);
+          //const payableAmount = counter * payableAmountPer;
+          const tx = await contract?.call(
+          "mint", [BigNumber.from(counter)],
+          {
+            value: payableAmount
+          });
+          console.log(tx);
+          setIsLoading(false);
+          return tx;
         } catch (e: any) {
             console.log(e);
             console.log(e.message);
+            setIsLoading(false);
             if (e.message.includes("Reason: user rejected transaction")){
               return "User denied transaction signature.";
             } else if (e.message.includes("Reason: Address is not whitelisted")){
