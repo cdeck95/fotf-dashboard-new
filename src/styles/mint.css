@@ -24,6 +24,18 @@
     min-height: 400px;
 }
 
+.col-mint-between {
+  display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    margin: 0%;
+    padding: 0%;
+    height: 100%;
+    width: 50%;
+    min-height: 400px;
+}
+
 .col-mint-mobile {
     display: flex;
     flex-direction: column;

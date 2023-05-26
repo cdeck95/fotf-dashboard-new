@@ -83,7 +83,7 @@ function AITedMint(props: MintProps) {
   const [counter, setCounter] = useState(0);
   const [open, setOpen] = useState(false);
 
-  const [mintWithHNY, setMintWithHNY] = useState(false);
+  // const [mintWithHNY, setMintWithHNY] = useState(false);
 
   useEffect(() => {
     if (isMediumLarge || isMobile) {
@@ -127,7 +127,7 @@ function AITedMint(props: MintProps) {
 
   const isApproved = async () => {
     try {
-      const txApprove = await honeyContract?.call("allowance", [address, HONEY_CONTRACT]);
+      const txApprove = await honeyContract?.call("allowance", [address, AITEDS_POLYGON_CONTRACT]);
       console.log(txApprove);
       return txApprove;
     } catch (e: any) {
@@ -136,31 +136,20 @@ function AITedMint(props: MintProps) {
     }
   };
 
+
   const mint = async () => {
     try {
       setIsLoading(true);
-      const pricePerHoney = mintWithHNY ? 100000 : 2;
-      const payableAmountPerHoney = BigNumber.from(pricePerHoney).mul(
-        BigNumber.from(10).pow(18)
-      );
-      const isApprovedResponse = await isApproved();
-      console.log(isApprovedResponse);
-      if(isApprovedResponse.toString() === "0") {
-        console.log("not approved");
-        const txApprove = await honeyContract?.call("approve", [address, payableAmountPerHoney]);
-        console.log(txApprove);
-      }
-
-      const pricePer = mintWithHNY ? 0 : 2;
+      
+      const pricePer = 2;
       const payableAmountPer = BigNumber.from(pricePer).mul(
         BigNumber.from(10).pow(18)
       );
       const payableAmount = BigNumber.from(counter).mul(payableAmountPer);
-
       
       const tx = await contract?.call(
         "mint",
-        [BigNumber.from(counter), mintWithHNY],
+        [BigNumber.from(counter), false],
         {
           value: payableAmount,
         }
@@ -181,12 +170,65 @@ function AITedMint(props: MintProps) {
         return;
       } else if (e.message.includes("ERC20: transfer amount exceeds balance")) {
         alert("Insufficient funds");
-        return;
+        return; 
       } else if (e.message.includes("ERC20: transfer amount exceeds allowance")) {
         alert("Insufficient funds");
         return;
-      } else if (e.message.includes("ERC721: transfer caller is not owner nor approved")) {
-        alert("You do not own this NFT");
+      } else if (e.message.includes("Reason: ERC20: insufficient allowance")) {
+        alert("You are not approved to spend this amount of MATIC");
+        return;
+      } else {
+        alert("Something went wrong, please try again");
+        return e.message;
+      }
+    }
+  };
+
+  const mintWithHoney = async () => {
+    try {
+      setIsLoading(true);
+      const isApprovedString = await isApproved();
+      console.log(isApprovedString.toString());
+      if(isApprovedString.toString() === "0") {
+        const pricePerHoney =  100000;
+        const priceTotal = counter === 0 ? pricePerHoney : pricePerHoney * counter;
+        const payableAmountPerHoney = BigNumber.from(priceTotal).mul(
+          BigNumber.from(10).pow(18)
+        );
+        console.log("not approved");
+        const txApprove = await honeyContract?.call("approve", [AITEDS_POLYGON_CONTRACT, payableAmountPerHoney]);
+        console.log(txApprove);
+      }
+      
+      const tx = await contract?.call(
+        "mint",
+        [BigNumber.from(counter), true],
+        {
+          value: 0,
+        }
+      );
+      console.log(tx);
+      setIsLoading(false);
+      return tx;
+    } catch (e: any) {
+      console.log(e);
+      console.log(e.message);
+      setIsLoading(false);
+      if (e.message.includes("Reason: user rejected transaction")) {
+        alert("User denied transaction signature.");
+      } else if (e.message.includes("Reason: Address is not whitelisted")) {
+        return `You are not whitelisted to Mint ${COLLECTION_FOR_MINT}`;
+      } else if (e.message.includes("Contract is paused")) {
+        alert("Contract is paused");
+        return;
+      } else if (e.message.includes("ERC20: transfer amount exceeds balance")) {
+        alert("Insufficient funds");
+        return; 
+      } else if (e.message.includes("ERC20: transfer amount exceeds allowance")) {
+        alert("Insufficient funds");
+        return;
+      } else if (e.message.includes("Reason: ERC20: insufficient allowance")) {
+        alert("You are not approved to spend this amount of HNY");
         return;
       } else {
         alert("Something went wrong, please try again");
@@ -253,21 +295,7 @@ function AITedMint(props: MintProps) {
             className={isSmallScreen ? "mint-image-mobile" : "mint-image"}
           />
           <Box className={isSmallScreen ? "col-mint-mobile" : "col-mint"}>
-
-           <Box className={isSmallScreen ? "row" : "row"}>
-                <Box className="row-around">
-                  <Typography className="page-header-mint">Mint with {" "} <span className="accent-text">&nbsp;$HNY? </span></Typography>
-                  <ToggleButton
-                    value="check"
-                    selected={!mintWithHNY}
-                    onChange={() => setMintWithHNY(!mintWithHNY)}
-                    sx={{ marginLeft:"0px", color: "#000", backgroundColor: "#FED100"}}>
-                    <Box className="row">
-                     <CheckIcon sx={{opacity:  mintWithHNY? 1 : 0}}/>
-                    </Box>
-                  </ToggleButton>
-                </Box>
-                <Box className="row-around">
+              <Box className="row-around">
                 <ButtonGroup size="large" aria-label="small outlined button group">
                   <Button
                     disabled={!(counter > 0)}
@@ -279,21 +307,34 @@ function AITedMint(props: MintProps) {
                   <Button onClick={() => handleIncrement()}>+</Button>
                 </ButtonGroup>
               </Box>
-            </Box>
-            <Box className={isSmallScreen ? "row" : "row"}> 
+            
+            <Box className={isSmallScreen ? "col-mint-mobile" : "row-around"}> 
               <Button
                 className="mint-button"
                 disabled={counter === 0}
                 onClick={() => mint()}
+                sx={{ marginTop: "10px", marginBottom: "10px"}}
               >
                 Mint {counter} {COLLECTION_FOR_MINT}
               </Button>
-              {/* <Box className="toggle-container" onClick={() => setMintWithHNY(!mintWithHNY)}>
-                    <Box className={`dialog-button ${mintWithHNY ? "" : "disabled"}`}>
-                      {mintWithHNY ? "$HNY" : "$MATIC"}
-                    </Box>
-                  </Box>
-                  */}
+              <Button
+                className="mint-button"
+                disabled={counter === 0}
+                onClick={() => mintWithHoney()}
+                sx={{
+                  backgroundColor: "#FED100", 
+                  marginTop: "10px", 
+                  marginBottom: "10px",
+                  color: "#000",
+                  border: "1px solid #000",
+                  "&:hover": {
+                    backgroundColor: "green",
+                    color: "FED100",
+                    border: "1px solid #000",
+                }}}
+              >
+                Mint {counter} {COLLECTION_FOR_MINT} with HNY
+              </Button>
             </Box>
             </Box>
         </Box>
