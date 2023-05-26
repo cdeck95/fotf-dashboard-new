@@ -1,4 +1,4 @@
-import { Box, Button, Chip, Divider, Typography } from "@mui/material";
+import { Box, Button, Chip, Divider, Typography, useMediaQuery, useTheme } from "@mui/material";
 import { useTitle } from "../hooks/useTitle";
 import "../styles/Dashboard.css";
 import {
@@ -14,6 +14,7 @@ import { useSDK } from "@thirdweb-dev/react";
 import { LoadETHAccountDetails } from "../account/loadETHAccountDetails";
 import { PolygonProps } from "../views/Dashboard";
 import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
 
 export interface HoneyEarningsProps {
     totalFuryTedsEarnings: number;
@@ -28,8 +29,20 @@ function HoneyEarnings(props: HoneyEarningsProps) {
     // console.log(isLoadingOneOfOne);
     // console.log(isLoadingBirthCerts);
     // console.log(ethTokens);
+    const theme = useTheme();
+    const isMobile = !useMediaQuery(theme.breakpoints.up("md"));
+    const isMediumLarge = useMediaQuery(theme.breakpoints.down("lg"));
+    const [isSmallScreen, setSmallScreen] = useState(false);
 
     const { totalHNYEarnings, totalTeddiesEarnings, totalFuryTedsEarnings } = props;
+
+    useEffect(() => {
+        if (!isMobile && isMediumLarge) {
+          setSmallScreen(true);
+        } else {
+          setSmallScreen(isMobile);
+        }
+      }, [isMobile, isMediumLarge, isSmallScreen]);
 
     const navigate = useNavigate();
 
@@ -42,9 +55,9 @@ function HoneyEarnings(props: HoneyEarningsProps) {
                 <Box className="column-between-dashboard">
                     <Divider sx={{ paddingBottom: "31px", paddingTop: "11px", opacity: "0"}}><Chip label="" /></Divider>
                     <Typography className="honey-earnings-dashboard" sx={{ paddingBottom: "15px"}}>
-                        <span className="accent-text">{totalHNYEarnings}</span><br/><span className="perDay"> Per Day</span> 
+                        <span className="accent-text">{totalHNYEarnings}</span><br/><span className={isSmallScreen ? "perDay-mobile" : "perDay"}> Per Day</span> 
                     </Typography>
-                    <Button className="dashboard-button" variant="contained" color="primary" sx={{ marginTop: "5px"}} onClick={() => navigate("/TheFactory")}>
+                    <Button className="dashboard-button" variant="contained" color="primary" sx={{ marginBottom: "10px", padding: "8px !important", marginTop: isSmallScreen? "0px": "5px", fontSize: isSmallScreen? ".80rem !important" : "1rem !important"}} onClick={() => navigate("/TheFactory")}>
                         Visit The Factory
                     </Button>
                 </Box>
@@ -52,19 +65,19 @@ function HoneyEarnings(props: HoneyEarningsProps) {
                     {/* <Typography className="honey-earnings-title"> Teddies by FOTF </Typography> */}
                     <Divider sx={{ paddingBottom: "31px", paddingTop: "11px"}}><Chip label="Teddies by FOTF" /></Divider>
                     <Typography className="honey-earnings-dashboard" sx={{ paddingBottom: "15px"}}>
-                        {totalTeddiesEarnings}<br/><span className="perDay"> Per Day</span> 
+                        {totalTeddiesEarnings}<br/><span className={isSmallScreen ? "perDay-mobile" : "perDay"}> Per Day</span> 
                     </Typography>
-                    <Button className="dashboard-button" variant="contained" color="primary" sx={{ marginTop: "5px"}} onClick={() => navigate("/TeddyMint")}>
-                        Purchase More Teddies
+                    <Button className="dashboard-button" variant="contained" color="primary" sx={{ marginBottom: "10px", padding: "8px !important", marginTop: isSmallScreen? "0px": "5px", fontSize: isSmallScreen? ".80rem !important" : "1rem !important"}} onClick={() => navigate("/TeddyMint")}>
+                        Purchase Teddies
                     </Button>
                 </Box>
                 <Box className="column-between-dashboard">
                     {/* <Typography className="honey-earnings-title"> Fury Teds </Typography> */}
                     <Divider sx={{ paddingBottom: "31px", paddingTop: "11px"}}><Chip label="Fury Teds" /></Divider>
                     <Typography className="honey-earnings-dashboard" sx={{ paddingBottom: "15px"}}>
-                        {totalFuryTedsEarnings}<br/><span className="perDay"> Per Day</span> 
+                        {totalFuryTedsEarnings}<br/><span className={isSmallScreen ? "perDay-mobile" : "perDay"}> Per Day</span> 
                     </Typography>
-                    <Button className="dashboard-button" variant="contained" color="primary" sx={{ marginTop: "5px"}} onClick={() => navigate("/TedMint")}>
+                    <Button className="dashboard-button" variant="contained" color="primary" sx={{ marginBottom: "10px", padding: "8px !important", marginTop: isSmallScreen? "0px": "5px", fontSize: isSmallScreen? ".80rem !important" : "1rem !important"}} onClick={() => navigate("/TedMint")}>
                         Purchase Fury Teds
                     </Button>
                 </Box>
