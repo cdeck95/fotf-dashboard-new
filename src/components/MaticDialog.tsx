@@ -9,7 +9,7 @@ import Slide from '@mui/material/Slide';
 import { TransitionProps } from '@mui/material/transitions';
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
-import { Box, IconButton, useMediaQuery, useTheme } from '@mui/material';
+import { Box, IconButton, ThemeProvider, createTheme, useMediaQuery, useTheme } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import Paper, { PaperProps } from '@mui/material/Paper';
 import Draggable from 'react-draggable';
@@ -43,8 +43,39 @@ function MaticDialog(props: DialogProps) {
   const { open, handleClose } = props;
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
-  const theme = useTheme();
-  const fullScreen = useMediaQuery(theme.breakpoints.down('md'));
+  const themeMui = useTheme();
+  const fullScreen = useMediaQuery(themeMui.breakpoints.down('md'));
+
+  const sidebarBackgroundColor = getComputedStyle(
+    document.documentElement
+  ).getPropertyValue("--sidebar-background-color");
+
+  const theme = createTheme({
+    typography: {
+      fontFamily: ["Bebas Neue", "Roboto", "Helvetica", "Arial"].join(","),
+      fontSize: 16,
+      fontWeightLight: 300,
+    },
+    components: {
+      MuiPaper: {
+        styleOverrides: {
+          root: {
+            backgroundColor: sidebarBackgroundColor,
+            paddingLeft: "0px !important",
+            paddingRight: "0px !important",
+            overflowX: "hidden",
+            overflowY: "hidden",
+            "&:hover": {
+              overflowY: "auto",
+            },
+            "&::-webkit-scrollbar": {
+              display: "none",
+            },
+          },
+        },
+      },
+    },
+  });
 
   
     function openCoinbase(): void {
@@ -61,6 +92,7 @@ function MaticDialog(props: DialogProps) {
 
   return (
     <Box sx={{ borderRadius: "0px" }}>
+      <ThemeProvider theme={theme}>
       <Dialog
         open={open}
         TransitionComponent={Transition}
@@ -182,6 +214,7 @@ function MaticDialog(props: DialogProps) {
           </Button>
         </DialogActions>
       </Dialog>
+      </ThemeProvider>
     </Box>
   );
 }
