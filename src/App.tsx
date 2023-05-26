@@ -53,6 +53,7 @@ import AITedMint from "./views/AITedMint";
 import TedMint from "./views/TedMint";
 import TeddyMint from "./views/TeddyMint";
 import { PolygonNetwork } from "./components/PolygonNetwork";
+import PullToRefresh from 'react-simple-pull-to-refresh';
 
 export const LeftDrawerWidthPX = "260px";
 export const LeftDrawerWidth = 260;
@@ -261,176 +262,180 @@ function App() {
     }
   }, [location.pathname]);
 
-  
+  const handleRefresh = async () => {
+    window.location.reload();
+  }
 
   return (
-    <Box className="app-container" sx={{ position: "relative", overflowY: "auto" }}>
-      <ThemeProvider theme={theme}>
-      {showMismatch && <Backdrop
-        sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1, marginLeft: leftDrawerWidth,
-        marginRight: rightDrawerWidth,}}
-        open={showMismatch}
-      >
-        <Backdrop
-      sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1, marginLeft: leftDrawerWidth,
-      marginRight: rightDrawerWidth, }}
-      open={showMismatch}
+    <PullToRefresh  onRefresh={handleRefresh}>
+      <Box className="app-container" sx={{ position: "relative", overflowY: "auto" }}>
+        <ThemeProvider theme={theme}>
+        {showMismatch && <Backdrop
+          sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1, marginLeft: leftDrawerWidth,
+          marginRight: rightDrawerWidth,}}
+          open={showMismatch}
         >
-        <PolygonNetwork />
-        </Backdrop>
-      </Backdrop>
-    }
-        {isSmallScreen && (
-          <Box
-            sx={{
-              position: "fixed",
-              top: "0",
-              backgroundColor: "Black",
-              height: "60px",
-              width: "100%",
-              zIndex: "2 !important",
-            }}
+          <Backdrop
+        sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1, marginLeft: leftDrawerWidth,
+        marginRight: rightDrawerWidth, }}
+        open={showMismatch}
           >
+          <PolygonNetwork />
+          </Backdrop>
+        </Backdrop>
+      }
+          {isSmallScreen && (
             <Box
               sx={{
-                display: "flex",
+                position: "fixed",
+                top: "0",
+                backgroundColor: "Black",
+                height: "60px",
                 width: "100%",
-                justifyContent: "center",
-                alignItems: "center",
-                textAlign: "center",
                 zIndex: "2 !important",
               }}
             >
-              {address && <Typography
+              <Box
                 sx={{
-                  color: "White",
-                  marginLeft: "10px",
-                  marginTop: "10px",
+                  display: "flex",
+                  width: "100%",
                   justifyContent: "center",
                   alignItems: "center",
                   textAlign: "center",
-                  fontSize: "2rem",
                   zIndex: "2 !important",
                 }}
               >
-               {pageTitle}
-              </Typography>
-            }
+                {address && <Typography
+                  sx={{
+                    color: "White",
+                    marginLeft: "10px",
+                    marginTop: "10px",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    textAlign: "center",
+                    fontSize: "2rem",
+                    zIndex: "2 !important",
+                  }}
+                >
+                {pageTitle}
+                </Typography>
+              }
+              </Box>
             </Box>
-          </Box>
-        )}
+          )}
 
-        <Box
-          sx={{
-            paddingLeft: leftNavOpen ? LeftDrawerWidthPX : "0px",
-            paddingRight: rightNavOpen ? "340px" : "0px",
-            marginTop: isSmallScreen ? "60px" : "20px",
-            // paddingTop: isSmallScreen ? "10px" : "0px",
-            backgroundColor: "white",
-            height: "100% !important",
-            width: "100dvw",
-            display: "flex",
-            flexDirection: "column",
-            overflowY: "auto",
-          }}
-        >
-          {address ? (
-            <Routes>
-              <Route path="/" element={<Dashboard tokenProps={polygonTokenProps} leftNavOpen={leftNavOpen} rightNavOpen={rightNavOpen} showMismatch={showMismatch}/>} />
-              <Route path="/HoneyExchange" element={<HoneyExchange />} />
-              <Route path="/TeddyClaims" element={<TeddyClaims />} />
-              <Route path="/TedClaims" element={<TedClaims />} />{" "}
-              <Route path="/TedMint" element={<TedMint  showMismatch={showMismatch} contract={polygonTokenProps.tedContract} isloadingContract={polygonTokenProps.isLoadingTedContract} />} />{" "}
-              <Route path="/TeddyMint" element={<TeddyMint showMismatch={showMismatch} contract={polygonTokenProps.teddyContract} isloadingContract={polygonTokenProps.isLoadingTeddyContract} />} />{" "}
-              <Route path="/AITedMint" element={<AITedMint  showMismatch={showMismatch} contract={polygonTokenProps.aiTedContract} isloadingContract={polygonTokenProps.isLoadingAITedContract} />} />{" "}
-              {/* <Route
-                path="/Bridge"
-                element={
-                  <PolygonBridge
-                    tokenProps={polygonTokenProps} leftNavOpen={navOpen} rightNavOpen={rightNavOpen} 
-                  />
-                }
-              /> */}
-              <Route
-                path="/TheFactory"
-                element={<TheFactory tokenProps={polygonTokenProps} leftNavOpen={leftNavOpen} rightNavOpen={rightNavOpen} showMismatch={showMismatch} />}
+          <Box
+            sx={{
+              paddingLeft: leftNavOpen ? LeftDrawerWidthPX : "0px",
+              paddingRight: rightNavOpen ? "340px" : "0px",
+              marginTop: isSmallScreen ? "60px" : "20px",
+              // paddingTop: isSmallScreen ? "10px" : "0px",
+              backgroundColor: "white",
+              height: "100% !important",
+              width: "100dvw",
+              display: "flex",
+              flexDirection: "column",
+              overflowY: "auto",
+            }}
+          >
+            {address ? (
+              <Routes>
+                <Route path="/" element={<Dashboard tokenProps={polygonTokenProps} leftNavOpen={leftNavOpen} rightNavOpen={rightNavOpen} showMismatch={showMismatch}/>} />
+                <Route path="/HoneyExchange" element={<HoneyExchange />} />
+                <Route path="/TeddyClaims" element={<TeddyClaims />} />
+                <Route path="/TedClaims" element={<TedClaims />} />{" "}
+                <Route path="/TedMint" element={<TedMint  showMismatch={showMismatch} contract={polygonTokenProps.tedContract} isloadingContract={polygonTokenProps.isLoadingTedContract} />} />{" "}
+                <Route path="/TeddyMint" element={<TeddyMint showMismatch={showMismatch} contract={polygonTokenProps.teddyContract} isloadingContract={polygonTokenProps.isLoadingTeddyContract} />} />{" "}
+                <Route path="/AITedMint" element={<AITedMint  showMismatch={showMismatch} contract={polygonTokenProps.aiTedContract} isloadingContract={polygonTokenProps.isLoadingAITedContract} />} />{" "}
+                {/* <Route
+                  path="/Bridge"
+                  element={
+                    <PolygonBridge
+                      tokenProps={polygonTokenProps} leftNavOpen={navOpen} rightNavOpen={rightNavOpen} 
+                    />
+                  }
+                /> */}
+                <Route
+                  path="/TheFactory"
+                  element={<TheFactory tokenProps={polygonTokenProps} leftNavOpen={leftNavOpen} rightNavOpen={rightNavOpen} showMismatch={showMismatch} />}
+                />
+                <Route path="/BuildATeddy" element={<BuildATeddy />} />
+                <Route path="/TraitSwapTeds" element={<TraitSwapTeds />} />
+                <Route path="/GraphicTemplates" element={<GraphicTemplates />} />
+                <Route path="*" element={<NotFound />} />
+              </Routes>
+            ) : (
+              <ConnectWalletPage />
+            )}
+
+            <LeftDrawer navOpen={leftNavOpen} setNavOpen={setLeftNavOpen} />
+
+            {leftNavOpen ? (
+              <Box></Box>
+            ) : (
+              <Box
+                sx={{
+                  position: "fixed",
+                  top: "5px",
+                  left: "5px",
+                  backgroundColor: "transparent",
+                  zIndex: "2 !important",
+                }}
+              >
+                {address && !isBridgePage && (
+                  <IconButton
+                    color="inherit"
+                    aria-label="open drawer"
+                    onClick={() => handleOpen()}
+                    size="large"
+                  >
+                    <MenuIcon sx={{ color: "White" }} />
+                  </IconButton>
+                )}
+              </Box>
+            )}
+            {rightNavOpen ? (
+              <RightDrawer
+                tokenProps={polygonTokenProps}
+                navOpen={rightNavOpen}
+                setNavOpen={setRightNavOpen}
+                // tokens={tokens}
+                // error={error}
+                // isLoadingTed={isLoadingTed}
+                // isLoadingTeddy={isLoadingTeddy}
+                // isLoadingStaked={isLoadingStaked}
+                // isLoadingAI={isLoadingAI}
+                // isLoadingBirthCerts={isLoadingBirthCerts}
+                // isLoadingOneOfOne={isLoadingOneOfOne}
+                // honeyBalance={honeyBalance}
               />
-              <Route path="/BuildATeddy" element={<BuildATeddy />} />
-              <Route path="/TraitSwapTeds" element={<TraitSwapTeds />} />
-              <Route path="/GraphicTemplates" element={<GraphicTemplates />} />
-              <Route path="*" element={<NotFound />} />
-            </Routes>
-          ) : (
-            <ConnectWalletPage />
-          )}
-
-          <LeftDrawer navOpen={leftNavOpen} setNavOpen={setLeftNavOpen} />
-
-          {leftNavOpen ? (
-            <Box></Box>
-          ) : (
-            <Box
-              sx={{
-                position: "fixed",
-                top: "5px",
-                left: "5px",
-                backgroundColor: "transparent",
-                zIndex: "2 !important",
-              }}
-            >
-              {address && !isBridgePage && (
-                <IconButton
-                  color="inherit"
-                  aria-label="open drawer"
-                  onClick={() => handleOpen()}
-                  size="large"
-                >
-                  <MenuIcon sx={{ color: "White" }} />
-                </IconButton>
-              )}
-            </Box>
-          )}
-          {rightNavOpen ? (
-            <RightDrawer
-              tokenProps={polygonTokenProps}
-              navOpen={rightNavOpen}
-              setNavOpen={setRightNavOpen}
-              // tokens={tokens}
-              // error={error}
-              // isLoadingTed={isLoadingTed}
-              // isLoadingTeddy={isLoadingTeddy}
-              // isLoadingStaked={isLoadingStaked}
-              // isLoadingAI={isLoadingAI}
-              // isLoadingBirthCerts={isLoadingBirthCerts}
-              // isLoadingOneOfOne={isLoadingOneOfOne}
-              // honeyBalance={honeyBalance}
-            />
-          ) : (
-            <Box
-              sx={{
-                position: "fixed",
-                top: "5px",
-                right: "5px",
-                backgroundColor: "transparent",
-                zIndex: "2 !important",
-              }}
-            >
-              {!leftNavOpen && (
-                <IconButton
-                  color="inherit"
-                  aria-label="open right drawer"
-                  onClick={() => handleRightNavOpen()}
-                  size="large"
-                  sx={{ zIndex: "2 !important" }}
-                >
-                  <MenuIcon sx={{ color: "White" }} />
-                </IconButton>
-              )}
-            </Box>
-          )}
-        </Box>
-      </ThemeProvider>
-    </Box>
+            ) : (
+              <Box
+                sx={{
+                  position: "fixed",
+                  top: "5px",
+                  right: "5px",
+                  backgroundColor: "transparent",
+                  zIndex: "2 !important",
+                }}
+              >
+                {!leftNavOpen && (
+                  <IconButton
+                    color="inherit"
+                    aria-label="open right drawer"
+                    onClick={() => handleRightNavOpen()}
+                    size="large"
+                    sx={{ zIndex: "2 !important" }}
+                  >
+                    <MenuIcon sx={{ color: "White" }} />
+                  </IconButton>
+                )}
+              </Box>
+            )}
+          </Box>
+        </ThemeProvider>
+      </Box>
+    </PullToRefresh>
   );
 }
 
