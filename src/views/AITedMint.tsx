@@ -234,7 +234,7 @@ function AITedMint(props: MintProps) {
         sx={{ paddingTop: "10px", paddingBottom: "10px" }}
       >
         <Typography className="desc-text"><span className="accent-text">Cost:</span> 2 MATIC 
-        {/* or 100K HNY */}
+        or 100K HNY
         </Typography>
       </Box>
 
@@ -255,7 +255,7 @@ function AITedMint(props: MintProps) {
           <Box className={isSmallScreen ? "col-mint-mobile" : "col-mint"}>
 
            <Box className={isSmallScreen ? "row" : "row"}>
-                {/* <Box className="row-around">
+                <Box className="row-around">
                   <Typography className="page-header-mint">Mint with {" "} <span className="accent-text">&nbsp;$HNY? </span></Typography>
                   <ToggleButton
                     value="check"
@@ -266,7 +266,7 @@ function AITedMint(props: MintProps) {
                      <CheckIcon sx={{opacity:  mintWithHNY? 1 : 0}}/>
                     </Box>
                   </ToggleButton>
-                </Box> */}
+                </Box>
                 <Box className="row-around">
                 <ButtonGroup size="large" aria-label="small outlined button group">
                   <Button
