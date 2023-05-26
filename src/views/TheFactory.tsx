@@ -2,8 +2,12 @@ import {
   Box,
   Button,
   Chip,
+  Container,
   ImageList,
+  Menu,
+  ThemeProvider,
   Typography,
+  createTheme,
   useMediaQuery,
   useTheme,
 } from "@mui/material";
@@ -57,6 +61,11 @@ import { PolygonProps } from "./Dashboard";
 import TedClaims from "./TedClaims";
 import ComingSoon from "./ComingSoon";
 import { TED_POLYGON_CONTRACT, TEDDIES_POLYGON_CONTRACT, AITEDS_POLYGON_CONTRACT } from "../account/loadPolygonAccountDetails";
+import IconMenu from "../components/IconMenu";
+import MoreVertIcon from '@mui/icons-material/MoreVert';
+import SuccessDialog from "../components/SuccessDialog";
+import LoadingDialog from "../components/LoadingDialog";
+import RenameDialog from "../components/RenameDialog";
 
 const IS_DISABLED = true;
 
@@ -102,6 +111,9 @@ function TheFactory(props: PolygonProps) {
 
   const isLoading =
     isLoadingTed || isLoadingAI || isLoadingTeddy;
+
+  const [isLoadingAWS, setIsLoadingAWS] = useState(false);
+  const [successAWS, setSuccessAWS] = useState(false);
 
   const tedNFTs = tokens.Teds?.tokens;
   const teddyNFTs = tokens.Teddies?.tokens;
@@ -171,7 +183,66 @@ function TheFactory(props: PolygonProps) {
 
   const add = (token: NFT) => {
     console.log("adding...");
+    handleCloseContextMenu();
     handleOnSelect(token);
+  };
+
+  const [renameFlag, setRenameFlag] = useState(false);
+  const [newName, setNewName] = useState(""); // for rename dialog
+  const handleRenameClose = () => {
+    setRenameFlag(false);
+    renameAWSCall(tokenClicked!);
+  };
+
+  const rename = (token: NFT) => {
+    console.log("prompting user to rename...");
+    handleCloseContextMenu();
+    setRenameFlag(true);
+  };
+  
+
+  const renameAWSCall = async (token: NFT) => {
+    setIsLoadingAWS(true);
+    console.log(`would rename ${token.metadata.name}`);
+    var collection = "FuryTeds";
+    if (token.metadata.uri.includes("Teddies")){
+      collection = "Teddies";
+    } else if (token.metadata.uri.includes("AITeds")){
+      collection = "AITeds";
+    }
+    const requestJSON: IDictionary = {
+      "collection": collection,
+      "tokenID": token.metadata.id.toString(),
+      "name": token.metadata.name!.toString(),
+      "newName": newName
+    };
+
+    const json = JSON.stringify(requestJSON, null, 2);
+    console.log(json);
+    
+    try {
+      const response = await fetch(`https://h7ke8qc4ng.execute-api.us-east-1.amazonaws.com/Prod/renameTeds`, {
+          method: 'POST',
+          body: json
+      })
+      const responseStatus = await response.status;
+      console.log(response.status);
+      if (responseStatus !== 200) {
+        setErrorCode(responseStatus);
+        setShowError(true);
+        setIsLoadingAWS(false);
+        return;
+      } else {
+        setSuccessAWS(true);
+        setIsLoadingAWS(false);
+      }
+    } catch (error) {
+      console.log(error);
+      setIsLoadingAWS(false);
+      setErrorCode(500);
+      setShowError(true);
+    }
+    
   };
 
   const star = () => {
@@ -220,6 +291,7 @@ function TheFactory(props: PolygonProps) {
   }
 
   const [open, setOpen] = useState(false);
+  
   const handleClose = () => {
     setOpen(false);
   };
@@ -425,6 +497,48 @@ function TheFactory(props: PolygonProps) {
     }
   }
 
+  const [tokenClicked, setTokenClicked] = useState<NFT>();
+
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+  const openContextMenu = Boolean(anchorEl);
+  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleCloseContextMenu = () => {
+    setAnchorEl(null);
+  };
+
+  const sidebarBackgroundColor = getComputedStyle(
+    document.documentElement
+  ).getPropertyValue("--sidebar-background-color");
+
+  const themeMenu = createTheme({
+    typography: {
+      fontFamily: ["Bebas Neue", "Roboto", "Helvetica", "Arial"].join(","),
+      fontSize: 16,
+      fontWeightLight: 300,
+    },
+    components: {
+      MuiPaper: {
+        styleOverrides: {
+          root: {
+            boxShadow: "none",
+            padding: "0px",
+            margin: "0px"
+          },
+        },
+      },
+      MuiList: {
+        styleOverrides: {
+          root: {
+            padding: "0px",
+            margin: "0px",
+          },
+        },
+      }
+    },
+  });
+
   //////////////////////////////////////////////
 
   return (
@@ -605,7 +719,6 @@ function TheFactory(props: PolygonProps) {
               }}
             >
               {tokens ? (
-                // <NFTList tokens={AllTokens} searchText={searchInput} stakedIDs={stakedTeddiesIDs!} selectedTokens={selectedTokens} setSelectedTokens={setSelectedTokens} />
                 <ImageList
                   sx={{
                     justifyContent: "center",
@@ -622,6 +735,7 @@ function TheFactory(props: PolygonProps) {
                   gap={25}
                   rowHeight={450}
                 >
+                  
                   {/* {filteredNFTsWithCategory.map((token: NFT) => ( */}
                    {filteredNFTs.map((token: NFT) => (
                     <Box
@@ -690,11 +804,38 @@ function TheFactory(props: PolygonProps) {
                             Last Transfer: 03/11/2023
                           </h4> */}
                         </div>
-                        <div className="small-right-column">
-                          <ControlPointIcon
+                        <div className="small-right-column" onClick={() => {
+                          if(anchorEl === null){
+                            setTokenClicked(token)
+                          }
+                        }}>
+                          {/* <ControlPointIcon
                             onClick={() => add(token)}
                             fontSize="small"
-                          />
+                          /> */}
+                          <Button
+                              id="basic-button"
+                              aria-controls={openContextMenu ? 'basic-menu' : undefined}
+                              aria-haspopup="true"
+                              aria-expanded={openContextMenu ? 'true' : undefined}
+                              onClick={handleClick}
+                              sx={{background: "none", color: "black", border: "none", minWidth: "0px", padding: "0px", "&:hover": {background: "none", color: "black", minWidth: "0px", padding: "0px"}}}
+                            >
+                              <MoreVertIcon/>
+                            </Button>
+                            <ThemeProvider theme={themeMenu}>
+                            <Menu
+                              id="basic-menu"
+                              anchorEl={anchorEl}
+                              open={openContextMenu}
+                              onClose={handleCloseContextMenu}
+                              MenuListProps={{
+                                'aria-labelledby': 'basic-button',
+                              }}
+                            >
+                              <IconMenu token={tokenClicked!} onClose={handleCloseContextMenu} addToBurnList={() => add(tokenClicked!)} renameTed={() => rename(tokenClicked!)} />
+                            </Menu>
+                            </ThemeProvider>
                         </div>
                       </Box>
                     </Box>
@@ -809,6 +950,32 @@ function TheFactory(props: PolygonProps) {
       ) : (
         <ConnectWalletPage />
       )}
+
+      <SuccessDialog
+        open={successAWS}
+        setOpen={setSuccessAWS}
+        successCode={4}
+      />
+
+    {renameFlag && <RenameDialog
+        open={renameFlag}
+        setOpen={setRenameFlag}
+        onClose={handleRenameClose}
+        currentName={tokenClicked!.metadata.name!.toString()}
+        setNewName={setNewName}
+      />}
+
+      <LoadingDialog
+        open={isLoadingAWS}
+        loadingCode={3}
+        onClose={() => setIsLoadingAWS(false)}
+      />
+
+      <ErrorDialog
+        open={showError}
+        handleClose={handleErrorClose}
+        errorCode={errorCode}
+      />
 
       <Sheet
         rootId="root"

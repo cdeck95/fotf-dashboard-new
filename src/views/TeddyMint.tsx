@@ -193,7 +193,7 @@ return (
       setOpen={setSuccess}
       collection={COLLECTION_FOR_MINT}
       count={counter}
-      successCode={1}
+      successCode={2}
     />
 
     <LoadingDialog
