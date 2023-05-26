@@ -9,7 +9,7 @@ import Slide from '@mui/material/Slide';
 import { TransitionProps } from '@mui/material/transitions';
 import { useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
-import { Box, LinearProgress } from '@mui/material';
+import { Box, LinearProgress, ThemeProvider, createTheme, styled } from '@mui/material';
 
 const Transition = React.forwardRef(function Transition(
   props: TransitionProps & {
@@ -47,38 +47,71 @@ function LoadingDialog(props: LoadingDialogProps) {
         return "Loading... hang tight!";
     }
   }; 
+
+  const sidebarBackgroundColor = getComputedStyle(
+    document.documentElement
+  ).getPropertyValue("--sidebar-background-color");
+
+  const theme = createTheme({
+    typography: {
+      fontFamily: ["Bebas Neue", "Roboto", "Helvetica", "Arial"].join(","),
+      fontSize: 16,
+      fontWeightLight: 300,
+    },
+    components: {
+      MuiPaper: {
+        styleOverrides: {
+          root: {
+            backgroundColor: sidebarBackgroundColor,
+            paddingLeft: "0px !important",
+            paddingRight: "0px !important",
+            overflowX: "hidden",
+            overflowY: "hidden",
+            "&:hover": {
+              overflowY: "auto",
+            },
+            "&::-webkit-scrollbar": {
+              display: "none",
+            },
+          },
+        },
+      },
+    },
+  });
   
   return (
     <Box sx={{borderRadius:"0px"}}>
-      <Dialog
-        open={open}
-        TransitionComponent={Transition}
-        keepMounted
-        onClose={handleClose}
-        aria-describedby="alert-dialog-slide-description"
-        sx={{borderRadius:"0px"}}
-      >
-        <DialogTitle sx={{
-          backgroundColor: "green", 
-          color: "white", 
-          margin: "0px",
-          fontFamily: "Bebas Neue",
-          fontSize: "30px"
-        }}>
-        {"Loading"}
-        {/* <Box sx={{position:"absolute", top: "5px", right: "5px", marginLeft: "auto"}} 
+      <ThemeProvider theme={theme}>
+        <Dialog
+          open={open}
+          TransitionComponent={Transition}
+          keepMounted
+          onClose={handleClose}
+          aria-describedby="alert-dialog-slide-description"
+          sx={{borderRadius:"0px"}}
         >
-          <Button sx={{color: "red", position:"absolute", top: "0px", right: "0px", marginLeft: "auto"}} 
-          onClick={handleClose}>X</Button>
-        </Box> */}
-        </DialogTitle>
-        <DialogContent>
-          <DialogContentText sx={{ marginTop: "10px", fontSize: "24px", fontFamily: "Bebas Neue"}} id="alert-dialog-slide-description">
-           {loadingText()}
-          </DialogContentText>
-          <LinearProgress color="success" sx={{ marginTop: "5px"}}/>
-        </DialogContent>
-      </Dialog>
+          <DialogTitle sx={{
+            backgroundColor: "green", 
+            color: "white", 
+            margin: "0px",
+            fontFamily: "Bebas Neue",
+            fontSize: "30px"
+          }}>
+          {"Loading"}
+          {/* <Box sx={{position:"absolute", top: "5px", right: "5px", marginLeft: "auto"}} 
+          >
+            <Button sx={{color: "red", position:"absolute", top: "0px", right: "0px", marginLeft: "auto"}} 
+            onClick={handleClose}>X</Button>
+          </Box> */}
+          </DialogTitle>
+          <DialogContent>
+            <DialogContentText sx={{ marginTop: "10px", fontSize: "24px", fontFamily: "Bebas Neue"}} id="alert-dialog-slide-description">
+            {loadingText()}
+            </DialogContentText>
+            <LinearProgress color="success" sx={{ marginTop: "5px"}}/>
+          </DialogContent>
+        </Dialog>
+      </ThemeProvider>
     </Box>
   )
 }

@@ -9,7 +9,7 @@ import Slide from '@mui/material/Slide';
 import { TransitionProps } from '@mui/material/transitions';
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
-import { Box } from '@mui/material';
+import { Box, ThemeProvider, createTheme } from '@mui/material';
 
 const Transition = React.forwardRef(function Transition(
   props: TransitionProps & {
@@ -38,10 +38,40 @@ function SuccessDialog(props: SuccessDialogProps) {
   };
 
   
- 
+  const sidebarBackgroundColor = getComputedStyle(
+    document.documentElement
+  ).getPropertyValue("--sidebar-background-color");
+
+  const theme = createTheme({
+    typography: {
+      fontFamily: ["Bebas Neue", "Roboto", "Helvetica", "Arial"].join(","),
+      fontSize: 16,
+      fontWeightLight: 300,
+    },
+    components: {
+      MuiPaper: {
+        styleOverrides: {
+          root: {
+            backgroundColor: sidebarBackgroundColor,
+            paddingLeft: "0px !important",
+            paddingRight: "0px !important",
+            overflowX: "hidden",
+            overflowY: "hidden",
+            "&:hover": {
+              overflowY: "auto",
+            },
+            "&::-webkit-scrollbar": {
+              display: "none",
+            },
+          },
+        },
+      },
+    },
+  });
   
   return (
     <Box sx={{borderRadius:"0px"}}>
+      <ThemeProvider theme={theme}>
       <Dialog
         open={open}
         TransitionComponent={Transition}
@@ -82,6 +112,7 @@ function SuccessDialog(props: SuccessDialogProps) {
           }}onClick={handleClose}>Done</Button>
         </DialogActions>
       </Dialog>
+      </ThemeProvider>
     </Box>
   )
 }

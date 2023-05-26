@@ -227,6 +227,11 @@ function LeftDrawer(props: NavProps) {
     }
   };
 
+  // const StyledDialog = styled(Drawer)`
+  //   margin: 0px;
+  //   padding: 0px;
+  // `;
+
   return (
     <Box sx={{ display: "flex", margin: "0px !important", padding: "0px !important" }}>
       <CssBaseline />

@@ -9,7 +9,7 @@ import Slide from '@mui/material/Slide';
 import { TransitionProps } from '@mui/material/transitions';
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
-import { Box } from '@mui/material';
+import { Box, ThemeProvider, createTheme } from '@mui/material';
 
 const Transition = React.forwardRef(function Transition(
   props: TransitionProps & {
@@ -88,57 +88,90 @@ function ErrorDialog(props: FailureDialogProps) {
     }
   };
 
+  const sidebarBackgroundColor = getComputedStyle(
+    document.documentElement
+  ).getPropertyValue("--sidebar-background-color");
+
+  const theme = createTheme({
+    typography: {
+      fontFamily: ["Bebas Neue", "Roboto", "Helvetica", "Arial"].join(","),
+      fontSize: 16,
+      fontWeightLight: 300,
+    },
+    components: {
+      MuiPaper: {
+        styleOverrides: {
+          root: {
+            backgroundColor: sidebarBackgroundColor,
+            paddingLeft: "0px !important",
+            paddingRight: "0px !important",
+            overflowX: "hidden",
+            overflowY: "hidden",
+            "&:hover": {
+              overflowY: "auto",
+            },
+            "&::-webkit-scrollbar": {
+              display: "none",
+            },
+          },
+        },
+      },
+    },
+  });
+
   
  
   
   return (
     <Box sx={{borderRadius:"0px"}}>
-      <Dialog
-        open={open}
-        TransitionComponent={Transition}
-        keepMounted
-        onClose={handleClose}
-        aria-describedby="alert-dialog-slide-description"
-        sx={{borderRadius:"0px"}}
-      >
-        <DialogTitle sx={{
-          backgroundColor: errorColor(), 
-          color: "white", 
-          margin: "0px",
-          fontFamily: "Bebas Neue",
-          fontSize: "30px"
-        }}>
-        {errorTitle()}
-        {/* <Box sx={{position:"absolute", top: "5px", right: "5px", marginLeft: "auto"}} 
+      <ThemeProvider theme={theme}>
+        <Dialog
+          open={open}
+          TransitionComponent={Transition}
+          keepMounted
+          onClose={handleClose}
+          aria-describedby="alert-dialog-slide-description"
+          sx={{borderRadius:"0px"}}
         >
-          <Button sx={{color: "red", position:"absolute", top: "0px", right: "0px", marginLeft: "auto"}} 
-          onClick={handleClose}>X</Button>
-        </Box> */}
-        </DialogTitle>
-        <DialogContent>
-          <DialogContentText sx={{ marginTop: "10px", fontSize: "24px", fontFamily: "Bebas Neue"}} id="alert-dialog-slide-description">
-            {errorText()}
-          </DialogContentText>
-        </DialogContent>
-        <DialogActions>
-          <Button variant="contained" color="error" sx={{
+          <DialogTitle sx={{
+            backgroundColor: errorColor(), 
+            color: "white", 
+            margin: "0px",
             fontFamily: "Bebas Neue",
-            fontSize: "24px",
-            marginBottom: "5px",
-            backgroundColor: errorColor(),
-            color: "white",
-            borderColor: "white",
-            borderWidth: "1px",
-            "&:hover": {
-              backgroundColor: "white",
-              color: errorColor(),
-              borderColor: errorColor(),
+            fontSize: "30px"
+          }}>
+          {errorTitle()}
+          {/* <Box sx={{position:"absolute", top: "5px", right: "5px", marginLeft: "auto"}} 
+          >
+            <Button sx={{color: "red", position:"absolute", top: "0px", right: "0px", marginLeft: "auto"}} 
+            onClick={handleClose}>X</Button>
+          </Box> */}
+          </DialogTitle>
+          <DialogContent>
+            <DialogContentText sx={{ marginTop: "10px", fontSize: "24px", fontFamily: "Bebas Neue"}} id="alert-dialog-slide-description">
+              {errorText()}
+            </DialogContentText>
+          </DialogContent>
+          <DialogActions>
+            <Button variant="contained" color="error" sx={{
+              fontFamily: "Bebas Neue",
+              fontSize: "24px",
+              marginBottom: "5px",
+              backgroundColor: errorColor(),
+              color: "white",
+              borderColor: "white",
               borderWidth: "1px",
-              borderStyle: "solid"
-            }
-          }}onClick={handleClose}>Close</Button>
-        </DialogActions>
-      </Dialog>
+              "&:hover": {
+                backgroundColor: "white",
+                color: errorColor(),
+                borderColor: errorColor(),
+                borderWidth: "1px",
+                borderStyle: "solid"
+              }
+            }}onClick={handleClose}>Close</Button>
+          </DialogActions>
+        </Dialog>
+      </ThemeProvider>
     </Box>
   )
 }
