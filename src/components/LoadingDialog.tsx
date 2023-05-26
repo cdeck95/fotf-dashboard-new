@@ -23,8 +23,8 @@ const Transition = React.forwardRef(function Transition(
 export interface LoadingDialogProps {
   open: boolean;
   onClose: () => void;
-  collection: string;
-  collectionCount: number;
+  collection?: string;
+  collectionCount?: number;
   loadingCode: number;
 }
 
@@ -43,6 +43,8 @@ function LoadingDialog(props: LoadingDialogProps) {
         return `We are hard at work bridging your ${collectionCount} ${collection}... hang tight!`;
       case 2:
         return `Minting ${collectionCount} ${collection} ... hang tight!`;
+      case 3:
+        return `Renaming your Ted... hang tight!`;
       default:
         return "Loading... hang tight!";
     }
@@ -88,7 +90,7 @@ function LoadingDialog(props: LoadingDialogProps) {
           keepMounted
           onClose={handleClose}
           aria-describedby="alert-dialog-slide-description"
-          sx={{borderRadius:"0px"}}
+          sx={{borderRadius:"0px", zIndex: "1000"}}
         >
           <DialogTitle sx={{
             backgroundColor: "green", 

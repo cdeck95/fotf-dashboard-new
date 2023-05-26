@@ -24,8 +24,8 @@ export interface SuccessDialogProps {
   open: boolean;
   setOpen: (open: boolean) => void;
   successCode: number;
-  collection: string;
-  count: number;
+  collection?: string;
+  count?: number;
 }
 
 function SuccessDialog(props: SuccessDialogProps) {
@@ -35,6 +35,17 @@ function SuccessDialog(props: SuccessDialogProps) {
 
   const handleClose = () => {
     setOpen(false);
+  };
+
+  const successText = () => {
+    switch (successCode) {
+      case 1:
+        return "You have successfully renamed your Ted!";
+      case 2:
+        return `You have officially minted ${count} ${collection} NFTs on Polygon! You can view them in your OpenSea profile to check them out!`;
+      default:
+        return "Please refresh the page to see your results.";
+    }
   };
 
   
@@ -92,7 +103,7 @@ function SuccessDialog(props: SuccessDialogProps) {
         <DialogContent>
           <DialogContentText sx={{ marginTop: "10px", fontSize: "24px", fontFamily: "Bebas Neue"}} 
           id="alert-dialog-slide-description">
-          You have officially minted {count} {collection} NFTs on Polygon! You can view them in your OpenSea profile to check them out!
+          {successText()}
           </DialogContentText>
         </DialogContent>
         <DialogActions>
