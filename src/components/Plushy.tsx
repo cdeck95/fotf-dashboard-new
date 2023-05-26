@@ -46,7 +46,7 @@ function Plushy() {
       }, [isMobile, isMediumLarge, isSmallScreen]);
 
     return (
-        <Box className="row-between" sx={{height: "auto", width: "100%", paddingLeft: "10px", paddingRight: "10px", backgroundColor: "#fff", borderRadius: "10px"}}>
+        <Box className="row-between" sx={{height: "auto", width: "100%", marginBottom: isSmallScreen? "15px": "0px", paddingTop: isSmallScreen? "7.5px": "0px", paddingBottom: isSmallScreen? "7.5px": "0px", paddingLeft: "10px", paddingRight: "10px", backgroundColor: "#fff", borderRadius: "10px"}}>
             <Box className="half-col">
                 <img src={plushy} alt="Plushies" className={isSmallScreen ? "plushyImage-mobile" : "plushyImage"}/>
             </Box>
