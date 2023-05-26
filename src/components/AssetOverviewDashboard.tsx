@@ -134,7 +134,9 @@ function AssetOverviewDashboard(props: AssetOverviewProps) {
           <Box className="col-large-dashboard">
           {isLoadingHoney || isLoadingHoneyContract
               ? <CircularProgress size="1rem" sx={{margin: "auto"}}/>
-              : <Typography className="honeyBalanceBlack-dashboard">{honeyBalance}</Typography>
+              : <Typography className="honeyBalanceBlack-dashboard">{new Intl.NumberFormat("en-US", {
+                minimumIntegerDigits: 2,
+              }).format(parseInt(honeyBalance.toString()))}</Typography>
             }
             <Typography className="honeyBalance-dashboard"> $HNY</Typography>
           </Box>
