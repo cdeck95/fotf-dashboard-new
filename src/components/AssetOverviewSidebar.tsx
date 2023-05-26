@@ -138,7 +138,9 @@ function AssetOverviewSidebar(props: AssetOverviewProps) {
         <Box className="row-center-margin">
           {isLoadingHoney || isLoadingHoneyContract
               ? <CircularProgress size="1rem" sx={{margin: "auto"}}/>
-              : <Typography className="honeyBalanceBlack">{honeyBalance}</Typography>
+              : <Typography className="honeyBalanceBlack">{new Intl.NumberFormat("en-US", {
+                minimumIntegerDigits: 2,
+              }).format(parseInt(honeyBalance.toString()))}</Typography>
             }
           <Typography className="honeyBalance"> $HNY</Typography>
         </Box>
