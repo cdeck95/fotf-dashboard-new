@@ -143,13 +143,13 @@ function AITedMint(props: MintProps) {
       const payableAmountPerHoney = BigNumber.from(pricePerHoney).mul(
         BigNumber.from(10).pow(18)
       );
-      // const isApprovedResponse = await isApproved();
-      // console.log(isApprovedResponse);
-      // if(isApprovedResponse.toString() === "0") {
-      //   console.log("not approved");
-      //   const txApprove = await honeyContract?.call("approve", [address, payableAmountPerHoney]);
-      //   console.log(txApprove);
-      // }
+      const isApprovedResponse = await isApproved();
+      console.log(isApprovedResponse);
+      if(isApprovedResponse.toString() === "0") {
+        console.log("not approved");
+        const txApprove = await honeyContract?.call("approve", [address, payableAmountPerHoney]);
+        console.log(txApprove);
+      }
 
       const pricePer = mintWithHNY ? 0 : 2;
       const payableAmountPer = BigNumber.from(pricePer).mul(
