@@ -267,8 +267,9 @@ function App() {
   }
 
   return (
-    <PullToRefresh  onRefresh={handleRefresh}>
-      <Box className="app-container" sx={{ position: "relative", overflowY: "auto" }}>
+    <Box className="app-container" sx={{ position: "relative", overflowY: "auto" }}>
+      <PullToRefresh  onRefresh={handleRefresh}>
+
         <ThemeProvider theme={theme}>
         {showMismatch && <Backdrop
           sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1, marginLeft: leftDrawerWidth,
@@ -434,8 +435,9 @@ function App() {
             )}
           </Box>
         </ThemeProvider>
-      </Box>
-    </PullToRefresh>
+      </PullToRefresh>
+    </Box>
+    
   );
 }
 
