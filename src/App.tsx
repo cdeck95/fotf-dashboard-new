@@ -326,7 +326,7 @@ function App() {
             sx={{
               paddingLeft: leftNavOpen ? LeftDrawerWidthPX : "0px",
               paddingRight: rightNavOpen ? "340px" : "0px",
-              marginTop: isSmallScreen ? "60px" : "20px",
+              marginTop: isSmallScreen ? "60px" : "0px",
               // paddingTop: isSmallScreen ? "10px" : "0px",
               backgroundColor: "white",
               height: "100% !important",
@@ -338,7 +338,7 @@ function App() {
           >     
           
           {leftNavOpen ? (
-              <Box></Box>
+              <LeftDrawer navOpen={leftNavOpen} setNavOpen={setLeftNavOpen} />
             ) : (
               <Box
                 sx={{
@@ -399,8 +399,7 @@ function App() {
                 )}
               </Box>
             )}  
-          <LeftDrawer navOpen={leftNavOpen} setNavOpen={setLeftNavOpen} />
-          <PullToRefresh  onRefresh={handleRefresh}>
+          {/* <PullToRefresh className="ptr-override" onRefresh={handleRefresh}> */}
             {address ? (
               <Routes>
                 <Route path="/" element={<Dashboard tokenProps={polygonTokenProps} leftNavOpen={leftNavOpen} rightNavOpen={rightNavOpen} showMismatch={showMismatch}/>} />
@@ -432,7 +431,7 @@ function App() {
             )}  
 
             
-            </PullToRefresh>
+            {/* </PullToRefresh> */}
           </Box>
         </ThemeProvider>
     </Box>

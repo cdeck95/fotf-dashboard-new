@@ -66,6 +66,7 @@ import MoreVertIcon from '@mui/icons-material/MoreVert';
 import SuccessDialog from "../components/SuccessDialog";
 import LoadingDialog from "../components/LoadingDialog";
 import RenameDialog from "../components/RenameDialog";
+import PullToRefresh from "react-simple-pull-to-refresh";
 
 const IS_DISABLED = true;
 
@@ -435,8 +436,9 @@ function TheFactory(props: PolygonProps) {
     setSearchInput(e.target.value);
   };
 
-  
-  
+  const handleRefresh = async () => {
+    window.location.reload();
+  }  
 
   const [filteredNFTs, setFilteredNFTs] = useState<NFT[]>([]);
 
@@ -623,7 +625,9 @@ function TheFactory(props: PolygonProps) {
           </Typography>
         </Box>
       </Backdrop> */}
-      {address && (
+      <PullToRefresh className="ptr-override" onRefresh={handleRefresh}>
+        <Box sx={{width: "100%", height: "100%", margin: "0px", padding: "0px"}}>
+        {address && (
         <Box className={isSmallScreen ? "header-mobile" : "header"}>
           <Box className={isSmallScreen ? "header-row-mobile" : "header-row"}>
             {!isSmallScreen && <h3 className={isSmallScreen ? "page-header-mobile" : "page-header"} >
@@ -950,6 +954,8 @@ function TheFactory(props: PolygonProps) {
       ) : (
         <ConnectWalletPage />
       )}
+        </Box>
+      </PullToRefresh>
 
       <SuccessDialog
         open={successAWS}
