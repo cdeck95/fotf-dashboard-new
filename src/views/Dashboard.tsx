@@ -47,6 +47,7 @@ import TeddiesDashboard from "../components/TeddiesDashboard";
 import HoneyDashboard from "../components/HoneyDashboard";
 import Plushy from "../components/Plushy";
 import ComingSoon from "./ComingSoon";
+import PullToRefresh from "react-simple-pull-to-refresh";
 
 export interface PolygonProps {
   tokenProps: PolygonAccountDetails;
@@ -144,8 +145,13 @@ function Dashboard(props: PolygonProps) {
     tokens.Teddies?.tokens,
   ]);
 
+  const handleRefresh = async () => {
+    window.location.reload();
+  }
+
   return (
     <Box className={isSmallScreen? "inner-container-mobile" : "inner-container"} sx={{zIndex: "1 !important", position: "relative"}}>
+      {/* <PullToRefresh className="ptr-override" onRefresh={handleRefresh}> */}
       {address ? (
         <Box>
             <Box
@@ -216,7 +222,7 @@ function Dashboard(props: PolygonProps) {
       ) : (
         <ConnectWalletPage />
       )}
-      
+      {/* </PullToRefresh> */}
     </Box>
   );
 }

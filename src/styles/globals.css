@@ -721,6 +721,10 @@ body {
   text-align: left;
 }
 
+.ptr-override {
+  overflow: auto;
+}
+
 .footer-card {
   justify-content: right;
   align-items: end;
