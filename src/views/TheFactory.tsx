@@ -625,7 +625,7 @@ function TheFactory(props: PolygonProps) {
           </Typography>
         </Box>
       </Backdrop> */}
-      <PullToRefresh className="ptr-override" onRefresh={handleRefresh}>
+      {/* <PullToRefresh className="ptr-override" onRefresh={handleRefresh}> */}
         <Box sx={{width: "100%", height: "100%", margin: "0px", padding: "0px"}}>
         {address && (
         <Box className={isSmallScreen ? "header-mobile" : "header"}>
@@ -955,7 +955,7 @@ function TheFactory(props: PolygonProps) {
         <ConnectWalletPage />
       )}
         </Box>
-      </PullToRefresh>
+      {/* </PullToRefresh> */}
 
       <SuccessDialog
         open={successAWS}

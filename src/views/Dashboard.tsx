@@ -151,7 +151,7 @@ function Dashboard(props: PolygonProps) {
 
   return (
     <Box className={isSmallScreen? "inner-container-mobile" : "inner-container"} sx={{zIndex: "1 !important", position: "relative"}}>
-      <PullToRefresh className="ptr-override" onRefresh={handleRefresh}>
+      {/* <PullToRefresh className="ptr-override" onRefresh={handleRefresh}> */}
       {address ? (
         <Box>
             <Box
@@ -222,7 +222,7 @@ function Dashboard(props: PolygonProps) {
       ) : (
         <ConnectWalletPage />
       )}
-      </PullToRefresh>
+      {/* </PullToRefresh> */}
     </Box>
   );
 }
