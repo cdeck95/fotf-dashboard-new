@@ -337,6 +337,41 @@ function App() {
             }}
           >     
           
+ 
+          <PullToRefresh className="ptr-override" onRefresh={handleRefresh}>
+            {address ? (
+              <Routes>
+                <Route path="/" element={<Dashboard tokenProps={polygonTokenProps} leftNavOpen={leftNavOpen} rightNavOpen={rightNavOpen} showMismatch={showMismatch}/>} />
+                <Route path="/HoneyExchange" element={<HoneyExchange />} />
+                <Route path="/TeddyClaims" element={<TeddyClaims />} />
+                <Route path="/TedClaims" element={<TedClaims />} />{" "}
+                <Route path="/TedMint" element={<TedMint  showMismatch={showMismatch} contract={polygonTokenProps.tedContract} isloadingContract={polygonTokenProps.isLoadingTedContract} />} />{" "}
+                <Route path="/TeddyMint" element={<TeddyMint showMismatch={showMismatch} contract={polygonTokenProps.teddyContract} isloadingContract={polygonTokenProps.isLoadingTeddyContract} />} />{" "}
+                <Route path="/AITedMint" element={<AITedMint  showMismatch={showMismatch} contract={polygonTokenProps.aiTedContract} isloadingContract={polygonTokenProps.isLoadingAITedContract} />} />{" "}
+                {/* <Route
+                  path="/Bridge"
+                  element={
+                    <PolygonBridge
+                      tokenProps={polygonTokenProps} leftNavOpen={navOpen} rightNavOpen={rightNavOpen} 
+                    />
+                  }
+                /> */}
+                <Route
+                  path="/TheFactory"
+                  element={<TheFactory tokenProps={polygonTokenProps} leftNavOpen={leftNavOpen} rightNavOpen={rightNavOpen} showMismatch={showMismatch} />}
+                />
+                <Route path="/BuildATeddy" element={<BuildATeddy />} />
+                <Route path="/TraitSwapTeds" element={<TraitSwapTeds />} />
+                <Route path="/GraphicTemplates" element={<GraphicTemplates />} />
+                <Route path="*" element={<NotFound />} />
+              </Routes>
+            ) : (
+              <ConnectWalletPage />
+            )}  
+
+            
+            </PullToRefresh>
+          </Box>
           {leftNavOpen ? (
               <LeftDrawer navOpen={leftNavOpen} setNavOpen={setLeftNavOpen} />
             ) : (
@@ -398,41 +433,7 @@ function App() {
                   </IconButton>
                 )}
               </Box>
-            )}  
-          {/* <PullToRefresh className="ptr-override" onRefresh={handleRefresh}> */}
-            {address ? (
-              <Routes>
-                <Route path="/" element={<Dashboard tokenProps={polygonTokenProps} leftNavOpen={leftNavOpen} rightNavOpen={rightNavOpen} showMismatch={showMismatch}/>} />
-                <Route path="/HoneyExchange" element={<HoneyExchange />} />
-                <Route path="/TeddyClaims" element={<TeddyClaims />} />
-                <Route path="/TedClaims" element={<TedClaims />} />{" "}
-                <Route path="/TedMint" element={<TedMint  showMismatch={showMismatch} contract={polygonTokenProps.tedContract} isloadingContract={polygonTokenProps.isLoadingTedContract} />} />{" "}
-                <Route path="/TeddyMint" element={<TeddyMint showMismatch={showMismatch} contract={polygonTokenProps.teddyContract} isloadingContract={polygonTokenProps.isLoadingTeddyContract} />} />{" "}
-                <Route path="/AITedMint" element={<AITedMint  showMismatch={showMismatch} contract={polygonTokenProps.aiTedContract} isloadingContract={polygonTokenProps.isLoadingAITedContract} />} />{" "}
-                {/* <Route
-                  path="/Bridge"
-                  element={
-                    <PolygonBridge
-                      tokenProps={polygonTokenProps} leftNavOpen={navOpen} rightNavOpen={rightNavOpen} 
-                    />
-                  }
-                /> */}
-                <Route
-                  path="/TheFactory"
-                  element={<TheFactory tokenProps={polygonTokenProps} leftNavOpen={leftNavOpen} rightNavOpen={rightNavOpen} showMismatch={showMismatch} />}
-                />
-                <Route path="/BuildATeddy" element={<BuildATeddy />} />
-                <Route path="/TraitSwapTeds" element={<TraitSwapTeds />} />
-                <Route path="/GraphicTemplates" element={<GraphicTemplates />} />
-                <Route path="*" element={<NotFound />} />
-              </Routes>
-            ) : (
-              <ConnectWalletPage />
-            )}  
-
-            
-            {/* </PullToRefresh> */}
-          </Box>
+            )} 
         </ThemeProvider>
     </Box>
     

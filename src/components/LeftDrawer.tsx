@@ -240,19 +240,16 @@ function LeftDrawer(props: NavProps) {
           width: drawerWidth,
           flexShrink: 0,
           whiteSpace: "nowrap",
-          // "& .MuiDrawer-root": { width: 200, zIndex: -1 },
+          "& .MuiDrawer-root": { width: 200, zIndex: -1 },
           "& .MuiDrawer-paper": {
             width: drawerWidth,
-            // zIndex: -1,
+            zIndex: 10001,
             overflowY: "hidden",
             overflowX: "hidden",
             margin: "0px !important", padding: "0px !important",
             border: "none",
+            boxSizing: "border-box",
             flexShrink: 0,
-            "& .MuiDrawer-paper": {
-              width: drawerWidth,
-              boxSizing: "border-box",
-            },
           },
         }}
         open={navOpen}
