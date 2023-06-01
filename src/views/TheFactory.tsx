@@ -549,7 +549,7 @@ function TheFactory(props: PolygonProps) {
         isSmallScreen
           ? "factory-inner-container-mobile"
           : "factory-inner-container"
-      } sx={{zIndex: "1 !important", position: "relative"}}
+      } sx={{zIndex: "1 !important", position: "relative", overflowY: "hidden"}}
     >
 {/* 
   {isLoading && <Backdrop
@@ -704,7 +704,7 @@ function TheFactory(props: PolygonProps) {
         </Box>
       )}
       {address ? (
-        <div>
+        <Box sx={{overflowY: "auto"}}>
           {errorAI && errorTed && errorTeddy ? (
             <div>
               <p>NFT not found - error</p>
@@ -733,7 +733,6 @@ function TheFactory(props: PolygonProps) {
                     overflowX: "hidden",
                     overflowY: "auto",
                     backgroundColor: "white",
-                    // zIndex: "0 !important",
                   }}
                   cols={columns}
                   gap={25}
@@ -950,7 +949,7 @@ function TheFactory(props: PolygonProps) {
           <ExpandMoreOutlinedIcon/>
         </Box>
       )}
-        </div>
+        </Box>
       ) : (
         <ConnectWalletPage />
       )}

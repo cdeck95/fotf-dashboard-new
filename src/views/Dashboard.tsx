@@ -172,7 +172,7 @@ function Dashboard(props: PolygonProps) {
                     Dashboard
                   </Typography>}
                 </Box>
-                <Box className={isSmallScreen? "column-center-full-container" : "first-row-space-around-dashboard"}>
+                <Box className={isSmallScreen? "column-center-full-container" : "row-space-around-dashboard"}>
                   <ThirdwebProvider
                     key={"ethThirdWebProviderDashboard"}
                     supportedWallets={[

@@ -40,15 +40,15 @@ function FuryTedsDashboard(props: PolygonPropsNoNav) {
     const navigate = useNavigate();
     
     return (
-        <Box sx={{height: "auto", width: "100%", paddingLeft: "10px", paddingRight: "10px", backgroundColor: "#fff", borderRadius: "10px"}}>
+        <Box sx={{height: "100%", width: "100%", paddingLeft: "5px", paddingRight: "5px", backgroundColor: "#fff", borderRadius: "10px", overflowY: "auto"}}>
             <Typography className="page-header-dashboard">
                 Fury Teds
             </Typography>
-            <Box className="row-space-between" sx={{ height: "180px" }}>
+            <Box className="row-space-between">
                 <NFTList tokens={tedNFTs!} isLoading={isLoadingTed} />
             </Box>  
             <Box className="row-center">
-                <Button className="dashboard-button" variant="contained" color="primary" onClick={() => navigate("/TeddyClaims")} sx={{marginBottom: "10px", padding: "8px !important", marginTop: isSmallScreen? "0px": "5px", fontSize: isSmallScreen? ".90rem !important" : "1rem !important"}}>
+                <Button className="dashboard-button" variant="contained" color="primary" onClick={() => navigate("/TeddyClaims")} sx={{marginBottom: "0px", padding: "8px !important", marginTop: isSmallScreen? "0px": "5px", fontSize: isSmallScreen? ".90rem !important" : "1rem !important"}}>
                     Head to Fury Ted $HNY Claim
                 </Button>
             </Box>  

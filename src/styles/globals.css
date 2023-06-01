@@ -126,11 +126,30 @@ body {
   justify-content: space-around;
   width: 100%;
   align-items: center;
-  
-  height: 29%;
-  min-height: 29%;
-  padding-bottom: 15px;
-  margin-bottom: 15px;
+  height: 31dvh;
+  max-height: 31dvh;
+  margin-bottom: 20px;
+}
+
+.row-space-around-honey {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  width: 100%;
+  max-height: 25dvh;
+  min-height: 25dvh;
+  height: 25dvh;
+  overflow-y: auto;
+}
+
+.first-row-space-around-honey{
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  width: 100%;
+  max-height: 5dvh;
+  min-height: 5dvh;
+  text-align: left;
 }
 
 .header {
@@ -498,8 +517,7 @@ body {
 .col-margin{
   display: flex;
   flex-direction: column;
-  margin-left: 10px;
-  /* margin-right: 10px; */
+  margin-left: 5px;
   height: 100%;
   justify-content: center;
 }
@@ -722,9 +740,9 @@ body {
   text-align: left;
 }
 
-/* .ptr-override {
-  overflow: auto;
-} */
+.ptr-override {
+  overflow: hidden !important;
+}
 
 .footer-card {
   justify-content: right;

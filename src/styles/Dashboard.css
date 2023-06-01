@@ -298,11 +298,8 @@
   border-radius: 10px;
   justify-content: center;
   flex-direction: column;
-  margin-left: 10px;
-  margin-right: 10px;
-  margin-top: 5px;
-  margin-bottom: 5px;
-  padding-top: 5px;
+  height: 100%;
+  overflow-y: auto;
 }
 
 .info-card__title-dashboard  {
@@ -338,6 +335,16 @@
   height: 100%;
   width: 32%;
 }
+
+.column-between-honey {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  /* align-items: center; */
+  text-align: center;
+  width: 32%;
+}
+
 
 .column-center-dashboard {
   display: flex;
@@ -405,8 +412,9 @@
 }
 
 .honeyImage {
-  width: 175px;
-  height: 175px;
+  width: 90%;
+  height: 75%;
+  padding-bottom: 5px;
   margin: auto;
   object-fit: contain;
 }
@@ -419,9 +427,9 @@
 }
 
 .plushyImage {
-  width: 250px;
-  height: 245px;
-  margin-bottom: 10px;
+  width: 100%;
+  height: 100%;
+  padding-bottom: 5px;
   margin: auto;
   object-fit: cover;
 }
@@ -514,12 +522,14 @@
 }
 
 .half-col {
-  height: 100%;
+  height: 30dvh;
+  max-height: 30dvh;
+  min-height: 30dvh;
   width: 50%;
   /* min-height: 265px; */
   display: flex;
   flex-direction: column;
-  justify-content: space-evenly;
+  justify-content: space-around;
 }
 
 .dashboard-button {

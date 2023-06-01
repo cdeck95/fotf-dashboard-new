@@ -88,26 +88,28 @@ function HoneyDashboard() {
 
 
     return (
-        <Box sx={{height: "auto", width: "100%", paddingLeft: "10px", paddingRight: "10px", backgroundColor: "#fff", borderRadius: "10px"}}>
-            <Typography className="page-header-small-mobile">
-                Quick Purchase Amounts w/ Bonus
-            </Typography>
-            <Box className="row-space-around-dashboard" sx={{ height: "220px" }}>
-                <Box className="column-between-dashboard">
+        <Box sx={{height: "100%", width: "100%", paddingLeft: "5px", paddingRight: "5px", backgroundColor: "#fff", borderRadius: "10px", overflowY: "auto", position: "relative"}}>
+            <Box className="first-row-space-around-honey">
+              <Typography className="page-header-small-mobile">
+                  Quick Purchase Amounts w/ Bonus
+              </Typography>
+            </Box>
+            <Box className="row-space-around-honey">
+                <Box className="column-between-honey">
                     <img src={honeyJar} alt="honey jar" className={isSmallScreen ? "honeyImage-mobile" : "honeyImage"}/>
-                    <Button className="dashboard-button" variant="contained" color="primary" onClick={() => buyHoneyJar()}>
+                    <Button className="dashboard-button" variant="contained" color="primary" onClick={() => buyHoneyJar()} sx={{marginBottom: "5px"}}>
                         50,000
                     </Button>
                 </Box>
-                <Box className="column-between-dashboard">
+                <Box className="column-between-honey">
                     <img src={honeyPot} alt="honey pot" className={isSmallScreen ? "honeyImage-mobile" : "honeyImage"}/>
-                    <Button className="dashboard-button" variant="contained" color="primary" onClick={() => buyHoneyPot()}>
+                    <Button className="dashboard-button" variant="contained" color="primary" onClick={() => buyHoneyPot()} sx={{marginBottom: "5px"}}>
                         110,000
                     </Button>
                 </Box>
-                <Box className="column-between-dashboard">
+                <Box className="column-between-honey">
                     <img src={honeyStash} alt="honey stash" className={isSmallScreen ? "honeyImage-mobile" : "honeyImage"}/>
-                    <Button className="dashboard-button" variant="contained" color="primary" onClick={() => buyHoneyStash()}>
+                    <Button className="dashboard-button" variant="contained" color="primary" onClick={() => buyHoneyStash()} sx={{marginBottom: "5px"}}>
                         220,000
                     </Button>
                 </Box>

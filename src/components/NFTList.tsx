@@ -113,7 +113,7 @@ function NFTList(props: NFTListProps) {
               borderRadius: "10px"
             }}
           >
-            <Skeleton variant="rectangular" width={160} height={160} />
+            <Skeleton variant="rectangular" width={150} height={150} />
           </Box>
         ))}
       </ImageList>
@@ -127,7 +127,7 @@ function NFTList(props: NFTListProps) {
                 justifyContent: "flex-start",
                 width: "100%",
                 height: "100%",
-                overflowX: "auto",
+                overflowX: "hidden",
                 overflowY: "hidden",
                 marginLeft: "auto",
                 marginRight: "auto",
@@ -139,8 +139,8 @@ function NFTList(props: NFTListProps) {
                 
               }}
               cols={columns}
-              gap={10}
-              rowHeight={160}
+              gap={7.5}
+              rowHeight={150}
             >
               {tokens.slice(startIndex,endIndex).map((token: NFT) => (
                 <Box
@@ -148,19 +148,19 @@ function NFTList(props: NFTListProps) {
                   className="card-dashboard"
                   sx={{
                     background: "none",
-                    maxHeight: "160px",
-                    maxWidth: "160px",
+                    maxHeight: "100%",
+                    maxWidth: "100%",
                   }}
                 >
                   <ThirdwebNftMedia
                     metadata={token.metadata}
                     style={{
-                      maxHeight: "160px",
-                      maxWidth: "160px",
+                      maxHeight: "100%",
+                      maxWidth: "100%",
                       borderRadius: "10px",
                       objectFit: "cover",
-                      width: "160px",
-                      height: "160px",
+                      width: "100%",
+                      height: "100%",
                     }}
                   />
                 </Box>

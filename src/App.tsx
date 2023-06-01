@@ -136,9 +136,13 @@ function App() {
   //const isMobile = !useMediaQuery(themeMui.breakpoints.up("md"));
   const isMobile = !useMediaQuery(theme.breakpoints.up("md"));
   const isMediumLarge = useMediaQuery(theme.breakpoints.down("lg"));
+  const isLarge = useMediaQuery(theme.breakpoints.down("xl"));
+  console.log(isMobile);
+  console.log(isMediumLarge);
+  console.log(isLarge);
   const [isSmallScreen, setSmallScreen] = useState(false);
   const leftDrawerWidth = isSmallScreen ? "0px" : "260px";
-  const rightDrawerWidth = isSmallScreen ? "0px" : "340px";
+  const rightDrawerWidth = isSmallScreen ? "0px" : "320px";
 
   const sdk = useSDK();
   const provider = sdk?.getProvider();
@@ -152,32 +156,7 @@ function App() {
   const [isBridgePage, setIsBridgePage] = useState(false);
   const [allOwnedNFTsArray, setAllOwnedNFTsArray] = useState<any>([]);
 
-  // const ethTokenProps = LoadETHAccountDetails();
-
   const polygonTokenProps = LoadPolygonAccountDetails();
-  // const {contract: tedPolygonContract, isLoading: isLoadingContract, error } = useContract(TED_POLYGON_CONTRACT);
-  //   console.log(tedPolygonContract);
-
-  // const {
-  //   tokens,
-  //   // isLoadingTed,
-  //   // isLoadingTeddy,
-  //   // isLoadingStaked,
-  //   // isLoadingAI,
-  //   isLoadingBirthCerts,
-  //   isLoadingOneOfOne,
-  //   errorBirthCerts,
-  //   errorOneOfOne,
-  //   // error,
-  //   honeyBalance,
-  // } = tokenProps;
-
-  // console.log(tokens);
-  // console.log(isLoadingBirthCerts);
-  // console.log(isLoadingOneOfOne);
-  // console.log(errorBirthCerts);
-  // console.log(errorOneOfOne);
-  // console.log(honeyBalance);
 
   const handleOpen = (): void => {
     setLeftNavOpen(true);
@@ -199,8 +178,15 @@ function App() {
     }
   }, [address, isMismatched, isSmallScreen, leftNavOpen, rightNavOpen]);
 
+  const location = useLocation();  
+  const [pageTitle, setPageTitle] = useState("");
+
   useEffect(() => {
-    if (!isMobile && isMediumLarge) {
+    if (!isMobile && !isMediumLarge && isLarge && (pageTitle === "Dashboard")){
+      setLeftNavOpen(false);
+      setRightNavOpen(false);
+      setSmallScreen(true);
+    } else if (!isMobile && isMediumLarge) {
       setLeftNavOpen(false);
       setRightNavOpen(false);
       setSmallScreen(true);
@@ -210,10 +196,7 @@ function App() {
       setSmallScreen(isMobile);
     }
     
-  }, [isMobile, isMediumLarge, isMismatched, isSmallScreen]);
-  
-  const location = useLocation();  
-  const [pageTitle, setPageTitle] = useState("");
+  }, [isMobile, isMediumLarge, isMismatched, isSmallScreen, isLarge, location.pathname, pageTitle]);
 
   useEffect(() => { 
 
@@ -267,7 +250,7 @@ function App() {
   }
 
   return (
-    <Box className="app-container" sx={{ position: "relative", overflowY: "auto" }}>
+    <Box className="app-container" sx={{ position: "relative", overflowY: "hidden" }}>
         <ThemeProvider theme={theme}>
         {showMismatch && <Backdrop
           sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1, marginLeft: leftDrawerWidth,
@@ -333,7 +316,6 @@ function App() {
               width: "100dvw",
               display: "flex",
               flexDirection: "column",
-              overflowY: "auto",
             }}
           >     
           
