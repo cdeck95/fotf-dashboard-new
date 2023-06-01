@@ -323,7 +323,7 @@ function App() {
           <PullToRefresh className="ptr-override" onRefresh={handleRefresh}>
             {address ? (
               <Routes>
-                <Route path="/" element={<Dashboard tokenProps={polygonTokenProps} leftNavOpen={leftNavOpen} rightNavOpen={rightNavOpen} showMismatch={showMismatch}/>} />
+                <Route path="/" element={<Dashboard tokenProps={polygonTokenProps} leftNavOpen={leftNavOpen} rightNavOpen={rightNavOpen} showMismatch={showMismatch} isSmallScreen={isSmallScreen} />} />
                 <Route path="/HoneyExchange" element={<HoneyExchange />} />
                 <Route path="/TeddyClaims" element={<TeddyClaims />} />
                 <Route path="/TedClaims" element={<TedClaims />} />{" "}
@@ -340,7 +340,7 @@ function App() {
                 /> */}
                 <Route
                   path="/TheFactory"
-                  element={<TheFactory tokenProps={polygonTokenProps} leftNavOpen={leftNavOpen} rightNavOpen={rightNavOpen} showMismatch={showMismatch} />}
+                  element={<TheFactory tokenProps={polygonTokenProps} leftNavOpen={leftNavOpen} rightNavOpen={rightNavOpen} showMismatch={showMismatch} isSmallScreen={isSmallScreen}/>}
                 />
                 <Route path="/BuildATeddy" element={<BuildATeddy />} />
                 <Route path="/TraitSwapTeds" element={<TraitSwapTeds />} />

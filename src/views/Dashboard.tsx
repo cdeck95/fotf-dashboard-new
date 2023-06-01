@@ -54,17 +54,19 @@ export interface PolygonProps {
   leftNavOpen: boolean;
   rightNavOpen: boolean;
   showMismatch: boolean;
+  isSmallScreen: boolean;
 }
 
 export interface PolygonPropsNoNav {
   tokenProps: PolygonAccountDetails;
+  isSmallScreen: boolean;
 }
 
 function Dashboard(props: PolygonProps) {
   useTitle("FOTF | Dashboard");
   //const { tokens, error, isLoadingAI, isLoadingBirthCerts, isLoadingOneOfOne, isLoadingStaked, isLoadingTed, isLoadingTeddy, honeyBalance, leftNavOpen, rightNavOpen} = props;
 
-  const { leftNavOpen, rightNavOpen } = props;
+  const { leftNavOpen, rightNavOpen, isSmallScreen } = props;
   const {
     tokens,
     isLoadingTed,
@@ -78,9 +80,6 @@ function Dashboard(props: PolygonProps) {
   } = props.tokenProps;
   const showMismatch = props.showMismatch;
   const theme = useTheme();
-  const isMobile = !useMediaQuery(theme.breakpoints.up("md"));
-  const isMediumLarge = useMediaQuery(theme.breakpoints.down("lg"));
-  const [isSmallScreen, setSmallScreen] = useState(false);
   const sdk = useSDK();
   const provider = sdk?.getProvider();
   const address = useAddress(); // Get connected wallet address
@@ -90,22 +89,6 @@ function Dashboard(props: PolygonProps) {
 
   // const { tokens, isLoadingTed, error, honeyBalance } = LoadAllAccountDetails();
 
-  useEffect(() => {
-    if (isMediumLarge || isMobile) {
-      setSmallScreen(true);
-    } else {
-      setSmallScreen(false);
-    }
-
-    // if (
-    //   isMismatched &&
-    //   (!isSmallScreen || (isSmallScreen && !rightNavOpen && !leftNavOpen))
-    // ) {
-    //   setShowMismatch(true);
-    // } else {
-    //   setShowMismatch(false);
-    // }
-  }, [isMediumLarge, isMobile, isSmallScreen, leftNavOpen, rightNavOpen]);
 
   const TedsDailyEarnings = 25;
   const TeddiesDailyEarnings = 35;
@@ -151,27 +134,25 @@ function Dashboard(props: PolygonProps) {
 
   return (
     <Box className={isSmallScreen? "inner-container-mobile" : "inner-container"} sx={{zIndex: "1 !important", position: "relative"}}>
-      {/* <PullToRefresh className="ptr-override" onRefresh={handleRefresh}> */}
       {address ? (
         <Box>
             <Box
               sx={{
-                height: "100dvh",
+                height: isSmallScreen ? "100dvh" : "100dvh",
                 display: "flex",
                 flexDirection: "column",
                 justifyContent: "center",
                 alignItems: "center",
                 width: "100%",
                 zIndex: "1 !important",
-                overflowY: "auto",
               }}
             >
-              <Box className="dashboard-inner-container">
-                <Box className="row-left" sx={{ height: "fit-content" }}>
+              <Box className="row-left">
                   {!isSmallScreen && <Typography className="page-header-small">
                     Dashboard
                   </Typography>}
                 </Box>
+              <Box className="dashboard-inner-container">
                 <Box className={isSmallScreen? "column-center-full-container" : "row-space-around-dashboard"}>
                   <ThirdwebProvider
                     key={"ethThirdWebProviderDashboard"}
@@ -202,18 +183,18 @@ function Dashboard(props: PolygonProps) {
                 </Box>
                 <Box className={isSmallScreen? "column-center-full-container" : "row-space-around-dashboard"}>
                   <Box className={isSmallScreen? "column-center-full" : "col-large-dashboard"}>
-                    <FuryTedsDashboard tokenProps={props.tokenProps} />
+                    <FuryTedsDashboard tokenProps={props.tokenProps} isSmallScreen={isSmallScreen} />
                   </Box>
                   <Box className={isSmallScreen? "column-center-full" : "col-large-dashboard"}>
-                    <TeddiesDashboard tokenProps={props.tokenProps} />
+                    <TeddiesDashboard tokenProps={props.tokenProps} isSmallScreen={isSmallScreen} />
                   </Box>
                 </Box>
-                <Box className={isSmallScreen? "column-center-full-container" : "row-space-around-dashboard"}>
+                <Box className={isSmallScreen? "column-center-full-container-last" : "row-space-around-dashboard"}>
                   <Box className={isSmallScreen? "column-center-full" : "col-large-dashboard"}>
                     <HoneyDashboard />
                   </Box>
                   <Box className={isSmallScreen? "column-center-full" : "col-large-dashboard"}>
-                    <Plushy />
+                    <Plushy isSmallScreen={isSmallScreen} />
                   </Box>
                 </Box>
               </Box>
@@ -222,7 +203,6 @@ function Dashboard(props: PolygonProps) {
       ) : (
         <ConnectWalletPage />
       )}
-      {/* </PullToRefresh> */}
     </Box>
   );
 }

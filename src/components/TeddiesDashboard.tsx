@@ -23,18 +23,7 @@ function TeddiesDashboard(props: PolygonPropsNoNav) {
     const teddyNFTs = props.tokenProps.tokens.Teddies?.tokens;
     const isLoadingTeddy = props.tokenProps.isLoadingTeddy;
 
-    const theme = useTheme();
-    const isMobile = !useMediaQuery(theme.breakpoints.up("md"));
-    const isMediumLarge = useMediaQuery(theme.breakpoints.down("lg"));
-    const [isSmallScreen, setSmallScreen] = useState(false);
-
-    useEffect(() => {
-        if (!isMobile && isMediumLarge) {
-          setSmallScreen(true);
-        } else {
-          setSmallScreen(isMobile);
-        }
-      }, [isMobile, isMediumLarge, isSmallScreen]);
+    const isSmallScreen = props.isSmallScreen;
 
     const navigate = useNavigate();
 
@@ -44,9 +33,9 @@ function TeddiesDashboard(props: PolygonPropsNoNav) {
                 Teddies by FOTF
             </Typography>
             <Box className="row-space-between">
-                <NFTList tokens={teddyNFTs!} isLoading={isLoadingTeddy} />
+                <NFTList tokens={teddyNFTs!} isLoading={isLoadingTeddy} isSmallScreen={isSmallScreen} />
             </Box>  
-            <Box className="row-center">
+            <Box className="row-center" sx={{ marginBottom: isSmallScreen ? "5px" : "0px" }}>
                 <Button className="dashboard-button" variant="contained" color="primary" onClick={() => navigate("/TeddyClaims")} sx={{marginBottom: "0px", padding: "8px !important", marginTop: isSmallScreen? "0px": "5px", fontSize: isSmallScreen? ".90rem !important" : "1rem !important"}}>
                     Head to Teddy $HNY Claims
                 </Button>

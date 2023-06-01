@@ -128,7 +128,18 @@ body {
   align-items: center;
   height: 31dvh;
   max-height: 31dvh;
-  margin-bottom: 20px;
+  margin-bottom: 15px;
+}
+
+.row-space-around-dashboard-mobile {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  width: 100%;
+  align-items: center;
+  height: 29dvh;
+  max-height: 29dvh;
+  margin-bottom: 10px;
 }
 
 .row-space-around-honey {
@@ -364,6 +375,16 @@ body {
   max-width: 1380px;
 }
 
+.row-between-mobile{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  overflow-wrap: break-word;
+  width: 100%;
+}
+
 .row-around{
   display: flex;
   flex-direction: row;
@@ -413,12 +434,25 @@ body {
 .column-center-full-container {
   display: flex;
   flex-direction: column;
-  height: auto;
+  height: 100%;
   width: 100%;
   justify-content: center;
   align-items: center;
   background-color: var(--sidebar-background-color);
   border-radius: 10px;
+
+}
+
+.column-center-full-container-last {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--sidebar-background-color);
+  border-radius: 10px;
+  padding-bottom: 40px;
 }
 
 .column-center-full {
@@ -665,6 +699,8 @@ body {
   padding-right: 10px;
   padding-top: 0px;
   padding-bottom: 0px;
+  overflow-y: auto;
+  /* padding-bottom: 60px; */
   display: flex;
   flex-direction: column;
   background-color: var(--sidebar-background-color);
