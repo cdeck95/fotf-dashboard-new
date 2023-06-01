@@ -20,6 +20,7 @@ import "../styles/TheFactory.css";
 
 interface NFTListProps {
   tokens: NFT[];
+  isSmallScreen: boolean;
   isLoading: boolean;
   // searchText: string;
   // stakedIDs: string[];
@@ -29,21 +30,23 @@ interface NFTListProps {
 
 function NFTList(props: NFTListProps) {
   const theme = useTheme();
-  const isMobile = !useMediaQuery(theme.breakpoints.up("md"));
-  const isSmall = useMediaQuery(theme.breakpoints.down("sm"));
-  const isMedium = useMediaQuery(theme.breakpoints.down("md"));
-  const isMediumLarge = useMediaQuery(theme.breakpoints.down("lg"));
-  const isLarge = useMediaQuery(theme.breakpoints.between("lg", "xl"));
-  const isXL = !useMediaQuery(theme.breakpoints.down("xl"));
+  // const isMobile = !useMediaQuery(theme.breakpoints.up("md"));
+  // const isSmall = useMediaQuery(theme.breakpoints.down("sm"));
+  // const isMedium = useMediaQuery(theme.breakpoints.down("md"));
+  // const isMediumLarge = useMediaQuery(theme.breakpoints.down("lg"));
+  // const isLarge = useMediaQuery(theme.breakpoints.between("lg", "xl"));
+  // const isXL = !useMediaQuery(theme.breakpoints.down("xl"));
   const isFullScreen = useMediaQuery(theme.breakpoints.up(1800));
-  const [isSmallScreen, setSmallScreen] = useState(false);
-  console.log(`Mobile:  ${isMobile}`);
-  console.log(`Small:  ${isSmall}`);
-  console.log(`Medium:  ${isMedium}`);
-  console.log(`Medium-Large:  ${isMediumLarge}`);
-  console.log(`Large:  ${isLarge}`);
-  console.log(`XL:  ${isXL}`);
+  // const [isSmallScreen, setSmallScreen] = useState(false);
+  // console.log(`Mobile:  ${isMobile}`);
+  // console.log(`Small:  ${isSmall}`);
+  // console.log(`Medium:  ${isMedium}`);
+  // console.log(`Medium-Large:  ${isMediumLarge}`);
+  // console.log(`Large:  ${isLarge}`);
+  // console.log(`XL:  ${isXL}`);
   console.log(`Is 1920:  ${isFullScreen}`);
+
+  const isSmallScreen = props.isSmallScreen;
 
   const { tokens, isLoading } = props;
   const [noTokens, setNoTokens] = useState(true);
@@ -70,14 +73,6 @@ function NFTList(props: NFTListProps) {
     console.log("clicked token");
     console.log(token);
   }
-
-  useEffect(() => {
-    if (!isMobile && isMediumLarge) {
-      setSmallScreen(true);
-    } else {
-      setSmallScreen(isMobile);
-    }
-  }, [isMobile, isMediumLarge, isSmallScreen]);
 
   const skeltonMap:number[] = isSmallScreen ? [1, 2] : [1, 2, 3];
 
@@ -108,12 +103,12 @@ function NFTList(props: NFTListProps) {
               marginLeft: "auto",
               marginRight: "auto",
               background: "none",
-              maxHeight: "160px",
-              maxWidth: "160px",
+              maxHeight: "100%",
+              maxWidth: "100%",
               borderRadius: "10px"
             }}
           >
-            <Skeleton variant="rectangular" width={160} height={160} />
+            <Skeleton variant="rectangular" width={150} height={150} />
           </Box>
         ))}
       </ImageList>
@@ -127,7 +122,7 @@ function NFTList(props: NFTListProps) {
                 justifyContent: "flex-start",
                 width: "100%",
                 height: "100%",
-                overflowX: "auto",
+                overflowX: "hidden",
                 overflowY: "hidden",
                 marginLeft: "auto",
                 marginRight: "auto",
@@ -139,8 +134,8 @@ function NFTList(props: NFTListProps) {
                 
               }}
               cols={columns}
-              gap={10}
-              rowHeight={160}
+              gap={7.5}
+              rowHeight={150}
             >
               {tokens.slice(startIndex,endIndex).map((token: NFT) => (
                 <Box
@@ -148,19 +143,19 @@ function NFTList(props: NFTListProps) {
                   className="card-dashboard"
                   sx={{
                     background: "none",
-                    maxHeight: "160px",
-                    maxWidth: "160px",
+                    maxHeight: "20dvh",
+                    maxWidth: "20dvh",
                   }}
                 >
                   <ThirdwebNftMedia
                     metadata={token.metadata}
                     style={{
-                      maxHeight: "160px",
-                      maxWidth: "160px",
+                      maxHeight: "100%",
+                      maxWidth: "100%",
                       borderRadius: "10px",
                       objectFit: "cover",
-                      width: "160px",
-                      height: "160px",
+                      width: "100%",
+                      height: "100%",
                     }}
                   />
                 </Box>

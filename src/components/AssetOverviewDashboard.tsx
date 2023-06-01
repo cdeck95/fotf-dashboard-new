@@ -122,7 +122,7 @@ function AssetOverviewDashboard(props: AssetOverviewProps) {
 
   return (
   <Box className="info-card-dashboard">
-        <Box className="row-between">
+        <Box className="row-between" sx={{maxHeight: "15%"}}>
             <Typography className="page-header-small">
                 Asset Overview
             </Typography>
@@ -130,7 +130,7 @@ function AssetOverviewDashboard(props: AssetOverviewProps) {
             {tokenCount} total tokens
           </Typography>
         </Box>
-        <Box className="row-around">
+        <Box className="row-around" sx={{maxHeight: "40%"}}>
           <Box className="col-large-dashboard">
           {isLoadingHoney || isLoadingHoneyContract
               ? <CircularProgress size="1rem" sx={{margin: "auto"}}/>
@@ -141,11 +141,10 @@ function AssetOverviewDashboard(props: AssetOverviewProps) {
             <Typography className="honeyBalance-dashboard"> $HNY</Typography>
           </Box>
           <Box className="col-margin">
-            {isLoadingTed 
-              ? <CircularProgress size="1rem" sx={{margin: "auto"}}/>
-              : <Typography className="asset-numbers-dashboard">{tedNFTs?.length}</Typography>
-            }
-            <Typography className="asset-type-dashboard">{tedNFTs?.length === 1 ? "Ted" : "Teds"}</Typography>
+            <Typography className="asset-numbers-dashboard">
+              {traitTokens?.length}
+            </Typography>
+            <Typography className="asset-type-dashboard">{traitTokens?.length === 1 ? "Trait Token" : "Trait Tokens"}</Typography>
           </Box>
           <Box className="col-margin">
             {isLoadingTeddy 
@@ -160,7 +159,14 @@ function AssetOverviewDashboard(props: AssetOverviewProps) {
           <Typography className="honeyBalanceBlack">{honeyBalance}</Typography>
           <Typography className="honeyBalance"> $HNY</Typography>
         </Box> */}
-        <Box className="row-around">
+        <Box className="row-around" sx={{maxHeight: "40%"}}>
+        <Box className="col-margin">
+            {isLoadingTed 
+              ? <CircularProgress size="1rem" sx={{margin: "auto"}}/>
+              : <Typography className="asset-numbers-dashboard">{tedNFTs?.length}</Typography>
+            }
+            <Typography className="asset-type-dashboard">{tedNFTs?.length === 1 ? "Ted" : "Teds"}</Typography>
+          </Box>
           <Box className="col-margin">
             {isLoadingAI
               ? <CircularProgress size="1rem" sx={{margin: "auto"}}/>
@@ -181,12 +187,6 @@ function AssetOverviewDashboard(props: AssetOverviewProps) {
               : <Typography className="asset-numbers-dashboard"> {birthCerts?.length}</Typography>
           }
             <Typography className="asset-type-dashboard">{birthCerts?.length === 1 ? "Birth Certificate" : "Birth Certificates"}</Typography>
-          </Box>
-          <Box className="col-margin">
-            <Typography className="asset-numbers-dashboard">
-              {traitTokens?.length}
-            </Typography>
-            <Typography className="asset-type-dashboard">{traitTokens?.length === 1 ? "Trait Token" : "Trait Tokens"}</Typography>
           </Box>
         </Box>
       </Box>

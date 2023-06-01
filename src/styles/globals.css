@@ -126,11 +126,41 @@ body {
   justify-content: space-around;
   width: 100%;
   align-items: center;
-  
-  height: 29%;
-  min-height: 29%;
-  padding-bottom: 15px;
+  height: 31dvh;
+  max-height: 31dvh;
   margin-bottom: 15px;
+}
+
+.row-space-around-dashboard-mobile {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  width: 100%;
+  align-items: center;
+  height: 29dvh;
+  max-height: 29dvh;
+  margin-bottom: 10px;
+}
+
+.row-space-around-honey {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  width: 100%;
+  max-height: 25dvh;
+  min-height: 25dvh;
+  height: 25dvh;
+  overflow-y: auto;
+}
+
+.first-row-space-around-honey{
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  width: 100%;
+  max-height: 5dvh;
+  min-height: 5dvh;
+  text-align: left;
 }
 
 .header {
@@ -345,6 +375,16 @@ body {
   max-width: 1380px;
 }
 
+.row-between-mobile{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  overflow-wrap: break-word;
+  width: 100%;
+}
+
 .row-around{
   display: flex;
   flex-direction: row;
@@ -394,12 +434,25 @@ body {
 .column-center-full-container {
   display: flex;
   flex-direction: column;
-  height: auto;
+  height: 100%;
   width: 100%;
   justify-content: center;
   align-items: center;
   background-color: var(--sidebar-background-color);
   border-radius: 10px;
+
+}
+
+.column-center-full-container-last {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--sidebar-background-color);
+  border-radius: 10px;
+  padding-bottom: 40px;
 }
 
 .column-center-full {
@@ -498,8 +551,7 @@ body {
 .col-margin{
   display: flex;
   flex-direction: column;
-  margin-left: 10px;
-  /* margin-right: 10px; */
+  margin-left: 5px;
   height: 100%;
   justify-content: center;
 }
@@ -647,6 +699,8 @@ body {
   padding-right: 10px;
   padding-top: 0px;
   padding-bottom: 0px;
+  overflow-y: auto;
+  /* padding-bottom: 60px; */
   display: flex;
   flex-direction: column;
   background-color: var(--sidebar-background-color);
@@ -722,9 +776,9 @@ body {
   text-align: left;
 }
 
-/* .ptr-override {
-  overflow: auto;
-} */
+.ptr-override {
+  overflow: hidden !important;
+}
 
 .footer-card {
   justify-content: right;

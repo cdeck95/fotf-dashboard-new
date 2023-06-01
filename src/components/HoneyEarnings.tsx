@@ -47,12 +47,12 @@ function HoneyEarnings(props: HoneyEarningsProps) {
     const navigate = useNavigate();
 
     return (
-        <Box sx={{width: "100%", height: "auto", paddingLeft: "10px", paddingRight: "10px", backgroundColor: "#fff", borderRadius: "10px"}}>
+        <Box sx={{width: "100%", height: "100%", overflowY: "auto", paddingLeft: "5px", paddingRight: "5px", backgroundColor: "#fff", borderRadius: "10px"}}>
             <Typography className="page-header-small">
                 My Earnings
             </Typography>
             <Box className="row-space-between">
-                <Box className="column-between-dashboard">
+                <Box className="column-between-dashboard" sx={{marginTop: "-20px"}}>
                     <Divider sx={{ paddingBottom: "31px", paddingTop: "11px", opacity: "0"}}><Chip label="" /></Divider>
                     <Typography className="honey-earnings-dashboard" sx={{ paddingBottom: "15px"}}>
                         <span className="accent-text">{totalHNYEarnings}</span><br/><span className={isSmallScreen ? "perDay-mobile" : "perDay"}> Per Day</span> 
@@ -61,7 +61,7 @@ function HoneyEarnings(props: HoneyEarningsProps) {
                         Visit The Factory
                     </Button>
                 </Box>
-                <Box className="column-between-dashboard">
+                <Box className="column-between-dashboard" sx={{marginTop: "-20px"}}>
                     {/* <Typography className="honey-earnings-title"> Teddies by FOTF </Typography> */}
                     <Divider sx={{ paddingBottom: "31px", paddingTop: "11px"}}><Chip label="Teddies by FOTF" /></Divider>
                     <Typography className="honey-earnings-dashboard" sx={{ paddingBottom: "15px"}}>
@@ -71,7 +71,7 @@ function HoneyEarnings(props: HoneyEarningsProps) {
                         Purchase Teddies
                     </Button>
                 </Box>
-                <Box className="column-between-dashboard">
+                <Box className="column-between-dashboard" sx={{marginTop: "-20px"}}>
                     {/* <Typography className="honey-earnings-title"> Fury Teds </Typography> */}
                     <Divider sx={{ paddingBottom: "31px", paddingTop: "11px"}}><Chip label="Fury Teds" /></Divider>
                     <Typography className="honey-earnings-dashboard" sx={{ paddingBottom: "15px"}}>

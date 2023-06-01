@@ -244,7 +244,7 @@ function LeftDrawer(props: NavProps) {
           "& .MuiDrawer-paper": {
             width: drawerWidth,
             zIndex: 10001,
-            overflowY: "hidden",
+            overflowY: "auto",
             overflowX: "hidden",
             margin: "0px !important", padding: "0px !important",
             border: "none",
