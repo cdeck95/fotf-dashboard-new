@@ -28,10 +28,12 @@
   font: 'Bebas Neue';
   text-align: center;
   z-index: 1;
+  font-family: 'Bebas Neue';
 }
 
 .comingSoon-Mobile {
   color: var(--accent-color);
+  font-family: 'Bebas Neue';
   font-size: 3.5rem;
   font: 'Bebas Neue';
   text-align: center;
@@ -46,6 +48,7 @@
   font: 'Bebas Neue';
   text-align: center;
   z-index: 1;
+  font-family: 'Bebas Neue';
 }
 
 .comingSoonBlack-Mobile {
@@ -54,6 +57,7 @@
   font: 'Bebas Neue';
   text-align: center;
   z-index: 1;
+  font-family: 'Bebas Neue';
 }
 
 

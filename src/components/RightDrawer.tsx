@@ -349,6 +349,7 @@ function PermanentDrawerRight(props: NavProps) {
             width: drawerWidth,
             overflowY: "hidden",
             overflowX: "hidden",
+            zIndex: 10001,
             border: "none",
             flexShrink: 0,
             "& .MuiDrawer-paper": {
