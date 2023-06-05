@@ -348,7 +348,7 @@ function App() {
                 <Route path="*" element={<NotFound />} />
               </Routes>
             ) : (
-              <ConnectWalletPage />
+              <ConnectWalletPage tedContract={polygonTokenProps.tedContract} isLoadingTedContract={polygonTokenProps.isLoadingTedContract}/>
             )}  
 
             

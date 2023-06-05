@@ -134,7 +134,7 @@ function Dashboard(props: PolygonProps) {
 
   return (
     <Box className={isSmallScreen? "inner-container-mobile" : "inner-container"} sx={{zIndex: "1 !important", position: "relative"}}>
-      {address ? (
+
         <Box>
             <Box
               sx={{
@@ -200,9 +200,6 @@ function Dashboard(props: PolygonProps) {
               </Box>
             </Box>
         </Box>
-      ) : (
-        <ConnectWalletPage />
-      )}
     </Box>
   );
 }

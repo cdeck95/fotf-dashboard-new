@@ -654,8 +654,7 @@ function TheFactory(props: PolygonProps) {
         </Box>
       </Backdrop> */}
       {/* <PullToRefresh className="ptr-override" onRefresh={handleRefresh}> */}
-        <Box sx={{width: "100%", height: "100%", margin: "0px", padding: "0px"}}>
-        {address && (
+        {/* <Box sx={{width: "100%", height: "100%", margin: "0px", padding: "0px"}}> */}
         <Box className={isSmallScreen ? "header-mobile" : "header"}>
           <Box className={isSmallScreen ? "header-row-mobile" : "header-row"}>
             {!isSmallScreen && <h3 className={isSmallScreen ? "page-header-mobile" : "page-header"} >
@@ -768,259 +767,252 @@ function TheFactory(props: PolygonProps) {
             </Button>
           </Box> */}
         </Box>
-      )}
-      {address ? (
-        <Box sx={{overflowY: "auto"}}>
-          {errorAI && errorTed && errorTeddy ? (
-            <div>
-              <p>NFT not found - error</p>
-            </div>
-          ) : (
-            <Box
-              className="gallery"
-              sx={{
-                // zIndex: "0 !important",
-                paddingLeft: "10px",
-                paddingBottom: "110px",
-                backgroundColor: "white",
-                paddingRight: "10px",
-                overflowX: "hidden",
-                overflowY: "hidden"
-              }}
-            >
-              {tokens ? (
-                <ImageList
-                  sx={{
-                    justifyContent: "center",
-                    width: "100%",
-                    height: "100%",
-                    paddingLeft: "10px",
-                    paddingRight: "10px",
-                    overflowX: "hidden",
-                    overflowY: "auto",
-                    backgroundColor: "white",
-                  }}
-                  cols={columns}
-                  gap={25}
-                  rowHeight={450}
-                >
-                  
-                  {/* {filteredNFTsWithCategory.map((token: NFT) => ( */}
-                   {filteredNFTs.map((token: NFT) => (
+      <Box sx={{overflowY: "auto"}}>
+        {errorAI && errorTed && errorTeddy ? (
+          <div>
+            <p>NFT not found - error</p>
+          </div>
+        ) : (
+          <Box
+            className="gallery"
+            sx={{
+              // zIndex: "0 !important",
+              paddingLeft: "10px",
+              paddingBottom: "110px",
+              backgroundColor: "white",
+              paddingRight: "10px",
+              overflowX: "hidden",
+              overflowY: "hidden"
+            }}
+          >
+            {tokens ? (
+              <ImageList
+                sx={{
+                  justifyContent: "center",
+                  width: "100%",
+                  height: "100%",
+                  paddingLeft: "10px",
+                  paddingRight: "10px",
+                  overflowX: "hidden",
+                  overflowY: "auto",
+                  backgroundColor: "white",
+                }}
+                cols={columns}
+                gap={25}
+                rowHeight={450}
+              >
+                
+                {/* {filteredNFTsWithCategory.map((token: NFT) => ( */}
+                  {filteredNFTs.map((token: NFT) => (
+                  <Box
+                    key={token.metadata.name}
+                    className={
+                      selectedTokens?.includes(token)
+                        ? "card-selected"
+                        : "card"
+                    }
+                    sx={{
+                      marginLeft: "auto",
+                      marginRight: "auto",
+                      background: "none",
+                      maxHeight: "375px",
+                      maxWidth: "350px",
+                    }}
+                  >
+                    {/* <StarBorderIcon
+                    onClick={star}
+                    sx={{ position: "absolute", top: "10px", right: "10px" }}
+                  /> */}
                     <Box
-                      key={token.metadata.name}
-                      className={
-                        selectedTokens?.includes(token)
-                          ? "card-selected"
-                          : "card"
-                      }
                       sx={{
-                        marginLeft: "auto",
-                        marginRight: "auto",
-                        background: "none",
-                        maxHeight: "375px",
-                        maxWidth: "350px",
+                        position: "relative",
+                        cursor: "pointer",
                       }}
+                      onClick={() => add(token)}
                     >
-                      {/* <StarBorderIcon
-                      onClick={star}
-                      sx={{ position: "absolute", top: "10px", right: "10px" }}
-                    /> */}
-                      <Box
-                        sx={{
-                          position: "relative",
-                          cursor: "pointer",
+                      <ThirdwebNftMedia
+                        metadata={token.metadata}
+                        style={{
+                          maxHeight: "280px",
+                          maxWidth: "280px",
+                          borderRadius: "10px",
+                          objectFit: "cover",
+                          width: "280px",
+                          height: "280px",
                         }}
-                        onClick={() => add(token)}
-                      >
-                        <ThirdwebNftMedia
-                          metadata={token.metadata}
-                          style={{
-                            maxHeight: "280px",
-                            maxWidth: "280px",
-                            borderRadius: "10px",
-                            objectFit: "cover",
-                            width: "280px",
-                            height: "280px",
-                          }}
-                        />
+                      />
 
-                        {selectedTokens?.includes(token) && (
-                          <p className="title-selected">Burn</p>
-                        )}
-                      </Box>
-                      <Box
-                        className="column-container"
-                        sx={{ marginBottom: "10px" }}
-                      >
-                        <div className="large-left-column">
-                          <h3 className="metadata-title">
-                            {token.metadata.name}
-                          </h3>
-                          {tedNFTs?.includes(token) && (
-                            <Chip label="Fury Teds" color="primary" sx={{maxWidth: "125px"}} variant="outlined"/>
-                          )}
-
-                          {teddyNFTs?.includes(token) && (
-                            <Chip label="Teddies by FOTF" color="secondary" sx={{maxWidth: "125px"}} variant="outlined"/>
-                          )}
-
-                          {aiTedNFTs?.includes(token) && (
-                            <Chip label="AI Teds" color="success" sx={{maxWidth: "125px"}} variant="outlined"/>
-                          )}
-                          
-                          {/* <h4 className="metadata">
-                            Last Transfer: 03/11/2023
-                          </h4> */}
-                        </div>
-                        <div className="small-right-column" onClick={() => {
-                          if(anchorEl === null){
-                            setTokenClicked(token)
-                          }
-                        }}>
-                          {/* <ControlPointIcon
-                            onClick={() => add(token)}
-                            fontSize="small"
-                          /> */}
-                          <Button
-                              id="basic-button"
-                              aria-controls={openContextMenu ? 'basic-menu' : undefined}
-                              aria-haspopup="true"
-                              aria-expanded={openContextMenu ? 'true' : undefined}
-                              onClick={handleClick}
-                              sx={{background: "none", color: "black", border: "none", minWidth: "0px", padding: "0px", "&:hover": {background: "none", color: "black", minWidth: "0px", padding: "0px"}}}
-                            >
-                              <MoreVertIcon/>
-                            </Button>
-                            <ThemeProvider theme={themeMenu}>
-                            <Menu
-                              id="basic-menu"
-                              anchorEl={anchorEl}
-                              open={openContextMenu}
-                              onClose={handleCloseContextMenu}
-                              MenuListProps={{
-                                'aria-labelledby': 'basic-button',
-                              }}
-                            >
-                              <IconMenu token={tokenClicked!} onClose={handleCloseContextMenu} addToBurnList={() => add(tokenClicked!)} renameTed={() => rename(tokenClicked!)} />
-                            </Menu>
-                            </ThemeProvider>
-                        </div>
-                      </Box>
+                      {selectedTokens?.includes(token) && (
+                        <p className="title-selected">Burn</p>
+                      )}
                     </Box>
-                  ))}
-                </ImageList>
-              ) : (
-                <p>Loading...</p>
-              )}
-              
+                    <Box
+                      className="column-container"
+                      sx={{ marginBottom: "10px" }}
+                    >
+                      <div className="large-left-column">
+                        <h3 className="metadata-title">
+                          {token.metadata.name}
+                        </h3>
+                        {tedNFTs?.includes(token) && (
+                          <Chip label="Fury Teds" color="primary" sx={{maxWidth: "125px"}} variant="outlined"/>
+                        )}
+
+                        {teddyNFTs?.includes(token) && (
+                          <Chip label="Teddies by FOTF" color="secondary" sx={{maxWidth: "125px"}} variant="outlined"/>
+                        )}
+
+                        {aiTedNFTs?.includes(token) && (
+                          <Chip label="AI Teds" color="success" sx={{maxWidth: "125px"}} variant="outlined"/>
+                        )}
+                        
+                        {/* <h4 className="metadata">
+                          Last Transfer: 03/11/2023
+                        </h4> */}
+                      </div>
+                      <div className="small-right-column" onClick={() => {
+                        if(anchorEl === null){
+                          setTokenClicked(token)
+                        }
+                      }}>
+                        {/* <ControlPointIcon
+                          onClick={() => add(token)}
+                          fontSize="small"
+                        /> */}
+                        <Button
+                            id="basic-button"
+                            aria-controls={openContextMenu ? 'basic-menu' : undefined}
+                            aria-haspopup="true"
+                            aria-expanded={openContextMenu ? 'true' : undefined}
+                            onClick={handleClick}
+                            sx={{background: "none", color: "black", border: "none", minWidth: "0px", padding: "0px", "&:hover": {background: "none", color: "black", minWidth: "0px", padding: "0px"}}}
+                          >
+                            <MoreVertIcon/>
+                          </Button>
+                          <ThemeProvider theme={themeMenu}>
+                          <Menu
+                            id="basic-menu"
+                            anchorEl={anchorEl}
+                            open={openContextMenu}
+                            onClose={handleCloseContextMenu}
+                            MenuListProps={{
+                              'aria-labelledby': 'basic-button',
+                            }}
+                          >
+                            <IconMenu token={tokenClicked!} onClose={handleCloseContextMenu} addToBurnList={() => add(tokenClicked!)} renameTed={() => rename(tokenClicked!)} />
+                          </Menu>
+                          </ThemeProvider>
+                      </div>
+                    </Box>
+                  </Box>
+                ))}
+              </ImageList>
+            ) : (
+              <p>Loading...</p>
+            )}
+            
+          </Box>
+        )}
+      
+      {address && !isSmallScreen && !isLarge && (
+      <Box
+        sx={{
+          position: "fixed",
+          paddingLeft: "20px",
+          bottom: "0px",
+          left: leftDrawerWidth,
+          right: rightDrawerWidth,
+          height: "70px",
+          zIndex: (theme: { zIndex: { drawer: number } }) =>
+            theme.zIndex.drawer - 1,
+          backgroundColor: "#FED100",
+        }}
+      >
+        <Box className="row-space-between">
+          <Box
+            className="selected-box"
+            sx={{ display: "flex", flexDirection: "row" }}
+          >
+            <Box className="stats-col">
+              <p className="stats">
+                {new Intl.NumberFormat("en-US", {
+                  minimumIntegerDigits: 2,
+                }).format(selectedTeds?.length)}
+              </p>
+              <p className="stats-name"> Fury Teds</p>
             </Box>
-          )}
-        
-        {address && !isSmallScreen && !isLarge && (
-        <Box
-          sx={{
-            position: "fixed",
-            paddingLeft: "20px",
-            bottom: "0px",
-            left: leftDrawerWidth,
-            right: rightDrawerWidth,
-            height: "70px",
-            zIndex: (theme: { zIndex: { drawer: number } }) =>
-              theme.zIndex.drawer - 1,
-            backgroundColor: "#FED100",
-          }}
-        >
-          <Box className="row-space-between">
-            <Box
-              className="selected-box"
-              sx={{ display: "flex", flexDirection: "row" }}
-            >
-              <Box className="stats-col">
-                <p className="stats">
-                  {new Intl.NumberFormat("en-US", {
-                    minimumIntegerDigits: 2,
-                  }).format(selectedTeds?.length)}
-                </p>
-                <p className="stats-name"> Fury Teds</p>
-              </Box>
-              <Box className="stats-col">
-                <p className="stats">
-                  {new Intl.NumberFormat("en-US", {
-                    minimumIntegerDigits: 2,
-                  }).format(selectedTeddies?.length)}
-                </p>
-                <p className="stats-name"> Teddy by FOTF</p>
-              </Box>
-              <Box className="stats-col">
-                <p className="stats">
-                  {new Intl.NumberFormat("en-US", {
-                    minimumIntegerDigits: 2,
-                  }).format(selectedAITeds?.length)}
-                </p>
-                <p className="stats-name">
-                  {" "}
-                  AI
-                  <br /> Teds
-                </p>
-              </Box>
+            <Box className="stats-col">
+              <p className="stats">
+                {new Intl.NumberFormat("en-US", {
+                  minimumIntegerDigits: 2,
+                }).format(selectedTeddies?.length)}
+              </p>
+              <p className="stats-name"> Teddy by FOTF</p>
             </Box>
-            {/* <NumericFormat value={honeyBalance} displayType={'text'} thousandSeparator={true} prefix={'$'} suffix={' HNY'} /> */}
-            <Box
-              className="burn-box"
-              sx={{ display: "flex", flexDirection: "row" }}
-            >
-              <Button className="burn-btn" disabled={selectedTokens.length === 0} onClick={() => burn(selectedTokens)}>
-                Burn {selectedTokens.length} for{" "}
-                {parseInt(burnRewards).toLocaleString()} $HNY
-              </Button>
-              <Button className="burn-btn" disabled={!isOneOfEachSelected} onClick={() => burnForOneOfOne(selectedTokens)}>
-                Burn {selectedTokens.length} +{" "}
-                {(15000000 - parseInt(burnRewards)).toLocaleString()} $HNY for
-                Custom 1/1
-              </Button>
+            <Box className="stats-col">
+              <p className="stats">
+                {new Intl.NumberFormat("en-US", {
+                  minimumIntegerDigits: 2,
+                }).format(selectedAITeds?.length)}
+              </p>
+              <p className="stats-name">
+                {" "}
+                AI
+                <br /> Teds
+              </p>
             </Box>
           </Box>
+          {/* <NumericFormat value={honeyBalance} displayType={'text'} thousandSeparator={true} prefix={'$'} suffix={' HNY'} /> */}
+          <Box
+            className="burn-box"
+            sx={{ display: "flex", flexDirection: "row" }}
+          >
+            <Button className="burn-btn" disabled={selectedTokens.length === 0} onClick={() => burn(selectedTokens)}>
+              Burn {selectedTokens.length} for{" "}
+              {parseInt(burnRewards).toLocaleString()} $HNY
+            </Button>
+            <Button className="burn-btn" disabled={!isOneOfEachSelected} onClick={() => burnForOneOfOne(selectedTokens)}>
+              Burn {selectedTokens.length} +{" "}
+              {(15000000 - parseInt(burnRewards)).toLocaleString()} $HNY for
+              Custom 1/1
+            </Button>
+          </Box>
         </Box>
-         )}
-         {(isSmallScreen || isLarge) && (
-        <Box
-          sx={{
-            position: "fixed",
-            paddingLeft: "20px",
-            paddingRight: "20px",
-            marginLeft: leftDrawerWidth,
-            marginRight: rightDrawerWidth,
-            bottom: "0px",
-            left: "0px",
-            height: "70px",
-            width: "100dvw",
-            backgroundColor: "#FED100",
-            // zIndex: "1",
-            display: "flex",
-            flexDirection: "row",
-            justifyContent: "space-between",
-            alignItems: "center",
-            cursor: "pointer",
-            border: "2px solid black",
-          }}
-          onClick={() => setSheetOpen(true)}
-        >
-          <Typography className="factory-sheet-text">
-            {selectedTokens.length === 1
-              ? `Ready to Burn ${selectedTokens.length} token?`
-              : `Ready to Burn ${selectedTokens.length} tokens?`
-            }
-          </Typography>
-          <ExpandMoreOutlinedIcon/>
-        </Box>
-      )}
-        </Box>
-      ) : (
-        <ConnectWalletPage />
-      )}
-        </Box>
-      {/* </PullToRefresh> */}
+      </Box>
+        )}
+        {(isSmallScreen || isLarge) && (
+      <Box
+        sx={{
+          position: "fixed",
+          paddingLeft: "20px",
+          paddingRight: "20px",
+          marginLeft: leftDrawerWidth,
+          marginRight: rightDrawerWidth,
+          bottom: "0px",
+          left: "0px",
+          height: "70px",
+          width: "100dvw",
+          backgroundColor: "#FED100",
+          // zIndex: "1",
+          display: "flex",
+          flexDirection: "row",
+          justifyContent: "space-between",
+          alignItems: "center",
+          cursor: "pointer",
+          border: "2px solid black",
+        }}
+        onClick={() => setSheetOpen(true)}
+      >
+        <Typography className="factory-sheet-text">
+          {selectedTokens.length === 1
+            ? `Ready to Burn ${selectedTokens.length} token?`
+            : `Ready to Burn ${selectedTokens.length} tokens?`
+          }
+        </Typography>
+        <ExpandMoreOutlinedIcon/>
+      </Box>
+    )}
+      </Box>
 
       <SuccessDialog
         open={successAWS}
