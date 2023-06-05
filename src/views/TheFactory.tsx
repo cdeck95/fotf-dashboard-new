@@ -1,10 +1,12 @@
 import {
+  Avatar,
   Box,
   Button,
   Chip,
   Container,
   ImageList,
   Menu,
+  Popover,
   ThemeProvider,
   Typography,
   createTheme,
@@ -67,6 +69,15 @@ import SuccessDialog from "../components/SuccessDialog";
 import LoadingDialog from "../components/LoadingDialog";
 import RenameDialog from "../components/RenameDialog";
 import PullToRefresh from "react-simple-pull-to-refresh";
+import FilterListOutlinedIcon from '@mui/icons-material/FilterListOutlined';
+import Paper from '@mui/material/Paper';
+import InputBase from '@mui/material/InputBase';
+import Divider from '@mui/material/Divider';
+import IconButton from '@mui/material/IconButton';
+import SearchIcon from '@mui/icons-material/Search';
+import tedMintLogo from "../assets/tedMint.png";
+import teddyMintLogo from "../assets/teddyMint.gif";
+import aiTedMintLogo from "../assets/aiTedMint.png";
 
 const IS_DISABLED = true;
 
@@ -509,6 +520,23 @@ function TheFactory(props: PolygonProps) {
   const handleCloseContextMenu = () => {
     setAnchorEl(null);
   };
+  
+  const [filterMenuOpen, setFilterMenuOpen] = useState(false);
+
+  const [anchorElPopover, setAnchorElPopover] = useState<HTMLButtonElement | null>(null);
+
+  const handleClickPopover = (event: React.MouseEvent<HTMLButtonElement>) => {
+    console.log("filter button clicked");
+    setAnchorElPopover(event.currentTarget);
+  };
+
+  const handleClosePopover = () => {
+    setAnchorElPopover(null);
+  };
+
+  const openPopover = Boolean(anchorElPopover);
+  const idPopover = openPopover ? 'simple-popover' : undefined;
+
 
   const sidebarBackgroundColor = getComputedStyle(
     document.documentElement
@@ -633,7 +661,29 @@ function TheFactory(props: PolygonProps) {
             {!isSmallScreen && <h3 className={isSmallScreen ? "page-header-mobile" : "page-header"} >
               The Factory
             </h3> }
-            <input
+            <Paper
+              component="form"
+              sx={{ p: '2px 4px', display: 'flex', alignItems: 'center', width: 400 }}
+            >
+              <IconButton sx={{ p: '10px' }} aria-label="menu" onClick={handleClickPopover}>
+                <FilterListOutlinedIcon/>
+              </IconButton>
+              <InputBase
+                sx={{ ml: 1, flex: 1 }}
+                placeholder="Search for Ted, Teddy or AI Token ID"
+                inputProps={{ 'aria-label': 'Search for Ted, Teddy or AI Token ID' }}
+                onChange={handleSearch}
+                value={searchInput}
+              />
+              <IconButton type="button" sx={{ p: '10px' }} aria-label="search">
+                <SearchIcon />
+              </IconButton>
+              {/* <Divider sx={{ height: 28, m: 0.5 }} orientation="vertical" />
+              <IconButton color="primary" sx={{ p: '10px' }} aria-label="directions">
+                <DirectionsIcon />
+              </IconButton> */}
+            </Paper>
+            {/* <input
               type="text"
               className={
                 isSmallScreen ? "factory-search-mobile" : "factory-search"
@@ -641,37 +691,53 @@ function TheFactory(props: PolygonProps) {
               placeholder="Search for Ted, Teddy or AI Token ID"
               onChange={handleSearch}
               value={searchInput}
-            />
-          </Box>
-          <Box className={isSmallScreen ? "filter-row-mobile" : "filter-row"}>
-            <Button
-              disabled={!address}
+            /> */}
+             <Popover
+            id={idPopover}
+            open={openPopover}
+            anchorEl={anchorElPopover}
+            onClose={handleClosePopover}
+            anchorOrigin={{
+              vertical: 'bottom',
+              horizontal: 'left',
+            }}
+          >
+             <Box className={isSmallScreen ? "filter-row-mobile" : "filter-row"}>
+            <Chip           
+              variant="outlined"
+              label="Fury Teds"
               className={
                 isTedFilter ? "filter-button-selected" : "filter-button"
               }
-              onClick={() => setFilter("Ted")}
-            >
-              Fury Teds
-            </Button>
-            <Button
               disabled={!address}
+              avatar={<Avatar alt="FuryTeds" src={tedMintLogo} />}
+              onClick={() => setFilter("Ted")}
+            />
+            <Chip           
+              variant="outlined"
+              label="Teddy by FOTF"
               className={
                 isTeddyFilter ? "filter-button-selected" : "filter-button"
               }
-              onClick={() => setFilter("Teddy")}
-            >
-              Teddy by FOTF
-            </Button>
-            <Button
               disabled={!address}
+              avatar={<Avatar alt="Teddy by FOTF" src={teddyMintLogo} />}
+              onClick={() => setFilter("Teddy")}
+            />
+            <Chip           
+              variant="outlined"
+              label="AI Teds"
               className={
                 isAIFilter ? "filter-button-selected" : "filter-button"
               }
+              disabled={!address}
+              avatar={<Avatar alt="FuryTeds" src={aiTedMintLogo} />}
               onClick={() => setFilter("AI")}
-            >
-              AI Teds
-            </Button>
+            />
           </Box>
+          </Popover>
+          </Box>
+         
+          
           {/* <Box className={isSmallScreen ? "filter-row-mobile" : "filter-row"}>
             <Button
               disabled={!address}

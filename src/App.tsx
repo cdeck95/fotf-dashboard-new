@@ -320,7 +320,7 @@ function App() {
           >     
           
  
-          <PullToRefresh className="ptr-override" onRefresh={handleRefresh}>
+          {/* <PullToRefresh className="ptr-override" onRefresh={handleRefresh}> */}
             {address ? (
               <Routes>
                 <Route path="/" element={<Dashboard tokenProps={polygonTokenProps} leftNavOpen={leftNavOpen} rightNavOpen={rightNavOpen} showMismatch={showMismatch} isSmallScreen={isSmallScreen} />} />
@@ -352,7 +352,7 @@ function App() {
             )}  
 
             
-            </PullToRefresh>
+            {/* </PullToRefresh> */}
           </Box>
           {leftNavOpen ? (
               <LeftDrawer navOpen={leftNavOpen} setNavOpen={setLeftNavOpen} />
