@@ -196,10 +196,11 @@ body {
 .filter-row {
   display: flex;
   flex-direction: row;
-  justify-content: space-evenly;
+  justify-content: flex-start;
   align-items: center;
-  padding-top: 10px;
-  width: 500px;
+  padding: 7.5px;
+  min-width: 300px;
+  /* width: 500px; */
 }
 
 .filter-row-mobile {
@@ -207,8 +208,9 @@ body {
   flex-direction: row;
   justify-content: space-evenly;
   align-items: center;
-  padding-top: 15px;
-  width: 100dvw;
+  padding: 7.5px;
+  min-width: 300px;
+  /* width: 100dvw; */
 }
 
 .page-header-small{

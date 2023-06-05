@@ -32,10 +32,9 @@
 }
 
 .filter-button {
-  width: 125px;
-  height: 45px;
-  margin-left: 10px;
-  font-size: .9rem !important;
+  margin: 0px;
+  padding: 0px;
+  font-size: 1rem !important;
   cursor: pointer;
   color: grey !important;
   background-color: white !important;
@@ -53,10 +52,9 @@
 }
 
 .filter-button-selected {
-  width: 125px;
-  height: 45px;
-  font-size: .9rem !important;
-  margin-left: 10px;
+  margin: 0px;
+  padding: 0px;
+  font-size: 1rem !important;
   cursor: pointer;
   background-color: white !important;
   outline: none;
