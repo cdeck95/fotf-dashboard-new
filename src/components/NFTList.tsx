@@ -83,8 +83,6 @@ function NFTList(props: NFTListProps) {
         <ImageList
         sx={{
           justifyContent: "center",
-          width: "100%",
-          height: "100%",
           overflowX: "hidden",
           overflowY: "hidden",
           marginLeft: "auto",
@@ -103,8 +101,8 @@ function NFTList(props: NFTListProps) {
               marginLeft: "auto",
               marginRight: "auto",
               background: "none",
-              maxHeight: "100%",
-              maxWidth: "100%",
+              maxHeight: "150px",
+              maxWidth: "150px",
               borderRadius: "10px"
             }}
           >

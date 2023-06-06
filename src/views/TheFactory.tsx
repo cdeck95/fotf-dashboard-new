@@ -577,7 +577,7 @@ function TheFactory(props: PolygonProps) {
         isSmallScreen
           ? "factory-inner-container-mobile"
           : "factory-inner-container"
-      } sx={{zIndex: "1 !important", position: "relative", overflowY: "hidden"}}
+      } sx={{zIndex: "1 !important", position: "relative", overflowY: "hidden !important"}}
     >
 {/* 
   {isLoading && <Backdrop
@@ -634,27 +634,6 @@ function TheFactory(props: PolygonProps) {
         collection={"The Factory"}
       />
 
-      {/* <Backdrop
-        sx={{
-          color: "#fff",
-          zIndex: (theme) => theme.zIndex.drawer + 1,
-          marginLeft: leftDrawerWidth,
-          marginRight: rightDrawerWidth,
-        }}
-        open={isDisabled}
-        onClick={handleClose}
-      >
-        <Box sx={{ borderRadius: "10px", backgroundColor: "white" }}>
-          <Typography sx={{ padding: "20px", color: "Black" }}>
-            The Factory is currently disabled.
-          </Typography>
-          <Typography sx={{ padding: "20px", color: "Black" }}>
-            Please come back later.
-          </Typography>
-        </Box>
-      </Backdrop> */}
-      {/* <PullToRefresh className="ptr-override" onRefresh={handleRefresh}> */}
-        {/* <Box sx={{width: "100%", height: "100%", margin: "0px", padding: "0px"}}> */}
         <Box className={isSmallScreen ? "header-mobile" : "header"}>
           <Box className={isSmallScreen ? "header-row-mobile" : "header-row"}>
             {!isSmallScreen && <h3 className={isSmallScreen ? "page-header-mobile" : "page-header"} >
@@ -677,20 +656,7 @@ function TheFactory(props: PolygonProps) {
               <IconButton type="button" sx={{ p: '10px' }} aria-label="search">
                 <SearchIcon />
               </IconButton>
-              {/* <Divider sx={{ height: 28, m: 0.5 }} orientation="vertical" />
-              <IconButton color="primary" sx={{ p: '10px' }} aria-label="directions">
-                <DirectionsIcon />
-              </IconButton> */}
             </Paper>
-            {/* <input
-              type="text"
-              className={
-                isSmallScreen ? "factory-search-mobile" : "factory-search"
-              }
-              placeholder="Search for Ted, Teddy or AI Token ID"
-              onChange={handleSearch}
-              value={searchInput}
-            /> */}
              <Popover
             id={idPopover}
             open={openPopover}
@@ -701,7 +667,7 @@ function TheFactory(props: PolygonProps) {
               horizontal: 'left',
             }}
           >
-             <Box className={isSmallScreen ? "filter-row-mobile" : "filter-row"}>
+            <Box className={isSmallScreen ? "filter-row-mobile" : "filter-row"}>
             <Chip           
               variant="outlined"
               label="Fury Teds"
@@ -737,37 +703,8 @@ function TheFactory(props: PolygonProps) {
           </Box>
          
           
-          {/* <Box className={isSmallScreen ? "filter-row-mobile" : "filter-row"}>
-            <Button
-              disabled={!address}
-              className={
-                isActiveFilter ? "filter-button-selected" : "filter-button"
-              }
-              onClick={() => setFilter("Active")}
-            >
-              Active NFTs
-            </Button>
-            <Button
-              disabled={!address}
-              className={
-                isTransferredFilter ? "filter-button-selected" : "filter-button"
-              }
-              onClick={() => setFilter("Recent")}
-            >
-              Newest
-            </Button>
-            <Button
-              disabled={!address}
-              className={
-                isLongestHeldFilter ? "filter-button-selected" : "filter-button"
-              }
-              onClick={() => setFilter("Held")}
-            >
-              Longest Held
-            </Button>
-          </Box> */}
         </Box>
-      <Box sx={{overflowY: "auto"}}>
+      <Box>
         {errorAI && errorTed && errorTeddy ? (
           <div>
             <p>NFT not found - error</p>
@@ -782,7 +719,7 @@ function TheFactory(props: PolygonProps) {
               backgroundColor: "white",
               paddingRight: "10px",
               overflowX: "hidden",
-              overflowY: "hidden"
+              overflowY: "auto"
             }}
           >
             {tokens ? (
@@ -797,6 +734,7 @@ function TheFactory(props: PolygonProps) {
                   overflowY: "auto",
                   backgroundColor: "white",
                 }}
+                className="factory-image-list"
                 cols={columns}
                 gap={25}
                 rowHeight={450}
@@ -889,12 +827,13 @@ function TheFactory(props: PolygonProps) {
                           >
                             <MoreVertIcon/>
                           </Button>
-                          <ThemeProvider theme={themeMenu}>
+                          <ThemeProvider theme={themeMenu} >
                           <Menu
                             id="basic-menu"
                             anchorEl={anchorEl}
                             open={openContextMenu}
                             onClose={handleCloseContextMenu}
+                            sx={{ zIndex: "10001"}}
                             MenuListProps={{
                               'aria-labelledby': 'basic-button',
                             }}

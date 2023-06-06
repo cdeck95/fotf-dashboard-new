@@ -14,8 +14,8 @@
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  padding-top: 10px;
-  padding-bottom: 10px;
+  /* padding-top: 10px;
+  padding-bottom: 10px; */
 }
 
 .app-container {

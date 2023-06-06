@@ -130,3 +130,25 @@
   line-height: 1;
   color: black;
 }
+
+body::-webkit-scrollbar{
+  display: none;
+}
+
+.factory-image-list::-webkit-scrollbar{
+  display: none;
+}
+
+.factory-image-list {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.gallery::-webkit-scrollbar{
+  display: none;
+}
+
+.gallery {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
