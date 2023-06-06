@@ -442,7 +442,6 @@ body {
   align-items: center;
   background-color: var(--sidebar-background-color);
   border-radius: 10px;
-
 }
 
 .column-center-full-container-last {
@@ -642,8 +641,10 @@ body {
 .app-container {
   width: 100%;
   height: 100% !important;
-  overflow-x: hidden;
-  /* overflow-y: hidden; */
+  overflow-x: auto;
+  overflow-y: auto;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }
 
 .container {
@@ -655,15 +656,25 @@ body {
 .inner-container {
   width: 100%;
   height: 100dvh;
-  margin: auto;
+  margin: 0;
   padding-left: 10px;
   padding-right: 10px;
-  padding-top: 0px;
+  padding-top: 40px;
   padding-bottom: 0px;
   display: flex;
   flex-direction: column;
   max-width: 1380px;
   justify-content: center;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+body::-webkit-scrollbar{
+  display: none;
+}
+
+.inner-container::-webkit-scrollbar{
+  display: none;
 }
 
 .inner-container-mint {
@@ -886,4 +897,30 @@ body {
 
 .addPadding {
   padding-top: 100px;
+}
+
+body::-webkit-scrollbar{
+  display: none;
+}
+
+.router-container::-webkit-scrollbar{
+  display: none;
+}
+
+.router-container {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.ptr-override::-webkit-scrollbar{
+  display: none;
+}
+
+.ptr-override {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.app-container::-webkit-scrollbar{
+  display: none;
 }

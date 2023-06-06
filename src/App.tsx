@@ -310,17 +310,19 @@ function App() {
               paddingLeft: leftNavOpen ? LeftDrawerWidthPX : "0px",
               paddingRight: rightNavOpen ? "340px" : "0px",
               marginTop: isSmallScreen ? "60px" : "0px",
-              // paddingTop: isSmallScreen ? "10px" : "0px",
+              // marginBottom: isSmallScreen ? "60px" : "50px",
+              paddingBottom: isSmallScreen ? "10px" : "0px",
               backgroundColor: "white",
               height: "100% !important",
               width: "100dvw",
               display: "flex",
               flexDirection: "column",
             }}
+            className="router-container"
           >     
           
  
-          {/* <PullToRefresh className="ptr-override" onRefresh={handleRefresh}> */}
+          <PullToRefresh className="ptr-override" onRefresh={handleRefresh}>
             {address ? (
               <Routes>
                 <Route path="/" element={<Dashboard tokenProps={polygonTokenProps} leftNavOpen={leftNavOpen} rightNavOpen={rightNavOpen} showMismatch={showMismatch} isSmallScreen={isSmallScreen} />} />
@@ -348,11 +350,11 @@ function App() {
                 <Route path="*" element={<NotFound />} />
               </Routes>
             ) : (
-              <ConnectWalletPage />
+              <ConnectWalletPage tedContract={polygonTokenProps.tedContract} isLoadingTedContract={polygonTokenProps.isLoadingTedContract}/>
             )}  
 
             
-            {/* </PullToRefresh> */}
+            </PullToRefresh>
           </Box>
           {leftNavOpen ? (
               <LeftDrawer navOpen={leftNavOpen} setNavOpen={setLeftNavOpen} />

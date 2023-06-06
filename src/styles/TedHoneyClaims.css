@@ -1,0 +1,21 @@
+.ted-honey-claim-row {
+    width: 95%;
+    height: 300px;
+    border-radius: 10px;
+    background-color: var(--accent-color);
+    align-items: center;
+    justify-content: center;
+    margin: auto;
+    display: flex;
+    flex-direction: row;
+}
+
+.column-center {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    width: 100%;
+    justify-content: space-evenly;
+    align-items: flex-start;
+    border-radius: 10px;
+  }
