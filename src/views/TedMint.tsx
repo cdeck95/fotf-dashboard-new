@@ -16,6 +16,7 @@ import "../styles/mint.css";
 import SuccessDialog from "../components/SuccessDialog";
 import { BaseContract, BigNumber } from "ethers";
 import tedMintLogo from "../assets/tedMint.png"
+import RevealDialog from "../components/RevealDialog";
 
 const COLLECTION_FOR_MINT = "Fury Teds";
 const DESCRIPTION_FOR_MINT = () => {
@@ -49,6 +50,8 @@ function TedMint(props: MintProps) {
     // console.log(tedPolygonContract);
 
     const [isLoading, setIsLoading] = useState(false);
+    const [mintedTokens, setMintedTokens] = useState<string[]>([]);
+    const [isReveal, setIsReveal] = useState(false);
     const [success, setSuccess] = useState(false);
     const [failure, setFailure] = useState(false);
     const [needsFunds, setNeedsFunds] = useState(false);
@@ -111,12 +114,26 @@ function TedMint(props: MintProps) {
             value: payableAmount
           });
           console.log(tx);
+          const events = tx["receipt"]["events"];
+          const mintedIDs:string[] = [];
+          for (let i = 1; i < events.length-1; i++) {
+            const jsonForID = events[i]["args"][2];
+            console.log(jsonForID);
+            const hexID = jsonForID["_hex"];
+            console.log(hexID);
+            const id = BigNumber.from(hexID).toString();
+            console.log(id);
+            mintedIDs.push(id);
+          }
+          setMintedTokens(mintedIDs);
           setIsLoading(false);
+          setIsReveal(true);
           return tx;
         } catch (e: any) {
             console.log(e);
             console.log(e.message);
             setIsLoading(false);
+            setIsReveal(false);
             if (e.message.includes("Reason: user rejected transaction")){
               return "User denied transaction signature.";
             } else if (e.message.includes("Reason: Address is not whitelisted")){
@@ -204,6 +221,15 @@ return (
       count={counter}
       successCode={12}
     />
+
+    <RevealDialog
+        open={isReveal}
+        setOpen={setIsReveal}
+        mintedIds={mintedTokens}
+        contract={contract!}
+        collection={"Fury Teds"}
+      />
+
 
     <LoadingDialog
       open={isLoading}
