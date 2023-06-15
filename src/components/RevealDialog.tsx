@@ -30,10 +30,11 @@ export interface RevealDialogProps {
   setOpen: (open: boolean) => void;
   mintedIds: string[];
   contract: SmartContract<BaseContract>;
+  collection: string;
 }
 
 function RevealDialog(props: RevealDialogProps) {
-  const { open, setOpen, mintedIds, contract } = props;
+  const { open, setOpen, mintedIds, contract, collection } = props
 
   //const testIDs = ["307", "308", "1"]
 
@@ -76,6 +77,42 @@ function RevealDialog(props: RevealDialogProps) {
   });
 
   const nftText = mintedIds.length > 1 ? "NFTs" : "NFT";
+
+  const getPrice = (collection: string) => {
+    switch(collection){
+      case "Fury Teds":
+        return "5";
+      case "Teddies by FOTF":
+        return "10";
+      case "AI Teds":
+        return "2";
+      default:
+        return "5";
+    }
+  };
+
+  const getURL = (collection: string) => {
+    switch(collection){
+      case "Fury Teds":
+        return "TedMint"
+      case "Teddies by FOTF":
+        return "TeddyMint"
+      case "AI Teds":
+        return "AITedMint"
+      default:
+        return "TedMint"
+    }
+  };
+  
+
+  const price = React.useMemo(() => {
+    return getPrice(collection);
+  }, [collection]);
+
+  const URL = React.useMemo(() => {
+    return getURL(collection);
+  }, [collection]);
+
   
   return (
     <Box sx={{borderRadius:"0px"}}>
@@ -132,15 +169,16 @@ function RevealDialog(props: RevealDialogProps) {
                         // maxWidth: "200px",
                     }}
                     >
-                        <SingleNFT tokenID={tokenID} contract={contract} />
+                        <SingleNFT tokenID={tokenID} contract={contract} 
+                        collection={collection} />
                     </Box>
                 ))}
           </ImageList>
           <TwitterShareButton
-              url={'https://app.furyofthefur.com/AITedMint \n \n'}
+              url={`https://app.furyofthefur.com/${URL} \n \n`}
               // quote={'Share your Teds!'}
               // title={ <meta property="og:image" content="http://graphics8.nytimes.com/images/2011/12/08/technology/bits-newtwitter/bits-newtwitter-tmagArticle.jpg" />}
-              title={`I just minted ${mintedIds.length} AI Teds for 2 MATIC each! The Fury of the Fur Polygon Mint closes on 6/23, don't miss out! \n \n Mint:`}
+              title={`I just minted ${mintedIds.length} ${collection} for ${price} MATIC each! The Fury of the Fur Polygon Mint closes on 6/23, don't miss out! \n \n Mint:`}
               hashtags={hashtags}
               via={'FuryofTheFurNFT'}
               related={["FuryofTheFurNFT", "@FuryofTheFurNFT"]}

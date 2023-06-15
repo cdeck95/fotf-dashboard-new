@@ -17,6 +17,7 @@ import SuccessDialog from "../components/SuccessDialog";
 import { BigNumber } from "ethers";
 import teddyMintLogo from "../assets/teddyMint.gif"
 import { MintProps } from "./TedMint";
+import RevealDialog from "../components/RevealDialog";
 
 const COLLECTION_FOR_MINT = "Teddies by FOTF";
 const DESCRIPTION_FOR_MINT = () => {
@@ -45,12 +46,15 @@ function TeddyMint(props: MintProps) {
 
     const [isLoading, setIsLoading] = useState(false);
     const [success, setSuccess] = useState(false);
+    const [isReveal, setIsReveal] = useState(false);
     const [failure, setFailure] = useState(false);
     const [needsFunds, setNeedsFunds] = useState(false);
     const [showError, setShowError] = useState(false);
     const [errorCode, setErrorCode] = useState(0);
     const [counter, setCounter] = useState(0);
     const [open, setOpen] = useState(false);
+    const [mintedTokens, setMintedTokens] = useState<string[]>([]);
+
     
 
     useEffect(() => {
@@ -105,12 +109,26 @@ function TeddyMint(props: MintProps) {
             value: payableAmount
           });
           console.log(tx);
+          const events = tx["receipt"]["events"];
+          const mintedIDs:string[] = [];
+          for (let i = 1; i < events.length-1; i++) {
+            const jsonForID = events[i]["args"][2];
+            console.log(jsonForID);
+            const hexID = jsonForID["_hex"];
+            console.log(hexID);
+            const id = BigNumber.from(hexID).toString();
+            console.log(id);
+            mintedIDs.push(id);
+          }
+          setMintedTokens(mintedIDs);
           setIsLoading(false);
+          setIsReveal(true);
           return tx;
         } catch (e: any) {
             console.log(e);
             console.log(e.message);
             setIsLoading(false);
+            setIsReveal(false);
             if (e.message.includes("Reason: user rejected transaction")){
               return "User denied transaction signature.";
             } else if (e.message.includes("Reason: Address is not whitelisted")){
@@ -198,6 +216,15 @@ return (
       count={counter}
       successCode={2}
     />
+
+    
+    <RevealDialog
+        open={isReveal}
+        setOpen={setIsReveal}
+        mintedIds={mintedTokens}
+        contract={contract!}
+        collection={"Teddies by FOTF"}
+      />
 
     <LoadingDialog
       open={isLoading}

@@ -23,11 +23,13 @@ import { TwitterShareButton, TwitterIcon } from 'react-share';
 export interface ShareMenuProps {
   token: NFT;
   onClose: () => void;
+  collection: string;
 }
 
 export default function ShareMenu(props: ShareMenuProps) {
   const token = props.token;
   const onClose = props.onClose;
+  const collection = props.collection;
   const navigate = useNavigate();
   const theme = useTheme();
 
@@ -40,6 +42,42 @@ export default function ShareMenu(props: ShareMenuProps) {
     console.log(imageURL);
     saveAs(imageURL, `${token.metadata.id}.png`);
   };
+
+  const getPrice = (collection: string) => {
+    switch(collection){
+      case "Fury Teds":
+        return "5";
+      case "Teddies by FOTF":
+        return "10";
+      case "AI Teds":
+        return "2";
+      default:
+        return "5";
+    }
+  };
+
+  const getURL = (collection: string) => {
+    switch(collection){
+      case "Fury Teds":
+        return "TedMint"
+      case "Teddies by FOTF":
+        return "TeddyMint"
+      case "AI Teds":
+        return "AITedMint"
+      default:
+        return "TedMint"
+    }
+  };
+
+  const price = React.useMemo(() => {
+    return getPrice(collection);
+  }, [collection]);
+
+  const URL = React.useMemo(() => {
+    return getURL(collection);
+  }, [collection]);
+
+  
 
   const loadPage = (token: NFT) => {
     if(token.metadata.uri.includes("FuryTeds")){
@@ -79,10 +117,10 @@ export default function ShareMenu(props: ShareMenuProps) {
         <Divider />
         <MenuItem>
           <TwitterShareButton
-              url={'https://app.furyofthefur.com/AITedMint \n \n'}
+              url={`https://app.furyofthefur.com/${URL} \n \n`}
               // quote={'Share your Teds!'}
               // title={ <meta property="og:image" content="http://graphics8.nytimes.com/images/2011/12/08/technology/bits-newtwitter/bits-newtwitter-tmagArticle.jpg" />}
-              title={`I just minted ${token.metadata.name} for 2 MATIC! The Fury of the Fur Polygon Mint closes on 6/23, don't miss out! \n \n Mint:`}
+              title={`I just minted ${token.metadata.name} for ${price} MATIC! The Fury of the Fur Polygon Mint closes on 6/23, don't miss out! \n \n Mint:`}
               hashtags={hashtags}
               via={'FuryofTheFurNFT'}
               related={["FuryofTheFurNFT", "@FuryofTheFurNFT"]}
