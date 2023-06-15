@@ -393,6 +393,7 @@ function AITedMint(props: MintProps) {
         setOpen={setIsReveal}
         mintedIds={mintedTokens}
         contract={contract!}
+        collection={"AI Teds"}
       />
 
       <LoadingDialog

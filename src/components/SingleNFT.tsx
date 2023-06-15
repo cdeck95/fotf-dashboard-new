@@ -12,6 +12,7 @@ import ShareMenu from "./ShareMenu";
 export interface SingleNFTProps {
     tokenID: string;
     contract: SmartContract<BaseContract>;
+    collection: string;
 }
 
 function SingleNFT(props: SingleNFTProps) {
@@ -19,6 +20,8 @@ function SingleNFT(props: SingleNFTProps) {
     console.log(id);
     const contract = props.contract;
     console.log(contract);
+    const collection = props.collection;
+    console.log(collection);
 
     const navigate = useNavigate();
     const theme = useTheme();
@@ -112,7 +115,7 @@ function SingleNFT(props: SingleNFTProps) {
                         'aria-labelledby': 'basic-button',
                       }}
                     >
-                      <ShareMenu token={nft!} onClose={handleCloseContextMenu} />
+                      <ShareMenu token={nft!} onClose={handleCloseContextMenu} collection={collection}/>
                     </Menu>
                   </ThemeProvider>
                   </Box>  
