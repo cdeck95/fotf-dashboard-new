@@ -36,6 +36,7 @@ import { BigNumber } from "ethers";
 import CheckIcon from '@mui/icons-material/Check';
 import aiTedMintLogo from "../assets/aiTedMint.png";
 import { MintProps } from "./TedMint";
+import RevealDialog from "../components/RevealDialog";
 
 
 const COLLECTION_FOR_MINT = "AI Teds";
@@ -75,6 +76,7 @@ function AITedMint(props: MintProps) {
   // console.log(aiTedsPolygonContract);
 
   const [isLoading, setIsLoading] = useState(false);
+  const [isReveal, setIsReveal] = useState(false);
   const [success, setSuccess] = useState(false);
   const [failure, setFailure] = useState(false);
   const [needsFunds, setNeedsFunds] = useState(false);
@@ -82,6 +84,18 @@ function AITedMint(props: MintProps) {
   const [errorCode, setErrorCode] = useState(0);
   const [counter, setCounter] = useState(0);
   const [open, setOpen] = useState(false);
+
+  const [mintedTokens, setMintedTokens] = useState<string[]>([]);
+
+  // const testObj = {
+  //   "type": "BigNumber",
+  //   "hex": "0x0137"
+  // }
+
+  // const hexID = testObj["hex"];
+  // console.log(hexID);
+  // const id = BigNumber.from(hexID).toString();
+  // console.log(id);
 
   // const [mintWithHNY, setMintWithHNY] = useState(false);
 
@@ -155,12 +169,26 @@ function AITedMint(props: MintProps) {
         }
       );
       console.log(tx);
+      const events = tx["receipt"]["events"];
+      const mintedIDs:string[] = [];
+      for (let i = 1; i < events.length-1; i++) {
+        const jsonForID = events[i]["args"][2];
+        console.log(jsonForID);
+        const hexID = jsonForID["_hex"];
+        console.log(hexID);
+        const id = BigNumber.from(hexID).toString();
+        console.log(id);
+        mintedIDs.push(id);
+      }
+      setMintedTokens(mintedIDs);
       setIsLoading(false);
+      setIsReveal(true);
       return tx;
     } catch (e: any) {
       console.log(e);
       console.log(e.message);
       setIsLoading(false);
+      setIsReveal(false);
       if (e.message.includes("Reason: user rejected transaction")) {
         alert("User denied transaction signature.");
       } else if (e.message.includes("Reason: Address is not whitelisted")) {
@@ -358,6 +386,13 @@ function AITedMint(props: MintProps) {
         collection={COLLECTION_FOR_MINT}
         count={counter}
         successCode={2}
+      />
+
+      <RevealDialog
+        open={isReveal}
+        setOpen={setIsReveal}
+        mintedIds={mintedTokens}
+        contract={contract!}
       />
 
       <LoadingDialog

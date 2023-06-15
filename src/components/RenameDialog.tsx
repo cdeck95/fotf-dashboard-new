@@ -44,7 +44,7 @@ function RenameDialog(props: RenameDialogProps) {
 
   const theme = createTheme({
     typography: {
-      fontFamily: ["Bebas Neue", "Roboto", "Helvetica", "Arial"].join(","),
+      fontFamily: ["Roboto", "Helvetica", "Arial"].join(","),
       fontSize: 16,
       fontWeightLight: 300,
     },
