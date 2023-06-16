@@ -5,7 +5,7 @@ import { SmartContract, ThirdwebNftMedia, useAddress, useNFT } from "@thirdweb-d
 import { useSDK } from "@thirdweb-dev/react";
 import accessDeniedImage from "../assets/access_denied_2.png";
 import "../styles/TedHoneyClaims.css";
-import { useState, SetStateAction } from "react";
+import { useState, SetStateAction, useEffect } from "react";
 import SearchIcon from '@mui/icons-material/Search';
 import { BaseContract } from "ethers";
 
@@ -37,6 +37,13 @@ function ConnectWalletPage(props: ConnectWalletPageProps) {
   const [hasBonus, setHasBonus] = useState("TBD");
   const [honeyStored, setHoneyStored] = useState("TBD");
   const [totalLifetimeClaimed, setTotalLifetimeClaimed] = useState("TBD");
+  const [isSmallScreen, setSmallScreen] = useState(false);
+  const isSmall = useMediaQuery(theme.breakpoints.down("sm"));
+  const isMedium = useMediaQuery(theme.breakpoints.down("md"));
+  const isMediumLarge = useMediaQuery(theme.breakpoints.down("lg"));
+  const isLarge = useMediaQuery(theme.breakpoints.between("lg", "xl"));
+  const isXL = useMediaQuery(theme.breakpoints.up("xl"));
+  const isFullScreen = useMediaQuery(theme.breakpoints.up(1800));
 
   const {data: token, isLoading, error } = useNFT(tedContract, tedId);
 
@@ -44,56 +51,61 @@ function ConnectWalletPage(props: ConnectWalletPageProps) {
     setTedId(parseInt(searchInput));
   }
 
+  useEffect(() => {
+    if (isMediumLarge || isMobile) {
+      setSmallScreen(true);
+    } else {
+      setSmallScreen(false);
+    }
+
+    // if (isMismatched && (!isSmallScreen || (isSmallScreen && !rightNavOpen && !leftNavOpen))){
+    //   setShowMismatch(true);
+    // } else {
+    //   setShowMismatch(false);
+    // }
+  }, [isMediumLarge, isMobile, isSmallScreen]);
+
 
   return (
-    <Box className="inner-container" sx={{ display: "flex", flexDirection: "column", justifyContent: "center"}}>
-      {/* <img
-        src={accessDeniedImage}
-        alt="access denied"
-        className={isMobile ? "accessDeniedImage-mobile" : "accessDeniedImage"}
-      /> */}
-        {/* <h1 className={isMobile ? "comingSoon-Mobile" : "comingSoon"}>
-          <span
-            className={isMobile ? "comingSoonBlack-Mobile" : "comingSoonBlack"}
-          >
-            Connect Your
-          </span>{" "}
-          Wallet
-        </h1> */}
-         <Box>
-          <h1 className={isMobile ? "comingSoon-Mobile" : "comingSoon"}>
+    <Box className={isSmallScreen? "inner-container-mobile" : "inner-container"}>
+         <Box className="col" sx={{width: "100%", height: "auto"}}>
+          <span className={isMobile ? "comingSoon-Mobile" : "comingSoon"}>
             <span
               className={isMobile ? "comingSoonBlack-Mobile" : "comingSoonBlack"}
             >
-              Connect Your 
-            </span>{" "}
+            Connect Your 
+            </span>
             Wallet
-          </h1>
-          <Typography sx={{justifyContent: "center", textAlign: "center", paddingLeft: "10px", paddingRight: "10px"}}>In order to use the app, you need to connect your wallet using the button in the top right. In the meantime, feel free to use the below section to check how much $HNY a Ted has without the need to connect your wallet. Great for research before buying on the open market! </Typography>
+          </span>
+          <Typography sx={{justifyContent: "center", textAlign: "center", 
+          paddingLeft: "10px", paddingRight: "10px", fontFamily: "Roboto, sans-serif", 
+          fontSize: isSmallScreen? "1rem" : "1.5rem"}}>In the meantime, feel free to use the below section to check how much $HNY a Ted has without the need to connect your wallet. Great for research before buying on the open market! </Typography>
         </Box>
-        <Box className="ted-honey-claim-row">
-          <Box className="column-center" sx={{paddingLeft: "15px", paddingRight: "15px", paddingTop: "10px", paddingBottom: "10px"}}>
-            <Typography sx={{fontSize: "24px", textAlign: "center"}}> Check if Ted has been Claimed </Typography>
-            <Paper
-              component="form"
-              sx={{ p: '2px 4px', display: 'flex', alignItems: 'center', width: "100%" }}
-            >
-              <InputBase
-                sx={{ ml: 1, flex: 1 }}
-                placeholder="Search for Ted, Teddy or AI Token ID"
-                inputProps={{ 'aria-label': 'Search for Ted, Teddy or AI Token ID' }}
-                onChange={handleSearch}
-                value={searchInput}
-              />
-              <IconButton type="button" sx={{ p: '10px' }} aria-label="search">
-                <SearchIcon />
-              </IconButton>
-              
-            </Paper>
-            <Button variant="contained" onClick={checkTedClaim} sx={{width: "100%", fontSize: "26px", letterSpacing: "2px"}}>Check Ted Claim</Button>
-            <Typography sx={{ fontSize: "16px", padding: "5px"}}>Please note: this claim checker is updated based on blockchain data from the Ted Rewards Contract. There might be slight delays or sync issues if an ID is checked at the same time is it claimed.</Typography>
+        <Box className={isSmallScreen? "ted-honey-claim-col": "ted-honey-claim-row"}>
+          <Box className={isSmallScreen? "row" : "column-center"} sx={{paddingLeft: "15px", paddingRight: "15px", paddingTop: "10px", paddingBottom: "10px"}}>
+            <Box className="col" sx={{width: "100%", justifyContent: "space-evenly"}}>
+              <Typography sx={{fontSize: "24px", textAlign: "center"}}> Check if Ted has been Claimed </Typography>
+              <Paper
+                component="form"
+                sx={{ p: '2px 4px', display: 'flex', alignItems: 'center', width: "100%", marginTop: "10px"}}
+              >
+                <InputBase
+                  sx={{ ml: 1, flex: 1 }}
+                  placeholder="Search for Ted, Teddy or AI Token ID"
+                  inputProps={{ 'aria-label': 'Search for Ted, Teddy or AI Token ID' }}
+                  onChange={handleSearch}
+                  value={searchInput}
+                />
+                <IconButton type="button" sx={{ p: '10px' }} aria-label="search">
+                  <SearchIcon />
+                </IconButton>
+              </Paper>
+              <Button variant="contained" onClick={checkTedClaim} sx={{width: "100%", fontSize: "26px", letterSpacing: "2px", marginTop: "10px"}}>Check Ted Claim</Button>
+              <Typography sx={{ marginTop: "10px", fontSize: "16px", padding: "5px"}}>Please note: this claim checker is updated based on blockchain data from the Ted Rewards Contract. There might be slight delays or sync issues if an ID is checked at the same time is it claimed.
+              </Typography>
+            </Box>
           </Box>
-          <Box className="column-center" sx={{paddingLeft: "15px", paddingRight: "15px", paddingTop: "10px", paddingBottom: "10px"}}>
+          <Box className={isSmallScreen? "row" : "column-center"} sx={{paddingLeft: "15px", paddingRight: "15px", paddingTop: "10px", paddingBottom: "10px"}}>
             {isLoadingTedContract
             ? <Box sx={{width: "100%", justifyContent: "center", alignItems: "center", display: "flex", flexDirection: "row", minWidth: "200px"}}>
                 <Typography sx={{marginRight: "10px"}}> Loading Contract... </Typography>
@@ -117,7 +129,7 @@ function ConnectWalletPage(props: ConnectWalletPageProps) {
                         height: "250px",
                       }}
                     />
-                    <Box className="col" sx={{margin: "0px", justifyContent: "flex-start", marginLeft: "10px", marginRight: "10px", width: "100%"}}>
+                    <Box className="col" sx={{margin: "0px", justifyContent: "flex-start", marginLeft: "10px", marginRight: "10px", width: "100%", padding: "0px", }}>
                       Token: {token!.metadata.name}
                       <Divider sx={{marginTop: "10px", marginBottom: "10px"}}/>
                       Has Bonus: {hasBonus}

@@ -10,6 +10,20 @@
     flex-direction: row;
 }
 
+.ted-honey-claim-col {
+    width: 95%;
+    border-radius: 10px;
+    background-color: var(--accent-color);
+    align-items: center;
+    margin: 0%;
+    padding: 0%;
+    margin-left: auto;
+    margin-right: auto;
+    display: flex;
+    flex-direction: column;
+    margin-top: 15px;
+}
+
 .column-center {
     display: flex;
     flex-direction: column;
