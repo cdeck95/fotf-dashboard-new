@@ -14,7 +14,12 @@ import { NFT } from '@thirdweb-dev/sdk';
 import { useNavigate } from 'react-router-dom';
 import WhatshotOutlinedIcon from '@mui/icons-material/Whatshot';
 import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
-import { useTheme } from '@mui/material';
+import { Menu, useTheme } from '@mui/material';
+import {saveAs} from "file-saver";
+import { TwitterShareButton, TwitterIcon } from 'react-share';
+import DownloadIcon from '@mui/icons-material/Download';
+
+
 
 export interface IconMenuProps {
   token: NFT;
@@ -33,6 +38,7 @@ export default function IconMenu(props: IconMenuProps) {
 
   console.log(token);
 
+  const hashtags = ["FOTF", "FOTFFAM", "FOTF4LYF"];
 
   const loadPage = (token: NFT) => {
     if(token.metadata.uri.includes("FuryTeds")){
@@ -49,6 +55,12 @@ export default function IconMenu(props: IconMenuProps) {
       alert("Unrecognized collection, please raise a ticket in the FOTF Discord if you believe this is a mistake.");
     }
     
+  };
+
+  const downloadImage = async (token: NFT) => {
+    const imageURL = token.metadata.image!;
+    console.log(imageURL);
+    saveAs(imageURL, `${token.metadata.id}.png`);
   };
 
   return (
@@ -70,11 +82,36 @@ export default function IconMenu(props: IconMenuProps) {
           <ListItemText>Add to Burn List</ListItemText>
         </MenuItem>
         <Divider />
+        <MenuItem onClick={() => downloadImage(token)}>
+          <ListItemIcon>
+            <DownloadIcon/>
+          </ListItemIcon>
+          <ListItemText>Download Image</ListItemText>
+        </MenuItem>
         <MenuItem onClick={() => loadPage(token)}>
           <ListItemIcon>
             <Cloud fontSize="small" />
           </ListItemIcon>
           <ListItemText>View on OpenSea</ListItemText>
+        </MenuItem>
+        <Divider />
+        <MenuItem>
+          <TwitterShareButton
+              url={`https://app.furyofthefur.com/TheFactory\n \n`}
+              // quote={'Share your Teds!'}
+              // title={ <meta property="og:image" content="http://graphics8.nytimes.com/images/2011/12/08/technology/bits-newtwitter/bits-newtwitter-tmagArticle.jpg" />}
+              title={`Check out my @FuryOfTheFurNFT: ${token.metadata.name} \n \nCheck yours out and share them within The Factory:`}
+              hashtags={hashtags}
+              via={'FuryofTheFurNFT'}
+              related={["FuryofTheFurNFT", "@FuryofTheFurNFT"]}
+              >  <TwitterIcon size={32} round/>  
+              </TwitterShareButton>
+        </MenuItem>
+        <MenuItem>
+          <Typography variant="body2" color="text.secondary" 
+          sx={{ fontSize: ".93rem ", overflowWrap: 'break-word !important', whiteSpace: 'normal', wordWrap: 'break-word', maxWidth: "100%" }}>
+            Make sure to download the image & attach it to the post!
+          </Typography>
         </MenuItem>
       </MenuList>
     </Paper>
