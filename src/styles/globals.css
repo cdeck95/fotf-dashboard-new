@@ -727,6 +727,8 @@ body::-webkit-scrollbar{
   padding-bottom: 0;
   display: flex;
   flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 .factory-inner-container-mobile {
@@ -735,6 +737,8 @@ body::-webkit-scrollbar{
   margin-top: 0px;
   padding: 0px;
   overflow-y: auto;
+  justify-content: center;
+  align-items: center;
 }
 
 .header-title {
