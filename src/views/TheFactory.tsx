@@ -838,7 +838,7 @@ function TheFactory(props: PolygonProps) {
                               'aria-labelledby': 'basic-button',
                             }}
                           >
-                            <IconMenu token={tokenClicked!} onClose={handleCloseContextMenu} addToBurnList={() => add(tokenClicked!)} renameTed={() => rename(tokenClicked!)} />
+                            <IconMenu token={tokenClicked!} onClose={handleCloseContextMenu} addToBurnList={() => add(tokenClicked!)} selectedTokens={selectedTokens} renameTed={() => rename(tokenClicked!)} />
                           </Menu>
                           </ThemeProvider>
                       </div>

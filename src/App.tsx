@@ -327,7 +327,7 @@ function App() {
               <Routes>
                 <Route path="/" element={<Dashboard tokenProps={polygonTokenProps} leftNavOpen={leftNavOpen} rightNavOpen={rightNavOpen} showMismatch={showMismatch} isSmallScreen={isSmallScreen} />} />
                 <Route path="/HoneyExchange" element={<HoneyExchange />} />
-                <Route path="/TeddyClaims" element={<TeddyClaims />} />
+                <Route path="/TeddyClaims" element={<TeddyClaims tokenProps={polygonTokenProps} leftNavOpen={leftNavOpen} rightNavOpen={rightNavOpen} showMismatch={showMismatch} isSmallScreen={isSmallScreen}/>} />
                 <Route path="/TedClaims" element={<TedClaims />} />{" "}
                 <Route path="/TedMint" element={<TedMint  showMismatch={showMismatch} contract={polygonTokenProps.tedContract} isloadingContract={polygonTokenProps.isLoadingTedContract} />} />{" "}
                 <Route path="/TeddyMint" element={<TeddyMint showMismatch={showMismatch} contract={polygonTokenProps.teddyContract} isloadingContract={polygonTokenProps.isLoadingTeddyContract} />} />{" "}
