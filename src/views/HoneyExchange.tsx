@@ -1,11 +1,11 @@
-import { Box, Button, CircularProgress, Typography, useMediaQuery, useTheme } from "@mui/material";
+import { Box, Button, CircularProgress, Divider, IconButton, InputBase, Paper, Typography, useMediaQuery, useTheme } from "@mui/material";
 import { useTitle } from "../hooks/useTitle";
 import "../styles/Dashboard.css";
 import { ThirdwebProvider, coinbaseWallet, localWallet, metamaskWallet, safeWallet, useAddress, walletConnect } from "@thirdweb-dev/react";
 import { useSDK } from "@thirdweb-dev/react";
 import ComingSoon from "./ComingSoon";
 import { ethers, BigNumber } from "ethers";
-import { useState, useEffect } from "react";
+import { useState, useEffect, SetStateAction } from "react";
 import { useNavigate } from "react-router";
 import { PolygonPropsNoNav } from "./Dashboard";
 import { Ethereum, Polygon } from "@thirdweb-dev/chains";
@@ -14,7 +14,11 @@ import HoneyEarnings from "../components/HoneyEarnings";
 import TeddiesDashboard from "../components/TeddiesDashboard";
 import HoneyDashboard from "../components/HoneyDashboard";
 import tedMintLogo from "../assets/tedMint.png"
+import "../styles/HoneyExchange.css";
+import SwapHorizOutlinedIcon from '@mui/icons-material/SwapHorizOutlined';
+import ErrorDialog from "../components/ErrorDialog";
 
+const IS_DISABLED = true;
 
 function HoneyExchange(props: PolygonPropsNoNav) {
     useTitle("FOTF | Honey Exchange");
@@ -62,6 +66,7 @@ function HoneyExchange(props: PolygonPropsNoNav) {
     const buyHoneyStash = tokenProps.buyHoneyStash!;
 
     const maticBalance = parseInt(tokenProps.maticBalance);
+    const honeyBalance = tokenProps.honeyBalance;
 
     const isLoadingAITedContract = tokenProps.isLoadingAITedContract;
 
@@ -121,122 +126,215 @@ function HoneyExchange(props: PolygonPropsNoNav) {
     const [totalTeddiesEarnings, setTotalTeddiesEarnings] = useState(0);
     const totalHNYEarnings = totalFuryTedsEarnings + totalTeddiesEarnings;
 
-    return (
-      <Box className={isSmallScreen? "inner-container-mobile" : "inner-container"} sx={{zIndex: "1 !important", position: "relative"}}>
-        {/* <Box
-          sx={{
-            height: isSmallScreen ? "100dvh" : "100dvh",
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "center",
-            alignItems: "center",
-            width: "100%",
-            zIndex: "1 !important",
-          }}
-        > */}
-          <Box className="row-left">
-              {!isSmallScreen && <Typography className="page-header-small">
-                $HNY Exchange
-              </Typography>}
-            </Box>
-          <Box className="dashboard-inner-container">
-            <Box className={isSmallScreen? "column-center-full-container" : "row-space-around-dashboard"}>
-              <ComingSoon/>
-            </Box>
-            <Box className={isSmallScreen? "column-center-full-container" : "row-space-around-dashboard"}>
-              <Box className={isSmallScreen? "column-center-full" : "col-large-dashboard"}>
-                <HoneyEarnings
-                      totalHNYEarnings={totalHNYEarnings}
-                      totalTeddiesEarnings={totalTeddiesEarnings}
-                      totalFuryTedsEarnings={totalFuryTedsEarnings}
-                    />
-              </Box>
-              <Box className={isSmallScreen? "column-center-full" : "col-large-dashboard"}>
-                <HoneyDashboard tokenProps={props.tokenProps} isSmallScreen={isSmallScreen} />
-              </Box>
-            </Box>
-            <Box className={isSmallScreen? "column-center-full-container-last" : "row-space-around-dashboard"}>
-              <Box sx={{height: "100%", width: "100%", paddingLeft: "5px", paddingRight: "5px", backgroundColor: "#fff", borderRadius: "10px", overflowY: "auto", position: "relative"}}>
-                  <Box className="first-row-space-around-honey">
-                    <Typography className="page-header-small-mobile">
-                        Quick Purchase Amounts w/ Bonus
-                    </Typography>
-                  </Box>
-                  <Box className="row-space-around-honey">
-                      <Box className="column-between-honey">
-                        <Box className="row-space-around-honey">
-                          <Box className="column-between-honey">
-                            <img src={tedMintLogo} alt="honey pot" className={isSmallScreen ? "honeyImage-mobile" : "honeyImage"}/>
-                          </Box>
-                          <Box className="column-between-honey">
-                            <Typography>AI Ted Mint</Typography>
-                            <Typography>100,000 $HNY</Typography>
-                            <Button className="dashboard-button" disabled={(tokenProps.honeyPotPrice.toString()==="-10" || !canBuyPot)} variant="contained" color="primary" onClick={() => buyHoneyPot()} sx={{ marginTop: isSmallScreen? "0px": "5px", fontSize: isSmallScreen? ".80rem !important" : "1rem !important"}}>
-                              {isLoadingAITedContract
-                                ? <CircularProgress size={20} color="inherit" />
-                                : <Button sx={{ fontSize: isSmallScreen? ".80rem !important" : "1rem !important"}}>Mint Now</Button>
-                              }
-                            </Button>
-                          </Box>
-                        </Box>
-                      </Box>
-                      <Box className="column-between-honey">
-                        <Box className="row-space-around-honey">
-                          <Box className="column-between-honey">
-                            <img src={tedMintLogo} alt="honey pot" className={isSmallScreen ? "honeyImage-mobile" : "honeyImage"}/>
-                          </Box>
-                          <Box className="column-between-honey">
-                            <Typography>AI Ted Mint</Typography>
-                            <Typography>100,000 $HNY</Typography>
-                            <Button className="dashboard-button" disabled={(tokenProps.honeyPotPrice.toString()==="-10" || !canBuyPot)} variant="contained" color="primary" onClick={() => buyHoneyPot()} sx={{ marginTop: isSmallScreen? "0px": "5px", fontSize: isSmallScreen? ".80rem !important" : "1rem !important"}}>
-                              {isLoadingAITedContract
-                                ? <CircularProgress size={20} color="inherit" />
-                                : <Button sx={{ fontSize: isSmallScreen? ".80rem !important" : "1rem !important"}}>Mint Now</Button>
-                              }
-                            </Button>
-                          </Box>
-                        </Box>
-                      </Box>
-                      <Box className="column-between-honey">
-                        <Box className="row-space-around-honey">
-                          <Box className="column-between-honey">
-                            <img src={tedMintLogo} alt="honey pot" className={isSmallScreen ? "honeyImage-mobile" : "honeyImage"}/>
-                          </Box>
-                          <Box className="column-between-honey">
-                            <Typography>AI Ted Mint</Typography>
-                            <Typography>100,000 $HNY</Typography>
-                            <Button className="dashboard-button" disabled={(tokenProps.honeyPotPrice.toString()==="-10" || !canBuyPot)} variant="contained" color="primary" onClick={() => buyHoneyPot()} sx={{ marginTop: isSmallScreen? "0px": "5px", fontSize: isSmallScreen? ".80rem !important" : "1rem !important"}}>
-                              {isLoadingAITedContract
-                                ? <CircularProgress size={20} color="inherit" />
-                                : <Button sx={{ fontSize: isSmallScreen? ".80rem !important" : "1rem !important"}}>Mint Now</Button>
-                              }
-                            </Button>
-                          </Box>
-                        </Box>
-                      </Box>
-                      <Box className="column-between-honey">
-                        <Box className="row-space-around-honey">
-                          <Box className="column-between-honey">
-                            <img src={tedMintLogo} alt="honey pot" className={isSmallScreen ? "honeyImage-mobile" : "honeyImage"}/>
-                          </Box>
-                          <Box className="column-between-honey">
-                            <Typography>AI Ted Mint</Typography>
-                            <Typography>100,000 $HNY</Typography>
-                            <Button className="dashboard-button" disabled={(tokenProps.honeyPotPrice.toString()==="-10" || !canBuyPot)} variant="contained" color="primary" onClick={() => buyHoneyPot()} sx={{ marginTop: isSmallScreen? "0px": "5px", fontSize: isSmallScreen? ".80rem !important" : "1rem !important"}}>
-                              {isLoadingAITedContract
-                                ? <CircularProgress size={20} color="inherit" />
-                                : <Button sx={{ fontSize: isSmallScreen? ".80rem !important" : "1rem !important"}}>Mint Now</Button>
-                              }
-                            </Button>
-                          </Box>
-                        </Box>
-                      </Box>
-                  </Box>  
+    const [exchangeInput, setExchangeInput] = useState<BigNumber>(BigNumber.from(0));
+    const [honeyForExchange, setHoneyForExchange] = useState<BigNumber>(BigNumber.from(0));
 
+    const handleInput = (e: {
+      preventDefault: () => void;
+      target: { value: SetStateAction<string> };
+    }) => {
+      e.preventDefault();
+      if(e.target.value === "") {
+        setExchangeInput(BigNumber.from(0));
+        setHoneyForExchange(BigNumber.from(0));
+        return;
+      }
+      else {
+        setExchangeInput(BigNumber.from(e.target.value));
+        setHoneyForExchange(BigNumber.from(e.target.value).mul(tokenProps.exchangeRate));
+      }
+    };  
+
+  function buyFOTFShirt(): void {
+    console.log("buy FOTF Shirt clicked");
+    if(IS_DISABLED) {
+      setShowError(true);
+      setErrorCode(4);
+      return;
+    }  
+  }
+
+  function buyCodenameFlavor(): void {
+    console.log("buy Codename: Flavor clicked");
+    if(IS_DISABLED) {
+      setShowError(true);
+      setErrorCode(4);
+      return;
+    }  
+  }
+
+  function buyGummies(): void {
+    console.log("buy gummies clicked");
+    if(IS_DISABLED) {
+      setShowError(true);
+      setErrorCode(4);
+      return;
+    }  
+  }
+
+  const handleErrorClose = () => {
+    setShowError(false);
+  };
+
+    return (
+      <Box className={isSmallScreen? "inner-container-mobile" : "inner-container-honey-exchange"} sx={{zIndex: "1 !important", position: "relative"}}>
+        <Box className="row-left" sx={{marginBottom: "10px"}}>
+          {!isSmallScreen && <Typography className="page-header-small">
+            $HNY Exchange
+          </Typography>}
+        </Box>
+        <Box className={isSmallScreen? "column-center-full-container" : "row-space-around-dash"}>
+          <Box className="row-space-around-dash">
+            <Box className="column-between">
+              <Box className="row-space-around">
+                <Box className="column-around" sx={{padding: "10px"}}>
+                  <Typography className="learnMore">Current Balance</Typography>
+                  {isLoadingHoneyExchangeContract
+                  ? <CircularProgress size="1rem" color="inherit" />
+                  : <Typography sx={{fontSize: "2.5rem", margin: 0, padding: 0,
+                  marginBlockStart: "0em", marginBlockEnd: "0em"}}>{new Intl.NumberFormat("en-US", { minimumIntegerDigits: 2}).format(parseInt(honeyBalance.toString()))} $HNY</Typography>
+                }
+                  
+                </Box>
               </Box>
+              <Box className="row-space-around">
+                <Box className="column-even" sx={{padding: "10px"}}>
+                  <Typography className="learnMore">Current Exchange Rate</Typography>
+                  {isLoadingHoneyExchangeContract
+                  ? <CircularProgress size="1rem" color="inherit" />
+                  : <Typography sx={{fontSize: "2.5rem", margin: 0, padding: 0,
+                  marginBlockStart: "0em", marginBlockEnd: "0em"}}>{exchangeRate.toString()} MATIC &rarr; 1 $HNY</Typography>
+                  }
+                </Box>
+              </Box>
+            </Box>
+            <Box className="honey-exchange-col">
+              <Box className="row" sx={{ justifyContent: "center"}}>
+                <Typography sx={{fontSize: "1.5rem"}}>The Exchange</Typography>
+              </Box>
+              <Box className="row"sx={{justifyContent: "center"}}>
+                <Paper
+                  component="form"
+                  sx={{ p: '2px 4px', display: 'flex', alignItems: 'center', width: "80%" }}
+                >
+                  <InputBase
+                    sx={{ ml: 1, flex: 1 }}
+                    type="number"
+                    placeholder="0"
+                    inputProps={{ 'aria-label': 'Enter ETH to Exchange for $HNY' }}
+                    onChange={handleInput}
+                    value={exchangeInput.toString()}
+                  />
+                  <Typography sx={{marginLeft: "10px", marginRight: "10px"}}> MATIC </Typography>
+                  <SwapHorizOutlinedIcon sx={{marginLeft: "10px", marginRight: "10px"}}/>
+                  <InputBase
+                    sx={{ ml: 1, flex: 1 }}
+                    placeholder="000,000,000"
+                    value={parseInt(honeyForExchange.toString()).toLocaleString("en-US")}
+                  />
+                  <Typography sx={{marginLeft: "10px", marginRight: "10px"}}> $HNY </Typography>
+                </Paper>
+              </Box>
+              <Box className="row"sx={{justifyContent: "space-evenly"}}>
+                <Button variant="contained" disabled={isLoadingHoneyExchangeContract} color="primary" className="exchange-button" sx={{ fontSize: "1.5rem" }}>
+                  Purchase $HNY
+                </Button>
+              </Box>
+              {/* <Box className="row"sx={{justifyContent: "space-evenly"}}>
+                <Typography>
+                  Want to purchase $HNY with fiat? Head just below and grab one of our fiat options.
+                </Typography>
+              </Box> */}
             </Box>
           </Box>
-        {/* </Box> */}
+        </Box>
+        <Box className={isSmallScreen? "column-center-full-container" : "row-space-around-dash"}>
+          <Box className={isSmallScreen? "column-center-full" : "col-large-dashboard"}>
+            <HoneyEarnings
+                  totalHNYEarnings={totalHNYEarnings}
+                  totalTeddiesEarnings={totalTeddiesEarnings}
+                  totalFuryTedsEarnings={totalFuryTedsEarnings}
+                />
+          </Box>
+          <Box className={isSmallScreen? "column-center-full" : "col-large-dashboard"}>
+            <HoneyDashboard tokenProps={props.tokenProps} isSmallScreen={isSmallScreen} />
+          </Box>
+        </Box>
+        <Box className={isSmallScreen? "column-center-full-container-last" : "row-space-around-dash"}>
+          <Box sx={{height: "100%", width: "100%"}}>
+              <Box className="row" sx={{justifyContent: "flex-start", marginBottom: "10px"}}>
+                <Typography className="page-header-small-mobile">
+                    Quick Purchase Amounts w/ Bonus
+                </Typography>
+              </Box>
+              <Box className="row" >
+                  <Box className="column-between-exchange">
+                    <Box className="row">
+                      <Box className="column-between-exchange">
+                        <img src={tedMintLogo} alt="honey pot" 
+                        className={isSmallScreen ? "exchangeImage-mobile" : "exchangeImage"}/>
+                      </Box>
+                      <Box className="column-around">
+                        <Box className="column-around" sx={{marginBottom: "20px"}}>
+                          <Typography sx={{fontSize: "1.5rem"}}>AI Ted Mint</Typography>
+                          <Typography className="accent-text">100,000 $HNY</Typography>
+                        </Box>
+                          <Button disabled={isLoadingAITedContract} className="exchange-button" variant="contained" color="primary" onClick={() => navigate("/AITedMint")}>Mint Now</Button>
+                      </Box>
+                    </Box>
+                  </Box>
+                  <Box className="column-between-exchange">
+                    <Box className="row">
+                      <Box className="column-between-exchange">
+                        <img src={tedMintLogo} alt="honey pot" className={isSmallScreen ? "exchangeImage-mobile" : "exchangeImage"}/>
+                      </Box>
+                      <Box className="column-around">
+                        <Box className="column-around" sx={{marginBottom: "20px"}}>
+                          <Typography sx={{fontSize: "1.5rem"}}>Sour Gummies</Typography>
+                          <Typography className="accent-text">250,000 $HNY</Typography>
+                        </Box>
+                          <Button disabled={isLoadingHoneyExchangeContract} className="exchange-button" variant="contained" color="primary" onClick={() => buyGummies()}>Buy Now</Button>
+                      </Box>
+                    </Box>
+                  </Box>
+                  <Box className="column-between-exchange">
+                    <Box className="row">
+                      <Box className="column-between-exchange">
+                        <img src={tedMintLogo} alt="honey pot" className={isSmallScreen ? "exchangeImage-mobile" : "exchangeImage"}/>
+                      </Box>
+                      <Box className="column-around">
+                        <Box className="column-around" sx={{marginBottom: "20px"}}>
+                          <Typography sx={{fontSize: "1.5rem"}}>Codename: Flavor</Typography>
+                          <Typography className="accent-text">75,000 $HNY</Typography>
+                        </Box>
+                          <Button disabled={isLoadingHoneyExchangeContract} className="exchange-button" variant="contained" color="primary" onClick={() => buyCodenameFlavor()}>Buy Now</Button>
+                      </Box>
+                    </Box>
+                  </Box>
+                  <Box className="column-between-exchange">
+                    <Box className="row">
+                      <Box className="column-between-exchange">
+                        <img src={tedMintLogo} alt="honey pot" className={isSmallScreen ? "exchangeImage-mobile" : "exchangeImage"}/>
+                      </Box>
+                      <Box className="column-around">
+                        <Box className="column-around" sx={{marginBottom: "20px"}}>
+                          <Typography sx={{fontSize: "1.5rem"}}>FOTF Logo Shirt</Typography>
+                          <Typography className="accent-text">125,000 $HNY</Typography>
+                        </Box>
+                          <Button disabled={isLoadingHoneyExchangeContract} className="exchange-button" variant="contained" color="primary" onClick={() => buyFOTFShirt()}>Buy Now</Button>
+                      </Box>
+                    </Box>
+                  </Box>
+              </Box>  
+
+          </Box>
+        </Box>
+        <ErrorDialog
+                open={showError}
+                handleClose={handleErrorClose}
+                errorCode={errorCode}
+                collection={"Honey Exchange"}
+            />
       </Box>
     );
 }

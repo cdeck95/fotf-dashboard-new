@@ -90,35 +90,6 @@ function HoneyDashboard(props: PolygonPropsNoNav) {
         setShowError(false);
       };
 
-    // function buyHoneyJar() {
-    //     console.log("buy honey jar clicked");
-    //     if(IS_DISABLED) {
-    //       setShowError(true);
-    //       setErrorCode(4);
-    //       return;
-    //     }  
-    // }
-
-    // function buyHoneyPot() {
-    //     console.log("buy honey pot clicked");
-    //     if(IS_DISABLED) {
-    //       setShowError(true);
-    //       setErrorCode(4);
-    //       return;
-    //     }  
-    // }
-
-    // function buyHoneyStash() {
-    //     console.log("buy honey stash clicked");
-    //     if(IS_DISABLED) {
-    //       setShowError(true);
-    //       setErrorCode(4);
-    //       return;
-    //     }  
-    // }
-    
-
-
     return (
         <Box sx={{height: "100%", width: "100%", paddingLeft: "5px", paddingRight: "5px", backgroundColor: "#fff", borderRadius: "10px", overflowY: "auto", position: "relative"}}>
             <Box className="first-row-space-around-honey">

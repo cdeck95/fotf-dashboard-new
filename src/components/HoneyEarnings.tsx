@@ -50,7 +50,7 @@ function HoneyEarnings(props: HoneyEarningsProps) {
         <Box sx={{width: "100%", height: "100%", overflowY: "auto", paddingLeft: "5px", paddingRight: "5px", backgroundColor: "#fff", borderRadius: "10px"}}>
             <Box className="row-space-between" sx={{height: "20%"}}>
                 <Typography className="page-header-small">
-                    My Earnings
+                    My Earnings - $HNY
                 </Typography>
             </Box>
             <Box className="row-space-between" sx={{height: "80%"}}>
@@ -59,7 +59,8 @@ function HoneyEarnings(props: HoneyEarningsProps) {
                     <Typography className="honey-earnings-dashboard" sx={{ paddingBottom: "15px"}}>
                         <span className="accent-text">{totalHNYEarnings}</span><br/><span className={isSmallScreen ? "perDay-mobile" : "perDay"}> Per Day</span> 
                     </Typography>
-                    <Button className="dashboard-button" variant="contained" color="primary" sx={{ marginTop: isSmallScreen? "0px": "5px", fontSize: isSmallScreen? ".80rem !important" : "1rem !important"}} onClick={() => navigate("/TheFactory")}>
+                    <Button className="dashboard-button" variant="contained" color="primary" 
+                    sx={{ marginTop: isSmallScreen? "0px": "5px", fontSize: isSmallScreen? ".80rem !important" : "1rem !important"}} onClick={() => navigate("/TheFactory")}>
                         Visit The Factory
                     </Button>
                 </Box>
