@@ -6,43 +6,36 @@ import MenuItem from '@mui/material/MenuItem';
 import ListItemText from '@mui/material/ListItemText';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import Typography from '@mui/material/Typography';
-import ContentCut from '@mui/icons-material/ContentCut';
-import ContentCopy from '@mui/icons-material/ContentCopy';
-import ContentPaste from '@mui/icons-material/ContentPaste';
 import Cloud from '@mui/icons-material/Cloud';
 import { NFT } from '@thirdweb-dev/sdk';
 import { useNavigate } from 'react-router-dom';
-import WhatshotOutlinedIcon from '@mui/icons-material/Whatshot';
-import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
 import { Menu, useTheme } from '@mui/material';
 import {saveAs} from "file-saver";
 import { TwitterShareButton, TwitterIcon } from 'react-share';
 import DownloadIcon from '@mui/icons-material/Download';
+import AdsClickIcon from '@mui/icons-material/AdsClick';
 import RemoveCircleOutlineOutlinedIcon from '@mui/icons-material/RemoveCircleOutlineOutlined';
 
 
 
-
-export interface IconMenuProps {
+export interface ClaimMenuProps {
   token: NFT;
   onClose: () => void;
-  addToBurnList: (token: NFT) => void;
-  renameTed: (token: NFT) => void;
+  addToClaimList: (token: NFT) => void;
   selectedTokens: NFT[];
 }
 
-export default function IconMenu(props: IconMenuProps) {
+export default function ClaimMenu(props: ClaimMenuProps) {
   const token = props.token;
   const onClose = props.onClose;
-  const addToBurnList = props.addToBurnList;
   const selectedTokens = props.selectedTokens;
-  const renameTed = props.renameTed;
-  const inBurnList = selectedTokens.includes(token);
+  const inClaimList = selectedTokens.includes(token);
+  const addToClaimList = props.addToClaimList;
   const navigate = useNavigate();
   const theme = useTheme();
 
   console.log(token);
-  console.log(inBurnList);
+  console.log(inClaimList);
 
   const hashtags = ["FOTF", "FOTFFAM", "FOTF4LYF"];
 
@@ -75,27 +68,26 @@ export default function IconMenu(props: IconMenuProps) {
   /* box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px; */
  }}>
       <MenuList>
-        <MenuItem onClick={() => renameTed(token)}>
+        {/* <MenuItem onClick={() => renameTed(token)}>
           <ListItemIcon>
             <EditOutlinedIcon/>
           </ListItemIcon>
           <ListItemText>Rename Ted</ListItemText>
-        </MenuItem>
-        {inBurnList
-        ? <MenuItem onClick={() => addToBurnList(token)}>
+        </MenuItem> */}
+        {inClaimList
+        ? <MenuItem onClick={() => addToClaimList(token)}>
             <ListItemIcon>
               <RemoveCircleOutlineOutlinedIcon/>
             </ListItemIcon>
-            <ListItemText>Remove from Burn List</ListItemText>
+            <ListItemText>Remove from Claim List</ListItemText>
           </MenuItem>
-        : <MenuItem onClick={() => addToBurnList(token)}>
-            <ListItemIcon>
-              <WhatshotOutlinedIcon/>
-            </ListItemIcon>
-            <ListItemText>Add to Burn List</ListItemText>
-          </MenuItem>
+        : <MenuItem onClick={() => addToClaimList(token)}>
+          <ListItemIcon>
+            <AdsClickIcon/>
+          </ListItemIcon>
+          <ListItemText>Add to Claim List</ListItemText>
+        </MenuItem>
         }
-        
         <Divider />
         <MenuItem onClick={() => downloadImage(token)}>
           <ListItemIcon>

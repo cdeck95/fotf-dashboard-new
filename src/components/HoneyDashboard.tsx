@@ -21,71 +21,74 @@ import honeyStash from "../assets/honey_stash.png";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import ErrorDialog from "./ErrorDialog";
+import { BigNumber, ethers } from "ethers";
 
 const IS_DISABLED = true;
 
-function HoneyDashboard() {
-
+function HoneyDashboard(props: PolygonPropsNoNav) {
     const navigate = useNavigate();
     const [showError, setShowError] = useState(false);
     const [errorCode, setErrorCode] = useState(0);
     const theme = useTheme();
     const isMobile = !useMediaQuery(theme.breakpoints.up("md"));
-    const isSmall = useMediaQuery(theme.breakpoints.down("sm"));
-    const isMedium = useMediaQuery(theme.breakpoints.down("md"));
-    const isMediumLarge = useMediaQuery(theme.breakpoints.down("lg"));
-    const isLarge = useMediaQuery(theme.breakpoints.between("lg", "xl"));
-    const isXL = !useMediaQuery(theme.breakpoints.down("xl"));
-    const isFullScreen = useMediaQuery(theme.breakpoints.up(1800));
-    const [isSmallScreen, setSmallScreen] = useState(false);
     console.log(`Mobile:  ${isMobile}`);
-    console.log(`Small:  ${isSmall}`);
-    console.log(`Medium:  ${isMedium}`);
-    console.log(`Medium-Large:  ${isMediumLarge}`);
-    console.log(`Large:  ${isLarge}`);
-    console.log(`XL:  ${isXL}`);
-    console.log(`Is 1920:  ${isFullScreen}`);
+
+    const tokenProps = props.tokenProps;
+    const isSmallScreen = props.isSmallScreen;
+
+    const isLoadingHoneyExchangeContract = tokenProps.isLoadingHoneyExchangeContract;
+    console.log(`isLoadingHoneyExchangeContract: ${isLoadingHoneyExchangeContract}`)
+
+    const exchangeRate = ethers.utils.formatEther(tokenProps.exchangeRate);
+    const honeyJarPrice = ethers.utils.formatEther(tokenProps.honeyJarPrice);
+    const honeyPotPrice = ethers.utils.formatEther(tokenProps.honeyPotPrice);
+    const honeyStashPrice = ethers.utils.formatEther(tokenProps.honeyStashPrice);
+
+    console.log(exchangeRate);
+    console.log(honeyJarPrice);
+    console.log(honeyPotPrice);
+    console.log(honeyStashPrice);
+
+    const honeyPotAmount = BigNumber.from(tokenProps.honeyPotPrice).mul(tokenProps.exchangeRate).div(BigNumber.from(10).pow(18));
+    //jar gets 10% bonus
+    const honeyJarAmount = BigNumber.from(tokenProps.honeyJarPrice).mul(tokenProps.exchangeRate).div(BigNumber.from(10).pow(18));
+    const honeyJarAmountWithBonus = honeyJarAmount.mul(11).div(10);
+    //stash gets 20% bonus
+    const honeyStashAmount = BigNumber.from(tokenProps.honeyStashPrice).mul(tokenProps.exchangeRate).div(BigNumber.from(10).pow(18));
+    const honeyStashAmountWithBonus = honeyStashAmount.mul(12).div(10);
+
+    const buyHoneyJar = tokenProps.buyHoneyJar!;
+    const buyHoneyPot = tokenProps.buyHoneyPot!;
+    const buyHoneyStash = tokenProps.buyHoneyStash!;
+
+    const maticBalance = parseInt(tokenProps.maticBalance);
+
+    const [canBuyJar, setCanBuyJar] = useState(false);
+    const [canBuyPot, setCanBuyPot] = useState(false);
+    const [canBuyStash, setCanBuyStash] = useState(false);
 
     useEffect(() => {
-        if (!isMobile && isMediumLarge) {
-          setSmallScreen(true);
-        } else {
-          setSmallScreen(isMobile);
-        }
-      }, [isMobile, isMediumLarge, isSmallScreen]);
-
+      if(maticBalance < 20) {
+        setCanBuyJar(false);
+      } else {
+        setCanBuyJar(true);
+      }
+      if(maticBalance < 40) {
+        setCanBuyPot(false);
+      } else {
+        setCanBuyPot(true);
+      }
+      if(maticBalance < 80) {
+        setCanBuyStash(false);
+      } else {
+        setCanBuyStash(true);
+      }
+      
+    }, [maticBalance]);
 
     const handleErrorClose = () => {
         setShowError(false);
       };
-
-    function buyHoneyJar() {
-        console.log("buy honey jar clicked");
-        if(IS_DISABLED) {
-          setShowError(true);
-          setErrorCode(4);
-          return;
-        }  
-    }
-
-    function buyHoneyPot() {
-        console.log("buy honey pot clicked");
-        if(IS_DISABLED) {
-          setShowError(true);
-          setErrorCode(4);
-          return;
-        }  
-    }
-
-    function buyHoneyStash() {
-        console.log("buy honey stash clicked");
-        if(IS_DISABLED) {
-          setShowError(true);
-          setErrorCode(4);
-          return;
-        }  
-    }
-
 
     return (
         <Box sx={{height: "100%", width: "100%", paddingLeft: "5px", paddingRight: "5px", backgroundColor: "#fff", borderRadius: "10px", overflowY: "auto", position: "relative"}}>
@@ -96,21 +99,30 @@ function HoneyDashboard() {
             </Box>
             <Box className="row-space-around-honey">
                 <Box className="column-between-honey">
-                    <img src={honeyJar} alt="honey jar" className={isSmallScreen ? "honeyImage-mobile" : "honeyImage"}/>
-                    <Button className="dashboard-button" variant="contained" color="primary" onClick={() => buyHoneyJar()} sx={{marginBottom: "5px"}}>
-                        50,000
+                    <img src={honeyPot} alt="honey pot" className={isSmallScreen ? "honeyImage-mobile" : "honeyImage"}/>
+                    <Button className="dashboard-button" disabled={(tokenProps.honeyPotPrice.toString()==="-10" || !canBuyPot)} variant="contained" color="primary" onClick={() => buyHoneyPot()} sx={{ marginTop: isSmallScreen? "0px": "5px", fontSize: isSmallScreen? ".80rem !important" : "1rem !important"}}>
+                      {isLoadingHoneyExchangeContract
+                        ? <CircularProgress size={20} color="inherit" />
+                        : <Typography sx={{ fontSize: isSmallScreen? ".80rem !important" : "1rem !important"}}>{new Intl.NumberFormat("en-US", { minimumIntegerDigits: 2, notation: 'compact'}).format(parseInt(honeyPotAmount.toString()))} $HNY - {new Intl.NumberFormat("en-US", { minimumIntegerDigits: 2 }).format(parseInt(honeyPotPrice))} MATIC</Typography>
+                       }
                     </Button>
                 </Box>
                 <Box className="column-between-honey">
-                    <img src={honeyPot} alt="honey pot" className={isSmallScreen ? "honeyImage-mobile" : "honeyImage"}/>
-                    <Button className="dashboard-button" variant="contained" color="primary" onClick={() => buyHoneyPot()} sx={{marginBottom: "5px"}}>
-                        110,000
+                    <img src={honeyJar} alt="honey jar" className={isSmallScreen ? "honeyImage-mobile" : "honeyImage"}/>
+                    <Button className="dashboard-button" disabled={(tokenProps.honeyJarPrice.toString()==="-10" || !canBuyJar)} variant="contained" color="primary" onClick={() => buyHoneyJar()} sx={{ marginTop: isSmallScreen? "0px": "5px", fontSize: isSmallScreen? ".80rem !important" : "1rem !important"}}>
+                      {isLoadingHoneyExchangeContract
+                        ? <CircularProgress size={20} color="inherit" />
+                        : <Typography sx={{ fontSize: isSmallScreen? ".80rem !important" : "1rem !important"}}>{new Intl.NumberFormat("en-US", { minimumIntegerDigits: 2, notation: 'compact' }).format(parseInt(honeyJarAmountWithBonus.toString()))} $HNY - {new Intl.NumberFormat("en-US", { minimumIntegerDigits: 2 }).format(parseInt(honeyJarPrice))} MATIC</Typography>
+                      }
                     </Button>
                 </Box>
                 <Box className="column-between-honey">
                     <img src={honeyStash} alt="honey stash" className={isSmallScreen ? "honeyImage-mobile" : "honeyImage"}/>
-                    <Button className="dashboard-button" variant="contained" color="primary" onClick={() => buyHoneyStash()} sx={{marginBottom: "5px"}}>
-                        220,000
+                    <Button className="dashboard-button" disabled={(tokenProps.honeyStashPrice.toString()==="-10" || !canBuyStash)} variant="contained" color="primary" onClick={() => buyHoneyStash()} sx={{ marginTop: isSmallScreen? "0px": "5px", fontSize: isSmallScreen? ".80rem !important" : "1rem !important"}}>
+                      {isLoadingHoneyExchangeContract
+                        ? <CircularProgress size={20} color="inherit" />
+                        : <Typography sx={{ fontSize: isSmallScreen? ".80rem !important" : "1rem !important"}}>{new Intl.NumberFormat("en-US", { minimumIntegerDigits: 2, notation: 'compact' }).format(parseInt(honeyStashAmountWithBonus.toString()))} $HNY - {new Intl.NumberFormat("en-US", { minimumIntegerDigits: 2 }).format(parseInt(honeyStashPrice))} MATIC</Typography>
+                      }
                     </Button>
                 </Box>
             </Box>  

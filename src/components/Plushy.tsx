@@ -31,7 +31,8 @@ function Plushy(props: PlushyProps) {
 
 
     return (
-        <Box className={isSmallScreen ? "row-between-mobile" : "row-between"} sx={{height: "100%", overflowY: "auto", width: "100%", marginBottom: isSmallScreen? "0px": "0px", paddingTop: isSmallScreen? "0px": "0px", paddingBottom: isSmallScreen? "0px": "0px", paddingLeft: "0px", paddingRight: "0px", backgroundColor: "#fff", borderRadius: "10px"}}>
+        <Box className={isSmallScreen ? "row-between-mobile" : "row-between"} sx={{height: "100%", width: "100%", marginBottom: isSmallScreen? "0px": "0px", 
+        paddingTop: isSmallScreen? "0px": "0px", paddingBottom: isSmallScreen? "0px": "0px", paddingLeft: "0px", paddingRight: "0px", backgroundColor: "#fff", borderRadius: "10px"}}>
             <Box className="half-col">
                 <img src={plushy} alt="Plushies" className={isSmallScreen ? "plushyImage" : "plushyImage"}/>
             </Box>
