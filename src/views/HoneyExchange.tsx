@@ -176,6 +176,15 @@ function HoneyExchange(props: PolygonPropsNoNav) {
     setShowError(false);
   };
 
+  function purchaseHoney(): void {
+    console.log("purchase Honey clicked");
+    if(IS_DISABLED) {
+      setShowError(true);
+      setErrorCode(4);
+      return;
+    }  
+  }
+
     return (
       <Box className={isSmallScreen? "inner-container-mobile" : "inner-container-honey-exchange"} sx={{zIndex: "1 !important", position: "relative"}}>
         <Box className="row-left" sx={{marginBottom: "10px"}}>
@@ -236,7 +245,7 @@ function HoneyExchange(props: PolygonPropsNoNav) {
                 </Paper>
               </Box>
               <Box className="row"sx={{justifyContent: "space-evenly"}}>
-                <Button variant="contained" disabled={isLoadingHoneyExchangeContract} color="primary" className="exchange-button" sx={{ fontSize: "1.5rem" }}>
+                <Button variant="contained" disabled={isLoadingHoneyExchangeContract} color="primary" className="exchange-button" sx={{ fontSize: "1.5rem" }} onClick={() => purchaseHoney()} >
                   Purchase $HNY
                 </Button>
               </Box>
