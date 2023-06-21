@@ -189,7 +189,7 @@ function Dashboard(props: PolygonProps) {
           </Box>
           <Box className={isSmallScreen? "column-center-full-container-last" : "row-space-around-dashboard"}>
             <Box className={isSmallScreen? "column-center-full" : "col-large-dashboard"}>
-              <HoneyDashboard />
+              <HoneyDashboard tokenProps={props.tokenProps} isSmallScreen={isSmallScreen}/>
             </Box>
             <Box className={isSmallScreen? "column-center-full" : "col-large-dashboard"}>
               <Plushy isSmallScreen={isSmallScreen} />
