@@ -411,8 +411,10 @@ export function LoadPolygonAccountDetails(): PolygonAccountDetails {
     try {
       const buyHoneyJarResults = await honeyExchangeContract?.call(
         "buyHoneyJar",
-        // Arguments to your function, in the same order they are on your smart contract
-        [honeyJarPrice]
+        [],
+        {
+          value: honeyJarPrice,
+        }
       );
       console.log(buyHoneyJarResults);
       return buyHoneyJarResults;
@@ -432,8 +434,10 @@ export function LoadPolygonAccountDetails(): PolygonAccountDetails {
     try {
       const buyHoneyPotResults = await honeyExchangeContract?.call(
         "buyHoneyPot",
-        // Arguments to your function, in the same order they are on your smart contract
-        [honeyPotPrice]
+        [],
+        {
+          value: honeyPotPrice,
+        }
       );
       console.log(buyHoneyPotResults);
       return buyHoneyPotResults;

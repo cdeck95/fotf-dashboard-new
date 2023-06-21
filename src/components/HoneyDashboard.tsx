@@ -21,7 +21,7 @@ import honeyStash from "../assets/honey_stash.png";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import ErrorDialog from "./ErrorDialog";
-import { ethers } from "ethers";
+import { BigNumber, ethers } from "ethers";
 
 const IS_DISABLED = true;
 
@@ -50,38 +50,42 @@ function HoneyDashboard(props: PolygonPropsNoNav) {
     console.log(honeyPotPrice);
     console.log(honeyStashPrice);
 
+    const honeyPotAmount = BigNumber.from(tokenProps.honeyPotPrice).mul(tokenProps.exchangeRate).div(BigNumber.from(10).pow(18));
+    //jar gets 10% bonus
+    const honeyJarAmount = BigNumber.from(tokenProps.honeyJarPrice).mul(tokenProps.exchangeRate).div(BigNumber.from(10).pow(18));
+    const honeyJarAmountWithBonus = honeyJarAmount.mul(11).div(10);
+    //stash gets 20% bonus
+    const honeyStashAmount = BigNumber.from(tokenProps.honeyStashPrice).mul(tokenProps.exchangeRate).div(BigNumber.from(10).pow(18));
+    const honeyStashAmountWithBonus = honeyStashAmount.mul(12).div(10);
+
     const buyHoneyJar = tokenProps.buyHoneyJar!;
     const buyHoneyPot = tokenProps.buyHoneyPot!;
     const buyHoneyStash = tokenProps.buyHoneyStash!;
 
     const maticBalance = parseInt(tokenProps.maticBalance);
 
-    // const [canBuyJar, setCanBuyJar] = useState(false);
-    // const [canBuyPot, setCanBuyPot] = useState(false);
-    // const [canBuyStash, setCanBuyStash] = useState(false);
+    const [canBuyJar, setCanBuyJar] = useState(false);
+    const [canBuyPot, setCanBuyPot] = useState(false);
+    const [canBuyStash, setCanBuyStash] = useState(false);
 
-    const [canBuyJar, setCanBuyJar] = useState(true);
-    const [canBuyPot, setCanBuyPot] = useState(true);
-    const [canBuyStash, setCanBuyStash] = useState(true);
-
-    // useEffect(() => {
-    //   if(maticBalance < 20) {
-    //     setCanBuyJar(false);
-    //   } else {
-    //     setCanBuyJar(true);
-    //   }
-    //   if(maticBalance < 40) {
-    //     setCanBuyPot(false);
-    //   } else {
-    //     setCanBuyPot(true);
-    //   }
-    //   if(maticBalance < 80) {
-    //     setCanBuyStash(false);
-    //   } else {
-    //     setCanBuyStash(true);
-    //   }
+    useEffect(() => {
+      if(maticBalance < 20) {
+        setCanBuyJar(false);
+      } else {
+        setCanBuyJar(true);
+      }
+      if(maticBalance < 40) {
+        setCanBuyPot(false);
+      } else {
+        setCanBuyPot(true);
+      }
+      if(maticBalance < 80) {
+        setCanBuyStash(false);
+      } else {
+        setCanBuyStash(true);
+      }
       
-    // }, [maticBalance]);
+    }, [maticBalance]);
 
     const handleErrorClose = () => {
         setShowError(false);
@@ -113,6 +117,7 @@ function HoneyDashboard(props: PolygonPropsNoNav) {
     //       return;
     //     }  
     // }
+    
 
 
     return (
@@ -128,7 +133,7 @@ function HoneyDashboard(props: PolygonPropsNoNav) {
                     <Button className="dashboard-button" disabled={(tokenProps.honeyPotPrice.toString()==="-10" || !canBuyPot)} variant="contained" color="primary" onClick={() => buyHoneyPot()} sx={{marginBottom: "5px"}}>
                       {isLoadingHoneyExchangeContract
                         ? <CircularProgress size={20} color="inherit" />
-                        : <Typography>{new Intl.NumberFormat("en-US", { minimumIntegerDigits: 2 }).format(parseInt(honeyPotPrice))} MATIC</Typography>
+                        : <Typography>{new Intl.NumberFormat("en-US", { minimumIntegerDigits: 2, notation: 'compact'}).format(parseInt(honeyPotAmount.toString()))} $HNY - {new Intl.NumberFormat("en-US", { minimumIntegerDigits: 2 }).format(parseInt(honeyPotPrice))} MATIC</Typography>
                        }
                     </Button>
                 </Box>
@@ -137,7 +142,7 @@ function HoneyDashboard(props: PolygonPropsNoNav) {
                     <Button className="dashboard-button" disabled={(tokenProps.honeyJarPrice.toString()==="-10" || !canBuyJar)} variant="contained" color="primary" onClick={() => buyHoneyJar()} sx={{marginBottom: "5px"}}>
                       {isLoadingHoneyExchangeContract
                         ? <CircularProgress size={20} color="inherit" />
-                        : <Typography>{new Intl.NumberFormat("en-US", { minimumIntegerDigits: 2 }).format(parseInt(honeyJarPrice))} MATIC</Typography>
+                        : <Typography>{new Intl.NumberFormat("en-US", { minimumIntegerDigits: 2, notation: 'compact' }).format(parseInt(honeyJarAmountWithBonus.toString()))} $HNY - {new Intl.NumberFormat("en-US", { minimumIntegerDigits: 2 }).format(parseInt(honeyJarPrice))} MATIC</Typography>
                       }
                     </Button>
                 </Box>
@@ -146,7 +151,7 @@ function HoneyDashboard(props: PolygonPropsNoNav) {
                     <Button className="dashboard-button" disabled={(tokenProps.honeyStashPrice.toString()==="-10" || !canBuyStash)} variant="contained" color="primary" onClick={() => buyHoneyStash()} sx={{marginBottom: "5px"}}>
                       {isLoadingHoneyExchangeContract
                         ? <CircularProgress size={20} color="inherit" />
-                        : <Typography>{new Intl.NumberFormat("en-US", { minimumIntegerDigits: 2 }).format(parseInt(honeyStashPrice))} MATIC</Typography>
+                        : <Typography>{new Intl.NumberFormat("en-US", { minimumIntegerDigits: 2, notation: 'compact' }).format(parseInt(honeyStashAmountWithBonus.toString()))} $HNY - {new Intl.NumberFormat("en-US", { minimumIntegerDigits: 2 }).format(parseInt(honeyStashPrice))} MATIC</Typography>
                       }
                     </Button>
                 </Box>
