@@ -187,7 +187,7 @@ function HoneyExchange(props: PolygonPropsNoNav) {
 
     return (
       <Box className={isSmallScreen? "inner-container-mobile" : "inner-container-honey-exchange"} sx={{zIndex: "1 !important", position: "relative"}}>
-        <Box className="row-left" sx={{marginBottom: "10px"}}>
+        <Box className="row-left" sx={{marginTop: "10px", marginBottom: "20px"}}>
           {!isSmallScreen && <Typography className="page-header-small">
             $HNY Exchange
           </Typography>}
@@ -218,10 +218,10 @@ function HoneyExchange(props: PolygonPropsNoNav) {
               </Box>
             </Box>
             <Box className="honey-exchange-col">
-              <Box className="row" sx={{ justifyContent: "center"}}>
+              <Box className="row-exchange" sx={{ justifyContent: "center"}}>
                 <Typography sx={{fontSize: "1.5rem"}}>The Exchange</Typography>
               </Box>
-              <Box className="row"sx={{justifyContent: "center"}}>
+              <Box className="row-exchange"sx={{justifyContent: "center"}}>
                 <Paper
                   component="form"
                   sx={{ p: '2px 4px', display: 'flex', alignItems: 'center', width: "80%" }}
@@ -244,12 +244,17 @@ function HoneyExchange(props: PolygonPropsNoNav) {
                   <Typography sx={{marginLeft: "10px", marginRight: "10px"}}> $HNY </Typography>
                 </Paper>
               </Box>
-              <Box className="row"sx={{justifyContent: "space-evenly"}}>
+              <Box className="row-exchange">
                 <Button variant="contained" disabled={isLoadingHoneyExchangeContract} color="primary" className="exchange-button" sx={{ fontSize: "1.5rem" }} onClick={() => purchaseHoney()} >
                   Purchase $HNY
                 </Button>
               </Box>
-              {/* <Box className="row"sx={{justifyContent: "space-evenly"}}>
+              {/* <Box className="row-exchange"sx={{justifyContent: "space-evenly"}}>
+                <Typography>
+                  Reminder: Quick Purchase Options () below offer a bonus amount of $HNY for your purchase.
+                </Typography>
+              </Box> */}
+              {/* <Box className="row-exchange"sx={{justifyContent: "space-evenly"}}>
                 <Typography>
                   Want to purchase $HNY with fiat? Head just below and grab one of our fiat options.
                 </Typography>
@@ -271,14 +276,14 @@ function HoneyExchange(props: PolygonPropsNoNav) {
         </Box>
         <Box className={isSmallScreen? "column-center-full-container-last" : "row-space-around-dash"}>
           <Box sx={{height: "100%", width: "100%"}}>
-              <Box className="row" sx={{justifyContent: "flex-start", marginBottom: "10px"}}>
+              <Box className="row-exchange" sx={{justifyContent: "flex-start", marginBottom: "10px"}}>
                 <Typography className="page-header-small-mobile">
                     Quick Purchase Amounts w/ Bonus
                 </Typography>
               </Box>
-              <Box className="row" >
+              <Box className="row-exchange" >
                   <Box className="column-between-exchange">
-                    <Box className="row">
+                    <Box className="row-exchange">
                       <Box className="column-between-exchange">
                         <img src={tedMintLogo} alt="honey pot" 
                         className={isSmallScreen ? "exchangeImage-mobile" : "exchangeImage"}/>
@@ -293,7 +298,7 @@ function HoneyExchange(props: PolygonPropsNoNav) {
                     </Box>
                   </Box>
                   <Box className="column-between-exchange">
-                    <Box className="row">
+                    <Box className="row-exchange">
                       <Box className="column-between-exchange">
                         <img src={tedMintLogo} alt="honey pot" className={isSmallScreen ? "exchangeImage-mobile" : "exchangeImage"}/>
                       </Box>
@@ -307,7 +312,7 @@ function HoneyExchange(props: PolygonPropsNoNav) {
                     </Box>
                   </Box>
                   <Box className="column-between-exchange">
-                    <Box className="row">
+                    <Box className="row-exchange">
                       <Box className="column-between-exchange">
                         <img src={tedMintLogo} alt="honey pot" className={isSmallScreen ? "exchangeImage-mobile" : "exchangeImage"}/>
                       </Box>
@@ -321,7 +326,7 @@ function HoneyExchange(props: PolygonPropsNoNav) {
                     </Box>
                   </Box>
                   <Box className="column-between-exchange">
-                    <Box className="row">
+                    <Box className="row-exchange">
                       <Box className="column-between-exchange">
                         <img src={tedMintLogo} alt="honey pot" className={isSmallScreen ? "exchangeImage-mobile" : "exchangeImage"}/>
                       </Box>
