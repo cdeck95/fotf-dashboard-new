@@ -514,6 +514,9 @@
 
 .dashboard-button {
   width: 100%;
+  margin-bottom: "5px";
+  padding: "8px !important";
+  min-height: 40px;
 }
 
 .logo {
