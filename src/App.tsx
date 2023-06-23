@@ -311,7 +311,7 @@ function App() {
               paddingRight: rightNavOpen ? "340px" : "0px",
               marginTop: isSmallScreen ? "60px" : "0px",
               marginBottom: isSmallScreen ? "60px" : "50px",
-              paddingBottom: isSmallScreen ? "10px" : "0px",
+              paddingBottom: isSmallScreen ? "60px" : "0px",
               backgroundColor: "white",
               height: "100% !important",
               width: "100dvw",
@@ -350,7 +350,7 @@ function App() {
                 <Route path="*" element={<NotFound />} />
               </Routes>
             ) : (
-              <ConnectWalletPage tedContract={polygonTokenProps.tedContract} isLoadingTedContract={polygonTokenProps.isLoadingTedContract}/>
+              <ConnectWalletPage tedContract={polygonTokenProps.tedContract} isLoadingTedContract={polygonTokenProps.isLoadingTedContract} teddyContract={polygonTokenProps.teddyContract} isLoadingTeddyContract={polygonTokenProps.isLoadingTeddyContract}  />
             )}  
 
             
