@@ -100,28 +100,28 @@ function HoneyDashboard(props: PolygonPropsNoNav) {
             <Box className="row-space-even-honey" sx={{height: "100%"}}>
                 <Box className="column-between-honey">
                     <img src={honeyPot} alt="honey pot" className={isSmallScreen ? "honeyImage-mobile" : "honeyImage"}/>
-                    <Button className="dashboard-button" disabled={(tokenProps.honeyPotPrice.toString()==="-10" || !canBuyPot)} variant="contained" color="primary" onClick={() => buyHoneyPot()} sx={{ marginTop: isSmallScreen? "0px": "5px", fontSize: isSmallScreen? ".80rem !important" : "1rem !important"}}>
+                    <Button className="dashboard-button" disabled={(tokenProps.honeyPotPrice.toString()==="-10" || !canBuyPot)} variant="contained" color="primary" onClick={() => buyHoneyPot()} sx={{ marginTop: isSmallScreen? "0px": "5px", fontSize: isSmallScreen? ".79rem !important" : "1rem !important"}}>
                       {isLoadingHoneyExchangeContract
                         ? <CircularProgress size={20} color="inherit" />
-                        : <Typography sx={{ fontSize: isSmallScreen? ".80rem !important" : "1rem !important"}}>{new Intl.NumberFormat("en-US", { minimumIntegerDigits: 1, notation: 'compact'}).format(parseInt(honeyPotAmount.toString()))} $HNY - {new Intl.NumberFormat("en-US", { minimumIntegerDigits: 2 }).format(parseInt(honeyPotPrice))} MATIC</Typography>
+                        : <Typography sx={{ fontSize: isSmallScreen? ".79rem !important" : "1rem !important"}}>{new Intl.NumberFormat("en-US", { minimumIntegerDigits: 1, notation: 'compact'}).format(parseInt(honeyPotAmount.toString()))} $HNY - {new Intl.NumberFormat("en-US", { minimumIntegerDigits: 2 }).format(parseInt(honeyPotPrice))} MATIC</Typography>
                        }
                     </Button>
                 </Box>
                 <Box className="column-between-honey">
                     <img src={honeyJar} alt="honey jar" className={isSmallScreen ? "honeyImage-mobile" : "honeyImage"}/>
-                    <Button className="dashboard-button" disabled={(tokenProps.honeyJarPrice.toString()==="-10" || !canBuyJar)} variant="contained" color="primary" onClick={() => buyHoneyJar()} sx={{ marginTop: isSmallScreen? "0px": "5px", fontSize: isSmallScreen? ".80rem !important" : "1rem !important"}}>
+                    <Button className="dashboard-button" disabled={(tokenProps.honeyJarPrice.toString()==="-10" || !canBuyJar)} variant="contained" color="primary" onClick={() => buyHoneyJar()} sx={{ marginTop: isSmallScreen? "0px": "5px", fontSize: isSmallScreen? ".79rem !important" : "1rem !important"}}>
                       {isLoadingHoneyExchangeContract
                         ? <CircularProgress size={20} color="inherit" />
-                        : <Typography sx={{ fontSize: isSmallScreen? ".80rem !important" : "1rem !important"}}>{new Intl.NumberFormat("en-US", { minimumIntegerDigits: 1, notation: 'compact' }).format(parseInt(honeyJarAmountWithBonus.toString()))} $HNY - {new Intl.NumberFormat("en-US", { minimumIntegerDigits: 2 }).format(parseInt(honeyJarPrice))} MATIC</Typography>
+                        : <Typography sx={{ fontSize: isSmallScreen? ".79rem !important" : "1rem !important"}}>{new Intl.NumberFormat("en-US", { minimumIntegerDigits: 1, notation: 'compact' }).format(parseInt(honeyJarAmountWithBonus.toString()))} $HNY - {new Intl.NumberFormat("en-US", { minimumIntegerDigits: 2 }).format(parseInt(honeyJarPrice))} MATIC</Typography>
                       }
                     </Button>
                 </Box>
                 <Box className="column-between-honey">
                     <img src={honeyStash} alt="honey stash" className={isSmallScreen ? "honeyImage-mobile" : "honeyImage"}/>
-                    <Button className="dashboard-button" disabled={(tokenProps.honeyStashPrice.toString()==="-10" || !canBuyStash)} variant="contained" color="primary" onClick={() => buyHoneyStash()} sx={{ marginTop: isSmallScreen? "0px": "5px", fontSize: isSmallScreen? ".80rem !important" : "1rem !important"}}>
+                    <Button className="dashboard-button" disabled={(tokenProps.honeyStashPrice.toString()==="-10" || !canBuyStash)} variant="contained" color="primary" onClick={() => buyHoneyStash()} sx={{ marginTop: isSmallScreen? "0px": "5px", fontSize: isSmallScreen? ".79rem !important" : "1rem !important"}}>
                       {isLoadingHoneyExchangeContract
                         ? <CircularProgress size={20} color="inherit" />
-                        : <Typography sx={{ fontSize: isSmallScreen? ".80rem !important" : "1rem !important"}}>{new Intl.NumberFormat("en-US", { minimumIntegerDigits: 1, notation: 'compact' }).format(parseInt(honeyStashAmountWithBonus.toString()))} $HNY - {new Intl.NumberFormat("en-US", { minimumIntegerDigits: 2 }).format(parseInt(honeyStashPrice))} MATIC</Typography>
+                        : <Typography sx={{ fontSize: isSmallScreen? ".79rem !important" : "1rem !important"}}>{new Intl.NumberFormat("en-US", { minimumIntegerDigits: 1, notation: 'compact' }).format(parseInt(honeyStashAmountWithBonus.toString()))} $HNY - {new Intl.NumberFormat("en-US", { minimumIntegerDigits: 2 }).format(parseInt(honeyStashPrice))} MATIC</Typography>
                       }
                     </Button>
                 </Box>

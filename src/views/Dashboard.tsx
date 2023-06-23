@@ -133,18 +133,8 @@ function Dashboard(props: PolygonProps) {
   }
 
   return (
-    <Box className={isSmallScreen? "inner-container-mobile" : "inner-container"} sx={{zIndex: "1 !important", position: "relative"}}>
-      {/* <Box
-        sx={{
-          height: isSmallScreen ? "100dvh" : "100dvh",
-          display: "flex",
-          flexDirection: "column",
-          justifyContent: "center",
-          alignItems: "center",
-          width: "100%",
-          zIndex: "1 !important",
-        }}
-      > */}
+    // <Box className={isSmallScreen? "inner-container-mobile" : "inner-container"} sx={{zIndex: "1 !important", position: "relative"}}>
+    <Box className={isSmallScreen? "inner-container-mobile" : "inner-container"}>
         <Box className="row-left">
             {!isSmallScreen && <Typography className="page-header-small">
               Dashboard
@@ -196,7 +186,6 @@ function Dashboard(props: PolygonProps) {
             </Box>
           </Box>
         </Box>
-      {/* </Box> */}
     </Box>
   );
 }
