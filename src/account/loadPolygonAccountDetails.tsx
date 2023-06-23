@@ -486,10 +486,16 @@ export function LoadPolygonAccountDetails(): PolygonAccountDetails {
     }
   }
 
-  async function buyHnyWithMATIC() {
+  async function buyHnyWithMATIC(maticToTransfer: BigNumber) {
     try {
+      console.log(maticToTransfer);
+      console.log(parseInt(maticToTransfer.toString()));
       const buyHnyWithMATICResults = await honeyExchangeContract?.call(
-        "buyHnyWithMATIC"
+        "buyHnyWithMATIC",
+        [maticToTransfer.mul(BigNumber.from(10).pow(18))],
+        {
+          value: maticToTransfer.mul(BigNumber.from(10).pow(18)),
+        }
       );
       console.log(buyHnyWithMATICResults);
       return buyHnyWithMATICResults;
