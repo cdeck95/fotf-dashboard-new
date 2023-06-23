@@ -504,10 +504,7 @@
 
 .half-col {
   height: 100%;
-  /* max-height: 30dvh; */
-  /* min-height: 30dvh; */
   width: 50%;
-  /* min-height: 265px; */
   display: flex;
   flex-direction: column;
   justify-content: space-between;

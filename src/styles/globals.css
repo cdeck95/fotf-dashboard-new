@@ -126,8 +126,6 @@ body {
   justify-content: space-around;
   width: 100%;
   align-items: center;
-  /* height: 31dvh;
-  max-height: 31dvh; */
   margin-bottom: 15px;
 }
 
@@ -137,8 +135,6 @@ body {
   justify-content: space-around;
   width: 100%;
   align-items: center;
-  /* height: 29dvh;
-  max-height: 29dvh; */
   margin-bottom: 10px;
 }
 
@@ -147,9 +143,6 @@ body {
   flex-direction: row;
   justify-content: space-evenly;
   width: 100%;
-  /* max-height: 25dvh;
-  min-height: 25dvh;
-  height: 25dvh; */
   overflow-y: auto;
 }
 
@@ -158,9 +151,6 @@ body {
   flex-direction: row;
   justify-content: space-around;
   width: 100%;
-  /* max-height: 25dvh;
-  min-height: 25dvh;
-  height: 25dvh; */
   overflow-y: auto;
 }
 
@@ -170,8 +160,6 @@ body {
   flex-direction: row;
   justify-content: flex-start;
   width: 100%;
-  /* max-height: 5dvh;
-  min-height: 5dvh; */
   text-align: left;
 }
 
