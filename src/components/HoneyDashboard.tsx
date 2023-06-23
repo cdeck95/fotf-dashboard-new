@@ -91,13 +91,13 @@ function HoneyDashboard(props: PolygonPropsNoNav) {
       };
 
     return (
-        <Box sx={{height: "100%", width: "100%", paddingLeft: "5px", paddingRight: "5px", paddingBottom: "10px", backgroundColor: "#fff", borderRadius: "10px"}}>
+        <Box sx={{display: "flex", flexDirection: "column", height: "100%", width: "100%", paddingLeft: "5px", paddingRight: "5px", paddingBottom: "10px", backgroundColor: "#fff", borderRadius: "10px"}}>
             <Box className="first-row-space-around-honey">
               <Typography className="page-header-small-mobile">
                   Quick Purchase Amounts w/ Bonus
               </Typography>
             </Box>
-            <Box className="row-space-around-honey" sx={{height: "80%"}}>
+            <Box className="row-space-even-honey" sx={{height: "100%"}}>
                 <Box className="column-between-honey">
                     <img src={honeyPot} alt="honey pot" className={isSmallScreen ? "honeyImage-mobile" : "honeyImage"}/>
                     <Button className="dashboard-button" disabled={(tokenProps.honeyPotPrice.toString()==="-10" || !canBuyPot)} variant="contained" color="primary" onClick={() => buyHoneyPot()} sx={{ marginTop: isSmallScreen? "0px": "5px", fontSize: isSmallScreen? ".80rem !important" : "1rem !important"}}>
