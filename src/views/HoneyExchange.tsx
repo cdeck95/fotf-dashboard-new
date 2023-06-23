@@ -194,7 +194,7 @@ function HoneyExchange(props: PolygonPropsNoNav) {
           </Typography>}
         </Box>
         <Box className={isSmallScreen? "column-center-full-container" : "row-space-around-dash"}>
-          <Box className="row-space-around-dash">
+          <Box className={isSmallScreen? "column-center-full-container" : "row-space-around-dash"}>
             <Box className="column-between">
               <Box className="row-space-around">
                 <Box className="column-around" sx={{padding: "10px"}}>
@@ -218,7 +218,7 @@ function HoneyExchange(props: PolygonPropsNoNav) {
                 </Box>
               </Box>
             </Box>
-            <Box className="honey-exchange-col">
+            <Box className={isSmallScreen? "honey-exchange-col-full" : "honey-exchange-col"}>
               <Box className="row-exchange" sx={{ justifyContent: "center"}}>
                 <Typography sx={{fontSize: "1.5rem"}}>The Exchange</Typography>
               </Box>
@@ -265,7 +265,7 @@ function HoneyExchange(props: PolygonPropsNoNav) {
             </Box>
           </Box>
         </Box>
-        <Box className={isSmallScreen? "column-center-full-container" : "row-space-around-dash"}>
+        <Box className={isSmallScreen? "column-center-full-container" : "row-space-around-dash"} sx={{marginTop: isSmallScreen? "20px" : "0px" }}>
           <Box className={isSmallScreen? "column-center-full" : "col-large-dashboard"}>
             <HoneyEarnings
                   totalHNYEarnings={totalHNYEarnings}
@@ -279,12 +279,12 @@ function HoneyExchange(props: PolygonPropsNoNav) {
         </Box>
         <Box className={isSmallScreen? "column-center-full-container-last" : "row-space-around-dash"}>
           <Box sx={{height: "100%", width: "100%"}}>
-              <Box className="row-exchange" sx={{justifyContent: "flex-start", marginBottom: "10px"}}>
+              <Box className="row-exchange" sx={{justifyContent: "flex-start"}}>
                 <Typography className="page-header-small-mobile">
                     Quick Purchase Amounts w/ Bonus
                 </Typography>
               </Box>
-              <Box className="row-exchange" >
+              <Box className={isSmallScreen? "column-center-full-container-last" :"row-exchange"}>
                   <Box className="column-between-exchange">
                     <Box className="row-exchange">
                       <Box className="column-between-exchange">
