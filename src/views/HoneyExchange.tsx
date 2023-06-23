@@ -64,6 +64,7 @@ function HoneyExchange(props: PolygonPropsNoNav) {
     const buyHoneyJar = tokenProps.buyHoneyJar!;
     const buyHoneyPot = tokenProps.buyHoneyPot!;
     const buyHoneyStash = tokenProps.buyHoneyStash!;
+    const buyHoneyWithMATIC = tokenProps.buyHnyWithMATIC!;
 
     const maticBalance = parseInt(tokenProps.maticBalance);
     const honeyBalance = tokenProps.honeyBalance;
@@ -93,6 +94,13 @@ function HoneyExchange(props: PolygonPropsNoNav) {
       
     }, [maticBalance]);
 
+    const TedsDailyEarnings = 25;
+    const TeddiesDailyEarnings = 35;
+
+    const [totalFuryTedsEarnings, setTotalFuryTedsEarnings] = useState(0);
+    const [totalTeddiesEarnings, setTotalTeddiesEarnings] = useState(0);
+    const totalHNYEarnings = totalFuryTedsEarnings + totalTeddiesEarnings;
+
     useEffect(() => {
       if (tokens === undefined) {
         return;
@@ -117,14 +125,6 @@ function HoneyExchange(props: PolygonPropsNoNav) {
         }
       }
     }, [tokens]);
-  
-
-    const TedsDailyEarnings = 25;
-    const TeddiesDailyEarnings = 35;
-
-    const [totalFuryTedsEarnings, setTotalFuryTedsEarnings] = useState(0);
-    const [totalTeddiesEarnings, setTotalTeddiesEarnings] = useState(0);
-    const totalHNYEarnings = totalFuryTedsEarnings + totalTeddiesEarnings;
 
     const [exchangeInput, setExchangeInput] = useState<BigNumber>(BigNumber.from(0));
     const [honeyForExchange, setHoneyForExchange] = useState<BigNumber>(BigNumber.from(0));
@@ -177,12 +177,13 @@ function HoneyExchange(props: PolygonPropsNoNav) {
   };
 
   function purchaseHoney(): void {
-    console.log("purchase Honey clicked");
-    if(IS_DISABLED) {
-      setShowError(true);
-      setErrorCode(4);
-      return;
-    }  
+    // console.log("purchase Honey clicked");
+    // if(IS_DISABLED) {
+    //   setShowError(true);
+    //   setErrorCode(4);
+    //   return;
+    // }  
+    buyHoneyWithMATIC(exchangeInput);
   }
 
     return (
@@ -228,6 +229,7 @@ function HoneyExchange(props: PolygonPropsNoNav) {
                 >
                   <InputBase
                     sx={{ ml: 1, flex: 1 }}
+                    disabled={isLoadingHoneyExchangeContract}
                     type="number"
                     placeholder="0"
                     inputProps={{ 'aria-label': 'Enter ETH to Exchange for $HNY' }}
@@ -245,7 +247,8 @@ function HoneyExchange(props: PolygonPropsNoNav) {
                 </Paper>
               </Box>
               <Box className="row-exchange">
-                <Button variant="contained" disabled={isLoadingHoneyExchangeContract} color="primary" className="exchange-button" sx={{ fontSize: "1.5rem" }} onClick={() => purchaseHoney()} >
+                <Button variant="contained" disabled={isLoadingHoneyExchangeContract} color="primary" className="exchange-button" 
+                sx={{ fontSize: "1.5rem" }} onClick={() => purchaseHoney()} >
                   Purchase $HNY
                 </Button>
               </Box>
@@ -307,7 +310,7 @@ function HoneyExchange(props: PolygonPropsNoNav) {
                           <Typography sx={{fontSize: "1.5rem"}}>Sour Gummies</Typography>
                           <Typography className="accent-text">250,000 $HNY</Typography>
                         </Box>
-                          <Button disabled={isLoadingHoneyExchangeContract} className="exchange-button" variant="contained" color="primary" onClick={() => buyGummies()}>Buy Now</Button>
+                          <Button disabled={isLoadingHoneyExchangeContract || IS_DISABLED} className="exchange-button" variant="contained" color="primary" onClick={() => buyGummies()}>Buy Now</Button>
                       </Box>
                     </Box>
                   </Box>
@@ -321,7 +324,7 @@ function HoneyExchange(props: PolygonPropsNoNav) {
                           <Typography sx={{fontSize: "1.5rem"}}>Codename: Flavor</Typography>
                           <Typography className="accent-text">75,000 $HNY</Typography>
                         </Box>
-                          <Button disabled={isLoadingHoneyExchangeContract} className="exchange-button" variant="contained" color="primary" onClick={() => buyCodenameFlavor()}>Buy Now</Button>
+                          <Button disabled={isLoadingHoneyExchangeContract || IS_DISABLED} className="exchange-button" variant="contained" color="primary" onClick={() => buyCodenameFlavor()}>Buy Now</Button>
                       </Box>
                     </Box>
                   </Box>
@@ -335,7 +338,7 @@ function HoneyExchange(props: PolygonPropsNoNav) {
                           <Typography sx={{fontSize: "1.5rem"}}>FOTF Logo Shirt</Typography>
                           <Typography className="accent-text">125,000 $HNY</Typography>
                         </Box>
-                          <Button disabled={isLoadingHoneyExchangeContract} className="exchange-button" variant="contained" color="primary" onClick={() => buyFOTFShirt()}>Buy Now</Button>
+                          <Button disabled={isLoadingHoneyExchangeContract || IS_DISABLED} className="exchange-button" variant="contained" color="primary" onClick={() => buyFOTFShirt()}>Buy Now</Button>
                       </Box>
                     </Box>
                   </Box>
