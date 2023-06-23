@@ -17,6 +17,8 @@ import tedMintLogo from "../assets/tedMint.png"
 import "../styles/HoneyExchange.css";
 import SwapHorizOutlinedIcon from '@mui/icons-material/SwapHorizOutlined';
 import ErrorDialog from "../components/ErrorDialog";
+import aiTedMintLogo from "../assets/aiTedMint.png";
+
 
 const IS_DISABLED = true;
 
@@ -288,7 +290,7 @@ function HoneyExchange(props: PolygonPropsNoNav) {
                   <Box className="column-between-exchange">
                     <Box className="row-exchange">
                       <Box className="column-between-exchange">
-                        <img src={tedMintLogo} alt="honey pot" 
+                        <img src={aiTedMintLogo} alt="honey pot" 
                         className={isSmallScreen ? "exchangeImage-mobile" : "exchangeImage"}/>
                       </Box>
                       <Box className="column-around">
