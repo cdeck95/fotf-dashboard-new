@@ -319,9 +319,11 @@
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  /* align-items: center; */
-  text-align: center;
-  width: 31%;
+  height: 100%;
+  width: 32%;
+  align-items: center;
+  margin-left: 5px;
+  margin-right: 5px;
 }
 
 
@@ -393,7 +395,7 @@
 .honeyImage {
   width: 90%;
   height: 75%;
-  padding-bottom: 5px;
+  /* padding-bottom: 5px; */
   margin: auto;
   object-fit: contain;
 }

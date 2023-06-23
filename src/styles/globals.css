@@ -142,6 +142,17 @@ body {
   margin-bottom: 10px;
 }
 
+.row-space-even-honey {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  width: 100%;
+  /* max-height: 25dvh;
+  min-height: 25dvh;
+  height: 25dvh; */
+  overflow-y: auto;
+}
+
 .row-space-around-honey {
   display: flex;
   flex-direction: row;
@@ -152,6 +163,7 @@ body {
   height: 25dvh; */
   overflow-y: auto;
 }
+
 
 .first-row-space-around-honey{
   display: flex;

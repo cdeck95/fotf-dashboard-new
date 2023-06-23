@@ -126,7 +126,7 @@ function HoneyExchange(props: PolygonPropsNoNav) {
           );
         }
       }
-    }, [tokens]);
+    }, [tokens, tokens.Teds, tokens.Teddies, tokens.Teds?.tokens, tokens.Teddies?.tokens,]);
 
     const [exchangeInput, setExchangeInput] = useState<BigNumber>(BigNumber.from(0));
     const [honeyForExchange, setHoneyForExchange] = useState<BigNumber>(BigNumber.from(0));
