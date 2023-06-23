@@ -678,7 +678,7 @@ body {
 
 .inner-container {
   width: 100%;
-  height: 100dvh;
+  height: 100%;
   margin: auto;
   padding-left: 10px;
   padding-right: 10px;
@@ -702,7 +702,7 @@ body::-webkit-scrollbar{
 
 .inner-container-mint {
   width: 100%;
-  height: 100dvh;
+  height: 100%;
   margin: auto;
   padding-left: 10px;
   padding-right: 10px;
@@ -717,7 +717,7 @@ body::-webkit-scrollbar{
 
 .inner-container-mint-mobile {
   width: 100%;
-  height: 100dvh;
+  height: 100%;
   margin: 0;
   padding-left: 10px;
   padding-right: 10px;
