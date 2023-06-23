@@ -91,19 +91,19 @@ function HoneyDashboard(props: PolygonPropsNoNav) {
       };
 
     return (
-        <Box sx={{height: "100%", width: "100%", paddingLeft: "5px", paddingRight: "5px", backgroundColor: "#fff", borderRadius: "10px", overflowY: "auto", position: "relative"}}>
+        <Box sx={{height: "100%", width: "100%", paddingLeft: "5px", paddingRight: "5px", paddingBottom: "10px", backgroundColor: "#fff", borderRadius: "10px"}}>
             <Box className="first-row-space-around-honey">
               <Typography className="page-header-small-mobile">
                   Quick Purchase Amounts w/ Bonus
               </Typography>
             </Box>
-            <Box className="row-space-around-honey">
+            <Box className="row-space-around-honey" sx={{height: "80%"}}>
                 <Box className="column-between-honey">
                     <img src={honeyPot} alt="honey pot" className={isSmallScreen ? "honeyImage-mobile" : "honeyImage"}/>
                     <Button className="dashboard-button" disabled={(tokenProps.honeyPotPrice.toString()==="-10" || !canBuyPot)} variant="contained" color="primary" onClick={() => buyHoneyPot()} sx={{ marginTop: isSmallScreen? "0px": "5px", fontSize: isSmallScreen? ".80rem !important" : "1rem !important"}}>
                       {isLoadingHoneyExchangeContract
                         ? <CircularProgress size={20} color="inherit" />
-                        : <Typography sx={{ fontSize: isSmallScreen? ".80rem !important" : "1rem !important"}}>{new Intl.NumberFormat("en-US", { minimumIntegerDigits: 2, notation: 'compact'}).format(parseInt(honeyPotAmount.toString()))} $HNY - {new Intl.NumberFormat("en-US", { minimumIntegerDigits: 2 }).format(parseInt(honeyPotPrice))} MATIC</Typography>
+                        : <Typography sx={{ fontSize: isSmallScreen? ".80rem !important" : "1rem !important"}}>{new Intl.NumberFormat("en-US", { minimumIntegerDigits: 1, notation: 'compact'}).format(parseInt(honeyPotAmount.toString()))} $HNY - {new Intl.NumberFormat("en-US", { minimumIntegerDigits: 2 }).format(parseInt(honeyPotPrice))} MATIC</Typography>
                        }
                     </Button>
                 </Box>
@@ -112,7 +112,7 @@ function HoneyDashboard(props: PolygonPropsNoNav) {
                     <Button className="dashboard-button" disabled={(tokenProps.honeyJarPrice.toString()==="-10" || !canBuyJar)} variant="contained" color="primary" onClick={() => buyHoneyJar()} sx={{ marginTop: isSmallScreen? "0px": "5px", fontSize: isSmallScreen? ".80rem !important" : "1rem !important"}}>
                       {isLoadingHoneyExchangeContract
                         ? <CircularProgress size={20} color="inherit" />
-                        : <Typography sx={{ fontSize: isSmallScreen? ".80rem !important" : "1rem !important"}}>{new Intl.NumberFormat("en-US", { minimumIntegerDigits: 2, notation: 'compact' }).format(parseInt(honeyJarAmountWithBonus.toString()))} $HNY - {new Intl.NumberFormat("en-US", { minimumIntegerDigits: 2 }).format(parseInt(honeyJarPrice))} MATIC</Typography>
+                        : <Typography sx={{ fontSize: isSmallScreen? ".80rem !important" : "1rem !important"}}>{new Intl.NumberFormat("en-US", { minimumIntegerDigits: 1, notation: 'compact' }).format(parseInt(honeyJarAmountWithBonus.toString()))} $HNY - {new Intl.NumberFormat("en-US", { minimumIntegerDigits: 2 }).format(parseInt(honeyJarPrice))} MATIC</Typography>
                       }
                     </Button>
                 </Box>
@@ -121,7 +121,7 @@ function HoneyDashboard(props: PolygonPropsNoNav) {
                     <Button className="dashboard-button" disabled={(tokenProps.honeyStashPrice.toString()==="-10" || !canBuyStash)} variant="contained" color="primary" onClick={() => buyHoneyStash()} sx={{ marginTop: isSmallScreen? "0px": "5px", fontSize: isSmallScreen? ".80rem !important" : "1rem !important"}}>
                       {isLoadingHoneyExchangeContract
                         ? <CircularProgress size={20} color="inherit" />
-                        : <Typography sx={{ fontSize: isSmallScreen? ".80rem !important" : "1rem !important"}}>{new Intl.NumberFormat("en-US", { minimumIntegerDigits: 2, notation: 'compact' }).format(parseInt(honeyStashAmountWithBonus.toString()))} $HNY - {new Intl.NumberFormat("en-US", { minimumIntegerDigits: 2 }).format(parseInt(honeyStashPrice))} MATIC</Typography>
+                        : <Typography sx={{ fontSize: isSmallScreen? ".80rem !important" : "1rem !important"}}>{new Intl.NumberFormat("en-US", { minimumIntegerDigits: 1, notation: 'compact' }).format(parseInt(honeyStashAmountWithBonus.toString()))} $HNY - {new Intl.NumberFormat("en-US", { minimumIntegerDigits: 2 }).format(parseInt(honeyStashPrice))} MATIC</Typography>
                       }
                     </Button>
                 </Box>

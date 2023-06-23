@@ -48,7 +48,7 @@ function HoneyEarnings(props: HoneyEarningsProps) {
 
     return (
         <Box sx={{width: "100%", height: "100%", padding: "10px", backgroundColor: "#fff", borderRadius: "10px"}}>
-            <Box className="row-space-between" sx={{height: "20%"}}>
+            <Box className="row-space-between">
                 <Typography className="page-header-small">
                     My Earnings - $HNY
                 </Typography>
