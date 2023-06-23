@@ -35,6 +35,8 @@ function ConnectWalletPage(props: ConnectWalletPageProps) {
   const isLoadingTeddyContract = props.isLoadingTeddyContract;
 
   const [searchInput, setSearchInput] = useState("");
+  const [searchInputTeddy, setSearchInputTeddy] = useState("");
+
 
   const handleSearch = (e: {
     preventDefault: () => void;
@@ -42,6 +44,14 @@ function ConnectWalletPage(props: ConnectWalletPageProps) {
   }) => {
     e.preventDefault();
     setSearchInput(e.target.value);
+  };
+
+  const handleSearchTeddy = (e: {
+    preventDefault: () => void;
+    target: { value: SetStateAction<string> };
+  }) => {
+    e.preventDefault();
+    setSearchInputTeddy(e.target.value);
   };
 
   const [tedId, setTedId] = useState(1);
@@ -64,6 +74,10 @@ function ConnectWalletPage(props: ConnectWalletPageProps) {
 
   const checkTedClaim = async () => {
     setTedId(parseInt(searchInput));
+  }
+
+  const checkTeddyClaim = async () => {
+    setTeddyId(parseInt(searchInputTeddy));
   }
 
   useEffect(() => {
@@ -137,7 +151,7 @@ function ConnectWalletPage(props: ConnectWalletPageProps) {
                     <SearchIcon />
                   </IconButton>
                 </Paper>
-                <Button variant="contained" onClick={checkTedClaim} sx={{width: "100%", fontSize: "26px", letterSpacing: "2px", marginTop: "10px"}}>Check Ted Claim</Button>
+                <Button variant="contained" disabled={isLoadingTedContract} onClick={checkTedClaim} sx={{width: "100%", fontSize: "26px", letterSpacing: "2px", marginTop: "10px"}}>Check Ted Claim</Button>
                 <Typography sx={{ marginTop: "10px", fontSize: "16px", padding: "5px"}}>Please note: this claim checker is updated based on blockchain data from the Ted Rewards Contract. There might be slight delays or sync issues if an ID is checked at the same time is it claimed.
                 </Typography>
               </Box>
@@ -196,14 +210,14 @@ function ConnectWalletPage(props: ConnectWalletPageProps) {
                     sx={{ ml: 1, flex: 1 }}
                     placeholder="Search for Teddy Token ID"
                     inputProps={{ 'aria-label': 'Search for Teddy Token ID' }}
-                    onChange={handleSearch}
-                    value={searchInput}
+                    onChange={handleSearchTeddy}
+                    value={searchInputTeddy}
                   />
                   <IconButton type="button" sx={{ p: '10px' }} aria-label="search">
                     <SearchIcon />
                   </IconButton>
                 </Paper>
-                <Button variant="contained" onClick={checkTedClaim} sx={{width: "100%", fontSize: "26px", letterSpacing: "2px", marginTop: "10px"}}>Check Teddy Claim</Button>
+                <Button variant="contained" disabled={isLoadingTeddyContract} onClick={checkTeddyClaim} sx={{width: "100%", fontSize: "26px", letterSpacing: "2px", marginTop: "10px"}}>Check Teddy Claim</Button>
                 <Typography sx={{ marginTop: "10px", fontSize: "16px", padding: "5px"}}>Please note: this claim checker is updated based on blockchain data from the Teddy Rewards Contract. There might be slight delays or sync issues if an ID is checked at the same time is it claimed.
                 </Typography>
               </Box>
