@@ -213,7 +213,7 @@ function HoneyExchange(props: PolygonPropsNoNav) {
                   {isLoadingHoneyExchangeContract
                   ? <CircularProgress size="1rem" color="inherit" />
                   : <Typography sx={{fontSize: "2.5rem", margin: 0, padding: 0,
-                  marginBlockStart: "0em", marginBlockEnd: "0em"}}>{exchangeRate.toString()} MATIC &rarr; 1 $HNY</Typography>
+                  marginBlockStart: "0em", marginBlockEnd: "0em"}}>1 MATIC &rarr; {tokenProps.exchangeRate.toString()} $HNY</Typography>
                   }
                 </Box>
               </Box>
