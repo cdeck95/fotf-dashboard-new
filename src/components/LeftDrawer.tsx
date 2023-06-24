@@ -333,7 +333,7 @@ function LeftDrawer(props: NavProps) {
           </ListItem>
         </List>
         <Divider />
-        <Typography sx={{ marginTop: "10px", paddingLeft: "18px" }}>
+        {/* <Typography sx={{ marginTop: "10px", paddingLeft: "18px" }}>
           Minting
         </Typography>
         <List>
@@ -377,7 +377,7 @@ function LeftDrawer(props: NavProps) {
             </ListItemButton>
           </ListItem>
         </List>
-        <Divider />
+        <Divider /> */}
         <Typography sx={{ marginTop: "10px", paddingLeft: "18px" }}>
           Economy
         </Typography>
@@ -391,8 +391,11 @@ function LeftDrawer(props: NavProps) {
               <ListItemIcon>
                 <CurrencyExchangeOutlinedIcon fontSize="small" />
               </ListItemIcon>
-              <ListItemText primary={"$HNY Exchange"} />
-            </ListItemButton>
+              <Box className="row">
+                <ListItemText primary={"$HNY Exchange"} />
+                <Chip size="small"  label={<Typography sx={{fontSize: "15px"}}> New &#x2728; </Typography>} color="primary" sx={{maxHeight: "40px", maxWidth: "70px", justifyContent: "flex-start", textAlign: "start", alignItems: "flex-start", marginRight: "25px", marginBottom: "15px", border: "none"}} variant="outlined"/>
+              </Box>
+              </ListItemButton>
           </ListItem>
           <ListItem
             key={"TedClaims"}
