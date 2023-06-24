@@ -580,6 +580,7 @@ function TheFactory(props: PolygonProps) {
     } catch (error) {
       console.log(error);
       setIsLoadingApprovals(false);
+      //setError here
       return false;
     }
   }
@@ -614,6 +615,7 @@ function TheFactory(props: PolygonProps) {
       }
     } else {
       console.log("not approved, error");
+      //setError here
     }
   }
 
