@@ -79,7 +79,7 @@ import tedMintLogo from "../assets/tedMint.png";
 import teddyMintLogo from "../assets/teddyMint.gif";
 import aiTedMintLogo from "../assets/aiTedMint.png";
 
-const IS_DISABLED = true;
+const IS_DISABLED = false;
 const FACTORY_CONTRACT_ADDRESS = "0xe851Fbe10b8B252D31Fe4C246C43584b02045346";
 
 function TheFactory(props: PolygonProps) {
@@ -496,64 +496,125 @@ function TheFactory(props: PolygonProps) {
     setShowError(false);
   };
 
-  // useEffect(() => {
-  //   if(!isLoadingFactoryContract && !isLoadingHoneyContract && !isLoadingAITedContract && !isLoadingTeddyContract && !isLoadingTedContract && address) {
-  //     checkIfApproved();
-  //   }
-  // }, [address, isLoading, isLoadingAITedContract, isLoadingFactoryContract, isLoadingHoneyContract, isLoadingTedContract, isLoadingTeddyContract]);
+  useEffect(() => {
+    if(!isLoadingFactoryContract && !isLoadingHoneyContract && !isLoadingAITedContract && !isLoadingTeddyContract && !isLoadingTedContract && address) {
+      checkIfApproved();
+    }
+  }, [address, isLoading, isLoadingAITedContract, isLoadingFactoryContract, isLoadingHoneyContract, isLoadingTedContract, isLoadingTeddyContract]);
 
 
-  // const [isApprovedTed, setIsApprovedTed] = useState(false);
-  // const [isApprovedTeddy, setIsApprovedTeddy] = useState(false);
-  // const [isApprovedAITed, setIsApprovedAITed] = useState(false);
-  // const [isApprovedHoney, setIsApprovedHoney] = useState(false);
+  const [isApprovedTed, setIsApprovedTed] = useState(false);
+  const [isApprovedTeddy, setIsApprovedTeddy] = useState(false);
+  const [isApprovedAITed, setIsApprovedAITed] = useState(false);
+  const [isApprovedHoney, setIsApprovedHoney] = useState(false);
+  const [honeyApprovalAmount, setHoneyApprovalAmount] = useState(BigNumber.from(0));
 
-  // const checkIfApproved = async () => {
-  //   const isApprovedTed = await tedContract?.erc721.isApproved(address!, FACTORY_CONTRACT_ADDRESS);
-  //   const isApprovedTeddy = await teddyContract?.erc721.isApproved(address!, FACTORY_CONTRACT_ADDRESS);
-  //   const isApprovedAITed = await aiTedContract?.erc721.isApproved(address!, FACTORY_CONTRACT_ADDRESS);
-    // const isApprovedHoney = await honeyContract?.erc721.isApproved(address!, FACTORY_CONTRACT_ADDRESS);
-    // if(!isApprovedTed){
-    //   setIsApprovedTed(false);
-    //   var data = await tedContract?.erc721.setApprovalForAll(address!, true);
-    //   console.log(data);
-    // }
-    // if(!isApprovedTeddy){
-    //   setIsApprovedTeddy(false);
-    //   var dataTeddy = await teddyContract?.erc721.setApprovalForAll(address!, true);
-    //   console.log(dataTeddy);
-    // }
-    // if(!isApprovedAITed){
-    //   setIsApprovedAITed(false);
-    //   var dataAI = await aiTedContract?.erc721.setApprovalForAll(address!, true);
-    //   console.log(dataAI);
-    // }
-    // if(!isApprovedHoney){
-    //   setIsApprovedHoney(false);
-    //   var dataHoney = await honeyContract?.erc721.setApprovalForAll(address!, true);
-    //   console.log(dataHoney);
-    // }
-      // await [insert all 4 contracts]?.setApprovalForAll(factoryContractAddress, true);
-      // }
-      // await contract?.call([burn function], [id]);
-      // }
+  const checkIfApproved = async () => {
+    try {
+      const isApprovedTed = await tedContract?.erc721.isApproved(address!, FACTORY_CONTRACT_ADDRESS);
+      const isApprovedTeddy = await teddyContract?.erc721.isApproved(address!, FACTORY_CONTRACT_ADDRESS);
+      const isApprovedAITed = await aiTedContract?.erc721.isApproved(address!, FACTORY_CONTRACT_ADDRESS);
+      const isApprovedHoney = await honeyContract?.call("allowance", [address, FACTORY_CONTRACT_ADDRESS]);
       
-      // //for honey:
-      // await honeyContract?.approve(stakingContractAddress, true);
-      
-      //Transaction Hash & tell them to copy and paste it and open a ticket
-      
-      //have a delay before they can close it
-  
-  // } 
+      console.log(isApprovedTed);
+      console.log(isApprovedTeddy);
+      console.log(isApprovedAITed);
+      console.log(isApprovedHoney);
 
-  function burn(selectedTokens: NFT[]) {
+      setIsApprovedTed(isApprovedTed!);
+      setIsApprovedTeddy(isApprovedTeddy!);
+      setIsApprovedAITed(isApprovedAITed!);
+      setHoneyApprovalAmount(isApprovedHoney!);
+      if(parseInt(isApprovedHoney?.toString()) > 0){
+        setIsApprovedHoney(isApprovedHoney!);
+      } else {
+        setIsApprovedHoney(false);
+      }
+    } catch (error) {
+        console.log(error);
+      }
+  } 
+
+  const [isLoadingApprovals, setIsLoadingApprovals] = useState(false);
+  const [isLoadingBurn, setIsLoadingBurn] = useState(false);
+
+  const askForApprovals = async (honeyAmountToSend: BigNumber) => {
+    try {
+      if(!isApprovedTed){
+        setIsLoadingApprovals(true);
+        setIsApprovedTed(false);
+        var data = await tedContract?.erc721.setApprovalForAll(FACTORY_CONTRACT_ADDRESS, true);
+        console.log(data);
+        setIsLoadingApprovals(false);
+      }
+      if(!isApprovedTeddy){
+        setIsLoadingApprovals(true);
+        setIsApprovedTeddy(false);
+        var dataTeddy = await teddyContract?.erc721.setApprovalForAll(FACTORY_CONTRACT_ADDRESS, true);
+        console.log(dataTeddy);
+        setIsLoadingApprovals(false);
+      }
+      if(!isApprovedAITed){
+        setIsLoadingApprovals(true);
+        setIsApprovedAITed(false);
+        var dataAI = await aiTedContract?.erc721.setApprovalForAll(FACTORY_CONTRACT_ADDRESS, true);
+        console.log(dataAI);
+        setIsLoadingApprovals(false);
+      }
+      if(!isApprovedHoney){
+        setIsLoadingApprovals(true);
+        setIsApprovedHoney(false);
+        if(honeyAmountToSend.toString() === "0") {
+          console.log("just burning, not sending honey... skipping approval for honey");
+        } else {
+          const payableAmountPerHoney = BigNumber.from(honeyAmountToSend).mul(
+            BigNumber.from(10).pow(18)
+          );
+          const dataHoney = await honeyContract?.call("approve", [FACTORY_CONTRACT_ADDRESS, payableAmountPerHoney]);
+          console.log(dataHoney);
+          setIsLoadingApprovals(false);
+        } 
+      }
+      setIsLoadingApprovals(false);
+      return true;
+    } catch (error) {
+      console.log(error);
+      setIsLoadingApprovals(false);
+      return false;
+    }
+  }
+
+  async function burn(selectedTokens: NFT[]) {
     console.log("burn for hny clicked");
     if(IS_DISABLED) {
       setShowError(true);
       setErrorCode(4);
       return;
     }  
+    const isApproved = await askForApprovals(BigNumber.from(0));
+    console.log(isApproved);
+    if(isApproved){
+      console.log("approved");
+      setIsLoadingBurn(true);
+      console.log(selectedTokenContracts);
+      console.log(selectedTokensIDs);
+      try {
+        const startTx = await theFactoryContract?.call("startTheFactory", [selectedTokenContracts, selectedTokensIDs]);
+        console.log(startTx);
+        const burnTx = await theFactoryContract?.call("incinerate", [selectedTokenContracts, selectedTokensIDs]);
+        console.log(burnTx);
+        setIsLoadingBurn(false);
+        setSelectedTokenContracts([]);
+        setSelectedTokensIDs([]);
+        setSelectedTokens([]);
+      } catch (error) {
+        //setError here
+        console.log(error);
+        setIsLoadingBurn(false);
+      }
+    } else {
+      console.log("not approved, error");
+    }
   }
 
   function burnForOneOfOne(selectedTokens: NFT[]) {
@@ -1029,6 +1090,19 @@ function TheFactory(props: PolygonProps) {
         loadingCode={3}
         onClose={() => setIsLoadingAWS(false)}
       />
+
+    <LoadingDialog
+        open={isLoadingApprovals}
+        loadingCode={4}
+        onClose={() => setIsLoadingApprovals(false)}
+      />
+
+<LoadingDialog
+        open={isLoadingBurn}
+        loadingCode={5}
+        onClose={() => setIsLoadingBurn(false)}
+      />
+
 
       <ErrorDialog
         open={showError}
