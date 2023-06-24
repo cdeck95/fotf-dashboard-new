@@ -496,22 +496,22 @@ function TheFactory(props: PolygonProps) {
     setShowError(false);
   };
 
-  useEffect(() => {
-    if(!isLoadingFactoryContract && !isLoadingHoneyContract && !isLoadingAITedContract && !isLoadingTeddyContract && !isLoadingTedContract && address) {
-      checkIfApproved();
-    }
-  }, [address, isLoading, isLoadingAITedContract, isLoadingFactoryContract, isLoadingHoneyContract, isLoadingTedContract, isLoadingTeddyContract]);
+  // useEffect(() => {
+  //   if(!isLoadingFactoryContract && !isLoadingHoneyContract && !isLoadingAITedContract && !isLoadingTeddyContract && !isLoadingTedContract && address) {
+  //     checkIfApproved();
+  //   }
+  // }, [address, isLoading, isLoadingAITedContract, isLoadingFactoryContract, isLoadingHoneyContract, isLoadingTedContract, isLoadingTeddyContract]);
 
 
-  const [isApprovedTed, setIsApprovedTed] = useState(false);
-  const [isApprovedTeddy, setIsApprovedTeddy] = useState(false);
-  const [isApprovedAITed, setIsApprovedAITed] = useState(false);
-  const [isApprovedHoney, setIsApprovedHoney] = useState(false);
+  // const [isApprovedTed, setIsApprovedTed] = useState(false);
+  // const [isApprovedTeddy, setIsApprovedTeddy] = useState(false);
+  // const [isApprovedAITed, setIsApprovedAITed] = useState(false);
+  // const [isApprovedHoney, setIsApprovedHoney] = useState(false);
 
-  const checkIfApproved = async () => {
-    const isApprovedTed = await tedContract?.erc721.isApproved(address!, FACTORY_CONTRACT_ADDRESS);
-    const isApprovedTeddy = await teddyContract?.erc721.isApproved(address!, FACTORY_CONTRACT_ADDRESS);
-    const isApprovedAITed = await aiTedContract?.erc721.isApproved(address!, FACTORY_CONTRACT_ADDRESS);
+  // const checkIfApproved = async () => {
+  //   const isApprovedTed = await tedContract?.erc721.isApproved(address!, FACTORY_CONTRACT_ADDRESS);
+  //   const isApprovedTeddy = await teddyContract?.erc721.isApproved(address!, FACTORY_CONTRACT_ADDRESS);
+  //   const isApprovedAITed = await aiTedContract?.erc721.isApproved(address!, FACTORY_CONTRACT_ADDRESS);
     // const isApprovedHoney = await honeyContract?.erc721.isApproved(address!, FACTORY_CONTRACT_ADDRESS);
     // if(!isApprovedTed){
     //   setIsApprovedTed(false);
@@ -545,7 +545,7 @@ function TheFactory(props: PolygonProps) {
       
       //have a delay before they can close it
   
-  } 
+  // } 
 
   function burn(selectedTokens: NFT[]) {
     console.log("burn for hny clicked");
