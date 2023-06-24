@@ -80,6 +80,7 @@ import teddyMintLogo from "../assets/teddyMint.gif";
 import aiTedMintLogo from "../assets/aiTedMint.png";
 
 const IS_DISABLED = true;
+const FACTORY_CONTRACT_ADDRESS = "0xe851Fbe10b8B252D31Fe4C246C43584b02045346";
 
 function TheFactory(props: PolygonProps) {
   useTitle("FOTF | The Factory");
@@ -99,6 +100,10 @@ function TheFactory(props: PolygonProps) {
   // const isMismatched = useNetworkMismatch(); // Detect if user is connected to the wrong network
   // const [showMismatch, setShowMismatch] = useState(false);
 
+  const {contract: theFactoryContract, isLoading: isLoadingFactoryContract } = useContract(FACTORY_CONTRACT_ADDRESS);
+  console.log(theFactoryContract);
+  console.log(isLoadingFactoryContract);
+
   const [isSheetOpen, setSheetOpen] = useState(false);
   console.log(`Mobile:  ${isMobile}`);
   console.log(`Small:  ${isSmall}`);
@@ -109,7 +114,7 @@ function TheFactory(props: PolygonProps) {
   console.log(`Is 1920:  ${isFullScreen}`);
 
   const { leftNavOpen, rightNavOpen } = props;
-  const { tokens, isLoadingTed, isLoadingTeddy, isLoadingAI, errorTed, errorTeddy, errorAI, maticBalance, needsFunds } = props.tokenProps;
+  const { tokens, isLoadingTed, isLoadingTeddy, isLoadingAI, errorTed, errorTeddy, errorAI, maticBalance, needsFunds, tedContract, isLoadingTedContract, teddyContract, isLoadingTeddyContract, aiTedContract, isLoadingAITedContract, honeyContract, isLoadingHoneyContract } = props.tokenProps;
   const showMismatch = props.showMismatch;
   console.log(tokens);
   console.log(isLoadingTed);
@@ -491,6 +496,56 @@ function TheFactory(props: PolygonProps) {
     setShowError(false);
   };
 
+  // useEffect(() => {
+  //   if(!isLoadingFactoryContract && !isLoadingHoneyContract && !isLoadingAITedContract && !isLoadingTeddyContract && !isLoadingTedContract && address) {
+  //     checkIfApproved();
+  //   }
+  // }, [address, isLoading, isLoadingAITedContract, isLoadingFactoryContract, isLoadingHoneyContract, isLoadingTedContract, isLoadingTeddyContract]);
+
+
+  // const [isApprovedTed, setIsApprovedTed] = useState(false);
+  // const [isApprovedTeddy, setIsApprovedTeddy] = useState(false);
+  // const [isApprovedAITed, setIsApprovedAITed] = useState(false);
+  // const [isApprovedHoney, setIsApprovedHoney] = useState(false);
+
+  // const checkIfApproved = async () => {
+  //   const isApprovedTed = await tedContract?.erc721.isApproved(address!, FACTORY_CONTRACT_ADDRESS);
+  //   const isApprovedTeddy = await teddyContract?.erc721.isApproved(address!, FACTORY_CONTRACT_ADDRESS);
+  //   const isApprovedAITed = await aiTedContract?.erc721.isApproved(address!, FACTORY_CONTRACT_ADDRESS);
+    // const isApprovedHoney = await honeyContract?.erc721.isApproved(address!, FACTORY_CONTRACT_ADDRESS);
+    // if(!isApprovedTed){
+    //   setIsApprovedTed(false);
+    //   var data = await tedContract?.erc721.setApprovalForAll(address!, true);
+    //   console.log(data);
+    // }
+    // if(!isApprovedTeddy){
+    //   setIsApprovedTeddy(false);
+    //   var dataTeddy = await teddyContract?.erc721.setApprovalForAll(address!, true);
+    //   console.log(dataTeddy);
+    // }
+    // if(!isApprovedAITed){
+    //   setIsApprovedAITed(false);
+    //   var dataAI = await aiTedContract?.erc721.setApprovalForAll(address!, true);
+    //   console.log(dataAI);
+    // }
+    // if(!isApprovedHoney){
+    //   setIsApprovedHoney(false);
+    //   var dataHoney = await honeyContract?.erc721.setApprovalForAll(address!, true);
+    //   console.log(dataHoney);
+    // }
+      // await [insert all 4 contracts]?.setApprovalForAll(factoryContractAddress, true);
+      // }
+      // await contract?.call([burn function], [id]);
+      // }
+      
+      // //for honey:
+      // await honeyContract?.approve(stakingContractAddress, true);
+      
+      //Transaction Hash & tell them to copy and paste it and open a ticket
+      
+      //have a delay before they can close it
+  
+  // } 
 
   function burn(selectedTokens: NFT[]) {
     console.log("burn for hny clicked");
@@ -577,7 +632,7 @@ function TheFactory(props: PolygonProps) {
         isSmallScreen
           ? "factory-inner-container-mobile"
           : "factory-inner-container"
-      } sx={{zIndex: "1 !important", position: "relative", overflowY: "hidden !important"}}
+      } sx={{zIndex: "1 !important", position: "relative"}}
     >
 {/* 
   {isLoading && <Backdrop
@@ -704,7 +759,9 @@ function TheFactory(props: PolygonProps) {
          
           
         </Box>
-      <Box>
+      <Box sx={{
+              overflowY: "auto !important"
+            }}>
         {errorAI && errorTed && errorTeddy ? (
           <div>
             <p>NFT not found - error</p>
