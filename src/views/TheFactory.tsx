@@ -580,7 +580,8 @@ function TheFactory(props: PolygonProps) {
     } catch (error) {
       console.log(error);
       setIsLoadingApprovals(false);
-      //setError here
+      setShowError(true);
+      setErrorCode(10);
       return false;
     }
   }
@@ -600,8 +601,8 @@ function TheFactory(props: PolygonProps) {
       console.log(selectedTokenContracts);
       console.log(selectedTokensIDs);
       try {
-        const startTx = await theFactoryContract?.call("startTheFactory", [selectedTokenContracts, selectedTokensIDs]);
-        console.log(startTx);
+        // const startTx = await theFactoryContract?.call("startTheFactory", [selectedTokenContracts, selectedTokensIDs]);
+        // console.log(startTx);
         const burnTx = await theFactoryContract?.call("incinerate", [selectedTokenContracts, selectedTokensIDs]);
         console.log(burnTx);
         setIsLoadingBurn(false);
@@ -609,13 +610,15 @@ function TheFactory(props: PolygonProps) {
         setSelectedTokensIDs([]);
         setSelectedTokens([]);
       } catch (error) {
-        //setError here
+        setShowError(true);
+        setErrorCode(11);
         console.log(error);
         setIsLoadingBurn(false);
       }
     } else {
       console.log("not approved, error");
-      //setError here
+      setShowError(true);
+      setErrorCode(10);
     }
   }
 

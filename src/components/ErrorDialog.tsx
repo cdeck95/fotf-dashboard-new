@@ -53,6 +53,10 @@ function ErrorDialog(props: FailureDialogProps) {
         return `${collection}`;
       case 9:
         return `We could not find this token in your wallet. Please refresh and try again. If this continues to happen, please open a ticket within the FOTF Discord.`;
+      case 10:
+        return `We ran into an error trying to check whether you are approved to burn. Please try again. If this keeps happening please open a ticket in the FOTF Discord.`;
+      case 11:
+        return `We ran into an error trying to burn your token. Please try again. If this keeps happening please open a ticket in the FOTF Discord.`;
       default:
         return "Something went wrong. We are not sure exactly what. Please refresh the page. If this continues to happen, please open a ticket within the FOTF Discord.";
     }
