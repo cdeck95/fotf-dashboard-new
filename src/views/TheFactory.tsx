@@ -78,6 +78,7 @@ import SearchIcon from '@mui/icons-material/Search';
 import tedMintLogo from "../assets/tedMint.png";
 import teddyMintLogo from "../assets/teddyMint.gif";
 import aiTedMintLogo from "../assets/aiTedMint.png";
+import { CollectionsOutlined } from "@mui/icons-material";
 
 const IS_DISABLED = false;
 const FACTORY_CONTRACT_ADDRESS = "0xe851Fbe10b8B252D31Fe4C246C43584b02045346";
@@ -169,6 +170,9 @@ function TheFactory(props: PolygonProps) {
   const tedBurnWorth = 125000;
   const teddyBurnWorth = 250000;
   const aiTedBurnWorth = 50000;
+
+  // console.log(BigNumber.from(tedBurnWorth).mul(BigNumber.from(10).pow(18)).toString());
+  // console.log(BigNumber.from(teddyBurnWorth).mul(BigNumber.from(10).pow(18)).toString());
 
   const [columns, setColumns] = useState(3);
 
@@ -537,6 +541,11 @@ function TheFactory(props: PolygonProps) {
 
   const [isLoadingApprovals, setIsLoadingApprovals] = useState(false);
   const [isLoadingBurn, setIsLoadingBurn] = useState(false);
+  const [successBurn, setSuccessBurn] = useState(false);
+  const [burnCount, setBurnCount] = useState(0);
+  const [honeyRewards, setHoneyRewards] = useState("");
+
+
 
   const askForApprovals = async (honeyAmountToSend: BigNumber) => {
     try {
@@ -606,6 +615,9 @@ function TheFactory(props: PolygonProps) {
         const burnTx = await theFactoryContract?.call("incinerate", [selectedTokenContracts, selectedTokensIDs]);
         console.log(burnTx);
         setIsLoadingBurn(false);
+        setSuccessBurn(true);
+        setBurnCount(selectedTokensIDs.length);
+        setHoneyRewards(burnRewards);
         setSelectedTokenContracts([]);
         setSelectedTokensIDs([]);
         setSelectedTokens([]);
@@ -1079,8 +1091,17 @@ function TheFactory(props: PolygonProps) {
       <SuccessDialog
         open={successAWS}
         setOpen={setSuccessAWS}
-        successCode={4}
+        successCode={1}
       />
+
+      <SuccessDialog
+        open={successBurn}
+        setOpen={setSuccessBurn}
+        successCode={3}
+        count={burnCount}
+        honeyRewards={parseInt(honeyRewards)}
+      />
+
 
     {renameFlag && <RenameDialog
         open={renameFlag}
