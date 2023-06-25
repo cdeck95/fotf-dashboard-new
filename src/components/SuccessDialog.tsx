@@ -26,10 +26,11 @@ export interface SuccessDialogProps {
   successCode: number;
   collection?: string;
   count?: number;
+  honeyRewards?: number;
 }
 
 function SuccessDialog(props: SuccessDialogProps) {
-  const { open, successCode, setOpen, collection, count } = props;
+  const { open, successCode, setOpen, collection, count, honeyRewards } = props;
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
 
@@ -43,6 +44,8 @@ function SuccessDialog(props: SuccessDialogProps) {
         return "You have successfully renamed your Ted!";
       case 2:
         return `You have officially minted ${count} ${collection} NFTs on Polygon! You can view them in your OpenSea profile to check them out!`;
+      case 3:
+        return `You have successfully burned your ${count} NFTs for ${honeyRewards} $HNY!`;
       default:
         return "Please refresh the page to see your results.";
     }

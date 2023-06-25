@@ -45,6 +45,10 @@ function LoadingDialog(props: LoadingDialogProps) {
         return `Minting ${collectionCount} ${collection} ... hang tight!`;
       case 3:
         return `Renaming your Ted... hang tight!`;
+      case 4:
+        return `Approving contracts... hang tight!`;
+      case 5:
+        return `Burning... hang tight!`;
       default:
         return "Loading... hang tight!";
     }
