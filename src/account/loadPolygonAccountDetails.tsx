@@ -512,42 +512,42 @@ export function LoadPolygonAccountDetails(): PolygonAccountDetails {
   }
 
   useEffect(() => {
-    if(!honeyExchangeContract){
-      return;
+    if(honeyExchangeContract){
+      const getExchangeRate = async () => {
+        const rate = await honeyExchangeContract?.call("exchangeRate");
+        setExchangeRate(rate);
+      };
+  
+      const getHoneyJarPrice = async () => {
+        const price = await honeyExchangeContract?.call("honeyJarPrice");
+        setHoneyJarPrice(price);
+      };
+  
+      const getHoneyPotPrice = async () => {
+        const price = await honeyExchangeContract?.call("honeyPotPrice");
+        setHoneyPotPrice(price);
+      };
+      
+      const getHoneyStashPrice = async () => {
+        const price = await honeyExchangeContract?.call("honeyStashPrice");
+        setHoneyStashPrice(price);
+      };
+  
+      if(exchangeRate.toString() === "-10"){
+        getExchangeRate();
+      }
+      if(honeyJarPrice.toString() === "-10"){
+        getHoneyJarPrice();
+      }
+      if(honeyPotPrice.toString() === "-10"){
+        getHoneyPotPrice();
+      }
+      if(honeyStashPrice.toString() === "-10"){
+        getHoneyStashPrice();
+      }
     }
 
-    const getExchangeRate = async () => {
-      const rate = await honeyExchangeContract?.call("exchangeRate");
-      setExchangeRate(rate);
-    };
-
-    const getHoneyJarPrice = async () => {
-      const price = await honeyExchangeContract?.call("honeyJarPrice");
-      setHoneyJarPrice(price);
-    };
-
-    const getHoneyPotPrice = async () => {
-      const price = await honeyExchangeContract?.call("honeyPotPrice");
-      setHoneyPotPrice(price);
-    };
     
-    const getHoneyStashPrice = async () => {
-      const price = await honeyExchangeContract?.call("honeyStashPrice");
-      setHoneyStashPrice(price);
-    };
-
-    if(exchangeRate.toString() === "-10"){
-      getExchangeRate();
-    }
-    if(honeyJarPrice.toString() === "-10"){
-      getHoneyJarPrice();
-    }
-    if(honeyPotPrice.toString() === "-10"){
-      getHoneyPotPrice();
-    }
-    if(honeyStashPrice.toString() === "-10"){
-      getHoneyStashPrice();
-    }
   }, [honeyExchangeContract, exchangeRate, honeyJarPrice, honeyPotPrice, isLoadingHoneyExchangeContract, honeyStashPrice]);
   
   

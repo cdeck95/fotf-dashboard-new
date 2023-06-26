@@ -461,7 +461,10 @@ function LeftDrawer(props: NavProps) {
               <ListItemIcon>
                 <PrecisionManufacturingOutlinedIcon fontSize="small" />
               </ListItemIcon>
-              <ListItemText primary={"The Factory"} />
+              <Box className="row">
+                <ListItemText primary={"The Factory"} />
+                <Chip size="small"  label={<Typography sx={{fontSize: "15px"}}> New &#x2728; </Typography>} color="primary" sx={{ justifyContent: "flex-start", textAlign: "start", alignItems: "flex-start", marginRight: "45px", marginBottom: "15px", border: "none"}} variant="outlined"/>
+              </Box>
             </ListItemButton>
           </ListItem>
           <ListItem
