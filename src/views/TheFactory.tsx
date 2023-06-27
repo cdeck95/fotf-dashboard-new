@@ -426,9 +426,9 @@ function TheFactory(props: PolygonProps) {
   }, [aiTedNFTs, selectedTokens, tedNFTs, teddyNFTs]);
 
   useEffect(() => {
-    const tedNFTs = tokens.Teds?.tokens;
-    const teddyNFTs = tokens.Teddies?.tokens;
-    const aiTedNFTs = tokens.AITeds?.tokens;
+    // const tedNFTs = tokens.Teds?.tokens;
+    // const teddyNFTs = tokens.Teddies?.tokens;
+    // const aiTedNFTs = tokens.AITeds?.tokens;
     // const stakedTeddiesIDs = tokens.StakedTeddiesIDs?.tokens;
 
     if (!isLoading) {
@@ -442,7 +442,7 @@ function TheFactory(props: PolygonProps) {
         setOwnershipVerified(false);
       }
     }
-  }, [isLoading, tokens]);
+  }, [aiTedNFTs, isLoading, tedNFTs, teddyNFTs, tokens]);
 
   //////////// Header ///////////////////////////
 
@@ -482,7 +482,8 @@ function TheFactory(props: PolygonProps) {
       teddyNFTs?.forEach((nft) => {
         allOwnedNFTs.push(nft);
       });
-    } else {
+    } 
+    else {
       tedNFTs?.forEach((nft) => {
         allOwnedNFTs.push(nft);
       });

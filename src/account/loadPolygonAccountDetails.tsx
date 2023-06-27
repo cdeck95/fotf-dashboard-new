@@ -222,16 +222,16 @@ export function LoadPolygonAccountDetails(): PolygonAccountDetails {
   allOwnedNFTs.aiTedContract = aiTedsPolygonContract;
 
   //////////////////////// TEST //////////////////////////
-  const { contract: TEST_tedPolygonContract } = useContract(TED_TEST_CONTRACT);
-  console.log(TEST_tedPolygonContract);
+  // const { contract: TEST_tedPolygonContract } = useContract(TED_TEST_CONTRACT);
+  // console.log(TEST_tedPolygonContract);
 
-  const { contract: TEST_teddyPolygonContract } =
-    useContract(TEDDY_TEST_CONTRACT);
-  console.log(TEST_teddyPolygonContract);
+  // const { contract: TEST_teddyPolygonContract } =
+  //   useContract(TEDDY_TEST_CONTRACT);
+  // console.log(TEST_teddyPolygonContract);
 
-  const { contract: TEST_aiTedPolygonContract } =
-    useContract(AI_TED_TEST_CONTRACT);
-  console.log(TEST_aiTedPolygonContract);
+  // const { contract: TEST_aiTedPolygonContract } =
+  //   useContract(AI_TED_TEST_CONTRACT);
+  // console.log(TEST_aiTedPolygonContract);
 
   /////////////// Load Polygon Teds ///////////////////////
   const {
@@ -585,76 +585,76 @@ export function LoadPolygonAccountDetails(): PolygonAccountDetails {
     }
   }
 
-  async function testbridgeTeds() {
-    try {
-      const bridgeResults = await TEST_tedPolygonContract?.call("fotfbridge");
-      console.log(bridgeResults);
-      return bridgeResults;
-    } catch (e: any) {
-      console.log(e);
-      console.log(e.message);
-      if (e.message.includes("Reason: user rejected transaction")) {
-        return "User denied transaction signature.";
-      } else if (
-        e.message.includes("Reason: Address has already bridged tokens")
-      ) {
-        return "You have already bridged Teds";
-      } else if (e.message.includes("Reason: Address is not whitelisted")) {
-        return "You are not whitelisted to bridge Teds";
-      } else {
-        alert("Something went wrong, please try again");
-        return e.message;
-      }
-    }
-  }
+  // async function testbridgeTeds() {
+  //   try {
+  //     const bridgeResults = await TEST_tedPolygonContract?.call("fotfbridge");
+  //     console.log(bridgeResults);
+  //     return bridgeResults;
+  //   } catch (e: any) {
+  //     console.log(e);
+  //     console.log(e.message);
+  //     if (e.message.includes("Reason: user rejected transaction")) {
+  //       return "User denied transaction signature.";
+  //     } else if (
+  //       e.message.includes("Reason: Address has already bridged tokens")
+  //     ) {
+  //       return "You have already bridged Teds";
+  //     } else if (e.message.includes("Reason: Address is not whitelisted")) {
+  //       return "You are not whitelisted to bridge Teds";
+  //     } else {
+  //       alert("Something went wrong, please try again");
+  //       return e.message;
+  //     }
+  //   }
+  // }
 
-  async function testbridgeTeddies() {
-    try {
-      const bridgeResults = await TEST_teddyPolygonContract?.call(
-        "teddybridge"
-      );
-      console.log(bridgeResults);
-      return bridgeResults;
-    } catch (e: any) {
-      console.log(e);
-      console.log(e.message);
-      if (e.message.includes("Reason: user rejected transaction")) {
-        return "User denied transaction signature.";
-      } else if (
-        e.message.includes("Reason: Address has already bridged tokens")
-      ) {
-        return "You have already bridged Teddies";
-      } else if (e.message.includes("Reason: Address is not whitelisted")) {
-        return "You are not whitelisted to bridge Teddies";
-      } else {
-        alert("Something went wrong, please try again");
-        return e.message;
-      }
-    }
-  }
+  // async function testbridgeTeddies() {
+  //   try {
+  //     const bridgeResults = await TEST_teddyPolygonContract?.call(
+  //       "teddybridge"
+  //     );
+  //     console.log(bridgeResults);
+  //     return bridgeResults;
+  //   } catch (e: any) {
+  //     console.log(e);
+  //     console.log(e.message);
+  //     if (e.message.includes("Reason: user rejected transaction")) {
+  //       return "User denied transaction signature.";
+  //     } else if (
+  //       e.message.includes("Reason: Address has already bridged tokens")
+  //     ) {
+  //       return "You have already bridged Teddies";
+  //     } else if (e.message.includes("Reason: Address is not whitelisted")) {
+  //       return "You are not whitelisted to bridge Teddies";
+  //     } else {
+  //       alert("Something went wrong, please try again");
+  //       return e.message;
+  //     }
+  //   }
+  // }
 
-  async function testbridgeAITeds() {
-    try {
-      const bridgeResults = await TEST_aiTedPolygonContract?.call("aibridge");
-      console.log(bridgeResults);
-      return bridgeResults;
-    } catch (e: any) {
-      console.log(e);
-      console.log(e.message);
-      if (e.message.includes("Reason: user rejected transaction")) {
-        return "User denied transaction signature.";
-      } else if (
-        e.message.includes("Reason: Address has already bridged tokens")
-      ) {
-        return "You have already bridged AI Teds";
-      } else if (e.message.includes("Reason: Address is not whitelisted")) {
-        return "You are not whitelisted to bridge AI Teds";
-      } else {
-        alert("Something went wrong, please try again");
-        return null;
-      }
-    }
-  }
+  // async function testbridgeAITeds() {
+  //   try {
+  //     const bridgeResults = await TEST_aiTedPolygonContract?.call("aibridge");
+  //     console.log(bridgeResults);
+  //     return bridgeResults;
+  //   } catch (e: any) {
+  //     console.log(e);
+  //     console.log(e.message);
+  //     if (e.message.includes("Reason: user rejected transaction")) {
+  //       return "User denied transaction signature.";
+  //     } else if (
+  //       e.message.includes("Reason: Address has already bridged tokens")
+  //     ) {
+  //       return "You have already bridged AI Teds";
+  //     } else if (e.message.includes("Reason: Address is not whitelisted")) {
+  //       return "You are not whitelisted to bridge AI Teds";
+  //     } else {
+  //       alert("Something went wrong, please try again");
+  //       return null;
+  //     }
+  //   }
+  // }
 
   async function bridgeTeddies() {
     try {
@@ -701,9 +701,9 @@ export function LoadPolygonAccountDetails(): PolygonAccountDetails {
       }
     }
   }
-  allOwnedNFTs.testbridgeTeds = testbridgeTeds;
-  allOwnedNFTs.testbridgeTeddies = testbridgeTeddies;
-  allOwnedNFTs.testbridgeAITeds = testbridgeAITeds;
+  // allOwnedNFTs.testbridgeTeds = testbridgeTeds;
+  // allOwnedNFTs.testbridgeTeddies = testbridgeTeddies;
+  // allOwnedNFTs.testbridgeAITeds = testbridgeAITeds;
   allOwnedNFTs.bridgeTeds = bridgeTeds;
   allOwnedNFTs.bridgeTeddies = bridgeTeddies;
   allOwnedNFTs.bridgeAITeds = bridgeAITeds;
