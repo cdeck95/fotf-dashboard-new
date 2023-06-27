@@ -27,15 +27,20 @@ export interface SuccessDialogProps {
   collection?: string;
   count?: number;
   honeyRewards?: number;
+  honeySent?: string;
+  tx?: string;
 }
 
 function SuccessDialog(props: SuccessDialogProps) {
-  const { open, successCode, setOpen, collection, count, honeyRewards } = props;
+  const { open, successCode, setOpen, collection, count, honeyRewards, honeySent, tx } = props;
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
 
   const handleClose = () => {
     setOpen(false);
+  };
+  const openDiscord = () => {
+    window.open("https://discord.gg/fotf");
   };
 
   const successText = () => {
@@ -46,6 +51,8 @@ function SuccessDialog(props: SuccessDialogProps) {
         return `You have officially minted ${count} ${collection} NFTs on Polygon! You can view them in your OpenSea profile to check them out!`;
       case 3:
         return `You have successfully burned your ${count} NFTs for ${honeyRewards} $HNY!`;
+      case 4:
+        return `You have successfully sent ${honeySent} $HNY & burned ${count} NFTs and have received your ticket for a Fully Custom 1 of 1 Ted! Please open a ticket in the FOTF Discord and provide the transaction (tx) hash for your ticket. The tx is below for your reference. ${tx}`;
       default:
         return "Please refresh the page to see your results.";
     }
@@ -110,6 +117,20 @@ function SuccessDialog(props: SuccessDialogProps) {
           </DialogContentText>
         </DialogContent>
         <DialogActions>
+          <Button variant="contained" sx={{
+              fontFamily: "Bebas Neue",
+              fontSize: "24px",
+              marginBottom: "5px",
+              backgroundColor: "yellow",
+              color: "white",
+              "&:hover": {
+                backgroundColor: "white",
+                color: "black",
+                borderColor: "black",
+                borderWidth: "1px",
+                borderStyle: "solid"
+              }
+            }}onClick={openDiscord}>Open FOTF Discord</Button>
           <Button variant="contained" sx={{
             fontFamily: "Bebas Neue",
             fontSize: "24px",

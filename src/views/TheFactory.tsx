@@ -542,8 +542,11 @@ function TheFactory(props: PolygonProps) {
   const [isLoadingApprovals, setIsLoadingApprovals] = useState(false);
   const [isLoadingBurn, setIsLoadingBurn] = useState(false);
   const [successBurn, setSuccessBurn] = useState(false);
+  const [successBurnForOneOfOne, setSuccessBurnForOneOfOne] = useState(false);
   const [burnCount, setBurnCount] = useState(0);
   const [honeyRewards, setHoneyRewards] = useState("");
+  const [honeySent, setHoneySent] = useState("");
+  const [txFor1of1, setTxFor1of1] = useState("");
 
 
 
@@ -610,14 +613,13 @@ function TheFactory(props: PolygonProps) {
       console.log(selectedTokenContracts);
       console.log(selectedTokensIDs);
       try {
-        // const startTx = await theFactoryContract?.call("startTheFactory", [selectedTokenContracts, selectedTokensIDs]);
-        // console.log(startTx);
         const burnTx = await theFactoryContract?.call("incinerate", [selectedTokenContracts, selectedTokensIDs]);
         console.log(burnTx);
         setIsLoadingBurn(false);
         setSuccessBurn(true);
         setBurnCount(selectedTokensIDs.length);
-        setHoneyRewards(burnRewards);
+        setHoneySent((15000000 - parseInt(burnRewards)).toLocaleString());
+        setTxFor1of1(burnTx.toString());
         setSelectedTokenContracts([]);
         setSelectedTokensIDs([]);
         setSelectedTokens([]);
@@ -634,12 +636,40 @@ function TheFactory(props: PolygonProps) {
     }
   }
 
-  function burnForOneOfOne(selectedTokens: NFT[]) {
+  async function burnForOneOfOne(selectedTokens: NFT[]) {
     console.log("burn 1 of 1 clicked");
     if(IS_DISABLED) {
       setShowError(true);
       setErrorCode(4);
       return;
+    }
+    const isApproved = await askForApprovals(BigNumber.from(0));
+    console.log(isApproved);
+    if(isApproved){
+      console.log("approved");
+      setIsLoadingBurn(true);
+      console.log(selectedTokenContracts);
+      console.log(selectedTokensIDs);
+      try {
+        const startTx = await theFactoryContract?.call("startTheFactory", [selectedTokenContracts, selectedTokensIDs]);
+        console.log(startTx);
+        setIsLoadingBurn(false);
+        setSuccessBurnForOneOfOne(true);
+        setBurnCount(selectedTokensIDs.length);
+        setHoneyRewards(burnRewards);
+        setSelectedTokenContracts([]);
+        setSelectedTokensIDs([]);
+        setSelectedTokens([]);
+      } catch (error) {
+        setShowError(true);
+        setErrorCode(11);
+        console.log(error);
+        setIsLoadingBurn(false);
+      }
+    } else {
+      console.log("not approved, error");
+      setShowError(true);
+      setErrorCode(10);
     }
   }
 
@@ -1100,6 +1130,15 @@ function TheFactory(props: PolygonProps) {
         successCode={3}
         count={burnCount}
         honeyRewards={parseInt(honeyRewards)}
+      />
+
+      <SuccessDialog
+        open={successBurnForOneOfOne}
+        setOpen={setSuccessBurnForOneOfOne}
+        successCode={4}
+        count={burnCount}
+        honeySent={honeySent}
+        tx={txFor1of1}
       />
 
 
