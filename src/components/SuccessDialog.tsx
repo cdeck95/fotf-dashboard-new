@@ -27,16 +27,31 @@ export interface SuccessDialogProps {
   collection?: string;
   count?: number;
   honeyRewards?: number;
+  honeySent?: string;
+  tx?: string;
 }
 
 function SuccessDialog(props: SuccessDialogProps) {
-  const { open, successCode, setOpen, collection, count, honeyRewards } = props;
+  const { open, successCode, setOpen, collection, count, honeyRewards, honeySent, tx } = props;
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
+
+  const [copyText, setCopyText] = useState("Copy Message Contents");
 
   const handleClose = () => {
     setOpen(false);
   };
+
+  const openDiscord = () => {
+    window.open("https://discord.gg/fotf");
+  };
+
+  const copyMessage = () => {
+    navigator.clipboard.writeText(successText());
+    setCopyText("Copied!");
+  };
+
+
 
   const successText = () => {
     switch (successCode) {
@@ -46,6 +61,8 @@ function SuccessDialog(props: SuccessDialogProps) {
         return `You have officially minted ${count} ${collection} NFTs on Polygon! You can view them in your OpenSea profile to check them out!`;
       case 3:
         return `You have successfully burned your ${count} NFTs for ${honeyRewards} $HNY!`;
+      case 4:
+        return `You have successfully: \n \n*Sent ${(parseInt(honeySent!)).toLocaleString()} $HNY \n*Burned ${count} NFTs \n \nIn doing so, you will recieve a fully Custom 1 of 1 Ted! Please copy the message contents (including the TX) using the button below & open a ticket in the FOTF Discord to claim your 1 of 1! \n \ntx: ${tx}`;
       default:
         return "Please refresh the page to see your results.";
     }
@@ -104,12 +121,26 @@ function SuccessDialog(props: SuccessDialogProps) {
         {"Success!"}
         </DialogTitle>
         <DialogContent>
-          <DialogContentText sx={{ marginTop: "10px", fontSize: "24px", fontFamily: "Bebas Neue"}} 
+          <DialogContentText sx={{ marginTop: "10px", fontSize: "24px", fontFamily: "Bebas Neue", wordBreak: "break-word", whiteSpace: "pre-wrap"}} 
           id="alert-dialog-slide-description">
           {successText()}
           </DialogContentText>
         </DialogContent>
         <DialogActions>
+          {tx && <Button variant="contained" sx={{
+              fontFamily: "Bebas Neue",
+              fontSize: "24px",
+              marginBottom: "5px",
+              backgroundColor: "#FED100",
+              color: "black",
+              "&:hover": {
+                backgroundColor: "white",
+                color: "#FED100",
+                borderColor: "black",
+                borderWidth: "1px",
+                borderStyle: "solid"
+              }
+            }}onClick={copyMessage}>{copyText}</Button>}
           <Button variant="contained" sx={{
             fontFamily: "Bebas Neue",
             fontSize: "24px",
