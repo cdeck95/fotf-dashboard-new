@@ -127,6 +127,12 @@ export default function ShareMenu(props: ShareMenuProps) {
               >  <TwitterIcon size={32} round/>  
               </TwitterShareButton>
         </MenuItem>
+        <MenuItem onClick={() => downloadImage(token)}>
+          <Typography variant="body2" color="text.secondary"
+          sx={{ fontSize: ".93rem ", overflowWrap: 'break-word !important', whiteSpace: 'normal', wordWrap: 'break-word', maxWidth: "100%" }}>
+            Make sure to download the image & attach it to the post!
+          </Typography>
+        </MenuItem>
        
            
       </MenuList>
