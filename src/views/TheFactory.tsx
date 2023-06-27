@@ -82,6 +82,7 @@ import { CollectionsOutlined } from "@mui/icons-material";
 
 const IS_DISABLED = false;
 const FACTORY_CONTRACT_ADDRESS = "0xe851Fbe10b8B252D31Fe4C246C43584b02045346";
+const FACTORY_V3_CONTRACT_ADDRESS = "0x3456b19A504C02219c46558521a8d0057bA67425";
 
 function TheFactory(props: PolygonProps) {
   useTitle("FOTF | The Factory");
@@ -104,6 +105,10 @@ function TheFactory(props: PolygonProps) {
   const {contract: theFactoryContract, isLoading: isLoadingFactoryContract } = useContract(FACTORY_CONTRACT_ADDRESS);
   console.log(theFactoryContract);
   console.log(isLoadingFactoryContract);
+
+  const {contract: theFactoryContractv3, isLoading: isLoadingFactoryContractv3 } = useContract(FACTORY_V3_CONTRACT_ADDRESS);
+  console.log(theFactoryContractv3);
+  console.log(isLoadingFactoryContractv3);
 
   const [isSheetOpen, setSheetOpen] = useState(false);
   console.log(`Mobile:  ${isMobile}`);
@@ -508,8 +513,11 @@ function TheFactory(props: PolygonProps) {
 
 
   const [isApprovedTed, setIsApprovedTed] = useState(false);
+  const [isApprovedTedV3, setIsApprovedTedV3] = useState(false);
   const [isApprovedTeddy, setIsApprovedTeddy] = useState(false);
+  const [isApprovedTeddyV3, setIsApprovedTeddyV3] = useState(false);
   const [isApprovedAITed, setIsApprovedAITed] = useState(false);
+  const [isApprovedAITedV3, setIsApprovedAITedV3] = useState(false);
   const [isApprovedHoney, setIsApprovedHoney] = useState(false);
   const [honeyApprovalAmount, setHoneyApprovalAmount] = useState(BigNumber.from(0));
 
@@ -518,19 +526,31 @@ function TheFactory(props: PolygonProps) {
       const isApprovedTed = await tedContract?.erc721.isApproved(address!, FACTORY_CONTRACT_ADDRESS);
       const isApprovedTeddy = await teddyContract?.erc721.isApproved(address!, FACTORY_CONTRACT_ADDRESS);
       const isApprovedAITed = await aiTedContract?.erc721.isApproved(address!, FACTORY_CONTRACT_ADDRESS);
-      const isApprovedHoney = await honeyContract?.call("allowance", [address, FACTORY_CONTRACT_ADDRESS]);
+      //const isApprovedHoney = await honeyContract?.call("allowance", [address, FACTORY_CONTRACT_ADDRESS]);
+
+      const isApprovedTedv3 = await tedContract?.erc721.isApproved(address!, FACTORY_V3_CONTRACT_ADDRESS);
+      const isApprovedTeddyv3 = await teddyContract?.erc721.isApproved(address!, FACTORY_V3_CONTRACT_ADDRESS);
+      const isApprovedAITedv3 = await aiTedContract?.erc721.isApproved(address!, FACTORY_V3_CONTRACT_ADDRESS);
+      const isApprovedHoneyv3 = await honeyContract?.call("allowance", [address, FACTORY_V3_CONTRACT_ADDRESS]);
       
       console.log(isApprovedTed);
       console.log(isApprovedTeddy);
       console.log(isApprovedAITed);
-      console.log(isApprovedHoney);
+      //console.log(isApprovedHoney);
+      console.log(isApprovedTedv3);
+      console.log(isApprovedTeddyv3);
+      console.log(isApprovedAITedv3);
+      console.log(isApprovedHoneyv3);
 
       setIsApprovedTed(isApprovedTed!);
+      setIsApprovedTedV3(isApprovedTedv3!);
       setIsApprovedTeddy(isApprovedTeddy!);
+      setIsApprovedTeddyV3(isApprovedTeddyv3!);
       setIsApprovedAITed(isApprovedAITed!);
-      setHoneyApprovalAmount(isApprovedHoney!);
-      if(parseInt(isApprovedHoney?.toString()) > 0){
-        setIsApprovedHoney(isApprovedHoney!);
+      setIsApprovedAITedV3(isApprovedAITedv3!);
+      setHoneyApprovalAmount(isApprovedHoneyv3!);
+      if(parseInt(isApprovedHoneyv3?.toString()) > 0){
+        setIsApprovedHoney(isApprovedHoneyv3!);
       } else {
         setIsApprovedHoney(false);
       }
@@ -547,8 +567,7 @@ function TheFactory(props: PolygonProps) {
   const [honeyRewards, setHoneyRewards] = useState("");
   const [honeySent, setHoneySent] = useState("");
   const [txFor1of1, setTxFor1of1] = useState("");
-
-
+  const honeyAmountToSend = BigNumber.from((15000000 - parseInt(burnRewards)));
 
   const askForApprovals = async (honeyAmountToSend: BigNumber) => {
     try {
@@ -559,6 +578,13 @@ function TheFactory(props: PolygonProps) {
         console.log(data);
         setIsLoadingApprovals(false);
       }
+      if (!isApprovedTedV3){
+        setIsLoadingApprovals(true);
+        setIsApprovedTedV3(false);
+        data = await tedContract?.erc721.setApprovalForAll(FACTORY_V3_CONTRACT_ADDRESS, true);
+        console.log(data);
+        setIsLoadingApprovals(false);
+      }
       if(!isApprovedTeddy){
         setIsLoadingApprovals(true);
         setIsApprovedTeddy(false);
@@ -566,10 +592,25 @@ function TheFactory(props: PolygonProps) {
         console.log(dataTeddy);
         setIsLoadingApprovals(false);
       }
+      if (!isApprovedTeddyV3){
+        setIsLoadingApprovals(true);
+        setIsApprovedTeddyV3(false);
+        dataTeddy = await teddyContract?.erc721.setApprovalForAll(FACTORY_V3_CONTRACT_ADDRESS, true);
+        console.log(dataTeddy);
+        setIsLoadingApprovals(false);
+      }
       if(!isApprovedAITed){
         setIsLoadingApprovals(true);
         setIsApprovedAITed(false);
         var dataAI = await aiTedContract?.erc721.setApprovalForAll(FACTORY_CONTRACT_ADDRESS, true);
+        console.log(dataAI);
+        setIsLoadingApprovals(false);
+      }
+      if (!isApprovedAITedV3){
+        setIsLoadingApprovals(true);
+        setIsApprovedAITedV3(false);
+        //SHOULD I ACTUALLY BE SETTING THIS FALSE?
+        dataAI = await aiTedContract?.erc721.setApprovalForAll(FACTORY_V3_CONTRACT_ADDRESS, true);
         console.log(dataAI);
         setIsLoadingApprovals(false);
       }
@@ -582,7 +623,7 @@ function TheFactory(props: PolygonProps) {
           const payableAmountPerHoney = BigNumber.from(honeyAmountToSend).mul(
             BigNumber.from(10).pow(18)
           );
-          const dataHoney = await honeyContract?.call("approve", [FACTORY_CONTRACT_ADDRESS, payableAmountPerHoney]);
+          const dataHoney = await honeyContract?.call("approve", [FACTORY_V3_CONTRACT_ADDRESS, payableAmountPerHoney]);
           console.log(dataHoney);
           setIsLoadingApprovals(false);
         } 
@@ -643,7 +684,7 @@ function TheFactory(props: PolygonProps) {
       setErrorCode(4);
       return;
     }
-    const isApproved = await askForApprovals(BigNumber.from(0));
+    const isApproved = await askForApprovals(honeyAmountToSend);
     console.log(isApproved);
     if(isApproved){
       console.log("approved");
@@ -651,12 +692,14 @@ function TheFactory(props: PolygonProps) {
       console.log(selectedTokenContracts);
       console.log(selectedTokensIDs);
       try {
-        const startTx = await theFactoryContract?.call("startTheFactory", [selectedTokenContracts, selectedTokensIDs]);
+        const startTx = await theFactoryContractv3?.call("startTheFactory", [selectedTokenContracts, selectedTokensIDs]);
         console.log(startTx);
+        const tx = startTx["receipt"]["transactionHash"];
         setIsLoadingBurn(false);
         setSuccessBurnForOneOfOne(true);
         setBurnCount(selectedTokensIDs.length);
-        setHoneyRewards(burnRewards);
+        setHoneySent(honeyAmountToSend.toString());
+        setTxFor1of1(tx.toString());
         setSelectedTokenContracts([]);
         setSelectedTokensIDs([]);
         setSelectedTokens([]);
@@ -1076,9 +1119,7 @@ function TheFactory(props: PolygonProps) {
               {parseInt(burnRewards).toLocaleString()} $HNY
             </Button>
             <Button className="burn-btn" disabled={!isOneOfEachSelected} onClick={() => burnForOneOfOne(selectedTokens)}>
-              Burn {selectedTokens.length} +{" "}
-              {(15000000 - parseInt(burnRewards)).toLocaleString()} $HNY for
-              Custom 1/1
+              Burn {selectedTokens.length} + {honeyAmountToSend.toString()} $HNY for Custom 1/1
             </Button>
           </Box>
         </Box>

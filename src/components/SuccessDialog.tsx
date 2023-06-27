@@ -36,12 +36,22 @@ function SuccessDialog(props: SuccessDialogProps) {
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
 
+  const [copyText, setCopyText] = useState("Copy Message Contents");
+
   const handleClose = () => {
     setOpen(false);
   };
+
   const openDiscord = () => {
     window.open("https://discord.gg/fotf");
   };
+
+  const copyMessage = () => {
+    navigator.clipboard.writeText(successText());
+    setCopyText("Copied!");
+  };
+
+
 
   const successText = () => {
     switch (successCode) {
@@ -52,7 +62,7 @@ function SuccessDialog(props: SuccessDialogProps) {
       case 3:
         return `You have successfully burned your ${count} NFTs for ${honeyRewards} $HNY!`;
       case 4:
-        return `You have successfully sent ${honeySent} $HNY & burned ${count} NFTs and have received your ticket for a Fully Custom 1 of 1 Ted! Please open a ticket in the FOTF Discord and provide the transaction (tx) hash for your ticket. The tx is below for your reference. ${tx}`;
+        return `You have successfully: \n \n*Sent ${(parseInt(honeySent!)).toLocaleString()} $HNY \n*Burned ${count} NFTs \n \nIn doing so, you will recieve a fully Custom 1 of 1 Ted! Please copy the message contents (including the TX) using the button below & open a ticket in the FOTF Discord to claim your 1 of 1! \n \ntx: ${tx}`;
       default:
         return "Please refresh the page to see your results.";
     }
@@ -111,26 +121,26 @@ function SuccessDialog(props: SuccessDialogProps) {
         {"Success!"}
         </DialogTitle>
         <DialogContent>
-          <DialogContentText sx={{ marginTop: "10px", fontSize: "24px", fontFamily: "Bebas Neue"}} 
+          <DialogContentText sx={{ marginTop: "10px", fontSize: "24px", fontFamily: "Bebas Neue", wordBreak: "break-word", whiteSpace: "pre-wrap"}} 
           id="alert-dialog-slide-description">
           {successText()}
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button variant="contained" sx={{
+          {tx && <Button variant="contained" sx={{
               fontFamily: "Bebas Neue",
               fontSize: "24px",
               marginBottom: "5px",
-              backgroundColor: "yellow",
-              color: "white",
+              backgroundColor: "#FED100",
+              color: "black",
               "&:hover": {
                 backgroundColor: "white",
-                color: "black",
+                color: "#FED100",
                 borderColor: "black",
                 borderWidth: "1px",
                 borderStyle: "solid"
               }
-            }}onClick={openDiscord}>Open FOTF Discord</Button>
+            }}onClick={copyMessage}>{copyText}</Button>}
           <Button variant="contained" sx={{
             fontFamily: "Bebas Neue",
             fontSize: "24px",
