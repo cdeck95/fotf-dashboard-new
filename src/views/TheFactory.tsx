@@ -468,6 +468,9 @@ function TheFactory(props: PolygonProps) {
   const [filteredNFTs, setFilteredNFTs] = useState<NFT[]>([]);
 
   useEffect(() => {
+    if(isLoadingAI || isLoadingTed || isLoadingTeddy){
+      return;
+    }
     const allOwnedNFTs: NFT[] = [];
 
     if(isAIFilter){
@@ -484,18 +487,31 @@ function TheFactory(props: PolygonProps) {
       });
     } 
     else {
-      tedNFTs?.forEach((nft) => {
-        allOwnedNFTs.push(nft);
-      });
-      teddyNFTs?.forEach((nft) => {
-        allOwnedNFTs.push(nft);
-      });
-      aiTedNFTs?.forEach((nft) => {
-        allOwnedNFTs.push(nft);
-      }); 
+      const maxLength = Math.max(tedNFTs!.length, teddyNFTs!.length, aiTedNFTs!.length);
+
+      for (let i = 0; i < maxLength; i++) {
+        if (i < tedNFTs!.length) {
+          allOwnedNFTs.push(tedNFTs![i]);
+        }
+        if (i < teddyNFTs!.length) {
+          allOwnedNFTs.push(teddyNFTs![i]);
+        }
+        if (i < aiTedNFTs!.length) {
+          allOwnedNFTs.push(aiTedNFTs![i]);
+        }
+      }
+      // tedNFTs?.forEach((nft) => {
+      //   allOwnedNFTs.push(nft);
+      // });
+      // teddyNFTs?.forEach((nft) => {
+      //   allOwnedNFTs.push(nft);
+      // });
+      // aiTedNFTs?.forEach((nft) => {
+      //   allOwnedNFTs.push(nft);
+      // }); 
     }
     setFilteredNFTs(allOwnedNFTs?.filter((e) => e.metadata.id!.includes(searchInput)));
-  }, [aiTedNFTs, isAIFilter, isTeddyFilter, isTedFilter, searchInput, teddyNFTs, tedNFTs]);
+  }, [aiTedNFTs, isAIFilter, isTeddyFilter, isTedFilter, searchInput, teddyNFTs, tedNFTs, isLoadingAI, isLoadingTed, isLoadingTeddy]);
   
   console.log(filteredNFTs);
 
