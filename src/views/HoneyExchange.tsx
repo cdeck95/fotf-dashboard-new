@@ -4,7 +4,7 @@ import "../styles/Dashboard.css";
 import { ThirdwebProvider, coinbaseWallet, localWallet, metamaskWallet, safeWallet, useAddress, walletConnect } from "@thirdweb-dev/react";
 import { useSDK } from "@thirdweb-dev/react";
 import ComingSoon from "./ComingSoon";
-import { ethers, BigNumber } from "ethers";
+import { ethers, BigNumber, FixedNumber } from "ethers";
 import { useState, useEffect, SetStateAction } from "react";
 import { useNavigate } from "react-router";
 import { PolygonPropsNoNav } from "./Dashboard";
@@ -128,8 +128,8 @@ function HoneyExchange(props: PolygonPropsNoNav) {
       }
     }, [tokens, tokens.Teds, tokens.Teddies, tokens.Teds?.tokens, tokens.Teddies?.tokens,]);
 
-    const [exchangeInput, setExchangeInput] = useState<BigNumber>(BigNumber.from(0));
-    const [honeyForExchange, setHoneyForExchange] = useState<BigNumber>(BigNumber.from(0));
+    const [exchangeInput, setExchangeInput] = useState<any>(BigNumber.from(0));
+    const [honeyForExchange, setHoneyForExchange] = useState<any>(BigNumber.from(0));
 
     const handleInput = (e: {
       preventDefault: () => void;
@@ -142,10 +142,44 @@ function HoneyExchange(props: PolygonPropsNoNav) {
         return;
       }
       else {
-        setExchangeInput(BigNumber.from(e.target.value));
-        setHoneyForExchange(BigNumber.from(e.target.value).mul(tokenProps.exchangeRate));
+        try {
+          setExchangeInput(BigNumber.from(e.target.value));
+          setHoneyForExchange(BigNumber.from(e.target.value).mul(BigNumber.from(tokenProps.exchangeRate)));
+        } catch (error) {
+          console.log(error);
+          setShowError(true);
+          setErrorCode(12)
+          setExchangeInput(BigNumber.from(0));
+          setHoneyForExchange(BigNumber.from(0));
+        }
       }
     };  
+
+    // const handleReverseInput = (e: {
+    //   preventDefault: () => void;
+    //   target: { value: SetStateAction<string> };
+    // }) => {
+    //   e.preventDefault();
+    //   if(e.target.value === "") {
+    //     setExchangeInput(BigNumber.from(0));
+    //     setHoneyForExchange(BigNumber.from(0));
+    //     return;
+    //   }
+    //   else {
+    //     try {
+    //       const maticFromHoney = FixedNumber.from(e.target.value).divUnsafe(FixedNumber.from(tokenProps.exchangeRate)); 
+    //       console.log(maticFromHoney.toString());
+    //       setExchangeInput(maticFromHoney);
+    //       setHoneyForExchange(BigNumber.from(e.target.value));
+    //     } catch (error) {
+    //       console.log(error);
+    //       setShowError(true);
+    //       setErrorCode(12)
+    //       setExchangeInput(BigNumber.from(0));
+    //       setHoneyForExchange(BigNumber.from(0));
+    //     }
+    //   }
+    // }; 
 
   function buyFOTFShirt(): void {
     console.log("buy FOTF Shirt clicked");
@@ -197,7 +231,7 @@ function HoneyExchange(props: PolygonPropsNoNav) {
         </Box>
         <Box className={isSmallScreen? "column-center-full-container" : "row-space-around-dash"}>
           <Box className={isSmallScreen? "column-center-full-container" : "row-space-around-dash"}>
-            <Box className="column-between">
+            <Box className="column-between" sx={{ width: "50%"}}>
               <Box className="row-space-around">
                 <Box className="column-around" sx={{padding: "10px"}}>
                   <Typography className="learnMore">Current Balance</Typography>
@@ -230,22 +264,23 @@ function HoneyExchange(props: PolygonPropsNoNav) {
                   sx={{ p: '2px 4px', display: 'flex', alignItems: 'center', width: "80%" }}
                 >
                   <InputBase
-                    sx={{ ml: 1, flex: 1 }}
+                    sx={{ ml: 1, flex: 1, minWidth: "75px"  }}
                     disabled={isLoadingHoneyExchangeContract}
                     type="number"
                     placeholder="0"
-                    inputProps={{ 'aria-label': 'Enter ETH to Exchange for $HNY' }}
+                    inputProps={{ 'aria-label': 'Enter MATIC to Exchange for $HNY' }}
                     onChange={handleInput}
                     value={exchangeInput.toString()}
                   />
-                  <Typography sx={{marginLeft: "10px", marginRight: "10px"}}> MATIC </Typography>
-                  <SwapHorizOutlinedIcon sx={{marginLeft: "10px", marginRight: "10px"}}/>
+                  <Typography sx={{marginLeft: "5px", marginRight: "5px"}}> MATIC </Typography>
+                  <SwapHorizOutlinedIcon sx={{marginLeft: "5px", marginRight: "5px"}}/>
                   <InputBase
-                    sx={{ ml: 1, flex: 1 }}
+                    sx={{ ml: 1, flex: 1, minWidth: "75px" }}
+                    disabled={isLoadingHoneyExchangeContract}
                     placeholder="000,000,000"
-                    value={parseInt(honeyForExchange.toString()).toLocaleString("en-US")}
+                    value={honeyForExchange.toString()}
                   />
-                  <Typography sx={{marginLeft: "10px", marginRight: "10px"}}> $HNY </Typography>
+                  <Typography sx={{marginLeft: "5px", marginRight: "5px"}}> $HNY </Typography>
                 </Paper>
               </Box>
               <Box className="row-exchange">
