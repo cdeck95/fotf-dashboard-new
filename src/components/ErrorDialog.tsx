@@ -59,6 +59,8 @@ function ErrorDialog(props: FailureDialogProps) {
         return `We ran into an error trying to burn your token. Please try again. If this keeps happening please open a ticket in the FOTF Discord.`;
       case 12:
         return `Please use whole numbers only.`;
+      case 13:
+        return `You do not have enough MATIC to support this purchase. Please try again.`;
       default:
         return "Something went wrong. We are not sure exactly what. Please refresh the page. If this continues to happen, please open a ticket within the FOTF Discord.";
     }

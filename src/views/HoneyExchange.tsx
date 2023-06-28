@@ -128,8 +128,8 @@ function HoneyExchange(props: PolygonPropsNoNav) {
       }
     }, [tokens, tokens.Teds, tokens.Teddies, tokens.Teds?.tokens, tokens.Teddies?.tokens,]);
 
-    const [exchangeInput, setExchangeInput] = useState<any>(BigNumber.from(0));
-    const [honeyForExchange, setHoneyForExchange] = useState<any>(BigNumber.from(0));
+    const [exchangeInput, setExchangeInput] = useState<BigNumber>(BigNumber.from(0));
+    const [honeyForExchange, setHoneyForExchange] = useState<BigNumber>(BigNumber.from(0));
 
     const handleInput = (e: {
       preventDefault: () => void;
@@ -219,7 +219,20 @@ function HoneyExchange(props: PolygonPropsNoNav) {
     //   setErrorCode(4);
     //   return;
     // }  
-    buyHoneyWithMATIC(exchangeInput);
+    if (parseInt(exchangeInput.toString()) > maticBalance) {
+      setShowError(true);
+      setErrorCode(13);
+      return;
+    }
+    try {
+      buyHoneyWithMATIC(exchangeInput);
+    } catch (error) {
+      console.log(error);
+      setShowError(true);
+      setErrorCode(-1)
+      setExchangeInput(BigNumber.from(0));
+      setHoneyForExchange(BigNumber.from(0));
+    }
   }
 
     return (
