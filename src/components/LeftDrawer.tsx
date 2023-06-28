@@ -333,11 +333,11 @@ function LeftDrawer(props: NavProps) {
           </ListItem>
         </List>
         <Divider />
-        {/* <Typography sx={{ marginTop: "10px", paddingLeft: "18px" }}>
+        <Typography sx={{ marginTop: "10px", paddingLeft: "18px" }}>
           Minting
         </Typography>
         <List>
-          <ListItem
+          {/* <ListItem
             key={"TedMint"}
             disablePadding
             onClick={() => loadPage("TedMint")}
@@ -349,7 +349,7 @@ function LeftDrawer(props: NavProps) {
               <ListItemText primary={"Fury Ted Mint"} />
               <Chip size="small"  label={<Typography sx={{fontSize: "15px"}}> New &#x2728; </Typography>} color="primary" sx={{maxHeight: "40px", maxWidth: "70px", marginRight: "33px", marginBottom: "15px", border: "none"}} variant="outlined"/>
             </ListItemButton>
-          </ListItem>
+          </ListItem> */}
           <ListItem
             key={"TeddyMint"}
             disablePadding
@@ -360,7 +360,7 @@ function LeftDrawer(props: NavProps) {
                 <ChildFriendlyOutlinedIcon fontSize="small" />
               </ListItemIcon>
               <ListItemText primary={"Teddy Mint"} />
-              <Chip size="small"  label={<Typography sx={{fontSize: "15px"}}> New &#x2728; </Typography>} color="primary" sx={{maxHeight: "40px", maxWidth: "70px", marginRight: "50px", marginBottom: "15px", border: "none"}} variant="outlined"/>
+              {/* <Chip size="small"  label={<Typography sx={{fontSize: "15px"}}> New &#x2728; </Typography>} color="primary" sx={{maxHeight: "40px", maxWidth: "70px", marginRight: "50px", marginBottom: "15px", border: "none"}} variant="outlined"/> */}
             </ListItemButton>
           </ListItem>
           <ListItem
@@ -373,11 +373,11 @@ function LeftDrawer(props: NavProps) {
                 <CycloneOutlinedIcon fontSize="small" />
               </ListItemIcon>
               <ListItemText primary={"AI Ted Mint"} />
-              <Chip size="small"  label={<Typography sx={{fontSize: "15px"}}> New &#x2728; </Typography>} color="primary" sx={{maxHeight: "40px", maxWidth: "70px", marginRight: "50px", marginBottom: "15px", border: "none"}} variant="outlined"/>
+              {/* <Chip size="small"  label={<Typography sx={{fontSize: "15px"}}> New &#x2728; </Typography>} color="primary" sx={{maxHeight: "40px", maxWidth: "70px", marginRight: "50px", marginBottom: "15px", border: "none"}} variant="outlined"/> */}
             </ListItemButton>
           </ListItem>
         </List>
-        <Divider /> */}
+        <Divider />
         <Typography sx={{ marginTop: "10px", paddingLeft: "18px" }}>
           Economy
         </Typography>
