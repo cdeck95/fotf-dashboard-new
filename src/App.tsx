@@ -54,6 +54,7 @@ import TedMint from "./views/TedMint";
 import TeddyMint from "./views/TeddyMint";
 import { PolygonNetwork } from "./components/PolygonNetwork";
 import PullToRefresh from 'react-simple-pull-to-refresh';
+import { useNavigate } from 'react-router-dom';
 
 export const LeftDrawerWidthPX = "260px";
 export const LeftDrawerWidth = 260;
@@ -178,6 +179,8 @@ function App() {
     }
   }, [address, isMismatched, isSmallScreen, leftNavOpen, rightNavOpen]);
 
+ 
+
   const location = useLocation();  
   const [pageTitle, setPageTitle] = useState("");
 
@@ -197,6 +200,14 @@ function App() {
     }
     
   }, [isMobile, isMediumLarge, isMismatched, isSmallScreen, isLarge, location.pathname, pageTitle]);
+
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!address) {
+      navigate("/");
+    }
+  }, [address, navigate]);
 
   useEffect(() => { 
 
