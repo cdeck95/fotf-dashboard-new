@@ -690,7 +690,7 @@ function TheFactory(props: PolygonProps) {
           setErrorCode(11);
         }
         console.log(error);
-        alert(error);
+        // alert(error);
         setIsLoadingBurn(false);
       }
     } else {
@@ -734,7 +734,7 @@ function TheFactory(props: PolygonProps) {
           setShowError(true);
           setErrorCode(11);
         }
-        alert(error);
+        // alert(error);
         console.log(error);
         setIsLoadingBurn(false);
       }
