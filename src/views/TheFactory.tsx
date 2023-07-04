@@ -685,6 +685,7 @@ function TheFactory(props: PolygonProps) {
         setShowError(true);
         setErrorCode(11);
         console.log(error);
+        alert(error);
         setIsLoadingBurn(false);
       }
     } else {
@@ -723,6 +724,7 @@ function TheFactory(props: PolygonProps) {
       } catch (error) {
         setShowError(true);
         setErrorCode(11);
+        alert(error);
         console.log(error);
         setIsLoadingBurn(false);
       }
