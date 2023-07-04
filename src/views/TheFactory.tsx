@@ -1133,11 +1133,11 @@ function TheFactory(props: PolygonProps) {
             className="burn-box"
             sx={{ display: "flex", flexDirection: "row" }}
           >
-            <Button className="burn-btn" disabled={selectedTokens.length === 0} onClick={() => burn(selectedTokens)}>
+            <Button className="burn-btn" disabled={selectedTokens.length === 0 } onClick={() => burn(selectedTokens)}>
               Burn {selectedTokens.length} for{" "}
               {parseInt(burnRewards).toLocaleString()} $HNY
             </Button>
-            <Button className="burn-btn" disabled={!isOneOfEachSelected} onClick={() => burnForOneOfOne(selectedTokens)}>
+            <Button className="burn-btn" disabled={!isOneOfEachSelected || parseInt(honeyAmountToSend.toString()) < 0} onClick={() => burnForOneOfOne(selectedTokens)}>
               Burn {selectedTokens.length} + {honeyAmountToSend.toString()} $HNY for Custom 1/1
             </Button>
           </Box>
@@ -1286,7 +1286,7 @@ function TheFactory(props: PolygonProps) {
                 Burn {selectedTokens.length} for{" "}
                 {parseInt(burnRewards).toLocaleString()} $HNY
               </Button>
-              <Button className="burn-btn-mobile " disabled={!isOneOfEachSelected} onClick={() => burnForOneOfOne(selectedTokens)}>
+              <Button className="burn-btn-mobile " disabled={!isOneOfEachSelected || parseInt(honeyAmountToSend.toString()) < 0} onClick={() => burnForOneOfOne(selectedTokens)}>
                 Burn {selectedTokens.length} +{" "}
                 {(15000000 - parseInt(burnRewards)).toLocaleString()} $HNY for
                 Custom 1/1
