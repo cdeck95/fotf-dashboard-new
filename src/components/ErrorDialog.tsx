@@ -61,6 +61,10 @@ function ErrorDialog(props: FailureDialogProps) {
         return `Please use whole numbers only.`;
       case 13:
         return `You do not have enough MATIC to support this purchase. Please try again.`;
+      case 14:
+        return 'The amount of HNY you are trying to receive exceeeds the available supply. Please deselect some of your tokens and try again.'
+      case 15:
+        return 'The amount of HNY you are trying to send exceeeds your balance. Please try to burn more tokens to reduce the amount of honey you need to send, or visit the Honey Exchange to purhcase more.'
       default:
         return "Something went wrong. We are not sure exactly what. Please refresh the page. If this continues to happen, please open a ticket within the FOTF Discord.";
     }

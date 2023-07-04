@@ -681,9 +681,14 @@ function TheFactory(props: PolygonProps) {
         setSelectedTokenContracts([]);
         setSelectedTokensIDs([]);
         setSelectedTokens([]);
-      } catch (error) {
-        setShowError(true);
-        setErrorCode(11);
+      } catch (error: any) {
+        if (error.message.includes("Reason: ERC20: transfer amount exceeds balance")) {
+          setShowError(true);
+          setErrorCode(14);
+        } else {
+          setShowError(true);
+          setErrorCode(11);
+        }
         console.log(error);
         alert(error);
         setIsLoadingBurn(false);
@@ -721,9 +726,14 @@ function TheFactory(props: PolygonProps) {
         setSelectedTokenContracts([]);
         setSelectedTokensIDs([]);
         setSelectedTokens([]);
-      } catch (error) {
-        setShowError(true);
-        setErrorCode(11);
+      } catch (error: any) {
+        if (error.message.includes("Reason: ERC20: transfer amount exceeds balance")) {
+          setShowError(true);
+          setErrorCode(15);
+        } else {
+          setShowError(true);
+          setErrorCode(11);
+        }
         alert(error);
         console.log(error);
         setIsLoadingBurn(false);
