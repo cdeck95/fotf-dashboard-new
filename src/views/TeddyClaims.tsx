@@ -398,437 +398,438 @@ function TeddyClaims(props: PolygonProps) {
 
   //////////////////////////////////////////////
 
-  return (
-    <Box
-      className={
-        isSmallScreen
-          ? "factory-inner-container-mobile"
-          : "factory-inner-container"
-      } sx={{zIndex: "1 !important", position: "relative", overflowY: "auto !important"}}
-    >
+  return <ComingSoon />;
+//   return (
+//     <Box
+//       className={
+//         isSmallScreen
+//           ? "factory-inner-container-mobile"
+//           : "factory-inner-container"
+//       } sx={{zIndex: "1 !important", position: "relative", overflowY: "auto !important"}}
+//     >
 
-{isLoading && !showMismatch && <Backdrop
-        sx={{
-          color: "#fff",
-          zIndex: (theme) => theme.zIndex.drawer + 1,
-          marginLeft: leftDrawerWidth,
-          marginRight: rightDrawerWidth,
-        }}
-        open={isLoading && !showMismatch}
-      >
-        <CircularProgress color="inherit" />
-      </Backdrop>
-}
+// {isLoading && !showMismatch && <Backdrop
+//         sx={{
+//           color: "#fff",
+//           zIndex: (theme) => theme.zIndex.drawer + 1,
+//           marginLeft: leftDrawerWidth,
+//           marginRight: rightDrawerWidth,
+//         }}
+//         open={isLoading && !showMismatch}
+//       >
+//         <CircularProgress color="inherit" />
+//       </Backdrop>
+// }
 
-{!ownershipVerified && !isLoading && !showMismatch && <Backdrop
-        sx={{
-          color: "#fff",
-          zIndex: (theme) => theme.zIndex.drawer + 1,
-          marginLeft: leftDrawerWidth,
-          marginRight: rightDrawerWidth,
-        }}
-        open={!isLoading}
-        onClick={handleClose}
-      >
-        <Box sx={{ borderRadius: "10px", backgroundColor: "white" }}>
-          <Typography sx={{ padding: "20px", color: "Black" }}>
-            You do not own any Teddies by FOTF. 
-          </Typography>
-          <Typography sx={{ padding: "20px", color: "Black" }}>
-            Please visit the Dashboard to view your owned NFTs.
-          </Typography>
-        </Box>
-      </Backdrop>
-}
+// {!ownershipVerified && !isLoading && !showMismatch && <Backdrop
+//         sx={{
+//           color: "#fff",
+//           zIndex: (theme) => theme.zIndex.drawer + 1,
+//           marginLeft: leftDrawerWidth,
+//           marginRight: rightDrawerWidth,
+//         }}
+//         open={!isLoading}
+//         onClick={handleClose}
+//       >
+//         <Box sx={{ borderRadius: "10px", backgroundColor: "white" }}>
+//           <Typography sx={{ padding: "20px", color: "Black" }}>
+//             You do not own any Teddies by FOTF. 
+//           </Typography>
+//           <Typography sx={{ padding: "20px", color: "Black" }}>
+//             Please visit the Dashboard to view your owned NFTs.
+//           </Typography>
+//         </Box>
+//       </Backdrop>
+// }
 
-      <ErrorDialog
-        open={showError}
-        handleClose={handleErrorClose}
-        errorCode={errorCode}
-        collection={"The Factory"}
-      />
+//       <ErrorDialog
+//         open={showError}
+//         handleClose={handleErrorClose}
+//         errorCode={errorCode}
+//         collection={"The Factory"}
+//       />
 
-      <Box className={isSmallScreen ? "header-mobile" : "header"} sx={{marginBottom: "20px"}}>
-        <Box className={isSmallScreen ? "header-row-mobile" : "header-row"}>
-          {!isSmallScreen && <Typography className={isSmallScreen ? "page-header-mobile" : "page-header"} sx={{fontWeight: "500"}} >
-            Teddy $HNY Claims
-          </Typography> }
-        </Box>
-      </Box>
+//       <Box className={isSmallScreen ? "header-mobile" : "header"} sx={{marginBottom: "20px"}}>
+//         <Box className={isSmallScreen ? "header-row-mobile" : "header-row"}>
+//           {!isSmallScreen && <Typography className={isSmallScreen ? "page-header-mobile" : "page-header"} sx={{fontWeight: "500"}} >
+//             Teddy $HNY Claims
+//           </Typography> }
+//         </Box>
+//       </Box>
 
-      <Box className={isSmallScreen? "column-center-full-container" : "row-space-around-dash"} sx={{ maxHeight: "300px"}}>
-          <Box className={isSmallScreen? "column-center-full-container" : "row-space-around-dash"} sx={{ maxHeight: "300px"}}>
-            <Box className="column-between" sx={{ maxHeight: "350px", padding: "0px !important"}}>
-              <Box className="row-space-around">
-                <Box className="column-around" sx={{padding: "10px"}}>
-                  <Typography className="learnMore">Claimable $HNY Balance</Typography>
-                  {isLoadingHoneyExchangeContract //TODO, change this to the actual contract
-                  ? <CircularProgress size="1rem" color="inherit" />
-                  : <Typography sx={{fontSize: "2.5rem", margin: 0, padding: 0,
-                  marginBlockStart: "0em", marginBlockEnd: "0em"}}>{new Intl.NumberFormat("en-US", { minimumIntegerDigits: 2}).format(parseInt(claimableHoneyBalance.toString()))} $HNY</Typography>
-                }
+//       <Box className={isSmallScreen? "column-center-full-container" : "row-space-around-dash"} sx={{ maxHeight: "300px"}}>
+//           <Box className={isSmallScreen? "column-center-full-container" : "row-space-around-dash"} sx={{ maxHeight: "300px"}}>
+//             <Box className="column-between" sx={{ maxHeight: "350px", padding: "0px !important"}}>
+//               <Box className="row-space-around">
+//                 <Box className="column-around" sx={{padding: "10px"}}>
+//                   <Typography className="learnMore">Claimable $HNY Balance</Typography>
+//                   {isLoadingHoneyExchangeContract //TODO, change this to the actual contract
+//                   ? <CircularProgress size="1rem" color="inherit" />
+//                   : <Typography sx={{fontSize: "2.5rem", margin: 0, padding: 0,
+//                   marginBlockStart: "0em", marginBlockEnd: "0em"}}>{new Intl.NumberFormat("en-US", { minimumIntegerDigits: 2}).format(parseInt(claimableHoneyBalance.toString()))} $HNY</Typography>
+//                 }
                   
-                </Box>
-              </Box>
-              <Box className="row-space-around">
-                <Box className="column-even" sx={{padding: "10px"}}>
-                  <Typography className="learnMore">Currently Earning</Typography>
-                  {isLoadingHoneyExchangeContract
-                  ? <CircularProgress size="1rem" color="inherit" />
-                  : <Typography sx={{fontSize: "2.5rem", margin: 0, padding: 0,
-                  marginBlockStart: "0em", marginBlockEnd: "0em"}}>{totalTeddiesEarnings.toLocaleString()}/Day</Typography>
-                  }
-                </Box>
-              </Box>
-            </Box>
-            <Box className={isSmallScreen? "honey-exchange-col-full" : "teddy-claim-col"}>
-              <Box className="row-exchange" sx={{ justifyContent: "flex-start", paddingLeft: "20px", paddingRight: "20px"}}>
-                <Typography sx={{fontSize: "1.5rem"}}>Quick Claim</Typography>
-              </Box>
-              <Box className="row-exchange" sx={{justifyContent: "flex-start", paddingLeft: "20px", paddingRight: "20px"}}>
-                <Paper
-                  component="form"
-                  sx={{ p: '2px 4px', display: 'flex', alignItems: 'flex-start', width: "100%" }}
-                >
-                  <InputBase
-                    sx={{ ml: 1, flex: 1 }}
-                    //TODO: change this to the actual contract
-                    disabled={isLoadingHoneyExchangeContract}
-                    type="number"
-                    placeholder="Enter Teddy ID #"
-                    inputProps={{ 'aria-label': 'Enter the Teddy ID to Claim its $HNY' }}
-                    onChange={handleInput}
-                    value={claimInput.toString()}
-                  />
+//                 </Box>
+//               </Box>
+//               <Box className="row-space-around">
+//                 <Box className="column-even" sx={{padding: "10px"}}>
+//                   <Typography className="learnMore">Currently Earning</Typography>
+//                   {isLoadingHoneyExchangeContract
+//                   ? <CircularProgress size="1rem" color="inherit" />
+//                   : <Typography sx={{fontSize: "2.5rem", margin: 0, padding: 0,
+//                   marginBlockStart: "0em", marginBlockEnd: "0em"}}>{totalTeddiesEarnings.toLocaleString()}/Day</Typography>
+//                   }
+//                 </Box>
+//               </Box>
+//             </Box>
+//             <Box className={isSmallScreen? "honey-exchange-col-full" : "teddy-claim-col"}>
+//               <Box className="row-exchange" sx={{ justifyContent: "flex-start", paddingLeft: "20px", paddingRight: "20px"}}>
+//                 <Typography sx={{fontSize: "1.5rem"}}>Quick Claim</Typography>
+//               </Box>
+//               <Box className="row-exchange" sx={{justifyContent: "flex-start", paddingLeft: "20px", paddingRight: "20px"}}>
+//                 <Paper
+//                   component="form"
+//                   sx={{ p: '2px 4px', display: 'flex', alignItems: 'flex-start', width: "100%" }}
+//                 >
+//                   <InputBase
+//                     sx={{ ml: 1, flex: 1 }}
+//                     //TODO: change this to the actual contract
+//                     disabled={isLoadingHoneyExchangeContract}
+//                     type="number"
+//                     placeholder="Enter Teddy ID #"
+//                     inputProps={{ 'aria-label': 'Enter the Teddy ID to Claim its $HNY' }}
+//                     onChange={handleInput}
+//                     value={claimInput.toString()}
+//                   />
                   
-                </Paper>
-                <Button> Calculate </Button>
-              </Box>
-              <Box className="row-exchange" sx={{justifyContent: "flex-start", paddingLeft: "20px", paddingRight: "20px"}}>
-                <Button variant="contained" disabled={isLoadingHoneyExchangeContract} color="primary" className="exchange-button" 
-                sx={{ fontSize: "1.5rem", width: "100%" }} onClick={() => claimHoney(claimInput.toString())} >
-                  Claim {parseInt(honeyForClaimInput.toString()).toLocaleString("en-US")} $HNY
-                </Button>
-              </Box>
-            </Box>
-          </Box>
-        </Box>
+//                 </Paper>
+//                 <Button> Calculate </Button>
+//               </Box>
+//               <Box className="row-exchange" sx={{justifyContent: "flex-start", paddingLeft: "20px", paddingRight: "20px"}}>
+//                 <Button variant="contained" disabled={isLoadingHoneyExchangeContract} color="primary" className="exchange-button" 
+//                 sx={{ fontSize: "1.5rem", width: "100%" }} onClick={() => claimHoney(claimInput.toString())} >
+//                   Claim {parseInt(honeyForClaimInput.toString()).toLocaleString("en-US")} $HNY
+//                 </Button>
+//               </Box>
+//             </Box>
+//           </Box>
+//         </Box>
 
-        <Box className="row-space-around" sx={{ justifyContent: "space-between !important", width: "100%", maxWidth: "1380px", height: "60px", margin: "auto", padding: "10px", marginTop: "00px", marginBottom: "20px" }}>
-          <Typography>Check if Teddy has been claimed</Typography>
-          <SouthIcon color="inherit"/>
-        </Box>
+//         <Box className="row-space-around" sx={{ justifyContent: "space-between !important", width: "100%", maxWidth: "1380px", height: "60px", margin: "auto", padding: "10px", marginTop: "00px", marginBottom: "20px" }}>
+//           <Typography>Check if Teddy has been claimed</Typography>
+//           <SouthIcon color="inherit"/>
+//         </Box>
 
-        <Box className={isSmallScreen ? "header-mobile" : "header"} sx={{marginBottom: "10px"}}>
-          <Box className={isSmallScreen ? "header-row-mobile" : "header-row"}>
-            {!isSmallScreen && <Typography className={isSmallScreen ? "page-header-mobile" : "page-header"} sx={{fontSize: "1.5rem !important"}}>
-              Teddy Claims
-            </Typography> }
-            <Paper
-              component="form"
-              sx={{ p: '2px 4px', display: 'flex', alignItems: 'center', width: 400 }}
-            >
+//         <Box className={isSmallScreen ? "header-mobile" : "header"} sx={{marginBottom: "10px"}}>
+//           <Box className={isSmallScreen ? "header-row-mobile" : "header-row"}>
+//             {!isSmallScreen && <Typography className={isSmallScreen ? "page-header-mobile" : "page-header"} sx={{fontSize: "1.5rem !important"}}>
+//               Teddy Claims
+//             </Typography> }
+//             <Paper
+//               component="form"
+//               sx={{ p: '2px 4px', display: 'flex', alignItems: 'center', width: 400 }}
+//             >
               
-              <InputBase
-                sx={{ ml: 1, flex: 1 }}
-                placeholder="Search for Teddy Token ID"
-                inputProps={{ 'aria-label': 'Search for Ted, Teddy or AI Token ID' }}
-                onChange={handleSearch}
-                value={searchInput}
-              />
-              <IconButton type="button" sx={{ p: '10px' }} aria-label="search">
-                <SearchIcon />
-              </IconButton>
-            </Paper>
+//               <InputBase
+//                 sx={{ ml: 1, flex: 1 }}
+//                 placeholder="Search for Teddy Token ID"
+//                 inputProps={{ 'aria-label': 'Search for Ted, Teddy or AI Token ID' }}
+//                 onChange={handleSearch}
+//                 value={searchInput}
+//               />
+//               <IconButton type="button" sx={{ p: '10px' }} aria-label="search">
+//                 <SearchIcon />
+//               </IconButton>
+//             </Paper>
              
-          </Box>
+//           </Box>
          
           
-        </Box>
-      <Box>
-        {errorTeddy ? (
-          <div>
-            <p>NFT not found - error</p>
-          </div>
-        ) : (
-          <Box
-            className="gallery"
-            sx={{
-              // zIndex: "0 !important",
-              paddingLeft: "10px",
-              paddingBottom: "110px",
-              backgroundColor: "white",
-              paddingRight: "10px",
-              overflowX: "hidden",
-              overflowY: "auto"
-            }}
-          >
-            {tokens ? (
-              <ImageList
-                sx={{
-                  justifyContent: "center",
-                  width: "100%",
-                  height: "100%",
-                  paddingLeft: "10px",
-                  paddingRight: "10px",
-                  overflowX: "hidden",
-                  overflowY: "auto",
-                  backgroundColor: "white",
-                }}
-                className="factory-image-list"
-                cols={columns}
-                gap={25}
-                rowHeight={450}
-              >
+//         </Box>
+//       <Box>
+//         {errorTeddy ? (
+//           <div>
+//             <p>NFT not found - error</p>
+//           </div>
+//         ) : (
+//           <Box
+//             className="gallery"
+//             sx={{
+//               // zIndex: "0 !important",
+//               paddingLeft: "10px",
+//               paddingBottom: "110px",
+//               backgroundColor: "white",
+//               paddingRight: "10px",
+//               overflowX: "hidden",
+//               overflowY: "auto"
+//             }}
+//           >
+//             {tokens ? (
+//               <ImageList
+//                 sx={{
+//                   justifyContent: "center",
+//                   width: "100%",
+//                   height: "100%",
+//                   paddingLeft: "10px",
+//                   paddingRight: "10px",
+//                   overflowX: "hidden",
+//                   overflowY: "auto",
+//                   backgroundColor: "white",
+//                 }}
+//                 className="factory-image-list"
+//                 cols={columns}
+//                 gap={25}
+//                 rowHeight={450}
+//               >
                 
-                {/* {filteredNFTsWithCategory.map((token: NFT) => ( */}
-                  {filteredNFTs.map((token: NFT) => (
-                  <Box
-                    key={token.metadata.name}
-                    className={
-                      selectedTokens?.includes(token)
-                        ? "card-selected"
-                        : "card"
-                    }
-                    sx={{
-                      marginLeft: "auto",
-                      marginRight: "auto",
-                      background: "none",
-                      maxHeight: "375px",
-                      maxWidth: "350px",
-                    }}
-                  >
-                    {/* <StarBorderIcon
-                    onClick={star}
-                    sx={{ position: "absolute", top: "10px", right: "10px" }}
-                  /> */}
-                    <Box
-                      sx={{
-                        position: "relative",
-                        cursor: "pointer",
-                      }}
-                      onClick={() => add(token)}
-                    >
-                      <ThirdwebNftMedia
-                        metadata={token.metadata}
-                        style={{
-                          maxHeight: "280px",
-                          maxWidth: "280px",
-                          borderRadius: "10px",
-                          objectFit: "cover",
-                          width: "280px",
-                          height: "280px",
-                        }}
-                      />
+//                 {/* {filteredNFTsWithCategory.map((token: NFT) => ( */}
+//                   {filteredNFTs.map((token: NFT) => (
+//                   <Box
+//                     key={token.metadata.name}
+//                     className={
+//                       selectedTokens?.includes(token)
+//                         ? "card-selected"
+//                         : "card"
+//                     }
+//                     sx={{
+//                       marginLeft: "auto",
+//                       marginRight: "auto",
+//                       background: "none",
+//                       maxHeight: "375px",
+//                       maxWidth: "350px",
+//                     }}
+//                   >
+//                     {/* <StarBorderIcon
+//                     onClick={star}
+//                     sx={{ position: "absolute", top: "10px", right: "10px" }}
+//                   /> */}
+//                     <Box
+//                       sx={{
+//                         position: "relative",
+//                         cursor: "pointer",
+//                       }}
+//                       onClick={() => add(token)}
+//                     >
+//                       <ThirdwebNftMedia
+//                         metadata={token.metadata}
+//                         style={{
+//                           maxHeight: "280px",
+//                           maxWidth: "280px",
+//                           borderRadius: "10px",
+//                           objectFit: "cover",
+//                           width: "280px",
+//                           height: "280px",
+//                         }}
+//                       />
 
-                      {selectedTokens?.includes(token) && (
-                        <p className="title-selected">Claim</p>
-                      )}
-                    </Box>
-                    <Box
-                      className="column-container"
-                      sx={{ marginBottom: "10px" }}
-                    >
-                      <div className="large-left-column">
-                        <h3 className="metadata-title">
-                          {token.metadata.name}
-                        </h3>
-                        {teddyNFTs?.includes(token) && (
-                          <Chip label="Teddies by FOTF" color="secondary" sx={{maxWidth: "125px"}} variant="outlined"/>
-                        )}
-                      </div>
-                      <div className="small-right-column" onClick={() => {
-                        if(anchorEl === null){
-                          setTokenClicked(token)
-                        }
-                      }}>
-                        {/* <ControlPointIcon
-                          onClick={() => add(token)}
-                          fontSize="small"
-                        /> */}
-                        <Button
-                            id="basic-button"
-                            aria-controls={openContextMenu ? 'basic-menu' : undefined}
-                            aria-haspopup="true"
-                            aria-expanded={openContextMenu ? 'true' : undefined}
-                            onClick={handleClick}
-                            sx={{background: "none", color: "black", border: "none", minWidth: "0px", padding: "0px", "&:hover": {background: "none", color: "black", minWidth: "0px", padding: "0px"}}}
-                          >
-                            <MoreVertIcon/>
-                          </Button>
-                          <ThemeProvider theme={themeMenu} >
-                          <Menu
-                            id="basic-menu"
-                            anchorEl={anchorEl}
-                            open={openContextMenu}
-                            onClose={handleCloseContextMenu}
-                            sx={{ zIndex: "10001"}}
-                            MenuListProps={{
-                              'aria-labelledby': 'basic-button',
-                            }}
-                          >
-                            <ClaimMenu token={tokenClicked!} onClose={handleCloseContextMenu} addToClaimList={() => add(tokenClicked!)} selectedTokens={selectedTokens}/>
-                          </Menu>
-                          </ThemeProvider>
-                      </div>
-                    </Box>
-                  </Box>
-                ))}
-              </ImageList>
-            ) : (
-              <p>Loading...</p>
-            )}
+//                       {selectedTokens?.includes(token) && (
+//                         <p className="title-selected">Claim</p>
+//                       )}
+//                     </Box>
+//                     <Box
+//                       className="column-container"
+//                       sx={{ marginBottom: "10px" }}
+//                     >
+//                       <div className="large-left-column">
+//                         <h3 className="metadata-title">
+//                           {token.metadata.name}
+//                         </h3>
+//                         {teddyNFTs?.includes(token) && (
+//                           <Chip label="Teddies by FOTF" color="secondary" sx={{maxWidth: "125px"}} variant="outlined"/>
+//                         )}
+//                       </div>
+//                       <div className="small-right-column" onClick={() => {
+//                         if(anchorEl === null){
+//                           setTokenClicked(token)
+//                         }
+//                       }}>
+//                         {/* <ControlPointIcon
+//                           onClick={() => add(token)}
+//                           fontSize="small"
+//                         /> */}
+//                         <Button
+//                             id="basic-button"
+//                             aria-controls={openContextMenu ? 'basic-menu' : undefined}
+//                             aria-haspopup="true"
+//                             aria-expanded={openContextMenu ? 'true' : undefined}
+//                             onClick={handleClick}
+//                             sx={{background: "none", color: "black", border: "none", minWidth: "0px", padding: "0px", "&:hover": {background: "none", color: "black", minWidth: "0px", padding: "0px"}}}
+//                           >
+//                             <MoreVertIcon/>
+//                           </Button>
+//                           <ThemeProvider theme={themeMenu} >
+//                           <Menu
+//                             id="basic-menu"
+//                             anchorEl={anchorEl}
+//                             open={openContextMenu}
+//                             onClose={handleCloseContextMenu}
+//                             sx={{ zIndex: "10001"}}
+//                             MenuListProps={{
+//                               'aria-labelledby': 'basic-button',
+//                             }}
+//                           >
+//                             <ClaimMenu token={tokenClicked!} onClose={handleCloseContextMenu} addToClaimList={() => add(tokenClicked!)} selectedTokens={selectedTokens}/>
+//                           </Menu>
+//                           </ThemeProvider>
+//                       </div>
+//                     </Box>
+//                   </Box>
+//                 ))}
+//               </ImageList>
+//             ) : (
+//               <p>Loading...</p>
+//             )}
             
-          </Box>
-        )}
+//           </Box>
+//         )}
       
-      {address && !isSmallScreen && !isLarge && (
-      <Box
-        sx={{
-          position: "fixed",
-          paddingLeft: "20px",
-          bottom: "0px",
-          left: leftDrawerWidth,
-          right: rightDrawerWidth,
-          height: "70px",
-          zIndex: (theme: { zIndex: { drawer: number } }) =>
-            theme.zIndex.drawer - 1,
-          backgroundColor: "#FED100",
-        }}
-      >
-        <Box className="row-space-between">
-          <Box
-            className="selected-box"
-            sx={{ display: "flex", flexDirection: "row" }}
-          >
-            {teddyNFTs && <Box className="stats-col">
-              <p className="stats">
-                {new Intl.NumberFormat("en-US", {
-                  minimumIntegerDigits: 2,
-                }).format(teddyNFTs!.length)}
-              </p>
-              <p className="stats-name">Staked Teddies</p>
-            </Box>}
-          </Box>
-          {/* <NumericFormat value={honeyBalance} displayType={'text'} thousandSeparator={true} prefix={'$'} suffix={' HNY'} /> */}
-          <Box
-            className="burn-box"
-            sx={{ display: "flex", flexDirection: "row" }}
-          >
-            {/* <Button className="burn-btn" disabled={selectedTokens.length === 0} onClick={() => claimHNY(selectedTokens)}>
-              Claim {parseInt(honeyRewards).toLocaleString()} $HNY via {selectedTokens.length} Teddies
-            </Button> */}
-            <Button className="burn-btn" disabled={selectedTokens.length === 0} onClick={() => claimHNY(selectedTokens)}>
-              Claim TBD $HNY via {selectedTokens.length} Teddies
-            </Button>
-            <Button className="burn-btn" onClick={() => claimAllHNY()}>
-              Claim all $HNY
-            </Button>
-          </Box>
-        </Box>
-      </Box>
-        )}
-        {(isSmallScreen || isLarge) && (
-      <Box
-        sx={{
-          position: "fixed",
-          paddingLeft: "20px",
-          paddingRight: "20px",
-          marginLeft: leftDrawerWidth,
-          marginRight: rightDrawerWidth,
-          bottom: "0px",
-          left: "0px",
-          height: "70px",
-          width: "100dvw",
-          backgroundColor: "#FED100",
-          // zIndex: "1",
-          display: "flex",
-          flexDirection: "row",
-          justifyContent: "space-between",
-          alignItems: "center",
-          cursor: "pointer",
-          border: "2px solid black",
-        }}
-        onClick={() => setSheetOpen(true)}
-      >
-        <Typography className="factory-sheet-text">
-          {selectedTokens.length === 1
-            ? `Ready to Claim ${selectedTokens.length} token?`
-            : `Ready to Claim ${selectedTokens.length} tokens?`
-          }
-        </Typography>
-        <ExpandMoreOutlinedIcon/>
-      </Box>
-    )}
-      </Box>
+//       {address && !isSmallScreen && !isLarge && (
+//       <Box
+//         sx={{
+//           position: "fixed",
+//           paddingLeft: "20px",
+//           bottom: "0px",
+//           left: leftDrawerWidth,
+//           right: rightDrawerWidth,
+//           height: "70px",
+//           zIndex: (theme: { zIndex: { drawer: number } }) =>
+//             theme.zIndex.drawer - 1,
+//           backgroundColor: "#FED100",
+//         }}
+//       >
+//         <Box className="row-space-between">
+//           <Box
+//             className="selected-box"
+//             sx={{ display: "flex", flexDirection: "row" }}
+//           >
+//             {teddyNFTs && <Box className="stats-col">
+//               <p className="stats">
+//                 {new Intl.NumberFormat("en-US", {
+//                   minimumIntegerDigits: 2,
+//                 }).format(teddyNFTs!.length)}
+//               </p>
+//               <p className="stats-name">Staked Teddies</p>
+//             </Box>}
+//           </Box>
+//           {/* <NumericFormat value={honeyBalance} displayType={'text'} thousandSeparator={true} prefix={'$'} suffix={' HNY'} /> */}
+//           <Box
+//             className="burn-box"
+//             sx={{ display: "flex", flexDirection: "row" }}
+//           >
+//             {/* <Button className="burn-btn" disabled={selectedTokens.length === 0} onClick={() => claimHNY(selectedTokens)}>
+//               Claim {parseInt(honeyRewards).toLocaleString()} $HNY via {selectedTokens.length} Teddies
+//             </Button> */}
+//             <Button className="burn-btn" disabled={selectedTokens.length === 0} onClick={() => claimHNY(selectedTokens)}>
+//               Claim TBD $HNY via {selectedTokens.length} Teddies
+//             </Button>
+//             <Button className="burn-btn" onClick={() => claimAllHNY()}>
+//               Claim all $HNY
+//             </Button>
+//           </Box>
+//         </Box>
+//       </Box>
+//         )}
+//         {(isSmallScreen || isLarge) && (
+//       <Box
+//         sx={{
+//           position: "fixed",
+//           paddingLeft: "20px",
+//           paddingRight: "20px",
+//           marginLeft: leftDrawerWidth,
+//           marginRight: rightDrawerWidth,
+//           bottom: "0px",
+//           left: "0px",
+//           height: "70px",
+//           width: "100dvw",
+//           backgroundColor: "#FED100",
+//           // zIndex: "1",
+//           display: "flex",
+//           flexDirection: "row",
+//           justifyContent: "space-between",
+//           alignItems: "center",
+//           cursor: "pointer",
+//           border: "2px solid black",
+//         }}
+//         onClick={() => setSheetOpen(true)}
+//       >
+//         <Typography className="factory-sheet-text">
+//           {selectedTokens.length === 1
+//             ? `Ready to Claim ${selectedTokens.length} token?`
+//             : `Ready to Claim ${selectedTokens.length} tokens?`
+//           }
+//         </Typography>
+//         <ExpandMoreOutlinedIcon/>
+//       </Box>
+//     )}
+//       </Box>
 
-      <SuccessDialog
-        open={successAWS}
-        setOpen={setSuccessAWS}
-        successCode={4}
-      />
+//       <SuccessDialog
+//         open={successAWS}
+//         setOpen={setSuccessAWS}
+//         successCode={4}
+//       />
 
-      <LoadingDialog
-        open={isLoadingAWS}
-        loadingCode={3}
-        onClose={() => setIsLoadingAWS(false)}
-      />
+//       <LoadingDialog
+//         open={isLoadingAWS}
+//         loadingCode={3}
+//         onClose={() => setIsLoadingAWS(false)}
+//       />
 
-      <ErrorDialog
-        open={showError}
-        handleClose={handleErrorClose}
-        errorCode={errorCode}
-        collection={"Teddy Claims"}
-      />
+//       <ErrorDialog
+//         open={showError}
+//         handleClose={handleErrorClose}
+//         errorCode={errorCode}
+//         collection={"Teddy Claims"}
+//       />
 
-      <Sheet
-        rootId="root"
-        isOpen={isSheetOpen && !showMismatch && ownershipVerified && (!isSmallScreen || (isSmallScreen && !rightNavOpen && !leftNavOpen) )}
-        onClose={() => setSheetOpen(false)}
-        detent="content-height"
-      >
-        <Sheet.Container>
-          <Sheet.Header/>
-          <Sheet.Content>
-            <Box
-              className="selected-box-mobile"
-              sx={{ display: "flex", flexDirection: "row" }}>
-              {teddyNFTs && <Box className="stats-col">
-                <p className="stats">
-                  {new Intl.NumberFormat("en-US", {
-                    minimumIntegerDigits: 2,
-                  }).format(teddyNFTs!.length)}
-                </p>
-                <p className="stats-name">Staked Teddies</p>
-              </Box>}
-            </Box>
-            {/* <NumericFormat value={honeyBalance} displayType={'text'} thousandSeparator={true} prefix={'$'} suffix={' HNY'} /> */}
-            <Box className="burn-box-mobile">
-              <Button
-                className="burn-btn-mobile "
-                disabled={selectedTokens.length === 0}
-                onClick={() => claimHNY(selectedTokens)}
-              >
-                Claim TBD $HNY via {selectedTokens.length} Teddies
-              </Button>
-              {/* <Button
-                className="burn-btn-mobile "
-                disabled={selectedTokens.length === 0}
-                onClick={() => claimHNY(selectedTokens)}
-              >
-                Claim {parseInt(honeyRewards).toLocaleString()} $HNY via {selectedTokens.length} Teddies
-              </Button> */}
-              <Button className="burn-btn-mobile " onClick={() => claimAllHNY()}>
-                Claim all $HNY
-              </Button>
-            </Box>
-          </Sheet.Content>
-        </Sheet.Container>
+//       <Sheet
+//         rootId="root"
+//         isOpen={isSheetOpen && !showMismatch && ownershipVerified && (!isSmallScreen || (isSmallScreen && !rightNavOpen && !leftNavOpen) )}
+//         onClose={() => setSheetOpen(false)}
+//         detent="content-height"
+//       >
+//         <Sheet.Container>
+//           <Sheet.Header/>
+//           <Sheet.Content>
+//             <Box
+//               className="selected-box-mobile"
+//               sx={{ display: "flex", flexDirection: "row" }}>
+//               {teddyNFTs && <Box className="stats-col">
+//                 <p className="stats">
+//                   {new Intl.NumberFormat("en-US", {
+//                     minimumIntegerDigits: 2,
+//                   }).format(teddyNFTs!.length)}
+//                 </p>
+//                 <p className="stats-name">Staked Teddies</p>
+//               </Box>}
+//             </Box>
+//             {/* <NumericFormat value={honeyBalance} displayType={'text'} thousandSeparator={true} prefix={'$'} suffix={' HNY'} /> */}
+//             <Box className="burn-box-mobile">
+//               <Button
+//                 className="burn-btn-mobile "
+//                 disabled={selectedTokens.length === 0}
+//                 onClick={() => claimHNY(selectedTokens)}
+//               >
+//                 Claim TBD $HNY via {selectedTokens.length} Teddies
+//               </Button>
+//               {/* <Button
+//                 className="burn-btn-mobile "
+//                 disabled={selectedTokens.length === 0}
+//                 onClick={() => claimHNY(selectedTokens)}
+//               >
+//                 Claim {parseInt(honeyRewards).toLocaleString()} $HNY via {selectedTokens.length} Teddies
+//               </Button> */}
+//               <Button className="burn-btn-mobile " onClick={() => claimAllHNY()}>
+//                 Claim all $HNY
+//               </Button>
+//             </Box>
+//           </Sheet.Content>
+//         </Sheet.Container>
 
-        <Sheet.Backdrop />
-      </Sheet>
-    </Box>
-  );
+//         <Sheet.Backdrop />
+//       </Sheet>
+//     </Box>
+//   );
 }
 
 export default TeddyClaims;
