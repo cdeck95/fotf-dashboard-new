@@ -59,7 +59,7 @@ function AssetOverviewDashboard(props: AssetOverviewProps) {
   console.log(isLoadingHoneyContract);
   console.log(honeyContract);
 
-  const { isLoadingOneOfOne, isLoadingBirthCerts, tokens: ethTokens, errorBirthCerts, errorOneOfOne, hasWalletClaimedETHHoney } = LoadETHAccountDetails();
+  const { isLoadingOneOfOne, isLoadingBirthCerts, tokens: ethTokens, errorBirthCerts, errorOneOfOne, hasWalletClaimedETHHoney, unclaimedHoneyBalance } = LoadETHAccountDetails();
   
   console.log(isLoadingOneOfOne);
   console.log(isLoadingBirthCerts);
@@ -67,6 +67,7 @@ function AssetOverviewDashboard(props: AssetOverviewProps) {
   console.log(errorBirthCerts);
   console.log(errorOneOfOne);
   console.log(hasWalletClaimedETHHoney);
+  console.log(unclaimedHoneyBalance);
 
   const tedNFTs = tokens.Teds?.tokens;
   const teddyNFTs = tokens.Teddies?.tokens;
@@ -123,6 +124,7 @@ function AssetOverviewDashboard(props: AssetOverviewProps) {
 
   function collectETHHoney(): void {
     console.log("Collecting ETH Honey");
+    //call a lambda, giving the unclaimed balance and wallet address. lambda should put this in both to "todo" text file and the "done" text file
   }
 
   return (
@@ -131,6 +133,7 @@ function AssetOverviewDashboard(props: AssetOverviewProps) {
             <Typography className="page-header-small">
                 Asset Overview
             </Typography>
+            {/* {!hasWalletClaimedETHHoney && <Button onClick={() => collectETHHoney()}>Collect Unclaims ETH $HNY</Button>} */}
           <Typography className="learnMore">
             {tokenCount} total tokens
           </Typography>
@@ -144,7 +147,7 @@ function AssetOverviewDashboard(props: AssetOverviewProps) {
               }).format(parseInt(honeyBalance.toString()))}</Typography>
             }
             <Typography className="honeyBalance-dashboard"> $HNY</Typography>
-            {/* {!hasWalletClaimedETHHoney && <Button onClick={() => collectETHHoney()}>Collect Unclaimed ETH $HNY</Button>} */}
+            
           </Box>
           <Box className="col-margin">
             <Typography className="asset-numbers-dashboard">
@@ -195,6 +198,10 @@ function AssetOverviewDashboard(props: AssetOverviewProps) {
             <Typography className="asset-type-dashboard">{birthCerts?.length === 1 ? "Birth Certificate" : "Birth Certificates"}</Typography>
           </Box>
         </Box>
+
+        {/* {new Intl.NumberFormat("en-US", {
+                minimumIntegerDigits: 2,
+              }).format(parseInt(unclaimedHoneyBalance.toString()))}  */}
       </Box>
         );
     }
