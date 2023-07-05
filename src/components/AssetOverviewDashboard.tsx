@@ -144,7 +144,7 @@ function AssetOverviewDashboard(props: AssetOverviewProps) {
               }).format(parseInt(honeyBalance.toString()))}</Typography>
             }
             <Typography className="honeyBalance-dashboard"> $HNY</Typography>
-            {!hasWalletClaimedETHHoney && <Button onClick={() => collectETHHoney()}>Collect Unclaimed ETH $HNY</Button>}
+            {/* {!hasWalletClaimedETHHoney && <Button onClick={() => collectETHHoney()}>Collect Unclaimed ETH $HNY</Button>} */}
           </Box>
           <Box className="col-margin">
             <Typography className="asset-numbers-dashboard">
