@@ -37,6 +37,7 @@ import AssetOverviewSidebar, { TokenProps } from "./AssetOverviewSidebar";
 import { tokens } from "../account/loadETHAccountDetails";
 import { PolygonAccountDetails } from "../account/loadPolygonAccountDetails";
 import { Ethereum, Polygon } from "@thirdweb-dev/chains";
+import honeyJar from '../assets/honey_jar.png'
 
 type NavProps = {
   setNavOpen: Function;
@@ -65,6 +66,14 @@ const DEFAULT_NOTIFICATION = {
   receivedTime: "12h ago",
 };
 
+const HONEY_NOTIFICATION = {
+  image:
+   honeyJar,
+  message: "Claim your $HNY left Behind on ETH!",
+  detailPage: "/HoneyExchange",
+  receivedTime: "12h ago",
+};
+
 function PermanentDrawerRight(props: NavProps) {
   const themeMui = useTheme();
   const isMobile = !useMediaQuery(themeMui.breakpoints.up("md"));
@@ -73,10 +82,30 @@ function PermanentDrawerRight(props: NavProps) {
   const { navOpen, setNavOpen } = props;
   const navigate = useNavigate();
   const [isDarkMode, setIsDarkMode] = React.useState(false);
-  const [data, setData] = useState([DEFAULT_NOTIFICATION]);
+  const [data, setData] = useState<any>([]);
   const [message, setMessage] = useState("");
   const [showNotification, setShowNotification] = useState(false);
   var showAssetOverview = false;
+
+  const [hasClaimedETHHoney, setHasClaimedETHHoney] = useState(false);
+
+  // useEffect(() => {
+  //   if(!hasClaimedETHHoney){
+  //     console.log("setting notification")
+  //     setData(HONEY_NOTIFICATION);
+  //     setMessage("You have $HNY to claim!");
+  //     setShowNotification(true);
+  //   } else {
+  //     console.log("setting default notification")
+  //     setData(DEFAULT_NOTIFICATION);
+  //     setMessage("You have a new notification!");
+  //     setShowNotification(true);
+  //   }
+  // }, [hasClaimedETHHoney]);
+
+  // useEffect(() => {
+  //   setHasClaimedETHHoney(false);
+  // }, []);
 
   // const tokenProps = props.tokenProps;
 
@@ -391,9 +420,9 @@ function PermanentDrawerRight(props: NavProps) {
             </div>
             {/* <div onClick={toggleDarkMode} className="center-flexbox">
               {isDarkMode? <DarkModeOutlinedIcon fontSize='small' className="pointer-icon"/> : <LightModeOutlinedIcon fontSize='small' className="pointer-icon"/>}
-            </div>
-            <div onClick={openNotifications} className="center-flexbox">
-              <NotificationsOutlinedIcon fontSize='small' className="pointer-icon"/>  
+            </div>*/}
+            {/* <div onClick={openNotifications} className="center-flexbox">
+              <NotificationsOutlinedIcon fontSize='small' className="pointer-icon"/>
               <Notifications
                 data={data}
                 icon={notificationIcon}
@@ -405,7 +434,7 @@ function PermanentDrawerRight(props: NavProps) {
                   console.log(data);
                 }}
               />
-            </div> */}
+            </div>  */}
             <ConnectWallet
               theme="dark"
               className={

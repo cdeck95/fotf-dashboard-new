@@ -84,6 +84,10 @@ const IS_DISABLED = false;
 const FACTORY_CONTRACT_ADDRESS = "0xe851Fbe10b8B252D31Fe4C246C43584b02045346";
 const FACTORY_V3_CONTRACT_ADDRESS = "0x3456b19A504C02219c46558521a8d0057bA67425";
 
+export interface IDictionary {
+  [index: string]: string;
+}
+
 function TheFactory(props: PolygonProps) {
   useTitle("FOTF | The Factory");
   const theme = useTheme();
@@ -445,10 +449,6 @@ function TheFactory(props: PolygonProps) {
   }, [aiTedNFTs, isLoading, tedNFTs, teddyNFTs, tokens]);
 
   //////////// Header ///////////////////////////
-
-  interface IDictionary {
-    [index: string]: string;
-  }
 
   const [searchInput, setSearchInput] = useState("");
   const [filteredNFTsWithCategory, setFilteredNFTsWithCategory] = useState<NFT[]>([]);

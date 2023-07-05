@@ -16,6 +16,7 @@ import aiABI from "../ABIs/aiABI.json";
 import birthCertsABI from "../ABIs/birthCertsABI.json";
 import oneOfOneABI from "../ABIs/oneOfOneABI.json";
 import { LoadStakedTeddy } from "./loadStakedTeddy";
+import { IDictionary } from "../views/TheFactory";
 
 
 interface StakedTokens {
@@ -44,6 +45,7 @@ export interface allOwnedNFTs {
   isLoadingOneOfOne: boolean,
   errorBirthCerts: boolean,
   errorOneOfOne: boolean,
+  hasWalletClaimedETHHoney: boolean,
   // honeyBalance: string;
 }
 
@@ -52,6 +54,7 @@ export const initialState: allOwnedNFTs = {
   isLoadingOneOfOne: false,
   errorBirthCerts: false,
   errorOneOfOne: false,
+  hasWalletClaimedETHHoney: true,
   // honeyBalance: "0",
   tokens: {
     OneofOnes: {
@@ -300,65 +303,6 @@ export function LoadETHAccountDetails(): allOwnedNFTs {
     }
   }, [address, oneOfOneNFTs, birthCertsNFTs]);
 
-  // const LoadMaticBalance = useCallback(async () => {
-  //   try {
-  //     // const polygonSDK = new ThirdwebSDK("polygon");
-  //     // const maticBalance = await polygonSDK?.wallet.balance("0x0000000000000000000000000000000000001010");
-  //     const maticBalance = await sdk?.wallet.balance("0x0000000000000000000000000000000000001010");
-  //     console.log(`Matic: ${maticBalance?.value}`);
-  //     setMaticBalance(maticBalance?.value);
-  //   } catch (e) {
-  //     console.log(e);
-  //   }
-  // }, [sdk?.wallet]);
-
-  // const LoadStakedTokens = useCallback(async () => {
-  //   // let tokensToReturn: NFT[] = [];
-  //   try {
-  //     const data: StakedTokens[] = await contract_STAKING?.call(
-  //       "getStakedTokens", // Name of your function as it is on the smart contract
-  //       // Arguments to your function, in the same order they are on your smart contract
-  //       [address]
-  //     );
-  //     console.log(data);
-  //     const stakedTokenIDsTmp: string[] = [];
-  //     data?.forEach((token) => {
-  //       console.log(token);
-  //       // const stakedTeddy = LoadStakedTeddy(token.tokenId.toString());
-  //       // console.log(stakedTeddy);
-  //       // teddyNFTs?.push(stakedTeddy!);
-  //       stakedTokenIDsTmp.push(token.tokenId.toString());
-  //     });
-  //     console.log(stakedTokenIDsTmp);
-  //     setStakedTokenIDs(stakedTokenIDsTmp);
-  //     allOwnedNFTs.isLoadingStaked = false;
-  //   } catch (e) {
-  //     console.log(e);
-  //   }
-  // }, [address, contract_STAKING]);
-
-  // const LoadContractFOTF = useCallback(async () => {
-  //   try {
-  //     const contractIn = await sdk?.getContractFromAbi(FOTF_CONTRACT, tedABI);
-  //     setContractFOTF(contractIn);
-  //   } catch (e) {
-  //     console.log(e);
-  //   }
-  // }, [sdk]);
-
-  // const LoadContractStaking = useCallback(async () => {
-  //   try {
-  //     const contractIn = await sdk?.getContractFromAbi(
-  //       STAKING_CONTRACT,
-  //       stakingABI
-  //     );
-  //     console.log(contractIn);
-  //     setContractStaking(contractIn);
-  //   } catch (e) {
-  //     console.log(e);
-  //   }
-  // }, [sdk]);
-
   const LoadContractBirthCerts = useCallback(async () => {
     try {
       const contractIn = await sdk?.getContractFromAbi(
@@ -394,65 +338,17 @@ export function LoadETHAccountDetails(): allOwnedNFTs {
     }
   }, [sdk]);
 
-  // const LoadContractAI = useCallback(async () => {
-  //   try {
-  //     const contractIn = await sdk?.getContractFromAbi(AI_MINT, aiABI);
-  //     setContractAI(contractIn);
-  //   } catch (e) {
-  //     console.log(e);
-  //   }
-  // }, [sdk]);
-
-  // const LoadHoney = useCallback(async () => {
-  //   try {
-  //     const data: BigNumber = await contract_REWARDS?.call(
-  //       "balanceOf", // Name of your function as it is on the smart contract
-  //       // Arguments to your function, in the same order they are on your smart contract
-  //       [address]
-  //     );
-  //     const honeyTMP = parseFloat(ethers.utils.formatEther(data)).toFixed(3);
-  //     setHoney(honeyTMP.toString());
-  //   } catch (e) {
-  //     console.log(e);
-  //   }
-  // }, [address, contract_REWARDS]);
-
   useEffect(() => {
     try {
-      // if(!maticBalance){
-      //   LoadMaticBalance();
-      // }
-      // if (!contract_FOTF) {
-      //   LoadContractFOTF();
-      // }
       if (!contract_REWARDS) {
         LoadContractRewards();
       }
-      // if (!contract_AI) {
-      //   LoadContractAI();
-      // }
-      // if (!contract_STAKING) {
-      //   LoadContractStaking();
-      //   allOwnedNFTs.isLoadingStaked = true;
-      // }
       if (!contract_BIRTHCERTS) {
         LoadContractBirthCerts();
       }
       if (!contract_OneOfOne) {
         LoadContractOneOfOne();
       }
-      // else {
-      //   LoadStakedTokens();
-      // }
-      // if (contract_TEDDY && stakedTokenIDs.length === 0) {
-      //   LoadStakedTokens();
-      // }
-      // if (contract_REWARDS) {
-      //   LoadHoney();
-      // }
-      // if(stakedTeddys){
-      //   setStakedNFTs(stakedTeddys);
-      // }
     } catch (e) {
       console.log(e);
       console.log("Error!");
@@ -460,9 +356,48 @@ export function LoadETHAccountDetails(): allOwnedNFTs {
   }, [sdk, address, contract_REWARDS, contract_BIRTHCERTS, contract_OneOfOne, LoadContractRewards, LoadContractBirthCerts, LoadContractOneOfOne]);
   
   allOwnedNFTs.tokens = nftArray;
-  // if (honey) {
-  //   allOwnedNFTs.honeyBalance = honey;
-  // }
+
+  const [hasWalletClaimedETHHoney, setHasWalletClaimedETHHoney] = useState<boolean>(true);
+
+  const checkEthHoneyBridge = useMemo(async () => {
+    try {
+      const requestJSON: IDictionary = {
+        "wallet": address!
+      };
+      const json = JSON.stringify(requestJSON, null, 2);
+      console.log(json);
+      const response = await fetch(`https://h7ke8qc4ng.execute-api.us-east-1.amazonaws.com/Prod/hasWalletClaimedETHHoney`, {
+        method: 'POST',
+        body: json,
+      });
+      console.log(response);
+      if(response.status !== 200){
+        console.log("error");
+        setHasWalletClaimedETHHoney(true);
+      }
+      const data = await response.text();
+      console.log(data);
+      if(data === "True"){
+        setHasWalletClaimedETHHoney(true);
+      } else {
+        setHasWalletClaimedETHHoney(false);
+      }
+    } catch (e) {
+      console.log(e);
+      console.log("Error!");
+      setHasWalletClaimedETHHoney(true);
+    }
+  }, [address]);
+
+  useEffect(() => {
+    if(address){
+      const temp = checkEthHoneyBridge;
+    }
+  }, [address, checkEthHoneyBridge]);
+
+  allOwnedNFTs.hasWalletClaimedETHHoney = hasWalletClaimedETHHoney;
 
   return allOwnedNFTs;
 }
+
+

@@ -1,6 +1,6 @@
 
 
-import { Box, CircularProgress, Typography } from "@mui/material";
+import { Box, Button, CircularProgress, Typography } from "@mui/material";
 import { useTitle } from "../hooks/useTitle";
 import "../styles/Dashboard.css";
 import { NFT, ThirdwebProvider, coinbaseWallet, localWallet, metamaskWallet, safeWallet, useAddress, walletConnect } from "@thirdweb-dev/react";
@@ -33,7 +33,7 @@ export interface EthProps {
   errorBirthCerts: boolean;
   isLoadingOneOfOne: boolean;
   isLoadingBirthCerts: boolean;
-  // honeyBalance: string;
+  hasWalletClaimedETHHoney: boolean;
 }
 
 export interface AssetOverviewProps {
@@ -59,13 +59,14 @@ function AssetOverviewDashboard(props: AssetOverviewProps) {
   console.log(isLoadingHoneyContract);
   console.log(honeyContract);
 
-  const { isLoadingOneOfOne, isLoadingBirthCerts, tokens: ethTokens, errorBirthCerts, errorOneOfOne} = props.ethTokenProps;
+  const { isLoadingOneOfOne, isLoadingBirthCerts, tokens: ethTokens, errorBirthCerts, errorOneOfOne, hasWalletClaimedETHHoney } = LoadETHAccountDetails();
   
   console.log(isLoadingOneOfOne);
   console.log(isLoadingBirthCerts);
   console.log(ethTokens);
   console.log(errorBirthCerts);
   console.log(errorOneOfOne);
+  console.log(hasWalletClaimedETHHoney);
 
   const tedNFTs = tokens.Teds?.tokens;
   const teddyNFTs = tokens.Teddies?.tokens;
@@ -120,6 +121,10 @@ function AssetOverviewDashboard(props: AssetOverviewProps) {
  
  
 
+  function collectETHHoney(): void {
+    console.log("Collecting ETH Honey");
+  }
+
   return (
   <Box className="info-card-dashboard">
         <Box className="row-between" sx={{maxHeight: "15%"}}>
@@ -139,6 +144,7 @@ function AssetOverviewDashboard(props: AssetOverviewProps) {
               }).format(parseInt(honeyBalance.toString()))}</Typography>
             }
             <Typography className="honeyBalance-dashboard"> $HNY</Typography>
+            {!hasWalletClaimedETHHoney && <Button onClick={() => collectETHHoney()}>Collect Unclaimed ETH $HNY</Button>}
           </Box>
           <Box className="col-margin">
             <Typography className="asset-numbers-dashboard">
