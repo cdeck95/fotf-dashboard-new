@@ -11,6 +11,9 @@ import { useEffect, useState } from "react";
 import { Ethereum, Polygon, Mumbai } from "@thirdweb-dev/chains";
 import { PolygonAccountDetails } from "../account/loadPolygonAccountDetails";
 import { Console } from "console";
+import { IDictionary } from "../views/TheFactory";
+import ErrorDialog from "./ErrorDialog";
+import SuccessDialog from "./SuccessDialog";
 
 
 export interface TokenProps {
@@ -45,6 +48,16 @@ function AssetOverviewDashboard(props: AssetOverviewProps) {
   //const { tokens, isLoadingTed, isLoadingTeddy, isLoadingStaked, isLoadingAI, isLoadingBirthCerts, isLoadingOneOfOne, error, honeyBalance } = props
   const { honeyBalance, isLoadingHoney, isLoadingHoneyContract, honeyContract, tokens, isLoadingTed, isLoadingTeddy, isLoadingAI, errorTed, errorTeddy, errorAI, maticBalance, needsFunds } = props.tokenProps;
 
+  const sdk = useSDK();
+  const provider = sdk?.getProvider();
+  const address = useAddress(); // Get connected wallet address
+
+  const [showError, setShowError] = useState(false);
+  const [errorCode, setErrorCode] = useState(0);
+
+  const [showSuccess, setShowSuccess] = useState(false);
+  const [successCode, setSuccessCode] = useState(0);
+  
   console.log(tokens);
   console.log(isLoadingTed);
   console.log(isLoadingTeddy);
@@ -59,7 +72,7 @@ function AssetOverviewDashboard(props: AssetOverviewProps) {
   console.log(isLoadingHoneyContract);
   console.log(honeyContract);
 
-  const { isLoadingOneOfOne, isLoadingBirthCerts, tokens: ethTokens, errorBirthCerts, errorOneOfOne, hasWalletClaimedETHHoney, unclaimedHoneyBalance } = LoadETHAccountDetails();
+  const { isLoadingOneOfOne, isLoadingBirthCerts, tokens: ethTokens, errorBirthCerts, errorOneOfOne, hasWalletClaimedETHHoney, unclaimedHoneyBalance, pendingHoneyAirdrop, loadingUnclaimedHoneyBalance, isLoadingContractTeds, isLoadingNumberOfTedsOwned} = LoadETHAccountDetails();
   
   console.log(isLoadingOneOfOne);
   console.log(isLoadingBirthCerts);
@@ -68,6 +81,10 @@ function AssetOverviewDashboard(props: AssetOverviewProps) {
   console.log(errorOneOfOne);
   console.log(hasWalletClaimedETHHoney);
   console.log(unclaimedHoneyBalance);
+  console.log(pendingHoneyAirdrop);
+  console.log(loadingUnclaimedHoneyBalance);
+  console.log(isLoadingContractTeds);
+  console.log(isLoadingNumberOfTedsOwned);
 
   const tedNFTs = tokens.Teds?.tokens;
   const teddyNFTs = tokens.Teddies?.tokens;
@@ -120,11 +137,45 @@ function AssetOverviewDashboard(props: AssetOverviewProps) {
 
   }, [tedNFTs, teddyNFTs, aiTedNFTs, oneOfOnes, birthCerts, traitTokens]);
  
- 
+  const handleErrorClose = () => {
+    setShowError(false);
+  };
 
-  function collectETHHoney(): void {
-    console.log("Collecting ETH Honey");
-    //call a lambda, giving the unclaimed balance and wallet address. lambda should put this in both to "todo" text file and the "done" text file
+  async function collectETHHoney(): Promise<void> {
+    if(address) {
+      console.log("Collecting ETH Honey");
+      try {
+        const requestJSON: IDictionary = {
+          "wallet": address!,
+          "amount": unclaimedHoneyBalance
+        };
+        const json = JSON.stringify(requestJSON, null, 2);
+        console.log(json);
+        const response = await fetch(`https://h7ke8qc4ng.execute-api.us-east-1.amazonaws.com/Prod/processETHHoneyClaim`, {
+          method: 'POST',
+          body: json,
+        });
+        console.log(response);
+        if(response.status === 400){
+          console.log("already bridged honey... error");
+          setShowError(true);
+          setErrorCode(16);
+        } else if (response.status === 403){
+          console.log("pending honey bridge... error");
+          setShowError(true);
+          setErrorCode(17);
+        } else if (response.status === 200){
+          console.log("success");
+          setShowSuccess(true);
+          setSuccessCode(5);
+        }
+      } catch (e) {
+        console.log(e);
+        console.log("Error!");
+        setShowError(true);
+        setErrorCode(1000);
+      }
+    }
   }
 
   return (
@@ -133,7 +184,8 @@ function AssetOverviewDashboard(props: AssetOverviewProps) {
             <Typography className="page-header-small">
                 Asset Overview
             </Typography>
-            {/* {!hasWalletClaimedETHHoney && <Button onClick={() => collectETHHoney()}>Collect Unclaims ETH $HNY</Button>} */}
+            {!hasWalletClaimedETHHoney && <Button disabled={loadingUnclaimedHoneyBalance || isLoadingContractTeds || isLoadingNumberOfTedsOwned} onClick={() => collectETHHoney()}>Collect Unclaimed ETH $HNY</Button>}
+            {pendingHoneyAirdrop && <Button disabled={true}>ETH $HNY Airdrop Pending...</Button>}
           <Typography className="learnMore">
             {tokenCount} total tokens
           </Typography>
@@ -198,6 +250,19 @@ function AssetOverviewDashboard(props: AssetOverviewProps) {
             <Typography className="asset-type-dashboard">{birthCerts?.length === 1 ? "Birth Certificate" : "Birth Certificates"}</Typography>
           </Box>
         </Box>
+        
+      <ErrorDialog
+        open={showError}
+        handleClose={handleErrorClose}
+        errorCode={errorCode}
+      />
+
+      <SuccessDialog
+        open={showSuccess}
+        setOpen={setShowSuccess}
+        successCode={successCode}
+        ethHoneyClaimed={unclaimedHoneyBalance}
+      />
 
         {/* {new Intl.NumberFormat("en-US", {
                 minimumIntegerDigits: 2,

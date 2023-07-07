@@ -146,6 +146,9 @@ function TheFactory(props: PolygonProps) {
   const teddyNFTs = tokens.Teddies?.tokens;
   const aiTedNFTs = tokens.AITeds?.tokens;
 
+  const [showError, setShowError] = useState(false);
+  const [errorCode, setErrorCode] = useState(0);
+
   const leftDrawerWidth = isSmallScreen ? "0px" : "260px";
   const rightDrawerWidth = isSmallScreen ? "0px" : "340px";
 
@@ -515,8 +518,7 @@ function TheFactory(props: PolygonProps) {
   
   console.log(filteredNFTs);
 
-  const [showError, setShowError] = useState(false);
-  const [errorCode, setErrorCode] = useState(0);
+  
 
   const handleErrorClose = () => {
     setShowError(false);

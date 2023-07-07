@@ -46,7 +46,11 @@ export interface allOwnedNFTs {
   errorBirthCerts: boolean,
   errorOneOfOne: boolean,
   hasWalletClaimedETHHoney: boolean,
-  unclaimedHoneyBalance: string;
+  unclaimedHoneyBalance: string,
+  pendingHoneyAirdrop: boolean;
+  loadingUnclaimedHoneyBalance: boolean;
+  isLoadingContractTeds: boolean;
+  isLoadingNumberOfTedsOwned: boolean;
   // honeyBalance: string;
 }
 
@@ -57,6 +61,10 @@ export const initialState: allOwnedNFTs = {
   errorOneOfOne: false,
   hasWalletClaimedETHHoney: true,
   unclaimedHoneyBalance: "0",
+  pendingHoneyAirdrop: false,
+  loadingUnclaimedHoneyBalance: true,
+  isLoadingContractTeds: true,
+  isLoadingNumberOfTedsOwned: true,
   // honeyBalance: "0",
   tokens: {
     OneofOnes: {
@@ -170,6 +178,8 @@ export function LoadETHAccountDetails(): allOwnedNFTs {
   console.log(isLoadingTedsContract);
   console.log(isErrorTedsContract);
 
+  allOwnedNFTs.isLoadingContractTeds = isLoadingTedsContract;
+
 
   const { contract: contract_TedRewards, isLoading: isLoadingTedRewards, error: isErrorTedRewards } = useContract(TED_REWARDS);
   console.log(contract_TedRewards);
@@ -270,59 +280,82 @@ export function LoadETHAccountDetails(): allOwnedNFTs {
   allOwnedNFTs.tokens = nftArray;
 
   const [hasWalletClaimedETHHoney, setHasWalletClaimedETHHoney] = useState<boolean>(true);
+  const [pendingHoneyAirdrop, setPendingHoneyAidrop] = useState<boolean>(false);
 
   const checkEthHoneyBridge = useMemo(async () => {
-    try {
-      const requestJSON: IDictionary = {
-        "wallet": address!
-      };
-      const json = JSON.stringify(requestJSON, null, 2);
-      console.log(json);
-      const response = await fetch(`https://h7ke8qc4ng.execute-api.us-east-1.amazonaws.com/Prod/hasWalletClaimedETHHoney`, {
-        method: 'POST',
-        body: json,
-      });
-      console.log(response);
-      if(response.status !== 200){
-        console.log("error");
+    if (address) {
+      try {
+        const requestJSON: IDictionary = {
+          "wallet": address!
+        };
+        const json = JSON.stringify(requestJSON, null, 2);
+        console.log(json);
+        const response = await fetch(`https://h7ke8qc4ng.execute-api.us-east-1.amazonaws.com/Prod/hasWalletClaimedETHHoney`, {
+          method: 'POST',
+          body: json,
+        });
+        console.log(response);
+        if(response.status !== 200){
+          console.log("error");
+          setHasWalletClaimedETHHoney(true);
+        }
+        const data = await response.text();
+        console.log(data);
+        if(data === "True" || data === "Pending"){
+          setHasWalletClaimedETHHoney(true);
+        } else {
+          setHasWalletClaimedETHHoney(false);
+        }
+        if(data === "Pending"){
+          setPendingHoneyAidrop(true);
+        } else {
+          setPendingHoneyAidrop(false);
+        }
+      } catch (e) {
+        console.log(e);
+        console.log("Error!");
         setHasWalletClaimedETHHoney(true);
       }
-      const data = await response.text();
-      console.log(data);
-      if(data === "True"){
-        setHasWalletClaimedETHHoney(true);
-      } else {
-        setHasWalletClaimedETHHoney(false);
-      }
-    } catch (e) {
-      console.log(e);
-      console.log("Error!");
-      setHasWalletClaimedETHHoney(true);
     }
   }, [address]);
 
-  useEffect(() => {
-    if(address){
-      const temp = checkEthHoneyBridge;
-    }
-  }, [address, checkEthHoneyBridge]);
+  allOwnedNFTs.pendingHoneyAirdrop = pendingHoneyAirdrop;
+
+  // useEffect(() => {
+  //   if(address){
+  //     const temp = checkEthHoneyBridge;
+  //   }
+  // }, [address, checkEthHoneyBridge]);
 
   allOwnedNFTs.hasWalletClaimedETHHoney = hasWalletClaimedETHHoney;
 
   const [numberOfTedsOwned, setNumberOfTedsOwned] = useState<number>(0);
+  const [isLoadingNumberOfTedsOwned, setIsLoadingNumberOfTedsOwned] = useState<boolean>(true);
 
   const checkNumberOfTedsOwned = useMemo(async () => {
-    if(contract_Teds){
-      const numberOfTeds = await contract_Teds.call("balanceOf", [address!]);
-      console.log(numberOfTeds);
-      setNumberOfTedsOwned(numberOfTeds);
+    setIsLoadingNumberOfTedsOwned(true);
+    try {
+      if(contract_Teds && address){
+        const numberOfTeds = await contract_Teds.call("balanceOf", [address!]);
+        console.log(numberOfTeds);
+        setNumberOfTedsOwned(numberOfTeds);
+        setIsLoadingNumberOfTedsOwned(false);
+      }
+    } catch (e) {
+      console.log(e);
+      console.log("Error!");
+      setIsLoadingNumberOfTedsOwned(false);
     }
   }, [address, contract_Teds]);
 
+  allOwnedNFTs.isLoadingNumberOfTedsOwned = isLoadingNumberOfTedsOwned;
+
   const [unclaimedHoneyBalance, setUnclaimedHoneyBalance] = useState<string>("0");
+  const [loadingUnclaimedHoneyBalance, setLoadingUnclaimedHoneyBalance] = useState<boolean>(false);
 
   const checkEthHoneyBalance = useMemo(async () => {
-    if(contract_TedRewards && contract_TeddyStaking){
+    setLoadingUnclaimedHoneyBalance(true);
+    if(contract_TedRewards && contract_TeddyStaking && address){
       var totalUnClaimedHoney = 0;
       const tedRewardsPerDay = 50;
       // const numberOfTedsOwned = 2;
@@ -353,8 +386,11 @@ export function LoadETHAccountDetails(): allOwnedNFTs {
       console.log(totalUnClaimedHoney.toString());
 
       setUnclaimedHoneyBalance(totalUnClaimedHoney.toString());
+      setLoadingUnclaimedHoneyBalance(false);
     }
   }, [address, contract_TedRewards, contract_TeddyStaking, numberOfTedsOwned]);
+
+  allOwnedNFTs.loadingUnclaimedHoneyBalance = loadingUnclaimedHoneyBalance;
 
   // useEffect(() => {
   //   if(contract_TedRewards && contract_TeddyStaking){

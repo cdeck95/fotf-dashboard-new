@@ -142,18 +142,7 @@ function Dashboard(props: PolygonProps) {
           </Box>
         <Box className="dashboard-inner-container">
           <Box className={isSmallScreen? "column-center-full-container" : "row-space-around-dashboard"}>
-            <ThirdwebProvider
-              key={"ethThirdWebProviderDashboard"}
-              supportedWallets={[
-                metamaskWallet(),
-                coinbaseWallet(),
-                walletConnect(),
-                localWallet(),
-                safeWallet(),
-              ]}
-              activeChain={Ethereum}
-              supportedChains={[Polygon, Ethereum]}
-            >
+            
               <Box className={isSmallScreen? "column-center-full" : "col-large-dashboard"}>
                 <HoneyEarnings
                   totalHNYEarnings={totalHNYEarnings}
@@ -162,12 +151,24 @@ function Dashboard(props: PolygonProps) {
                 />
               </Box>
               <Box className={isSmallScreen? "column-center-full" : "col-large-dashboard"}>
+                <ThirdwebProvider
+                key={"ethThirdWebProviderDashboard"}
+                supportedWallets={[
+                  metamaskWallet(),
+                  coinbaseWallet(),
+                  walletConnect(),
+                  localWallet(),
+                  safeWallet(),
+                ]}
+                activeChain={Ethereum}
+                supportedChains={[Polygon, Ethereum]}
+              >
                 <AssetOverview
                   tokenProps={props.tokenProps}
                   forSidebar={isSmallScreen? true : false}
                 />
+                </ThirdwebProvider>
               </Box>
-            </ThirdwebProvider>
           </Box>
           <Box className={isSmallScreen? "column-center-full-container" : "row-space-around-dashboard"}>
             <Box className={isSmallScreen? "column-center-full" : "col-large-dashboard"}>

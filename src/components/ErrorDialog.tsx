@@ -65,6 +65,10 @@ function ErrorDialog(props: FailureDialogProps) {
         return 'The amount of HNY you are trying to receive exceeeds the available supply. Please deselect some of your tokens and try again.'
       case 15:
         return 'The amount of HNY you are trying to send exceeeds your balance. Please try to burn more tokens to reduce the amount of honey you need to send, or visit the Honey Exchange to purhcase more.'
+      case 16:
+        return 'You have already received your ETH $HNY Airdrop. If you believe this to be incorrect, please raise a ticket in the FOTF Discord.'
+      case 17:
+        return 'Your ETH $HNY Airdrop is currently Pending. Please check back at a later date. If you believe this to be incorrect, please raise a ticket in the FOTF Discord.'
       default:
         return "Something went wrong. We are not sure exactly what. Please refresh the page. If this continues to happen, please open a ticket within the FOTF Discord.";
     }
