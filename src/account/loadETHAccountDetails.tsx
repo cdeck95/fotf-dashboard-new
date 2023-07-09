@@ -16,6 +16,7 @@ import aiABI from "../ABIs/aiABI.json";
 import birthCertsABI from "../ABIs/birthCertsABI.json";
 import oneOfOneABI from "../ABIs/oneOfOneABI.json";
 import { LoadStakedTeddy } from "./loadStakedTeddy";
+import { IDictionary } from "../views/TheFactory";
 
 
 interface StakedTokens {
@@ -44,6 +45,12 @@ export interface allOwnedNFTs {
   isLoadingOneOfOne: boolean,
   errorBirthCerts: boolean,
   errorOneOfOne: boolean,
+  hasWalletClaimedETHHoney: boolean,
+  unclaimedHoneyBalance: string,
+  pendingHoneyAirdrop: boolean;
+  loadingUnclaimedHoneyBalance: boolean;
+  isLoadingContractTeds: boolean;
+  isLoadingNumberOfTedsOwned: boolean;
   // honeyBalance: string;
 }
 
@@ -52,6 +59,12 @@ export const initialState: allOwnedNFTs = {
   isLoadingOneOfOne: false,
   errorBirthCerts: false,
   errorOneOfOne: false,
+  hasWalletClaimedETHHoney: true,
+  unclaimedHoneyBalance: "0",
+  pendingHoneyAirdrop: false,
+  loadingUnclaimedHoneyBalance: true,
+  isLoadingContractTeds: true,
+  isLoadingNumberOfTedsOwned: true,
   // honeyBalance: "0",
   tokens: {
     OneofOnes: {
@@ -69,9 +82,10 @@ export const initialState: allOwnedNFTs = {
   },
 };
 
-// const FOTF_CONTRACT = "0x06bdc702fb8af5af8067534546e0c54ea4243ea9";
+const FOTF_CONTRACT = "0x06bdc702fb8af5af8067534546e0c54ea4243ea9";
 // const TEDDY_CONTRACT = "0x4aB1337970E889Cf5E425A7267c51db183028cf4";
-// const STAKING_CONTRACT = "0x15829C851C3117f662C5A9E369bC3A4dBbeaFEBF";
+const TED_REWARDS = "0x62C7fD0D2eD0d01165C05086Ce62e5E1001c439c";
+const STAKING_CONTRACT = "0x15829C851C3117f662C5A9E369bC3A4dBbeaFEBF";
 const REWARD_TOKEN = "0x6ca0269dca415313256cfecD818F32c5AfF0A518";
 // const AI_MINT = "0x1C6d280280f7f8d139659E314d738bdD466741Ba";
 const BIRTH_CERTIFICATE_CONTRACT = "0xFC182BB64a3283f880861E065463356de92FBEcb";
@@ -116,42 +130,13 @@ export function LoadETHAccountDetails(): allOwnedNFTs {
   const provider = sdk?.getProvider();
   const address = useAddress();
 
-  // const [contract_FOTF, setContractFOTF] =
-  //   useState<SmartContract<BaseContract>>();
-  // const [contract_STAKING, setContractStaking] =
-  //   useState<SmartContract<BaseContract>>();
   const [contract_REWARDS, setContractRewards] =
     useState<SmartContract<BaseContract>>();
-  // const [contract_AI, setContractAI] = useState<SmartContract<BaseContract>>();
   const [contract_BIRTHCERTS, setContractBirthCerts] =
     useState<SmartContract<BaseContract>>();
   const [contract_OneOfOne, setContractOneOfOne] =
     useState<SmartContract<BaseContract>>();
 
-  // const [honey, setHoney] = useState<string>();
-  // const [stakedNFTs, setStakedNFTs] = useState<NFT[]>();
-
-  // const {
-  //   data: tedNFTs,
-  //   error: errorTed,
-  //   isLoading: isLoadingTed,
-  // } = useOwnedNFTs(contract_FOTF, address);
-  // console.log(tedNFTs);
-
-  // const {contract: tedContract } = useContract(FOTF_CONTRACT);
-
-  // const {
-  //   data: tedNFTs2,
-  //   error: errorTed2,
-  //   isLoading: isLoadingTed2,
-  // } = useOwnedNFTs(tedContract, address);
-  // console.log(tedNFTs2);
-  // console.log(errorTed2);
-  // console.log(isLoadingTed2);
-
-  //allOwnedNFTs.isLoadingTed = isLoadingTed;
-
-  // const { contract: contract_BIRTH } = useContract(BIRTH_CERTIFICATE_CONTRACT);
   const {
     data: birthCertsNFTs,
     error: errorBirthCerts,
@@ -176,11 +161,6 @@ export function LoadETHAccountDetails(): allOwnedNFTs {
     isLoading: isLoadingOneOfOne,
   } = useOwnedNFTs(contract_OneOfOneNative, address);
 
-  // const {
-  //   data: oneOfOneNFTs,
-  //   error: errorOneOfOne,
-  //   isLoading: isLoadingOneOfOne,
-  // } = useOwnedNFTs(contract_OneOfOne, address);
   console.log(contract_OneOfOne);
   console.log(oneOfOneNFTs);
   console.log(errorOneOfOne);
@@ -193,83 +173,28 @@ export function LoadETHAccountDetails(): allOwnedNFTs {
     allOwnedNFTs.errorOneOfOne = false;
   }
 
-  // const { contract: contract_TEDDY } = useContract(TEDDY_CONTRACT);
-  // const {
-  //   data: teddyNFTs,
-  //   error: errorTeddy,
-  //   isLoading: isLoadingTeddy,
-  // } = useOwnedNFTs(contract_TEDDY, address);
-  // console.log(teddyNFTs);
-  // console.log(errorTeddy);
-  // console.log(isLoadingTeddy);
+  const { contract: contract_Teds, isLoading: isLoadingTedsContract, error: isErrorTedsContract } = useContract(FOTF_CONTRACT);
+  console.log(contract_Teds);
+  console.log(isLoadingTedsContract);
+  console.log(isErrorTedsContract);
 
-  // allOwnedNFTs.isLoadingTeddy = isLoadingTeddy;
+  allOwnedNFTs.isLoadingContractTeds = isLoadingTedsContract;
 
-  // // const { contract: contract_STAKING } = useContract(STAKING_CONTRACT);
-  // const [stakedTokenIDs, setStakedTokenIDs] = useState<any>([]);
 
-  // const stakedTeddy = LoadStakedTeddy(stakedTokenIDs[0]);
-  // if(stakedTeddy){
-  //   console.log(stakedTeddy);
-  //   teddyNFTs?.push(stakedTeddy!);  
-  // }
-   
+  const { contract: contract_TedRewards, isLoading: isLoadingTedRewards, error: isErrorTedRewards } = useContract(TED_REWARDS);
+  console.log(contract_TedRewards);
+  console.log(isLoadingTedRewards);
+  console.log(isErrorTedRewards);
 
-  // const stakedTeddys: NFT[] = useMemo(() => {
-  //   const stakedTeddysTmp: NFT[] = [];
-  //   try {
-  //     if(typeof stakedTokenIDs == 'undefined' || typeof teddyNFTs == 'undefined'){
-  //       console.log('stakedTokenIDs or teddyNFTs are undefined');
-  //     } else {
-  //       console.log(stakedTokenIDs);
-  //       stakedTokenIDs.forEach((tokenID: string) => {
-  //         console.log(tokenID);
-  //         const stakedTeddy = LoadStakedTeddy(parseInt(tokenID));
-  //         console.log(stakedTeddy);
-  //         // stakedTeddys?.push(stakedTeddy!);
-  //         if(stakedTeddy){
-  //           stakedTeddysTmp.push(stakedTeddy!);  
-  //         } 
-  //       });
-  //     }
-  //   }
-  //   catch (e) {
-  //     console.log(e);
-  //   }
-  //   return stakedTeddysTmp;
-  // }, [stakedTokenIDs, teddyNFTs]);
-  // console.log(stakedTeddys);
+  const { contract: contract_TeddyStaking, isLoading: isLoadingTeddyStaking, error: isErrorTeddyStaking} = useContract(STAKING_CONTRACT);
+  console.log(contract_TeddyStaking);
+  console.log(isLoadingTeddyStaking);
+  console.log(isErrorTeddyStaking);
 
-  // const {
-  //   data: aiNFTs,
-  //   error: errorAI,
-  //   isLoading: isLoadingAI,
-  // } = useOwnedNFTs(contract_AI, address);
-  // console.log(aiNFTs);
-  // console.log(errorAI);
-  // console.log(isLoadingAI);
-
- // allOwnedNFTs.isLoadingAI = isLoadingAI;
 
   const nftArray: tokens = useMemo(() => {
     if (address) {
       const returnNFTs: NFT[] = [];
-      // tedNFTs?.forEach((token) => {
-      //   console.log(token);
-      //   returnNFTs?.push(token);
-      // });
-      // teddyNFTs?.forEach((token) => {
-      //   console.log(token);
-      //   returnNFTs?.push(token);
-      // });
-      // stakedTeddys?.forEach((token) => {
-      //   console.log(token);
-      //   returnNFTs?.push(token);
-      // });
-      // aiNFTs?.forEach((token) => {
-      //   console.log(token);
-      //   returnNFTs?.push(token);
-      // });
 
       oneOfOneNFTs?.forEach((token) => {
         console.log(token);
@@ -299,65 +224,6 @@ export function LoadETHAccountDetails(): allOwnedNFTs {
       return initialState.tokens;
     }
   }, [address, oneOfOneNFTs, birthCertsNFTs]);
-
-  // const LoadMaticBalance = useCallback(async () => {
-  //   try {
-  //     // const polygonSDK = new ThirdwebSDK("polygon");
-  //     // const maticBalance = await polygonSDK?.wallet.balance("0x0000000000000000000000000000000000001010");
-  //     const maticBalance = await sdk?.wallet.balance("0x0000000000000000000000000000000000001010");
-  //     console.log(`Matic: ${maticBalance?.value}`);
-  //     setMaticBalance(maticBalance?.value);
-  //   } catch (e) {
-  //     console.log(e);
-  //   }
-  // }, [sdk?.wallet]);
-
-  // const LoadStakedTokens = useCallback(async () => {
-  //   // let tokensToReturn: NFT[] = [];
-  //   try {
-  //     const data: StakedTokens[] = await contract_STAKING?.call(
-  //       "getStakedTokens", // Name of your function as it is on the smart contract
-  //       // Arguments to your function, in the same order they are on your smart contract
-  //       [address]
-  //     );
-  //     console.log(data);
-  //     const stakedTokenIDsTmp: string[] = [];
-  //     data?.forEach((token) => {
-  //       console.log(token);
-  //       // const stakedTeddy = LoadStakedTeddy(token.tokenId.toString());
-  //       // console.log(stakedTeddy);
-  //       // teddyNFTs?.push(stakedTeddy!);
-  //       stakedTokenIDsTmp.push(token.tokenId.toString());
-  //     });
-  //     console.log(stakedTokenIDsTmp);
-  //     setStakedTokenIDs(stakedTokenIDsTmp);
-  //     allOwnedNFTs.isLoadingStaked = false;
-  //   } catch (e) {
-  //     console.log(e);
-  //   }
-  // }, [address, contract_STAKING]);
-
-  // const LoadContractFOTF = useCallback(async () => {
-  //   try {
-  //     const contractIn = await sdk?.getContractFromAbi(FOTF_CONTRACT, tedABI);
-  //     setContractFOTF(contractIn);
-  //   } catch (e) {
-  //     console.log(e);
-  //   }
-  // }, [sdk]);
-
-  // const LoadContractStaking = useCallback(async () => {
-  //   try {
-  //     const contractIn = await sdk?.getContractFromAbi(
-  //       STAKING_CONTRACT,
-  //       stakingABI
-  //     );
-  //     console.log(contractIn);
-  //     setContractStaking(contractIn);
-  //   } catch (e) {
-  //     console.log(e);
-  //   }
-  // }, [sdk]);
 
   const LoadContractBirthCerts = useCallback(async () => {
     try {
@@ -394,65 +260,17 @@ export function LoadETHAccountDetails(): allOwnedNFTs {
     }
   }, [sdk]);
 
-  // const LoadContractAI = useCallback(async () => {
-  //   try {
-  //     const contractIn = await sdk?.getContractFromAbi(AI_MINT, aiABI);
-  //     setContractAI(contractIn);
-  //   } catch (e) {
-  //     console.log(e);
-  //   }
-  // }, [sdk]);
-
-  // const LoadHoney = useCallback(async () => {
-  //   try {
-  //     const data: BigNumber = await contract_REWARDS?.call(
-  //       "balanceOf", // Name of your function as it is on the smart contract
-  //       // Arguments to your function, in the same order they are on your smart contract
-  //       [address]
-  //     );
-  //     const honeyTMP = parseFloat(ethers.utils.formatEther(data)).toFixed(3);
-  //     setHoney(honeyTMP.toString());
-  //   } catch (e) {
-  //     console.log(e);
-  //   }
-  // }, [address, contract_REWARDS]);
-
   useEffect(() => {
     try {
-      // if(!maticBalance){
-      //   LoadMaticBalance();
-      // }
-      // if (!contract_FOTF) {
-      //   LoadContractFOTF();
-      // }
       if (!contract_REWARDS) {
         LoadContractRewards();
       }
-      // if (!contract_AI) {
-      //   LoadContractAI();
-      // }
-      // if (!contract_STAKING) {
-      //   LoadContractStaking();
-      //   allOwnedNFTs.isLoadingStaked = true;
-      // }
       if (!contract_BIRTHCERTS) {
         LoadContractBirthCerts();
       }
       if (!contract_OneOfOne) {
         LoadContractOneOfOne();
       }
-      // else {
-      //   LoadStakedTokens();
-      // }
-      // if (contract_TEDDY && stakedTokenIDs.length === 0) {
-      //   LoadStakedTokens();
-      // }
-      // if (contract_REWARDS) {
-      //   LoadHoney();
-      // }
-      // if(stakedTeddys){
-      //   setStakedNFTs(stakedTeddys);
-      // }
     } catch (e) {
       console.log(e);
       console.log("Error!");
@@ -460,9 +278,129 @@ export function LoadETHAccountDetails(): allOwnedNFTs {
   }, [sdk, address, contract_REWARDS, contract_BIRTHCERTS, contract_OneOfOne, LoadContractRewards, LoadContractBirthCerts, LoadContractOneOfOne]);
   
   allOwnedNFTs.tokens = nftArray;
-  // if (honey) {
-  //   allOwnedNFTs.honeyBalance = honey;
-  // }
+
+  const [hasWalletClaimedETHHoney, setHasWalletClaimedETHHoney] = useState<boolean>(true);
+  const [pendingHoneyAirdrop, setPendingHoneyAidrop] = useState<boolean>(false);
+
+  const checkEthHoneyBridge = useMemo(async () => {
+    if (address) {
+      try {
+        const requestJSON: IDictionary = {
+          "wallet": address!
+        };
+        const json = JSON.stringify(requestJSON, null, 2);
+        console.log(json);
+        const response = await fetch(`https://h7ke8qc4ng.execute-api.us-east-1.amazonaws.com/Prod/hasWalletClaimedETHHoney`, {
+          method: 'POST',
+          body: json,
+        });
+        console.log(response);
+        if(response.status !== 200){
+          console.log("error");
+          setHasWalletClaimedETHHoney(true);
+        }
+        const data = await response.text();
+        console.log(data);
+        if(data === "True" || data === "Pending"){
+          setHasWalletClaimedETHHoney(true);
+        } else {
+          setHasWalletClaimedETHHoney(false);
+        }
+        if(data === "Pending"){
+          setPendingHoneyAidrop(true);
+        } else {
+          setPendingHoneyAidrop(false);
+        }
+      } catch (e) {
+        console.log(e);
+        console.log("Error!");
+        setHasWalletClaimedETHHoney(true);
+      }
+    }
+  }, [address]);
+
+  allOwnedNFTs.pendingHoneyAirdrop = pendingHoneyAirdrop;
+
+  // useEffect(() => {
+  //   if(address){
+  //     const temp = checkEthHoneyBridge;
+  //   }
+  // }, [address, checkEthHoneyBridge]);
+
+  allOwnedNFTs.hasWalletClaimedETHHoney = hasWalletClaimedETHHoney;
+
+  const [numberOfTedsOwned, setNumberOfTedsOwned] = useState<number>(0);
+  const [isLoadingNumberOfTedsOwned, setIsLoadingNumberOfTedsOwned] = useState<boolean>(true);
+
+  const checkNumberOfTedsOwned = useMemo(async () => {
+    setIsLoadingNumberOfTedsOwned(true);
+    try {
+      if(contract_Teds && address){
+        const numberOfTeds = await contract_Teds.call("balanceOf", [address!]);
+        console.log(numberOfTeds);
+        setNumberOfTedsOwned(numberOfTeds);
+        setIsLoadingNumberOfTedsOwned(false);
+      }
+    } catch (e) {
+      console.log(e);
+      console.log("Error!");
+      setIsLoadingNumberOfTedsOwned(false);
+    }
+  }, [address, contract_Teds]);
+
+  allOwnedNFTs.isLoadingNumberOfTedsOwned = isLoadingNumberOfTedsOwned;
+
+  const [unclaimedHoneyBalance, setUnclaimedHoneyBalance] = useState<string>("0");
+  const [loadingUnclaimedHoneyBalance, setLoadingUnclaimedHoneyBalance] = useState<boolean>(false);
+
+  const checkEthHoneyBalance = useMemo(async () => {
+    setLoadingUnclaimedHoneyBalance(true);
+    if(contract_TedRewards && contract_TeddyStaking && address){
+      var totalUnClaimedHoney = 0;
+      const tedRewardsPerDay = 50;
+      // const numberOfTedsOwned = 2;
+      const startDate = new Date("2023-04-06T00:00:00-04:00");
+      const startDateString = startDate.toLocaleString("en-US", { timeZone: "America/New_York" });
+      console.log(startDateString); // "4/6/2023, 12:00:00 AM"
+      const today = new Date();
+      const timeDiff = today.getTime() - startDate.getTime();
+      const daysDiff = Math.floor(timeDiff / (1000 * 60 * 60 * 24));
+      console.log(daysDiff); // number of whole days between start date and today
+
+      //Load Teddy Rewards
+      const availableRewards = ethers.utils.formatEther(await contract_TeddyStaking!.call("availableRewards", [address!]));
+      const availableRewardsInt = Math.round(parseInt(availableRewards));
+      console.log(availableRewardsInt);
+      console.log(availableRewardsInt.toString());
+
+      //Load Ted Rewards
+      const availableRewardsTed = tedRewardsPerDay * numberOfTedsOwned * daysDiff;
+      // const availableRewardsIntTed = Math.round(parseInt(availableRewardsTed));
+      console.log(availableRewardsTed);
+      console.log(availableRewardsTed.toString());
+
+      //add to total
+      totalUnClaimedHoney+=availableRewardsInt;
+      totalUnClaimedHoney+=availableRewardsTed;
+
+      console.log(totalUnClaimedHoney.toString());
+
+      setUnclaimedHoneyBalance(totalUnClaimedHoney.toString());
+      setLoadingUnclaimedHoneyBalance(false);
+    }
+  }, [address, contract_TedRewards, contract_TeddyStaking, numberOfTedsOwned]);
+
+  allOwnedNFTs.loadingUnclaimedHoneyBalance = loadingUnclaimedHoneyBalance;
+
+  // useEffect(() => {
+  //   if(contract_TedRewards && contract_TeddyStaking){
+  //     const temp = checkEthHoneyBalance;
+  //   }
+  // }, [address, checkEthHoneyBalance, contract_TedRewards, contract_TeddyStaking]);
+
+  allOwnedNFTs.unclaimedHoneyBalance = unclaimedHoneyBalance;
 
   return allOwnedNFTs;
 }
+
+

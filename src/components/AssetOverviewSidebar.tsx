@@ -1,6 +1,6 @@
 
 
-import { Box, CircularProgress, Typography } from "@mui/material";
+import { Box, Button, CircularProgress, Typography } from "@mui/material";
 import { useTitle } from "../hooks/useTitle";
 import "../styles/Dashboard.css";
 import { NFT, ThirdwebProvider, coinbaseWallet, localWallet, metamaskWallet, safeWallet, useAddress, walletConnect } from "@thirdweb-dev/react";
@@ -11,6 +11,9 @@ import { useEffect, useState } from "react";
 import { Ethereum, Polygon, Mumbai } from "@thirdweb-dev/chains";
 import { AssetOverviewProps } from "./AssetOverviewDashboard";
 import { PolygonAccountDetails } from "../account/loadPolygonAccountDetails";
+import { IDictionary } from "../views/TheFactory";
+import ErrorDialog from "./ErrorDialog";
+import SuccessDialog from "./SuccessDialog";
 
 
 export interface TokenProps {
@@ -43,14 +46,30 @@ function AssetOverviewSidebar(props: AssetOverviewProps) {
   console.log(honeyBalance);
   console.log(isLoadingHoney);
   console.log(isLoadingHoneyContract);
-  console.log(honeyContract);
+  console.log(honeyContract);  
 
-  const { isLoadingOneOfOne, isLoadingBirthCerts, tokens: ethTokens, errorBirthCerts, errorOneOfOne} = props.ethTokenProps;
+  const sdk = useSDK();
+  const provider = sdk?.getProvider();
+  const address = useAddress(); // Get connected wallet address
+
+  const [showError, setShowError] = useState(false);
+  const [errorCode, setErrorCode] = useState(0);
+
+  const [showSuccess, setShowSuccess] = useState(false);
+  const [successCode, setSuccessCode] = useState(0);
+
+  const { isLoadingOneOfOne, isLoadingBirthCerts, tokens: ethTokens, errorBirthCerts, errorOneOfOne, hasWalletClaimedETHHoney, unclaimedHoneyBalance, pendingHoneyAirdrop, loadingUnclaimedHoneyBalance, isLoadingContractTeds, isLoadingNumberOfTedsOwned} = LoadETHAccountDetails();
   console.log(isLoadingOneOfOne);
   console.log(isLoadingBirthCerts);
   console.log(ethTokens);
   console.log(errorBirthCerts);
   console.log(errorOneOfOne);
+  console.log(hasWalletClaimedETHHoney);
+  console.log(unclaimedHoneyBalance);
+  console.log(pendingHoneyAirdrop);
+  console.log(loadingUnclaimedHoneyBalance);
+  console.log(isLoadingContractTeds);
+  console.log(isLoadingNumberOfTedsOwned);
 
 
   const tedNFTs = tokens.Teds?.tokens;
@@ -102,7 +121,46 @@ function AssetOverviewSidebar(props: AssetOverviewProps) {
 
   }, [tedNFTs, teddyNFTs, aiTedNFTs, oneOfOnes, birthCerts, traitTokens]);
  
- 
+  const handleErrorClose = () => {
+    setShowError(false);
+  };
+
+  async function collectETHHoney(): Promise<void> {
+    if(address) {
+      console.log("Collecting ETH Honey");
+      try {
+        const requestJSON: IDictionary = {
+          "wallet": address!,
+          "amount": unclaimedHoneyBalance
+        };
+        const json = JSON.stringify(requestJSON, null, 2);
+        console.log(json);
+        const response = await fetch(`https://h7ke8qc4ng.execute-api.us-east-1.amazonaws.com/Prod/processETHHoneyClaim`, {
+          method: 'POST',
+          body: json,
+        });
+        console.log(response);
+        if(response.status === 400){
+          console.log("already bridged honey... error");
+          setShowError(true);
+          setErrorCode(16);
+        } else if (response.status === 403){
+          console.log("pending honey bridge... error");
+          setShowError(true);
+          setErrorCode(17);
+        } else if (response.status === 200){
+          console.log("success");
+          setShowSuccess(true);
+          setSuccessCode(5);
+        }
+      } catch (e) {
+        console.log(e);
+        console.log("Error!");
+        setShowError(true);
+        setErrorCode(1000);
+      }
+    }
+  }
 
   return (
   <Box className="info-card" sx={{padding: "0px", margin: "0px"}}>
@@ -111,6 +169,10 @@ function AssetOverviewSidebar(props: AssetOverviewProps) {
           <Typography className="learnMore">
             {tokenCount} total tokens
           </Typography>
+        </Box>
+        <Box className="row-around">
+          {!hasWalletClaimedETHHoney && <Button disabled={loadingUnclaimedHoneyBalance || isLoadingContractTeds || isLoadingNumberOfTedsOwned} onClick={() => collectETHHoney()}>Collect Unclaimed ETH $HNY</Button>}
+          {pendingHoneyAirdrop && <Button disabled={true}>ETH $HNY Airdrop Pending...</Button>}
         </Box>
         <Box className="row-around">
           <Box className="col-no-space">
@@ -166,6 +228,19 @@ function AssetOverviewSidebar(props: AssetOverviewProps) {
             <Typography className="asset-type">{traitTokens?.length === 1 ? "Trait Token" : "Trait Tokens"}</Typography>
           </Box>
         </Box>
+
+        <ErrorDialog
+        open={showError}
+        handleClose={handleErrorClose}
+        errorCode={errorCode}
+      />
+
+      <SuccessDialog
+        open={showSuccess}
+        setOpen={setShowSuccess}
+        successCode={successCode}
+        ethHoneyClaimed={unclaimedHoneyBalance}
+      />
       </Box>
         );
     }

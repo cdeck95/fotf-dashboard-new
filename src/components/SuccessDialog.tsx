@@ -29,10 +29,11 @@ export interface SuccessDialogProps {
   honeyRewards?: number;
   honeySent?: string;
   tx?: string;
+  ethHoneyClaimed?: string;
 }
 
 function SuccessDialog(props: SuccessDialogProps) {
-  const { open, successCode, setOpen, collection, count, honeyRewards, honeySent, tx } = props;
+  const { open, successCode, setOpen, collection, count, honeyRewards, honeySent, tx, ethHoneyClaimed} = props;
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
 
@@ -63,6 +64,8 @@ function SuccessDialog(props: SuccessDialogProps) {
         return `You have successfully burned your ${count} NFTs for ${honeyRewards} $HNY!`;
       case 4:
         return `You have successfully: \n \n*Sent ${(parseInt(honeySent!)).toLocaleString()} $HNY \n*Burned ${count} NFTs \n \nIn doing so, you will recieve a fully Custom 1 of 1 Ted! Please copy the message contents (including the TX) using the button below & open a ticket in the FOTF Discord to claim your 1 of 1! \n \ntx: ${tx}`;
+      case 5:
+        return `You have successfully claimed ${ethHoneyClaimed} $HNY from the ETH Network. This amount will be airdropped to you soon.`;
       default:
         return "Please refresh the page to see your results.";
     }
