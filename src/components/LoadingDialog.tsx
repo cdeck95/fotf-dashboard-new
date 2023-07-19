@@ -11,7 +11,6 @@ import { useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { Box, CircularProgress, LinearProgress, ThemeProvider, createTheme, styled } from '@mui/material';
 import CancelOutlinedIcon from '@mui/icons-material/CancelOutlined';
-import CheckOutlinedIcon from '@mui/icons-material/CheckOutlined';
 
 const Transition = React.forwardRef(function Transition(
   props: TransitionProps & {
@@ -121,7 +120,7 @@ function LoadingDialog(props: LoadingDialogProps) {
               {/* <CheckOutlinedIcon fontSize='large' color='inherit' sx={{ margin: "auto", justifyContent: "center", alignItems: "center"}}/> */}
             </Box>
             <Box sx={{position: "absolute", right: "5px", top: "5px" }}>
-              <CancelOutlinedIcon fontSize='small' color='action' onClick={handleClose}/>
+              <CancelOutlinedIcon fontSize='small' color='action' onClick={handleClose}  sx={{ ":hover": { cursor: "pointer" }}}/>
             </Box>
           
 

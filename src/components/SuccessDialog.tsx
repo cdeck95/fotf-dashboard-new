@@ -10,6 +10,9 @@ import { TransitionProps } from '@mui/material/transitions';
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import { Box, ThemeProvider, createTheme } from '@mui/material';
+import CancelOutlinedIcon from '@mui/icons-material/CancelOutlined';
+import CheckOutlinedIcon from '@mui/icons-material/CheckOutlined';
+
 
 const Transition = React.forwardRef(function Transition(
   props: TransitionProps & {
@@ -83,17 +86,26 @@ function SuccessDialog(props: SuccessDialogProps) {
       fontWeightLight: 300,
     },
     components: {
+      MuiDialog: {
+        styleOverrides: {
+          paper: {
+            backgroundColor: sidebarBackgroundColor,
+            overflow: "unset",
+            borderRadius:"10px",
+          },
+        },
+      },
       MuiPaper: {
         styleOverrides: {
           root: {
             backgroundColor: sidebarBackgroundColor,
             paddingLeft: "0px !important",
             paddingRight: "0px !important",
-            overflowX: "hidden",
-            overflowY: "hidden",
-            "&:hover": {
-              overflowY: "auto",
-            },
+            // overflowX: "hidden",
+            // overflowY: "hidden",
+            // "&:hover": {
+            //   overflowY: "auto",
+            // },
             "&::-webkit-scrollbar": {
               display: "none",
             },
@@ -115,13 +127,22 @@ function SuccessDialog(props: SuccessDialogProps) {
         sx={{borderRadius:"0px"}}
       >
         <DialogTitle sx={{
-          backgroundColor: "green", 
-          color: "white", 
-          margin: "0px",
-          fontFamily: "Bebas Neue",
-          fontSize: "30px"
-        }}>
-        {"Success!"}
+            backgroundColor: "transparent", 
+            color: "white", 
+            margin: "0px",
+            borderRadius:"10px",
+            position: "relative",
+            borderTopColor: "green",
+            borderTopWidth: "3.5px",
+            borderTopStyle: "solid",
+            minWidth: "400px"
+          }}>
+          <Box sx={{backgroundColor: "green", borderRadius: "40px", height: "60px", width: "60px", marginTop: "-40px", display: "flex", marginLeft: "auto", marginRight: "auto", justifyContent: "center"}}>
+              <CheckOutlinedIcon fontSize='large' color='inherit' sx={{ margin: "auto", justifyContent: "center", alignItems: "center"}}/>
+            </Box>
+            <Box sx={{position: "absolute", right: "5px", top: "5px" }}>
+              <CancelOutlinedIcon fontSize='small' color='action' onClick={handleClose}  sx={{ ":hover": { cursor: "pointer" }}}/>
+            </Box>
         </DialogTitle>
         <DialogContent>
           <DialogContentText sx={{ marginTop: "10px", fontSize: "24px", fontFamily: "Bebas Neue", wordBreak: "break-word", whiteSpace: "pre-wrap"}} 
