@@ -9,7 +9,9 @@ import Slide from '@mui/material/Slide';
 import { TransitionProps } from '@mui/material/transitions';
 import { useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
-import { Box, LinearProgress, ThemeProvider, createTheme, styled } from '@mui/material';
+import { Box, CircularProgress, LinearProgress, ThemeProvider, createTheme, styled } from '@mui/material';
+import CancelOutlinedIcon from '@mui/icons-material/CancelOutlined';
+import CheckOutlinedIcon from '@mui/icons-material/CheckOutlined';
 
 const Transition = React.forwardRef(function Transition(
   props: TransitionProps & {
@@ -34,6 +36,7 @@ function LoadingDialog(props: LoadingDialogProps) {
   const navigate = useNavigate();
 
   const handleClose = () => {
+    console.log("closing...")
     onClose();
   };
 
@@ -65,17 +68,22 @@ function LoadingDialog(props: LoadingDialogProps) {
       fontWeightLight: 300,
     },
     components: {
+      MuiDialog: {
+        styleOverrides: {
+          paper: {
+            backgroundColor: sidebarBackgroundColor,
+            overflow: "unset",
+            borderRadius:"10px",
+          },
+        },
+      },
       MuiPaper: {
         styleOverrides: {
           root: {
             backgroundColor: sidebarBackgroundColor,
             paddingLeft: "0px !important",
             paddingRight: "0px !important",
-            overflowX: "hidden",
-            overflowY: "hidden",
-            "&:hover": {
-              overflowY: "auto",
-            },
+            borderRadius:"10px",
             "&::-webkit-scrollbar": {
               display: "none",
             },
@@ -86,7 +94,7 @@ function LoadingDialog(props: LoadingDialogProps) {
   });
   
   return (
-    <Box sx={{borderRadius:"0px"}}>
+    <Box sx={{borderRadius:"10px"}}>
       <ThemeProvider theme={theme}>
         <Dialog
           open={open}
@@ -94,28 +102,40 @@ function LoadingDialog(props: LoadingDialogProps) {
           keepMounted
           onClose={handleClose}
           aria-describedby="alert-dialog-slide-description"
-          sx={{borderRadius:"0px", zIndex: "1000"}}
+          sx={{borderRadius:"10px",}}
         >
           <DialogTitle sx={{
-            backgroundColor: "green", 
+            backgroundColor: "transparent", 
             color: "white", 
             margin: "0px",
-            fontFamily: "Bebas Neue",
-            fontSize: "30px"
+            borderRadius:"10px",
+            position: "relative",
+            borderTopColor: "green",
+            borderTopWidth: "3.5px",
+            borderTopStyle: "solid",
+            minWidth: "400px"
           }}>
-          {"Loading"}
-          {/* <Box sx={{position:"absolute", top: "5px", right: "5px", marginLeft: "auto"}} 
-          >
-            <Button sx={{color: "red", position:"absolute", top: "0px", right: "0px", marginLeft: "auto"}} 
-            onClick={handleClose}>X</Button>
-          </Box> */}
+          
+            <Box sx={{backgroundColor: "green", borderRadius: "40px", height: "60px", width: "60px", marginTop: "-40px", display: "flex", marginLeft: "auto", marginRight: "auto", justifyContent: "center"}}>
+              <CircularProgress color="inherit" sx={{ margin: "auto", justifyContent: "center", alignItems: "center"}} />
+              {/* <CheckOutlinedIcon fontSize='large' color='inherit' sx={{ margin: "auto", justifyContent: "center", alignItems: "center"}}/> */}
+            </Box>
+            <Box sx={{position: "absolute", right: "5px", top: "5px" }}>
+              <CancelOutlinedIcon fontSize='small' color='action' onClick={handleClose}/>
+            </Box>
+          
+
+          
+         
           </DialogTitle>
-          <DialogContent>
-            <DialogContentText sx={{ marginTop: "10px", fontSize: "24px", fontFamily: "Bebas Neue"}} id="alert-dialog-slide-description">
+          <DialogContent sx={{ marginTop: "-10px"}}>
+            <DialogContentText sx={{ marginTop: "10px", fontSize: "24px", fontFamily: "Bebas Neue", display: "flex", justifyContent: "center"}} id="alert-dialog-slide-description">
             {loadingText()}
             </DialogContentText>
-            <LinearProgress color="success" sx={{ marginTop: "5px"}}/>
+            <LinearProgress color="success" sx={{ marginTop: "10px"}}/>
           </DialogContent>
+          {/* <DialogActions sx={{ marginTop: "-10px", marginBottom: "10px", display: "flex", justifyContent: "center"}}>
+          </DialogActions> */}
         </Dialog>
       </ThemeProvider>
     </Box>
