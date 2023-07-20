@@ -602,6 +602,6 @@
   background-color: white;
   padding-right: auto;
   padding-left: auto;
-  justify-content: center;
+  justify-content: flex-end;
   align-items: center;
 }

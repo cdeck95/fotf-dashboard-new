@@ -10,6 +10,9 @@ import { TransitionProps } from '@mui/material/transitions';
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import { Box, ThemeProvider, createTheme } from '@mui/material';
+import HighlightOffOutlinedIcon from '@mui/icons-material/HighlightOffOutlined';
+import CheckOutlinedIcon from '@mui/icons-material/CheckOutlined';
+
 
 const Transition = React.forwardRef(function Transition(
   props: TransitionProps & {
@@ -83,17 +86,26 @@ function SuccessDialog(props: SuccessDialogProps) {
       fontWeightLight: 300,
     },
     components: {
+      MuiDialog: {
+        styleOverrides: {
+          paper: {
+            backgroundColor: sidebarBackgroundColor,
+            overflow: "unset",
+            borderRadius:"20px",
+          },
+        },
+      },
       MuiPaper: {
         styleOverrides: {
           root: {
             backgroundColor: sidebarBackgroundColor,
             paddingLeft: "0px !important",
             paddingRight: "0px !important",
-            overflowX: "hidden",
-            overflowY: "hidden",
-            "&:hover": {
-              overflowY: "auto",
-            },
+            // overflowX: "hidden",
+            // overflowY: "hidden",
+            // "&:hover": {
+            //   overflowY: "auto",
+            // },
             "&::-webkit-scrollbar": {
               display: "none",
             },
@@ -104,7 +116,7 @@ function SuccessDialog(props: SuccessDialogProps) {
   });
   
   return (
-    <Box sx={{borderRadius:"0px"}}>
+    <Box sx={{borderRadius:"20px"}}>
       <ThemeProvider theme={theme}>
       <Dialog
         open={open}
@@ -115,21 +127,31 @@ function SuccessDialog(props: SuccessDialogProps) {
         sx={{borderRadius:"0px"}}
       >
         <DialogTitle sx={{
-          backgroundColor: "green", 
-          color: "white", 
-          margin: "0px",
-          fontFamily: "Bebas Neue",
-          fontSize: "30px"
-        }}>
-        {"Success!"}
+            backgroundColor: "transparent", 
+            color: "white", 
+            margin: "0px",
+            borderRadius:"20px",
+            position: "relative",
+            borderTopColor: "#55c742",
+            borderTopWidth: "3.5px",
+            borderTopStyle: "solid",
+            minWidth: "400px",
+            maxWidth: "810px"
+          }}>
+          <Box sx={{backgroundColor: "#55c742", borderRadius: "40px", height: "60px", width: "60px", marginTop: "-40px", display: "flex", marginLeft: "auto", marginRight: "auto", justifyContent: "center"}}>
+              <CheckOutlinedIcon fontSize='large' color='inherit' sx={{ margin: "auto", justifyContent: "center", alignItems: "center"}}/>
+            </Box>
+            <Box sx={{position: "absolute", right: "10px", top: "10px" }}>
+              <HighlightOffOutlinedIcon fontSize='medium' color='action' onClick={handleClose}  sx={{ ":hover": { cursor: "pointer", width: "25px", height: "25px" }}}/>
+            </Box>
         </DialogTitle>
         <DialogContent>
-          <DialogContentText sx={{ marginTop: "10px", fontSize: "24px", fontFamily: "Bebas Neue", wordBreak: "break-word", whiteSpace: "pre-wrap"}} 
+          <DialogContentText sx={{ textAlign: "center", marginTop: "10px", paddingTop: "10px", paddingBottom: "10px", fontSize: "24px", fontFamily: "Bebas Neue", wordBreak: "break-word", whiteSpace: "pre-wrap", display: "flex", justifyContent: "center", alignItems: "center"}} 
           id="alert-dialog-slide-description">
           {successText()}
           </DialogContentText>
         </DialogContent>
-        <DialogActions>
+        <DialogActions sx={{ display: "flex", justifyContent: "center", width: "100%"}}>
           {tx && <Button variant="contained" sx={{
               fontFamily: "Bebas Neue",
               fontSize: "24px",
@@ -146,16 +168,24 @@ function SuccessDialog(props: SuccessDialogProps) {
             }}onClick={copyMessage}>{copyText}</Button>}
           <Button variant="contained" sx={{
             fontFamily: "Bebas Neue",
-            fontSize: "24px",
+            fontSize: "28px",
             marginBottom: "5px",
-            backgroundColor: "green",
+            backgroundColor: "#55c742",
             color: "white",
+            borderColor: "#55c742",
+            borderWidth: "5px",
+            borderStyle: "solid",
+            width: "235px",
+            height: "65px",
+            borderRadius: "0px",
             "&:hover": {
               backgroundColor: "white",
-              color: "green",
-              borderColor: "green",
-              borderWidth: "1px",
-              borderStyle: "solid"
+              color: "#55c742",
+              borderColor: "#55c742",
+              borderWidth: "5px",
+              borderStyle: "solid",
+              width: "235px",
+              height: "65px"
             }
           }}onClick={handleClose}>Done</Button>
         </DialogActions>
