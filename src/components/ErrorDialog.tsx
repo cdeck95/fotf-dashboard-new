@@ -102,7 +102,7 @@ function ErrorDialog(props: FailureDialogProps) {
       case 4:
         return "#FED100";
       default:
-        return "#c74242"
+        return "#c74242";
     }
   };
 

@@ -1242,7 +1242,13 @@ function TheFactory(props: PolygonProps) {
 
 
       <ErrorDialog
-        open={true} //showError 
+        open={showError}
+        handleClose={handleErrorClose}
+        errorCode={errorCode}
+      /> 
+
+<ErrorDialog
+        open={true}
         handleClose={handleErrorClose}
         errorCode={errorCode}
       />
