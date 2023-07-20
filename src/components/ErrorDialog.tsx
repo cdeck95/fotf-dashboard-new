@@ -10,7 +10,7 @@ import { TransitionProps } from '@mui/material/transitions';
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import { Box, CircularProgress, ThemeProvider, createTheme } from '@mui/material';
-import CancelOutlinedIcon from '@mui/icons-material/CancelOutlined';
+import HighlightOffOutlinedIcon from '@mui/icons-material/HighlightOffOutlined';
 import PriorityHighOutlinedIcon from '@mui/icons-material/PriorityHighOutlined';
 
 const Transition = React.forwardRef(function Transition(
@@ -94,15 +94,15 @@ function ErrorDialog(props: FailureDialogProps) {
   const errorColor = () => {
     switch (errorCode) {
       case 1:
-        return "red";
+        return "#c74242";
       case 2:
-        return "red";
+        return "#c74242";
       case 3:
         return "#FED100";
       case 4:
         return "#FED100";
       default:
-        return "red"
+        return "#c74242"
     }
   };
 
@@ -122,7 +122,7 @@ function ErrorDialog(props: FailureDialogProps) {
           paper: {
             backgroundColor: sidebarBackgroundColor,
             overflow: "unset",
-            borderRadius:"10px",
+            borderRadius:"20px",
           },
         },
       },
@@ -150,7 +150,7 @@ function ErrorDialog(props: FailureDialogProps) {
  
   
   return (
-    <Box sx={{borderRadius:"0px"}}>
+    <Box sx={{borderRadius:"20px"}}>
       <ThemeProvider theme={theme}>
         <Dialog
           open={open}
@@ -158,54 +158,55 @@ function ErrorDialog(props: FailureDialogProps) {
           keepMounted
           onClose={handleClose}
           aria-describedby="alert-dialog-slide-description"
-          sx={{borderRadius:"0px"}}
+          sx={{borderRadius:"20px"}}
         >
           <DialogTitle sx={{
             backgroundColor: "transparent", 
             color: "white", 
             margin: "0px",
-            borderRadius:"10px",
+            borderRadius:"20px",
             position: "relative",
-            borderTopColor: "red",
+            borderTopColor: "#c74242",
             borderTopWidth: "3.5px",
             borderTopStyle: "solid",
-            minWidth: "400px"
+            minWidth: "400px",
+            maxWidth: "810px"
           }}>
-            <Box sx={{backgroundColor: "red", borderRadius: "40px", height: "60px", width: "60px", marginTop: "-40px", display: "flex", marginLeft: "auto", marginRight: "auto", justifyContent: "center"}}>
+            <Box sx={{backgroundColor: "#c74242", borderRadius: "40px", height: "60px", width: "60px", marginTop: "-40px", display: "flex", marginLeft: "auto", marginRight: "auto", justifyContent: "center"}}>
               {/* <CircularProgress color="inherit" sx={{ margin: "auto", justifyContent: "center", alignItems: "center"}} /> */}
               <PriorityHighOutlinedIcon fontSize='large' color='inherit' sx={{ margin: "auto", justifyContent: "center", alignItems: "center"}}/>
             </Box>
-            <Box sx={{position: "absolute", right: "5px", top: "5px" }}>
-              <CancelOutlinedIcon fontSize='small' color='action' onClick={handleClose} sx={{ ":hover": { cursor: "pointer" }}}/>
+            <Box sx={{position: "absolute", right: "10px", top: "10px" }}>
+              <HighlightOffOutlinedIcon fontSize='medium' color='action' onClick={handleClose}  sx={{ ":hover": { cursor: "pointer", width: "25px", height: "25px" }}}/>
             </Box>
           
           </DialogTitle>
           <DialogContent>
-            <DialogContentText sx={{ marginTop: "10px", fontSize: "24px", fontFamily: "Bebas Neue"}} id="alert-dialog-slide-description">
+            <DialogContentText sx={{ textAlign: "center", marginTop: "10px", paddingTop: "10px", paddingBottom: "10px", fontSize: "24px", fontFamily: "Bebas Neue",  display: "flex", justifyContent: "center", alignItems: "center"}} id="alert-dialog-slide-description">
               {errorText()}
             </DialogContentText>
           </DialogContent>
-          <DialogActions>
+          <DialogActions sx={{ display: "flex", justifyContent: "center", width: "100%"}}>
             <Button variant="contained" color="error" sx={{
               fontFamily: "Bebas Neue",
-              fontSize: "24px",
+              fontSize: "28px",
               marginBottom: "5px",
               backgroundColor: errorColor(),
               color: "white",
-              borderColor: "white",
-              marginLeft: "auto",
-              marginRight: "auto",
-              display: "flex",
-              justifyContent: "center",
-              borderWidth: "1px",
-              paddingLeft: "0px",
-              paddingRight: "0px",
+              borderColor: "#c74242",
+              borderWidth: "5px",
+              borderStyle: "solid",
+              width: "235px",
+              height: "65px",
+              borderRadius: "0px",
               "&:hover": {
                 backgroundColor: "white",
                 color: errorColor(),
-                borderColor: errorColor(),
-                borderWidth: "1px",
-                borderStyle: "solid"
+                borderColor: "#c74242",
+                borderWidth: "5px",
+                borderStyle: "solid",
+                width: "235px",
+                height: "65px",
               }
             }}onClick={handleClose}>Close</Button>
           </DialogActions>

@@ -1191,7 +1191,7 @@ function TheFactory(props: PolygonProps) {
       </Box>
 
       <SuccessDialog
-        open={successAWS}
+        open={successAWS} 
         setOpen={setSuccessAWS}
         successCode={1}
       />
@@ -1242,7 +1242,7 @@ function TheFactory(props: PolygonProps) {
 
 
       <ErrorDialog
-        open={showError}
+        open={true} //showError 
         handleClose={handleErrorClose}
         errorCode={errorCode}
       />
