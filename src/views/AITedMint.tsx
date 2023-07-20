@@ -285,7 +285,7 @@ function AITedMint(props: MintProps) {
         <CircularProgress color="inherit" />
       </Backdrop>}
 
-      <MaticDialog open={needsFunds} handleClose={handleMaticClose} />
+      <MaticDialog open={needsFunds} handleClose={handleMaticClose} /> 
       {!isSmallScreen && (
         <Box className="row-center">
           <h1 className="Large-Header">

@@ -13,6 +13,8 @@ import { Box, IconButton, ThemeProvider, createTheme, useMediaQuery, useTheme } 
 import CloseIcon from '@mui/icons-material/Close';
 import Paper, { PaperProps } from '@mui/material/Paper';
 import Draggable from 'react-draggable';
+import HighlightOffOutlinedIcon from '@mui/icons-material/HighlightOffOutlined';
+import PriorityHighOutlinedIcon from '@mui/icons-material/PriorityHighOutlined';
 
 const Transition = React.forwardRef(function Transition(
   props: TransitionProps & {
@@ -57,17 +59,26 @@ function MaticDialog(props: DialogProps) {
       fontWeightLight: 300,
     },
     components: {
+      MuiDialog: {
+        styleOverrides: {
+          paper: {
+            backgroundColor: sidebarBackgroundColor,
+            overflow: "unset",
+            borderRadius:"20px",
+          },
+        },
+      },
       MuiPaper: {
         styleOverrides: {
           root: {
             backgroundColor: sidebarBackgroundColor,
             paddingLeft: "0px !important",
             paddingRight: "0px !important",
-            overflowX: "hidden",
-            overflowY: "hidden",
-            "&:hover": {
-              overflowY: "auto",
-            },
+            // overflowX: "hidden",
+            // overflowY: "hidden",
+            // "&:hover": {
+            //   overflowY: "auto",
+            // },
             "&::-webkit-scrollbar": {
               display: "none",
             },
@@ -91,7 +102,7 @@ function MaticDialog(props: DialogProps) {
     }
 
   return (
-    <Box sx={{ borderRadius: "0px" }}>
+    <Box sx={{ borderRadius: "20px" }}>
       <ThemeProvider theme={theme}>
       <Dialog
         open={open}
@@ -101,39 +112,32 @@ function MaticDialog(props: DialogProps) {
         fullScreen={fullScreen}
         PaperComponent={PaperComponent}
         aria-describedby="alert-dialog-slide-description"
-        sx={{ borderRadius: "0px" }}
+        sx={{ borderRadius: "20px" }}
       >
-        <DialogTitle
-          style={{ cursor: "move" }}
-          id="draggable-dialog-title"
-          sx={{
-            backgroundColor: "#FED100",
-            color: "white",
+        <DialogTitle sx={{
+            backgroundColor: "transparent", 
+            color: "white", 
             margin: "0px",
-            fontFamily: "Bebas Neue",
-            fontSize: "30px",
-            display: "flex",
-            justifyContent: "space-between",
-          }}
-        >
-          {"Warning"}
-          {/* <Box sx={{ display: "flex", justifyContent: "flex-end", alightItems: "center"}} 
-        > */}
-          <IconButton
-            color="inherit"
-            onClick={() => handleClose()}
-            size="large" 
-            >
-            <CloseIcon />
-          </IconButton>
-
-          {/* </Box> */}
-        </DialogTitle>
+            borderRadius:"20px",
+            position: "relative",
+            borderTopColor: "#FED100",
+            borderTopWidth: "3.5px",
+            borderTopStyle: "solid",
+            minWidth: "400px",
+            maxWidth: "810px"
+          }}>
+            <Box sx={{backgroundColor: "#FED100", borderRadius: "40px", height: "60px", width: "60px", marginTop: "-40px", display: "flex", marginLeft: "auto", marginRight: "auto", justifyContent: "center"}}>
+              {/* <CircularProgress color="inherit" sx={{ margin: "auto", justifyContent: "center", alignItems: "center"}} /> */}
+              <PriorityHighOutlinedIcon fontSize='large' color='inherit' sx={{ margin: "auto", justifyContent: "center", alignItems: "center"}}/>
+            </Box>
+            <Box sx={{position: "absolute", right: "10px", top: "10px" }}>
+              <HighlightOffOutlinedIcon fontSize='medium' color='action' onClick={handleClose}  sx={{ ":hover": { cursor: "pointer", width: "25px", height: "25px" }}}/>
+            </Box>
+          
+          </DialogTitle>
         <DialogContent>
-          <DialogContentText
-            sx={{ marginTop: "10px", fontSize: "22px" }}
-            id="alert-dialog-slide-description"
-          >
+          <DialogContentText sx={{ textAlign: "center", marginTop: "10px", paddingTop: "10px", paddingBottom: "10px", fontSize: "24px", fontFamily: "Helvetica Neue", wordBreak: "break-word", whiteSpace: "pre-wrap", display: "flex", justifyContent: "center", alignItems: "center"}} 
+            id="alert-dialog-slide-description">
             It looks like you are low on MATIC. We suggest having at least $5
             of MATIC to be safe. Getting MATIC is relatively easy and you can
             bridge your current ETH up using the Polygon Wallet for the best

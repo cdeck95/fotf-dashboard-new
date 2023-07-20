@@ -72,7 +72,7 @@ function LoadingDialog(props: LoadingDialogProps) {
           paper: {
             backgroundColor: sidebarBackgroundColor,
             overflow: "unset",
-            borderRadius:"10px",
+            borderRadius:"20px",
           },
         },
       },
@@ -101,7 +101,7 @@ function LoadingDialog(props: LoadingDialogProps) {
           keepMounted
           onClose={handleClose}
           aria-describedby="alert-dialog-slide-description"
-          sx={{borderRadius:"0px",}}
+          sx={{borderRadius:"20px",}}
         >
           <DialogTitle sx={{
             backgroundColor: "transparent", 

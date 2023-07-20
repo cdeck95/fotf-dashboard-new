@@ -14,14 +14,6 @@ import { BrowserRouter } from "react-router-dom";
 
 const container = document.getElementById("root");
 const root = createRoot(container!);
-// ReactDOM.render(
-//   <React.StrictMode>
-//     <ThirdwebProvider activeChain={activeChain}>
-//       <App />
-//     </ThirdwebProvider>
-//   </React.StrictMode>,
-//  document.getElementById('root')
-// );
   root.render(
   <React.StrictMode>
     <BrowserRouter>
@@ -29,6 +21,7 @@ const root = createRoot(container!);
       <ThirdwebProvider supportedWallets={[metamaskWallet(), coinbaseWallet(), walletConnect(), localWallet(), safeWallet()]}
         activeChain={Polygon}
         supportedChains={[Polygon, Ethereum]}
+        clientId="373b1cf6f7ae2a429f8359ddd03a40a2"
         key={"polygonThirdWebProvider"}>
         <App />
       </ThirdwebProvider>

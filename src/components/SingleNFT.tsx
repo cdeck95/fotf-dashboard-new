@@ -90,8 +90,8 @@ function SingleNFT(props: SingleNFTProps) {
                       // maxWidth: "200px",
                       borderRadius: "10px",
                       objectFit: "cover",
-                      width: "150px",
-                      height: "150px",
+                      width: "200px",
+                      height: "200px",
                   }} 
                   />
                   <Button

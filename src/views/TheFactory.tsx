@@ -79,6 +79,8 @@ import tedMintLogo from "../assets/tedMint.png";
 import teddyMintLogo from "../assets/teddyMint.gif";
 import aiTedMintLogo from "../assets/aiTedMint.png";
 import { CollectionsOutlined } from "@mui/icons-material";
+import MaticDialog from "../components/MaticDialog";
+import RevealDialog from "../components/RevealDialog";
 
 const IS_DISABLED = false;
 const FACTORY_CONTRACT_ADDRESS = "0xe851Fbe10b8B252D31Fe4C246C43584b02045346";
@@ -124,7 +126,7 @@ function TheFactory(props: PolygonProps) {
   console.log(`Is 1920:  ${isFullScreen}`);
 
   const { leftNavOpen, rightNavOpen } = props;
-  const { tokens, isLoadingTed, isLoadingTeddy, isLoadingAI, errorTed, errorTeddy, errorAI, maticBalance, needsFunds, tedContract, isLoadingTedContract, teddyContract, isLoadingTeddyContract, aiTedContract, isLoadingAITedContract, honeyContract, isLoadingHoneyContract } = props.tokenProps;
+  const { tokens, isLoadingTed, isLoadingTeddy, isLoadingAI, errorTed, errorTeddy, errorAI, maticBalance, needsFunds, setNeedsFunds, tedContract, isLoadingTedContract, teddyContract, isLoadingTeddyContract, aiTedContract, isLoadingAITedContract, honeyContract, isLoadingHoneyContract } = props.tokenProps;
   const showMismatch = props.showMismatch;
   console.log(tokens);
   console.log(isLoadingTed);
@@ -806,6 +808,11 @@ function TheFactory(props: PolygonProps) {
     },
   });
 
+  const handleMaticClose = () => {
+    setNeedsFunds!(false);
+    console.log("closing dialog");
+  };
+
   //////////////////////////////////////////////
 
   return (
@@ -1235,7 +1242,7 @@ function TheFactory(props: PolygonProps) {
       />
 
 <LoadingDialog
-        open={isLoadingBurn}
+        open={isLoadingBurn} 
         loadingCode={5}
         onClose={() => setIsLoadingBurn(false)}
       />
@@ -1247,8 +1254,19 @@ function TheFactory(props: PolygonProps) {
         errorCode={errorCode}
       /> 
 
+<MaticDialog open={needsFunds} handleClose={handleMaticClose} /> 
+{/* 
+<RevealDialog
+        open={isReveal} 
+        setOpen={setIsReveal}
+        mintedIds={["1", "2", "3"]} //dont hard code this
+        contract={tedContract!}
+        collection={"Fury Teds"}
+      /> */}
+
+
 <ErrorDialog
-        open={true}
+        open={showError}
         handleClose={handleErrorClose}
         errorCode={errorCode}
       />

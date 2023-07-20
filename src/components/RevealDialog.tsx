@@ -15,6 +15,8 @@ import { BaseContract } from 'ethers';
 import SingleNFT from './SingleNFT';
 import { TwitterShareButton, TwitterIcon } from 'react-share';
 import '../styles/RevealDialog.css';
+import HighlightOffOutlinedIcon from '@mui/icons-material/HighlightOffOutlined';
+import CheckOutlinedIcon from '@mui/icons-material/CheckOutlined';
 
 const Transition = React.forwardRef(function Transition(
   props: TransitionProps & {
@@ -56,17 +58,26 @@ function RevealDialog(props: RevealDialogProps) {
       fontWeightLight: 300,
     },
     components: {
+      MuiDialog: {
+        styleOverrides: {
+          paper: {
+            backgroundColor: sidebarBackgroundColor,
+            overflow: "unset",
+            borderRadius:"20px",
+          },
+        },
+      },
       MuiPaper: {
         styleOverrides: {
           root: {
             backgroundColor: sidebarBackgroundColor,
             paddingLeft: "0px !important",
             paddingRight: "0px !important",
-            overflowX: "hidden",
-            overflowY: "hidden",
-            "&:hover": {
-              overflowY: "auto",
-            },
+            // overflowX: "hidden",
+            // overflowY: "hidden",
+            // "&:hover": {
+            //   overflowY: "auto",
+            // },
             "&::-webkit-scrollbar": {
               display: "none",
             },
@@ -115,7 +126,7 @@ function RevealDialog(props: RevealDialogProps) {
 
   
   return (
-    <Box sx={{borderRadius:"0px"}}>
+    <Box sx={{borderRadius:"20px"}}>
       <ThemeProvider theme={theme}>
       <Dialog
         open={open}
@@ -123,22 +134,34 @@ function RevealDialog(props: RevealDialogProps) {
         keepMounted
         onClose={handleClose}
         aria-describedby="alert-dialog-slide-description"
-        sx={{borderRadius:"0px"}}
+        sx={{borderRadius:"20px"}}
       >
         <DialogTitle sx={{
-          backgroundColor: "green", 
-          color: "white", 
-          margin: "0px",
-          fontFamily: "Bebas Neue",
-          fontSize: "30px"
+           backgroundColor: "transparent", 
+           color: "white", 
+           margin: "0px",
+           borderRadius:"20px",
+           position: "relative",
+           borderTopColor: "#55c742",
+           borderTopWidth: "3.5px",
+           borderTopStyle: "solid",
+           minWidth: "400px",
+           maxWidth: "810px"
         }}>
-        {"Success!"}
+        {/* {"Success!"} */}
+        <Box sx={{backgroundColor: "#55c742", borderRadius: "40px", height: "60px", width: "60px", marginTop: "-40px", display: "flex", marginLeft: "auto", marginRight: "auto", justifyContent: "center"}}>
+              <CheckOutlinedIcon fontSize='large' color='inherit' sx={{ margin: "auto", justifyContent: "center", alignItems: "center"}}/>
+            </Box>
+            <Box sx={{position: "absolute", right: "10px", top: "10px" }}>
+              <HighlightOffOutlinedIcon fontSize='medium' color='action' onClick={handleClose}  sx={{ ":hover": { cursor: "pointer", width: "25px", height: "25px" }}}/>
+            </Box>
+        
         </DialogTitle>
         <DialogContent>
           <DialogContentText sx={{ marginTop: "10px", fontSize: "24px", fontFamily: "Bebas Neue"}} 
           id="alert-dialog-slide-description">
-            You have minted {mintedIds.length} {nftText}: {mintedIds.map((id, index) => {
-                return <span key={index}>{id}{index < mintedIds.length - 1 ? ", " : ""}</span>
+            You have minted {mintedIds.length} {nftText}: #{mintedIds.map((id, index) => {
+                return <span key={index}>{id}{index < mintedIds.length - 1 ? ", #" : ""}</span>
             }
             )}
           </DialogContentText>
@@ -154,7 +177,7 @@ function RevealDialog(props: RevealDialogProps) {
                 className="factory-image-list"
                 cols={2}
                 gap={15}
-                rowHeight={150}
+                rowHeight={200}
               >
                 {mintedIds.map((tokenID: string, index: number) => (
                     <Box
@@ -185,19 +208,27 @@ function RevealDialog(props: RevealDialogProps) {
               >  <TwitterIcon size={32} round/>  
               </TwitterShareButton>
         </DialogContent>
-        <DialogActions>
-          <Button variant="contained" sx={{
-            fontFamily: "Bebas Neue",
-            fontSize: "24px",
+        <DialogActions sx={{ display: "flex", justifyContent: "center", width: "100%"}}>
+        <Button variant="contained" sx={{
+            fontFamily: "Helvetica Neue",
+            fontSize: "28px",
             marginBottom: "5px",
-            backgroundColor: "green",
+            backgroundColor: "#55c742",
             color: "white",
+            borderColor: "#55c742",
+            borderWidth: "5px",
+            borderStyle: "solid",
+            width: "235px",
+            height: "65px",
+            borderRadius: "0px",
             "&:hover": {
               backgroundColor: "white",
-              color: "green",
-              borderColor: "green",
-              borderWidth: "1px",
-              borderStyle: "solid"
+              color: "#55c742",
+              borderColor: "#55c742",
+              borderWidth: "5px",
+              borderStyle: "solid",
+              width: "235px",
+              height: "65px"
             }
           }}onClick={handleClose}>Done</Button>
           
