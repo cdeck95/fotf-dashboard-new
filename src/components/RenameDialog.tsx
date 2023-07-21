@@ -131,7 +131,7 @@ function RenameDialog(props: RenameDialogProps) {
                     fontFamily: "Bebas Neue",
                     fontSize: "28px",
                     margin: "5px",
-                    backgroundColor: "white",
+                    backgroundColor: "transparent",
                     color: "#55c742",
                     borderColor: "#55c742",
                     borderWidth: "5px",

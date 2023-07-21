@@ -197,7 +197,7 @@ function ErrorDialog(props: FailureDialogProps) {
               fontFamily: "Helvetica Neue",
               fontSize: "1rem",
               marginBottom: "5px",
-              backgroundColor: "white",
+              backgroundColor: "transparent",
               color: errorColor(),
               borderColor: "#c74242",
               borderWidth: "5px",
