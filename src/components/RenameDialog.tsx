@@ -129,31 +129,47 @@ function RenameDialog(props: RenameDialogProps) {
             <DialogActions>
                 <Button variant="contained" sx={{
                     fontFamily: "Bebas Neue",
-                    fontSize: "18px",
-                    marginBottom: "0px",
-                    backgroundColor: "blue",
-                    color: "white",
-                    "&:hover": {
+                    fontSize: "28px",
+                    margin: "5px",
                     backgroundColor: "white",
-                    color: "blue",
-                    borderColor: "blue",
-                    borderWidth: "1px",
-                    borderStyle: "solid"
+                    color: "#55c742",
+                    borderColor: "#55c742",
+                    borderWidth: "5px",
+                    borderStyle: "solid",
+                    width: "195px",
+                    height: "60px",
+                    borderRadius: "0px",
+                    "&:hover": {
+                      backgroundColor: "#55c742",
+                      color: "white",
+                      borderColor: "#55c742",
+                      borderWidth: "5px",
+                      borderStyle: "solid",
+                      width: "195px",
+                      height: "60px"
                     }
                 }}onClick={handleClose}>Back</Button>
                 
                 <Button variant="contained" sx={{
                     fontFamily: "Bebas Neue",
-                    fontSize: "18px",
-                    marginBottom: "0px",
-                    backgroundColor: "green",
+                    fontSize: "28px",
+                    margin: "5px",
+                    backgroundColor: "#55c742",
                     color: "white",
+                    borderColor: "#55c742",
+                    borderWidth: "5px",
+                    borderStyle: "solid",
+                    width: "195px",
+                    height: "60px",
+                    borderRadius: "0px",
                     "&:hover": {
-                    backgroundColor: "white",
-                    color: "green",
-                    borderColor: "green",
-                    borderWidth: "1px",
-                    borderStyle: "solid"
+                      backgroundColor: "white",
+                      color: "#55c742",
+                      borderColor: "#55c742",
+                      borderWidth: "5px",
+                      borderStyle: "solid",
+                      width: "195px",
+                      height: "60px"
                     }
                 }}onClick={handleSubmit}>Submit</Button>
                 
