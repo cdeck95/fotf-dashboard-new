@@ -105,7 +105,7 @@ function RenameDialog(props: RenameDialogProps) {
                 borderTopColor: "#55c742",
                 borderTopWidth: "3.5px",
                 borderTopStyle: "solid",
-                minWidth: "400px",
+                minWidth: "410px",
                 maxWidth: "810px"
             }}>
             {/* {"Rename Your Ted"} */}
@@ -126,17 +126,17 @@ function RenameDialog(props: RenameDialogProps) {
                       }}
                     />
             </DialogContent>
-            <DialogActions>
+            <DialogActions sx={{ display: "flex", justifyContent: "center"}}>
                 <Button variant="contained" sx={{
                     fontFamily: "Bebas Neue",
                     fontSize: "28px",
                     margin: "5px",
-                    backgroundColor: "white",
+                    backgroundColor: "transparent",
                     color: "#55c742",
                     borderColor: "#55c742",
                     borderWidth: "5px",
                     borderStyle: "solid",
-                    width: "195px",
+                    width: "175px",
                     height: "60px",
                     borderRadius: "0px",
                     "&:hover": {
@@ -145,7 +145,7 @@ function RenameDialog(props: RenameDialogProps) {
                       borderColor: "#55c742",
                       borderWidth: "5px",
                       borderStyle: "solid",
-                      width: "195px",
+                      width: "175px",
                       height: "60px"
                     }
                 }}onClick={handleClose}>Back</Button>
@@ -159,7 +159,7 @@ function RenameDialog(props: RenameDialogProps) {
                     borderColor: "#55c742",
                     borderWidth: "5px",
                     borderStyle: "solid",
-                    width: "195px",
+                    width: "175px",
                     height: "60px",
                     borderRadius: "0px",
                     "&:hover": {
@@ -168,7 +168,7 @@ function RenameDialog(props: RenameDialogProps) {
                       borderColor: "#55c742",
                       borderWidth: "5px",
                       borderStyle: "solid",
-                      width: "195px",
+                      width: "175px",
                       height: "60px"
                     }
                 }}onClick={handleSubmit}>Submit</Button>

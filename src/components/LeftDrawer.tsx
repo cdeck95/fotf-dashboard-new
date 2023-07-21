@@ -393,7 +393,7 @@ function LeftDrawer(props: NavProps) {
               </ListItemIcon>
               <Box className="row">
                 <ListItemText primary={"$HNY Exchange"} />
-                <Chip size="small"  label={<Typography sx={{fontSize: "15px"}}> New &#x2728; </Typography>} color="primary" sx={{maxHeight: "40px", maxWidth: "70px", justifyContent: "flex-start", textAlign: "start", alignItems: "flex-start", marginRight: "25px", marginBottom: "15px", border: "none"}} variant="outlined"/>
+                {/* <Chip size="small"  label={<Typography sx={{fontSize: "15px"}}> New &#x2728; </Typography>} color="primary" sx={{maxHeight: "40px", maxWidth: "70px", justifyContent: "flex-start", textAlign: "start", alignItems: "flex-start", marginRight: "25px", marginBottom: "15px", border: "none"}} variant="outlined"/> */}
               </Box>
               </ListItemButton>
           </ListItem>
@@ -440,7 +440,7 @@ function LeftDrawer(props: NavProps) {
               <ListItemText primary={"Build A Teddy"} />
             </ListItemButton>
           </ListItem> */}
-          {/* <ListItem
+          <ListItem
             key={"TraitSwapTeds"}
             disablePadding
             onClick={() => loadPage("TraitSwapTeds")}
@@ -450,8 +450,9 @@ function LeftDrawer(props: NavProps) {
                 <EditOutlinedIcon fontSize="small" />
               </ListItemIcon>
               <ListItemText primary={"Trait Swap Teds"} />
+              <Chip size="small"  label={<Typography sx={{fontSize: "15px"}}> New &#x2728; </Typography>} color="primary" sx={{ justifyContent: "flex-start", textAlign: "start", alignItems: "flex-start", marginRight: "20px", marginBottom: "15px", border: "none"}} variant="outlined"/>
             </ListItemButton>
-          </ListItem> */}
+          </ListItem>
           <ListItem
             key={"TheFactory"}
             disablePadding

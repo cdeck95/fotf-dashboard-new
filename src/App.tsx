@@ -356,7 +356,7 @@ function App() {
                   element={<TheFactory tokenProps={polygonTokenProps} leftNavOpen={leftNavOpen} rightNavOpen={rightNavOpen} showMismatch={showMismatch} isSmallScreen={isSmallScreen}/>}
                 />
                 <Route path="/BuildATeddy" element={<BuildATeddy />} />
-                <Route path="/TraitSwapTeds" element={<TraitSwapTeds />} />
+                <Route path="/TraitSwapTeds" element={<TraitSwapTeds tokenProps={polygonTokenProps} leftNavOpen={leftNavOpen} rightNavOpen={rightNavOpen} showMismatch={showMismatch} isSmallScreen={isSmallScreen} />} />
                 <Route path="/GraphicTemplates" element={<GraphicTemplates />} />
                 <Route path="*" element={<NotFound />} />
               </Routes>
