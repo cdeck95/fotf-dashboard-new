@@ -72,7 +72,7 @@ function LoadingDialog(props: LoadingDialogProps) {
           paper: {
             backgroundColor: sidebarBackgroundColor,
             overflow: "unset",
-            borderRadius:"10px",
+            borderRadius:"20px",
           },
         },
       },
@@ -101,7 +101,7 @@ function LoadingDialog(props: LoadingDialogProps) {
           keepMounted
           onClose={handleClose}
           aria-describedby="alert-dialog-slide-description"
-          sx={{borderRadius:"0px",}}
+          sx={{borderRadius:"20px",}}
         >
           <DialogTitle sx={{
             backgroundColor: "transparent", 
@@ -129,7 +129,7 @@ function LoadingDialog(props: LoadingDialogProps) {
          
           </DialogTitle>
           <DialogContent sx={{ marginTop: "-10px"}}>
-            <DialogContentText sx={{ textAlign: "center", marginTop: "10px", paddingTop: "10px", paddingBottom: "10px", fontSize: "24px", fontFamily: "Bebas Neue",  display: "flex", justifyContent: "center", alignItems: "center"}} id="alert-dialog-slide-description">
+            <DialogContentText sx={{ textAlign: "center", marginTop: "10px", paddingTop: "10px", paddingBottom: "10px", fontSize: "24px", fontFamily: "Helvetica Neue",  display: "flex", justifyContent: "center", alignItems: "center"}} id="alert-dialog-slide-description">
             {loadingText()}
             </DialogContentText>
             <LinearProgress color="success" sx={{ marginTop: "10px"}}/>

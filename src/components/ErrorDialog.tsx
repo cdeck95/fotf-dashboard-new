@@ -34,6 +34,10 @@ function ErrorDialog(props: FailureDialogProps) {
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
 
+  const openDiscord = () => {
+    window.open("https://discord.gg/fotf");
+  };
+
   const errorText = () => {
     switch (errorCode) {
       case 1:
@@ -71,6 +75,8 @@ function ErrorDialog(props: FailureDialogProps) {
         return 'You have already received your ETH $HNY Airdrop. If you believe this to be incorrect, please raise a ticket in the FOTF Discord.'
       case 17:
         return 'Your ETH $HNY Airdrop is currently Pending. Please check back at a later date. If you believe this to be incorrect, please raise a ticket in the FOTF Discord.'
+      case 18: 
+        return 'You cannot send negative $HNY. Please unselect token(s) until you are at $0 (or more) HNY to send.'
       default:
         return "Something went wrong. We are not sure exactly what. Please refresh the page. If this continues to happen, please open a ticket within the FOTF Discord.";
     }
@@ -182,11 +188,33 @@ function ErrorDialog(props: FailureDialogProps) {
           
           </DialogTitle>
           <DialogContent>
-            <DialogContentText sx={{ textAlign: "center", marginTop: "10px", paddingTop: "10px", paddingBottom: "10px", fontSize: "24px", fontFamily: "Bebas Neue",  display: "flex", justifyContent: "center", alignItems: "center"}} id="alert-dialog-slide-description">
+            <DialogContentText sx={{ textAlign: "center", marginTop: "10px", paddingTop: "10px", paddingBottom: "10px", fontSize: "24px", fontFamily: "Helvetica Neue",  display: "flex", justifyContent: "center", alignItems: "center"}} id="alert-dialog-slide-description">
               {errorText()}
             </DialogContentText>
           </DialogContent>
           <DialogActions sx={{ display: "flex", justifyContent: "center", width: "100%"}}>
+          <Button variant="contained" color="error" sx={{
+              fontFamily: "Helvetica Neue",
+              fontSize: "1rem",
+              marginBottom: "5px",
+              backgroundColor: "white",
+              color: errorColor(),
+              borderColor: "#c74242",
+              borderWidth: "5px",
+              borderStyle: "solid",
+              width: "235px",
+              height: "65px",
+              borderRadius: "0px",
+              "&:hover": {
+                backgroundColor: errorColor(),
+                color: "white",
+                borderColor: errorColor(),
+                borderWidth: "5px",
+                borderStyle: "solid",
+                width: "235px",
+                height: "65px",
+              }
+            }}onClick={openDiscord}>Report Error to Discord</Button>
             <Button variant="contained" color="error" sx={{
               fontFamily: "Bebas Neue",
               fontSize: "28px",

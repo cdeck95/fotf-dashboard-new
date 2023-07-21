@@ -153,6 +153,7 @@ function Dashboard(props: PolygonProps) {
               <Box className={isSmallScreen? "column-center-full" : "col-large-dashboard"}>
                 <ThirdwebProvider
                 key={"ethThirdWebProviderDashboard"}
+                clientId="373b1cf6f7ae2a429f8359ddd03a40a2"
                 supportedWallets={[
                   metamaskWallet(),
                   coinbaseWallet(),

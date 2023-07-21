@@ -79,6 +79,8 @@ import tedMintLogo from "../assets/tedMint.png";
 import teddyMintLogo from "../assets/teddyMint.gif";
 import aiTedMintLogo from "../assets/aiTedMint.png";
 import { CollectionsOutlined } from "@mui/icons-material";
+import MaticDialog from "../components/MaticDialog";
+import RevealDialog from "../components/RevealDialog";
 
 const IS_DISABLED = false;
 const FACTORY_CONTRACT_ADDRESS = "0xe851Fbe10b8B252D31Fe4C246C43584b02045346";
@@ -124,7 +126,7 @@ function TheFactory(props: PolygonProps) {
   console.log(`Is 1920:  ${isFullScreen}`);
 
   const { leftNavOpen, rightNavOpen } = props;
-  const { tokens, isLoadingTed, isLoadingTeddy, isLoadingAI, errorTed, errorTeddy, errorAI, maticBalance, needsFunds, tedContract, isLoadingTedContract, teddyContract, isLoadingTeddyContract, aiTedContract, isLoadingAITedContract, honeyContract, isLoadingHoneyContract } = props.tokenProps;
+  const { tokens, isLoadingTed, isLoadingTeddy, isLoadingAI, errorTed, errorTeddy, errorAI, maticBalance, needsFunds, setNeedsFunds, tedContract, isLoadingTedContract, teddyContract, isLoadingTeddyContract, aiTedContract, isLoadingAITedContract, honeyContract, isLoadingHoneyContract } = props.tokenProps;
   const showMismatch = props.showMismatch;
   console.log(tokens);
   console.log(isLoadingTed);
@@ -182,6 +184,27 @@ function TheFactory(props: PolygonProps) {
   const tedBurnWorth = 125000;
   const teddyBurnWorth = 250000;
   const aiTedBurnWorth = 50000;
+
+  const [isApprovedTed, setIsApprovedTed] = useState(false);
+  const [isApprovedTedV3, setIsApprovedTedV3] = useState(false);
+  const [isApprovedTeddy, setIsApprovedTeddy] = useState(false);
+  const [isApprovedTeddyV3, setIsApprovedTeddyV3] = useState(false);
+  const [isApprovedAITed, setIsApprovedAITed] = useState(false);
+  const [isApprovedAITedV3, setIsApprovedAITedV3] = useState(false);
+  const [isApprovedHoney, setIsApprovedHoney] = useState(false);
+  const [honeyApprovalAmount, setHoneyApprovalAmount] = useState(BigNumber.from(0));
+
+  const [isLoadingApprovals, setIsLoadingApprovals] = useState(false);
+  const [isLoadingBurn, setIsLoadingBurn] = useState(false);
+  const [successBurn, setSuccessBurn] = useState(false);
+  const [successBurnForOneOfOne, setSuccessBurnForOneOfOne] = useState(false);
+  const [burnCount, setBurnCount] = useState(0);
+  const [honeyRewards, setHoneyRewards] = useState("");
+  const [honeySent, setHoneySent] = useState("");
+  const [txFor1of1, setTxFor1of1] = useState("");
+  const honeyAmountToSend = BigNumber.from((15000000 - parseInt(burnRewards)));
+  const [isNegativeHoneyToSend, setIsNegativeHoneyToSend] = useState(false);
+
 
   // console.log(BigNumber.from(tedBurnWorth).mul(BigNumber.from(10).pow(18)).toString());
   // console.log(BigNumber.from(teddyBurnWorth).mul(BigNumber.from(10).pow(18)).toString());
@@ -321,6 +344,13 @@ function TheFactory(props: PolygonProps) {
       setSelectedTokens([...selectedTokens, token]);
       console.log("pushed token, token ID & contract");
     }
+    if (parseInt(honeyAmountToSend.toString()) < 0) {
+      setErrorCode(18);
+      setShowError(true);
+      setIsNegativeHoneyToSend(true);
+    } else { 
+      setIsNegativeHoneyToSend(false);
+    }
   }
 
   const [open, setOpen] = useState(false);
@@ -430,7 +460,12 @@ function TheFactory(props: PolygonProps) {
       teddyCount * teddyBurnWorth +
       aiTedCount * aiTedBurnWorth;
     setBurnRewards(burnValue.toString());
-  }, [aiTedNFTs, selectedTokens, tedNFTs, teddyNFTs]);
+    if (parseInt(honeyAmountToSend.toString()) < 0) {
+      setIsNegativeHoneyToSend(true);
+    } else { 
+      setIsNegativeHoneyToSend(false);
+    }
+  }, [aiTedNFTs, honeyAmountToSend, selectedTokens, tedNFTs, teddyNFTs]);
 
   useEffect(() => {
     // const tedNFTs = tokens.Teds?.tokens;
@@ -531,15 +566,6 @@ function TheFactory(props: PolygonProps) {
   }, [address, isLoading, isLoadingAITedContract, isLoadingFactoryContract, isLoadingHoneyContract, isLoadingTedContract, isLoadingTeddyContract]);
 
 
-  const [isApprovedTed, setIsApprovedTed] = useState(false);
-  const [isApprovedTedV3, setIsApprovedTedV3] = useState(false);
-  const [isApprovedTeddy, setIsApprovedTeddy] = useState(false);
-  const [isApprovedTeddyV3, setIsApprovedTeddyV3] = useState(false);
-  const [isApprovedAITed, setIsApprovedAITed] = useState(false);
-  const [isApprovedAITedV3, setIsApprovedAITedV3] = useState(false);
-  const [isApprovedHoney, setIsApprovedHoney] = useState(false);
-  const [honeyApprovalAmount, setHoneyApprovalAmount] = useState(BigNumber.from(0));
-
   const checkIfApproved = async () => {
     try {
       const isApprovedTed = await tedContract?.erc721.isApproved(address!, FACTORY_CONTRACT_ADDRESS);
@@ -577,16 +603,6 @@ function TheFactory(props: PolygonProps) {
         console.log(error);
       }
   } 
-
-  const [isLoadingApprovals, setIsLoadingApprovals] = useState(false);
-  const [isLoadingBurn, setIsLoadingBurn] = useState(false);
-  const [successBurn, setSuccessBurn] = useState(false);
-  const [successBurnForOneOfOne, setSuccessBurnForOneOfOne] = useState(false);
-  const [burnCount, setBurnCount] = useState(0);
-  const [honeyRewards, setHoneyRewards] = useState("");
-  const [honeySent, setHoneySent] = useState("");
-  const [txFor1of1, setTxFor1of1] = useState("");
-  const honeyAmountToSend = BigNumber.from((15000000 - parseInt(burnRewards)));
 
   const askForApprovals = async (honeyAmountToSend: BigNumber) => {
     try {
@@ -805,6 +821,11 @@ function TheFactory(props: PolygonProps) {
       }
     },
   });
+
+  const handleMaticClose = () => {
+    setNeedsFunds!(false);
+    console.log("closing dialog");
+  };
 
   //////////////////////////////////////////////
 
@@ -1149,7 +1170,7 @@ function TheFactory(props: PolygonProps) {
               Burn {selectedTokens.length} for{" "}
               {parseInt(burnRewards).toLocaleString()} $HNY
             </Button>
-            <Button className="burn-btn" disabled={!isOneOfEachSelected || parseInt(honeyAmountToSend.toString()) < 0} onClick={() => burnForOneOfOne(selectedTokens)}>
+            <Button className="burn-btn" disabled={!isOneOfEachSelected || isNegativeHoneyToSend} onClick={() => burnForOneOfOne(selectedTokens)}>
               Burn {selectedTokens.length} + {honeyAmountToSend.toString()} $HNY for Custom 1/1
             </Button>
           </Box>
@@ -1235,7 +1256,7 @@ function TheFactory(props: PolygonProps) {
       />
 
 <LoadingDialog
-        open={isLoadingBurn}
+        open={isLoadingBurn} 
         loadingCode={5}
         onClose={() => setIsLoadingBurn(false)}
       />
@@ -1247,8 +1268,19 @@ function TheFactory(props: PolygonProps) {
         errorCode={errorCode}
       /> 
 
+{/* <MaticDialog open={needsFunds} handleClose={handleMaticClose} />  */}
+{/* 
+<RevealDialog
+        open={isReveal} 
+        setOpen={setIsReveal}
+        mintedIds={["1", "2", "3"]} //dont hard code this
+        contract={tedContract!}
+        collection={"Fury Teds"}
+      /> */}
+
+
 <ErrorDialog
-        open={true}
+        open={showError}
         handleClose={handleErrorClose}
         errorCode={errorCode}
       />
@@ -1304,7 +1336,7 @@ function TheFactory(props: PolygonProps) {
                 Burn {selectedTokens.length} for{" "}
                 {parseInt(burnRewards).toLocaleString()} $HNY
               </Button>
-              <Button className="burn-btn-mobile " disabled={!isOneOfEachSelected || parseInt(honeyAmountToSend.toString()) < 0} onClick={() => burnForOneOfOne(selectedTokens)}>
+              <Button className="burn-btn-mobile " disabled={!isOneOfEachSelected || isNegativeHoneyToSend} onClick={() => burnForOneOfOne(selectedTokens)}>
                 Burn {selectedTokens.length} +{" "}
                 {(15000000 - parseInt(burnRewards)).toLocaleString()} $HNY for
                 Custom 1/1

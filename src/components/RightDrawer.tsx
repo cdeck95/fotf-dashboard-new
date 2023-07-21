@@ -461,6 +461,7 @@ function PermanentDrawerRight(props: NavProps) {
         {showAssetOverview &&  
           <ThirdwebProvider
           key={"ethThirdWebProviderSidebar"}
+          clientId="373b1cf6f7ae2a429f8359ddd03a40a2"
           supportedWallets={[
             metamaskWallet(),
             coinbaseWallet(),
