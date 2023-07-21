@@ -75,6 +75,8 @@ function ErrorDialog(props: FailureDialogProps) {
         return 'You have already received your ETH $HNY Airdrop. If you believe this to be incorrect, please raise a ticket in the FOTF Discord.'
       case 17:
         return 'Your ETH $HNY Airdrop is currently Pending. Please check back at a later date. If you believe this to be incorrect, please raise a ticket in the FOTF Discord.'
+      case 18: 
+        return 'You cannot send negative $HNY. Please unselect token(s) until you are at $0 (or more) HNY to send.'
       default:
         return "Something went wrong. We are not sure exactly what. Please refresh the page. If this continues to happen, please open a ticket within the FOTF Discord.";
     }
