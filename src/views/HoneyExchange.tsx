@@ -335,7 +335,7 @@ function HoneyExchange(props: PolygonPropsNoNav) {
                 </Typography>
               </Box>
               <Box className={isSmallScreen? "column-center-full-container-last" :"row-exchange"}>
-                  <Box className="column-between-exchange">
+                  <Box className="column-between-exchange" sx={{ padding: "0"}}>
                     <Box className="row-exchange">
                       <Box className="column-between-exchange">
                         <img src={aiTedMintLogo} alt="honey pot" 
@@ -343,49 +343,49 @@ function HoneyExchange(props: PolygonPropsNoNav) {
                       </Box>
                       <Box className="column-around">
                         <Box className="column-around" sx={{marginBottom: "20px"}}>
-                          <Typography sx={{fontSize: "1.5rem"}}>AI Ted Mint</Typography>
+                          <Typography sx={{fontSize: "1.32rem"}}>AI Ted Mint</Typography>
                           <Typography className="accent-text">100,000 $HNY</Typography>
                         </Box>
                           <Button disabled={isLoadingAITedContract} className="exchange-button" variant="contained" color="primary" onClick={() => navigate("/AITedMint")}>Mint Now</Button>
                       </Box>
                     </Box>
                   </Box>
-                  <Box className="column-between-exchange">
+                  <Box className="column-between-exchange" sx={{ padding: "0"}}>
                     <Box className="row-exchange">
                       <Box className="column-between-exchange">
                         <img src={tedMintLogo} alt="honey pot" className={isSmallScreen ? "exchangeImage-mobile" : "exchangeImage"}/>
                       </Box>
                       <Box className="column-around">
                         <Box className="column-around" sx={{marginBottom: "20px"}}>
-                          <Typography sx={{fontSize: "1.5rem"}}>Sour Gummies</Typography>
+                          <Typography sx={{fontSize: "1.32rem"}}>Sour Gummies</Typography>
                           <Typography className="accent-text">250,000 $HNY</Typography>
                         </Box>
                           <Button disabled={isLoadingHoneyExchangeContract || IS_DISABLED} className="exchange-button" variant="contained" color="primary" onClick={() => buyGummies()}>Buy Now</Button>
                       </Box>
                     </Box>
                   </Box>
-                  <Box className="column-between-exchange">
+                  <Box className="column-between-exchange" sx={{ padding: "0"}}>
                     <Box className="row-exchange">
                       <Box className="column-between-exchange">
                         <img src={tedMintLogo} alt="honey pot" className={isSmallScreen ? "exchangeImage-mobile" : "exchangeImage"}/>
                       </Box>
                       <Box className="column-around">
                         <Box className="column-around" sx={{marginBottom: "20px"}}>
-                          <Typography sx={{fontSize: "1.5rem"}}>Codename: Flavor</Typography>
+                          <Typography sx={{fontSize: "1.32rem"}}>Codename: Flavor</Typography>
                           <Typography className="accent-text">75,000 $HNY</Typography>
                         </Box>
                           <Button disabled={isLoadingHoneyExchangeContract || IS_DISABLED} className="exchange-button" variant="contained" color="primary" onClick={() => buyCodenameFlavor()}>Buy Now</Button>
                       </Box>
                     </Box>
                   </Box>
-                  <Box className="column-between-exchange">
+                  <Box className="column-between-exchange" sx={{ padding: "0"}}>
                     <Box className="row-exchange">
                       <Box className="column-between-exchange">
                         <img src={tedMintLogo} alt="honey pot" className={isSmallScreen ? "exchangeImage-mobile" : "exchangeImage"}/>
                       </Box>
                       <Box className="column-around">
                         <Box className="column-around" sx={{marginBottom: "20px"}}>
-                          <Typography sx={{fontSize: "1.5rem"}}>FOTF Logo Shirt</Typography>
+                          <Typography sx={{fontSize: "1.32rem"}}>FOTF Logo Shirt</Typography>
                           <Typography className="accent-text">125,000 $HNY</Typography>
                         </Box>
                           <Button disabled={isLoadingHoneyExchangeContract || IS_DISABLED} className="exchange-button" variant="contained" color="primary" onClick={() => buyFOTFShirt()}>Buy Now</Button>
