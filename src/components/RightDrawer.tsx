@@ -45,18 +45,11 @@ type NavProps = {
   tokenProps: PolygonAccountDetails
 };
 
-const primaryColor = getComputedStyle(
-  document.documentElement
-).getPropertyValue("--primary-color");
-const secondaryColor = getComputedStyle(
-  document.documentElement
-).getPropertyValue("--secondary-color");
-const backgroundColorGlobal = getComputedStyle(
-  document.documentElement
-).getPropertyValue("--background-color");
-const accentColor = getComputedStyle(document.documentElement).getPropertyValue(
-  "--accent-color"
-);
+  const primaryColor = getComputedStyle(document.documentElement).getPropertyValue("--primary-color");
+  const secondaryColor = getComputedStyle(document.documentElement).getPropertyValue("--secondary-color");
+  const sidebarBackgroundColor = getComputedStyle(document.documentElement).getPropertyValue("--sidebar-background-color");
+  const accentColor = getComputedStyle(document.documentElement).getPropertyValue("--accent-color");
+  const errorColor = getComputedStyle(document.documentElement).getPropertyValue("--error-color");
 
 const DEFAULT_NOTIFICATION = {
   image:

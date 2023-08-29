@@ -25,6 +25,12 @@ const Transition = React.forwardRef(function Transition(
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
+  const primaryColor = getComputedStyle(document.documentElement).getPropertyValue("--primary-color");
+  const secondaryColor = getComputedStyle(document.documentElement).getPropertyValue("--secondary-color");
+  const sidebarBackgroundColor = getComputedStyle(document.documentElement).getPropertyValue("--sidebar-background-color");
+  const accentColor = getComputedStyle(document.documentElement).getPropertyValue("--accent-color");
+  const errorColor = getComputedStyle(document.documentElement).getPropertyValue("--error-color");
+
 function PaperComponent(props: PaperProps) {
     return (
       <Draggable
@@ -120,13 +126,13 @@ function MaticDialog(props: DialogProps) {
             margin: "0px",
             borderRadius:"20px",
             position: "relative",
-            borderTopColor: "#FED100",
+            borderTopColor: accentColor,
             borderTopWidth: "3.5px",
             borderTopStyle: "solid",
             minWidth: "400px",
             maxWidth: "810px"
           }}>
-            <Box sx={{backgroundColor: "#FED100", borderRadius: "40px", height: "60px", width: "60px", marginTop: "-40px", display: "flex", marginLeft: "auto", marginRight: "auto", justifyContent: "center"}}>
+            <Box sx={{backgroundColor: accentColor, borderRadius: "40px", height: "60px", width: "60px", marginTop: "-40px", display: "flex", marginLeft: "auto", marginRight: "auto", justifyContent: "center"}}>
               {/* <CircularProgress color="inherit" sx={{ margin: "auto", justifyContent: "center", alignItems: "center"}} /> */}
               <PriorityHighOutlinedIcon fontSize='large' color='inherit' sx={{ margin: "auto", justifyContent: "center", alignItems: "center"}}/>
             </Box>

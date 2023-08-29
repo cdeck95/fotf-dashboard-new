@@ -70,7 +70,11 @@ function ConnectWalletPage(props: ConnectWalletPageProps) {
   const [showTeddies, setShowTeddies] = useState(false);
   const {data: token, isLoading, error } = useNFT(showTeddies ? teddyContract : tedContract, showTeddies ? teddyId : tedId);
 
-  
+  const primaryColor = getComputedStyle(document.documentElement).getPropertyValue("--primary-color");
+  const secondaryColor = getComputedStyle(document.documentElement).getPropertyValue("--secondary-color");
+  const sidebarBackgroundColor = getComputedStyle(document.documentElement).getPropertyValue("--sidebar-background-color");
+  const accentColor = getComputedStyle(document.documentElement).getPropertyValue("--accent-color");
+  const errorColor = getComputedStyle(document.documentElement).getPropertyValue("--error-color");
 
   const checkTedClaim = async () => {
     setTedId(parseInt(searchInput));

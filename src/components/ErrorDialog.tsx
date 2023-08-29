@@ -34,6 +34,12 @@ function ErrorDialog(props: FailureDialogProps) {
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
 
+  const primaryColor = getComputedStyle(document.documentElement).getPropertyValue("--primary-color");
+  const secondaryColor = getComputedStyle(document.documentElement).getPropertyValue("--secondary-color");
+  const sidebarBackgroundColor = getComputedStyle(document.documentElement).getPropertyValue("--sidebar-background-color");
+  const accentColor = getComputedStyle(document.documentElement).getPropertyValue("--accent-color");
+  const errorColorGlobal = getComputedStyle(document.documentElement).getPropertyValue("--error-color");
+
   const openDiscord = () => {
     window.open("https://discord.gg/fotf");
   };
@@ -100,21 +106,17 @@ function ErrorDialog(props: FailureDialogProps) {
   const errorColor = () => {
     switch (errorCode) {
       case 1:
-        return "#c74242";
+        return errorColorGlobal;
       case 2:
-        return "#c74242";
+        return errorColorGlobal;
       case 3:
-        return "#FED100";
+        return accentColor;
       case 4:
-        return "#FED100";
+        return accentColor;
       default:
-        return "#c74242";
+        return errorColorGlobal;
     }
   };
-
-  const sidebarBackgroundColor = getComputedStyle(
-    document.documentElement
-  ).getPropertyValue("--sidebar-background-color");
 
   const theme = createTheme({
     typography: {

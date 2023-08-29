@@ -37,6 +37,12 @@ export default function ClaimMenu(props: ClaimMenuProps) {
   console.log(token);
   console.log(inClaimList);
 
+  const primaryColor = getComputedStyle(document.documentElement).getPropertyValue("--primary-color");
+  const secondaryColor = getComputedStyle(document.documentElement).getPropertyValue("--secondary-color");
+  const sidebarBackgroundColor = getComputedStyle(document.documentElement).getPropertyValue("--sidebar-background-color");
+  const accentColor = getComputedStyle(document.documentElement).getPropertyValue("--accent-color");
+  const errorColor = getComputedStyle(document.documentElement).getPropertyValue("--error-color");
+
   const hashtags = ["FOTF", "FOTFFAM", "FOTF4LYF"];
 
   const loadPage = (token: NFT) => {

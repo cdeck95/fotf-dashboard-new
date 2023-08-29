@@ -108,6 +108,12 @@ function TheFactory(props: PolygonProps) {
   // const isMismatched = useNetworkMismatch(); // Detect if user is connected to the wrong network
   // const [showMismatch, setShowMismatch] = useState(false);
 
+  const primaryColor = getComputedStyle(document.documentElement).getPropertyValue("--primary-color");
+  const secondaryColor = getComputedStyle(document.documentElement).getPropertyValue("--secondary-color");
+  const sidebarBackgroundColor = getComputedStyle(document.documentElement).getPropertyValue("--sidebar-background-color");
+  const accentColor = getComputedStyle(document.documentElement).getPropertyValue("--accent-color");
+  const errorColor = getComputedStyle(document.documentElement).getPropertyValue("--error-color");
+
   const {contract: theFactoryContract, isLoading: isLoadingFactoryContract } = useContract(FACTORY_CONTRACT_ADDRESS);
   console.log(theFactoryContract);
   console.log(isLoadingFactoryContract);
@@ -790,11 +796,6 @@ function TheFactory(props: PolygonProps) {
   const openPopover = Boolean(anchorElPopover);
   const idPopover = openPopover ? 'simple-popover' : undefined;
 
-
-  const sidebarBackgroundColor = getComputedStyle(
-    document.documentElement
-  ).getPropertyValue("--sidebar-background-color");
-
   const themeMenu = createTheme({
     typography: {
       fontFamily: ["Bebas Neue", "Roboto", "Helvetica", "Arial"].join(","),
@@ -1124,7 +1125,7 @@ function TheFactory(props: PolygonProps) {
           height: "70px",
           zIndex: (theme: { zIndex: { drawer: number } }) =>
             theme.zIndex.drawer - 1,
-          backgroundColor: "#FED100",
+          backgroundColor: accentColor,
         }}
       >
         <Box className="row-space-between">
@@ -1189,7 +1190,7 @@ function TheFactory(props: PolygonProps) {
           left: "0px",
           height: "70px",
           width: "100dvw",
-          backgroundColor: "#FED100",
+          backgroundColor: accentColor,
           // zIndex: "1",
           display: "flex",
           flexDirection: "row",

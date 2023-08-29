@@ -85,6 +85,12 @@ function AssetOverviewSidebar(props: AssetOverviewProps) {
   // const [teddyCount, setTeddyCount] = useState(0);
   const [tokenCount, setTokenCount] = useState(0);
 
+  const primaryColor = getComputedStyle(document.documentElement).getPropertyValue("--primary-color");
+  const secondaryColor = getComputedStyle(document.documentElement).getPropertyValue("--secondary-color");
+  const sidebarBackgroundColor = getComputedStyle(document.documentElement).getPropertyValue("--sidebar-background-color");
+  const accentColor = getComputedStyle(document.documentElement).getPropertyValue("--accent-color");
+  const errorColor = getComputedStyle(document.documentElement).getPropertyValue("--error-color");
+
   useEffect(() => {
 
     var tokenCountTmp = 0;

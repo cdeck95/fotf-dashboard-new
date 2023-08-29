@@ -25,13 +25,16 @@ function SingleNFT(props: SingleNFTProps) {
 
     const navigate = useNavigate();
     const theme = useTheme();
+
+    const primaryColor = getComputedStyle(document.documentElement).getPropertyValue("--primary-color");
+    const secondaryColor = getComputedStyle(document.documentElement).getPropertyValue("--secondary-color");
+    const sidebarBackgroundColor = getComputedStyle(document.documentElement).getPropertyValue("--sidebar-background-color");
+    const accentColor = getComputedStyle(document.documentElement).getPropertyValue("--accent-color");
+    const errorColor = getComputedStyle(document.documentElement).getPropertyValue("--error-color");
   
     const { data: nft, isLoading, error } = useNFT(contract, id);
   
     console.log(nft);
-    const sidebarBackgroundColor = getComputedStyle(
-      document.documentElement
-    ).getPropertyValue("--sidebar-background-color");
     const themeMenu = createTheme({
       typography: {
         fontFamily: ["Bebas Neue", "Roboto", "Helvetica", "Arial"].join(","),

@@ -15,7 +15,7 @@ export const PolygonNetwork = () => {
   return (
     <Box sx={{zIndex: "1 !important"}}>
       <p>{isMismatched}</p>
-      {isMismatched && (  <Alert severity="error" sx={{backgroundColor: "#FED100"}}
+      {isMismatched && (  <Alert severity="error" sx={{backgroundColor: accentColor}}
         action={
             <Button color="inherit" size="small" onClick={() => switchNetworkToPolygon()}>
             Switch Network

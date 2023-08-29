@@ -101,6 +101,12 @@ function TeddyClaims(props: PolygonProps) {
   // const isMismatched = useNetworkMismatch(); // Detect if user is connected to the wrong network
   // const [showMismatch, setShowMismatch] = useState(false);
 
+  const primaryColor = getComputedStyle(document.documentElement).getPropertyValue("--primary-color");
+  const secondaryColor = getComputedStyle(document.documentElement).getPropertyValue("--secondary-color");
+  const sidebarBackgroundColor = getComputedStyle(document.documentElement).getPropertyValue("--sidebar-background-color");
+  const accentColor = getComputedStyle(document.documentElement).getPropertyValue("--accent-color");
+  const errorColor = getComputedStyle(document.documentElement).getPropertyValue("--error-color");
+
   const [isSheetOpen, setSheetOpen] = useState(false);
   console.log(`Mobile:  ${isMobile}`);
   console.log(`Small:  ${isSmall}`);
@@ -338,11 +344,6 @@ function TeddyClaims(props: PolygonProps) {
     setTotalTeddiesEarnings(tokens!.Teddies?.tokens.length * TeddiesDailyEarnings);
 
   }, [tokens,tokens.Teddies, tokens.Teddies?.tokens]);
-
-
-  const sidebarBackgroundColor = getComputedStyle(
-    document.documentElement
-  ).getPropertyValue("--sidebar-background-color");
 
   const themeMenu = createTheme({
     typography: {
@@ -694,7 +695,7 @@ function TeddyClaims(props: PolygonProps) {
 //           height: "70px",
 //           zIndex: (theme: { zIndex: { drawer: number } }) =>
 //             theme.zIndex.drawer - 1,
-//           backgroundColor: "#FED100",
+//           backgroundColor: accentColor,
 //         }}
 //       >
 //         <Box className="row-space-between">
@@ -741,7 +742,7 @@ function TeddyClaims(props: PolygonProps) {
 //           left: "0px",
 //           height: "70px",
 //           width: "100dvw",
-//           backgroundColor: "#FED100",
+//           backgroundColor: accentColor,
 //           // zIndex: "1",
 //           display: "flex",
 //           flexDirection: "row",

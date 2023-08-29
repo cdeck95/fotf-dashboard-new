@@ -24,6 +24,12 @@ export function LoadStakedTeddy(tokenID: number): NFT {
     if(typeof tokenID == 'undefined'){
       tokenID = -10;
     }
+
+    const primaryColor = getComputedStyle(document.documentElement).getPropertyValue("--primary-color");
+    const secondaryColor = getComputedStyle(document.documentElement).getPropertyValue("--secondary-color");
+    const sidebarBackgroundColor = getComputedStyle(document.documentElement).getPropertyValue("--sidebar-background-color");
+    const accentColor = getComputedStyle(document.documentElement).getPropertyValue("--accent-color");
+    const errorColor = getComputedStyle(document.documentElement).getPropertyValue("--error-color");
     // tokenID = 917;
     const { contract: contract_TEDDY } = useContract(TEDDY_CONTRACT);    
     console.log(contract_TEDDY);

@@ -89,6 +89,11 @@ function Dashboard(props: PolygonProps) {
 
   // const { tokens, isLoadingTed, error, honeyBalance } = LoadAllAccountDetails();
 
+  const primaryColor = getComputedStyle(document.documentElement).getPropertyValue("--primary-color");
+  const secondaryColor = getComputedStyle(document.documentElement).getPropertyValue("--secondary-color");
+  const sidebarBackgroundColor = getComputedStyle(document.documentElement).getPropertyValue("--sidebar-background-color");
+  const accentColor = getComputedStyle(document.documentElement).getPropertyValue("--accent-color");
+  const errorColor = getComputedStyle(document.documentElement).getPropertyValue("--error-color");
 
   const TedsDailyEarnings = 25;
   const TeddiesDailyEarnings = 35;
