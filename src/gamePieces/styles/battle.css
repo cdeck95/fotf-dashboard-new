@@ -1,0 +1,51 @@
+.health-bars {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+    color: #0f0; /* Green text */
+    font-family: 'Press Start 2P', cursive;
+  }
+  
+  .health-bar {
+    position: relative; /* Ensure the "health-bar" is a positioned container */
+    width: 45%; /* Adjust as needed */
+    border: 1px solid #0f0; /* Green border */
+    text-align: center;
+    padding: 5px;
+  }
+  
+  .health-info {
+    position: relative; /* Ensure the "health-info" is a positioned element */
+    z-index: 1; /* Place "health-info" above other elements within "health-bar" */
+    text-align: center;
+    font-weight: bold;
+    font-size: 16px; /* Adjust the font size as needed */
+    margin-bottom: 5px; /* Add margin to separate health info from the health bar */
+  }
+  
+  .health-inner {
+    height: 100%;
+    transition: width 0.3s ease-in-out;
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+  
+  /* Add a class for the reversed health bar style when the background is green */
+  .health-bar.green-bg {
+    border: 1px solid #000; /* Black border */
+  }
+  
+  .health-inner.green-bg {
+    background-color: #000; /* Black background */
+    width: calc(100% - 2px); /* Adjust width accounting for border */
+  }
+
+  .battle-log {
+    max-height: 300px; /* Set a maximum height for the log container */
+    overflow-y: auto; /* Enable vertical scrolling if content overflows */
+    border: 1px solid #0f0; /* Green border (adjust as needed) */
+    padding: 10px;
+    padding-bottom: 0px;
+    margin-bottom: 10px;
+  }

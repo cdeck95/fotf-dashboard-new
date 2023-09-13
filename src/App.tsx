@@ -55,6 +55,7 @@ import TeddyMint from "./views/TeddyMint";
 import { PolygonNetwork } from "./components/PolygonNetwork";
 import PullToRefresh from 'react-simple-pull-to-refresh';
 import { useNavigate } from 'react-router-dom';
+import Game from "./gamePieces/components/Game";
 
 export const LeftDrawerWidthPX = "260px";
 export const LeftDrawerWidth = 260;
@@ -125,9 +126,6 @@ function App() {
     },
   });
 
-  //const themeMui = useTheme();
-  //const isMediumLarge = useMediaQuery(themeMui.breakpoints.down("lg"));
-  //const isMobile = !useMediaQuery(themeMui.breakpoints.up("md"));
   const isMobile = !useMediaQuery(theme.breakpoints.up("md"));
   const isMediumLarge = useMediaQuery(theme.breakpoints.down("lg"));
   const isLarge = useMediaQuery(theme.breakpoints.down("xl"));
@@ -196,11 +194,11 @@ function App() {
 
   const navigate = useNavigate();
 
-  useEffect(() => {
-    if (!address) {
-      navigate("/");
-    }
-  }, [address, navigate]);
+  // useEffect(() => {
+  //   if (!address) {
+  //     navigate("/");
+  //   }
+  // }, [address, navigate]);
 
   useEffect(() => { 
 
@@ -239,6 +237,9 @@ function App() {
         break;
       case "/tedclaims":
         setPageTitle("Ted Claims");
+        break;
+      case "/game":
+        setPageTitle("Game - Pre-Alpha");
         break;
       // case "/bridge":
       //   setPageTitle("Polygon Bridge");
@@ -336,6 +337,8 @@ function App() {
                 <Route path="/TedMint" element={<TedMint  showMismatch={showMismatch} contract={polygonTokenProps.tedContract} isloadingContract={polygonTokenProps.isLoadingTedContract} />} />{" "}
                 <Route path="/TeddyMint" element={<TeddyMint showMismatch={showMismatch} contract={polygonTokenProps.teddyContract} isloadingContract={polygonTokenProps.isLoadingTeddyContract} />} />{" "}
                 <Route path="/AITedMint" element={<AITedMint  showMismatch={showMismatch} contract={polygonTokenProps.aiTedContract} isloadingContract={polygonTokenProps.isLoadingAITedContract} />} />{" "}
+                <Route path="/Game" element={<Game showMismatch={showMismatch}/>} />{" "}
+
                 {/* <Route
                   path="/Bridge"
                   element={
