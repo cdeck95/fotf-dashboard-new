@@ -92,7 +92,7 @@ function Battle() {
 
     // Check categories for strong or weak (you can implement this logic here)
 
-    return totalAttack;
+    return Math.round(totalAttack);
   };
 
   const calculateDefense = () => {
@@ -106,7 +106,7 @@ function Battle() {
     // Ensure x is not greater than baseDefense
     const totalDefense = Math.min(baseDefense, maxDefense / x);
 
-    return totalDefense;
+    return Math.round(totalDefense);
   };
 
   const handlePlayer1Attack = () => {
@@ -119,7 +119,7 @@ function Battle() {
         // Ensure a minimum damage of 1
         const damage = Math.max(player1Attack - player2Defense, 1);
         // const damage = player1Attack - player2Defense; //does not ensure min 1 dmg
-        const newPlayer2Health = Math.max(player2Health - damage, 0);
+        const newPlayer2Health = Math.round(Math.max(player2Health - damage, 0));
 
         // Log the attack and defense calculations for Player 1
         const logEntryPlayer1 = `Turn ${turn}: Player 1 attacked with ${player1Attack} damage. Player 2 defended with ${player2Defense} defense. Player 2 now has ${newPlayer2Health} health.`;
@@ -151,7 +151,7 @@ function Battle() {
       // Ensure a minimum damage of 1
       const damage = Math.max(player2Attack - player1Defense, 1);
       //const damage = player2Attack - player1Defense; //does not ensure min dmg of 1
-      const newPlayer1Health = Math.max(player1Health - damage, 0);
+      const newPlayer1Health = Math.round(Math.max(player1Health - damage, 0));
 
       // Log the attack and defense calculations for Player 2
       const logEntryPlayer2 = `Turn ${turn}: Player 2 attacked with ${player2Attack} damage. Player 1 defended with ${player1Defense} defense. Player 1 now has ${newPlayer1Health} health.`;
