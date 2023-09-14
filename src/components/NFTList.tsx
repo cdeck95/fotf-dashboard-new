@@ -16,7 +16,7 @@ import "../styles/Dashboard.css";
 import "../styles/Bridge.css";
 import { LoadStakedTeddy } from "../account/loadStakedTeddy";
 import { SetStateAction, useEffect, useState } from "react";
-import "../styles/TheFactory.css";
+import "../styles/HoneyExchange.css";
 
 interface NFTListProps {
   tokens: NFT[];

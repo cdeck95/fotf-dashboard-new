@@ -137,7 +137,7 @@ function HoneyDashboard(props: PolygonPropsNoNav) {
                 open={showError}
                 handleClose={handleErrorClose}
                 errorCode={errorCode}
-                collection={"Honey Exchange"}
+                collection={"Honey Store"}
             />
         </Box>
     );

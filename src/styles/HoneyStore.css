@@ -1,0 +1,164 @@
+.honey-exchange-col {
+    width: 50%;
+    border-radius: 10px;
+    height: 100%;
+    background-color: var(--accent-color);
+    align-items: center;
+    justify-content: space-evenly;
+    margin: 0%;
+    padding: 0%;
+    margin-left: auto;
+    margin-right: auto;
+    display: flex;
+    flex-direction: column;
+    margin-top: 15px;
+}
+
+.honey-exchange-col-full {
+    width: 100%;
+    border-radius: 10px;
+    height: 100%;
+    background-color: var(--accent-color);
+    align-items: center;
+    justify-content: space-evenly;
+    margin: 0%;
+    padding: 0%;
+    margin-left: auto;
+    margin-right: auto;
+    display: flex;
+    flex-direction: column;
+    margin-top: 15px;
+}
+
+.teddy-claim-col {
+    border-radius: 10px;
+    background-color: var(--accent-color);
+    align-items: center;
+    justify-content: center;
+    margin: 0%;
+    padding: 0%;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    max-height: 225px;
+    width: 100%;
+    max-width: 400px;
+}
+
+p {
+margin: 0;
+padding: 0;
+margin-block-start: 0em;
+margin-block-end: 0em;
+}
+
+.exchangeImage {
+    width: 100%;
+    height: 100%;
+    margin: auto;
+    object-fit: contain;
+  }
+  
+  .exchangeImage-mobile {
+    width: 100px;
+    height: 100px;
+    margin: auto;
+    object-fit: contain;
+  }
+
+.exchange-button {
+    width: 80%;
+    padding: "8px !important";
+    min-height: 50px;
+}
+
+.column-between-exchange {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    width: 100%;
+    padding-right: 5px;
+    padding-left: 5px;
+}
+
+.row-space-around {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    width: fit-content;
+    height: 100%;
+    background-color: var(--sidebar-background-color);
+    border-radius: 10px;
+    /* padding: 10px; */
+    margin-bottom: 10px;
+}
+
+.row-space-around-dash {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    width: 100%;
+    height: 100%;
+    align-items: center;
+    margin-bottom: 20px;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+.column-around {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: flex-start;
+    width: 100%;
+}
+
+.column-even {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: flex-start;
+    width: 100%;
+}
+
+/* .column-between {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center; 
+    text-align: center; 
+  } */
+
+.inner-container-honey-exchange {
+    width: 100%;
+    height: 100%;
+    margin: auto;
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-top: 0px;
+    padding-bottom: 0px;
+    display: flex;
+    flex-direction: column;
+    max-width: 1380px;
+    justify-content: space-evenly;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
+.row-exchange {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    justify-content: center;
+    align-items: center; 
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.exchange-button {
+    /* width: 70%; */
+    padding: 8px !important;
+    min-height: 45px;
+  }
+  

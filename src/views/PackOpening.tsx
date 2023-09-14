@@ -5,8 +5,8 @@ import { useAddress } from "@thirdweb-dev/react";
 import { useSDK } from "@thirdweb-dev/react";
 import ComingSoon from "./ComingSoon";
 
-function GraphicTemplates() {
-  useTitle("FOTF | Graphic Templates");
+function PackOpening() {
+  useTitle("FOTF | Pack Opening");
   //const theme = useTheme();
   //const isMobile = !useMediaQuery(theme.breakpoints.up("md"));
   const sdk = useSDK();
@@ -22,4 +22,4 @@ function GraphicTemplates() {
   return <ComingSoon />;
 }
 
-export default GraphicTemplates;
+export default PackOpening;

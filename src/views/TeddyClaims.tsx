@@ -44,7 +44,7 @@ import { BaseContract, BigNumber, ethers } from "ethers";
 import { NumericFormat } from "react-number-format";
 import NFTList from "../components/NFTList";
 import "../styles/Dashboard.css";
-import "../styles/TheFactory.css";
+import "../styles/HoneyExchange.css";
 import StarBorderIcon from "@mui/icons-material/StarBorder";
 import StarIcon from "@mui/icons-material/Star";
 import ControlPointIcon from "@mui/icons-material/ControlPoint";
@@ -447,7 +447,7 @@ function TeddyClaims(props: PolygonProps) {
 //         open={showError}
 //         handleClose={handleErrorClose}
 //         errorCode={errorCode}
-//         collection={"The Factory"}
+//         collection={"Honey Exchange"}
 //       />
 
 //       <Box className={isSmallScreen ? "header-mobile" : "header"} sx={{marginBottom: "20px"}}>

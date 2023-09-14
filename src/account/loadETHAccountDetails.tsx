@@ -16,7 +16,7 @@ import aiABI from "../ABIs/aiABI.json";
 import birthCertsABI from "../ABIs/birthCertsABI.json";
 import oneOfOneABI from "../ABIs/oneOfOneABI.json";
 import { LoadStakedTeddy } from "./loadStakedTeddy";
-import { IDictionary } from "../views/TheFactory";
+import { IDictionary } from "../views/HoneyExchange";
 
 
 interface StakedTokens {

@@ -26,7 +26,7 @@ import CircularProgress from "@mui/material/CircularProgress";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { useSDK } from "@thirdweb-dev/react";
 import { Routes, Route, Navigate, useLocation } from "react-router-dom";
-import TheFactory from "./views/TheFactory";
+import HoneyExchange from "./views/HoneyExchange";
 import Dashboard from "./views/Dashboard";
 
 import NotFound from "./views/NotFound";
@@ -34,7 +34,7 @@ import LeftDrawer from "./components/LeftDrawer";
 import RightDrawer from "./components/RightDrawer";
 import BuildATeddy from "./views/BuildATeddy";
 import TraitSwapTeds from "./views/TraitSwapTeds";
-import HoneyExchange from "./views/HoneyExchange";
+import HoneyStore from "./views/HoneyStore";
 import TedClaims from "./views/TedClaims";
 import TeddyClaims from "./views/TeddyClaims";
 import MenuIcon from "@mui/icons-material/Menu";
@@ -43,7 +43,7 @@ import {
   allOwnedNFTs,
   initialState,
 } from "./account/loadETHAccountDetails";
-import GraphicTemplates from "./views/GraphicTemplates";
+import VisualUpgrades from "./views/VisualUpgrades";
 import ConnectWalletPage from "./components/ConnectWalletPage";
 import PolygonBridge from "./views/PolygonBridge";
 import { MainnetNetwork } from "./components/MainnetNetwork";
@@ -56,6 +56,10 @@ import { PolygonNetwork } from "./components/PolygonNetwork";
 import PullToRefresh from 'react-simple-pull-to-refresh';
 import { useNavigate } from 'react-router-dom';
 import Game from "./gamePieces/components/Game";
+import News from "./views/News";
+import Campaigns from "./views/Campaigns";
+import MyCards from "./views/MyCards";
+import PackOpening from "./views/PackOpening";
 
 export const LeftDrawerWidthPX = "260px";
 export const LeftDrawerWidth = 260;
@@ -208,8 +212,8 @@ function App() {
       case "/":
         setPageTitle("Dashboard");
         break;
-      case "/thefactory":
-        setPageTitle("The Factory");
+      case "/HoneyExchange":
+        setPageTitle("Honey Exchange");
         break;
       case "/buildateddy":
         setPageTitle("Build A Teddy");
@@ -217,11 +221,11 @@ function App() {
       case "/traitswapteds":
         setPageTitle("Trait Swap Teds");
         break;
-      case "/graphictemplates":
-        setPageTitle("Graphic Templates");
+      case "/VisualUpgrades":
+        setPageTitle("Visual Upgrades");
         break;
-      case "/honeyexchange":
-        setPageTitle("Honey Exchange");
+      case "/HoneyStore":
+        setPageTitle("Honey Store");
         break;
       case "/tedmint":
         setPageTitle("Ted Mint");
@@ -231,6 +235,15 @@ function App() {
         break;
       case "/aitedmint":
         setPageTitle("AI Ted Mint");
+        break;
+      case "/packopening":
+        setPageTitle("Pack Opening");
+        break;
+      case "/mycards":
+        setPageTitle("My Cards");
+        break;
+      case "/news":
+        setPageTitle("News");
         break;
       case "/teddyclaims":
         setPageTitle("Teddy Claims");
@@ -331,13 +344,18 @@ function App() {
             {address ? (
               <Routes>
                 <Route path="/" element={<Dashboard tokenProps={polygonTokenProps} leftNavOpen={leftNavOpen} rightNavOpen={rightNavOpen} showMismatch={showMismatch} isSmallScreen={isSmallScreen} />} />
-                <Route path="/HoneyExchange" element={<HoneyExchange tokenProps={polygonTokenProps} isSmallScreen={isSmallScreen} />} />
-                <Route path="/TeddyClaims" element={<TeddyClaims tokenProps={polygonTokenProps} leftNavOpen={leftNavOpen} rightNavOpen={rightNavOpen} showMismatch={showMismatch} isSmallScreen={isSmallScreen}/>} />
-                <Route path="/TedClaims" element={<TedClaims />} />{" "}
+                <Route path="/HoneyStore" element={<HoneyStore tokenProps={polygonTokenProps} isSmallScreen={isSmallScreen} />} />
+                {/* <Route path="/TeddyClaims" element={<TeddyClaims tokenProps={polygonTokenProps} leftNavOpen={leftNavOpen} rightNavOpen={rightNavOpen} showMismatch={showMismatch} isSmallScreen={isSmallScreen}/>} />
+                <Route path="/TedClaims" element={<TedClaims />} />{" "} */}
                 <Route path="/TedMint" element={<TedMint  showMismatch={showMismatch} contract={polygonTokenProps.tedContract} isloadingContract={polygonTokenProps.isLoadingTedContract} />} />{" "}
                 <Route path="/TeddyMint" element={<TeddyMint showMismatch={showMismatch} contract={polygonTokenProps.teddyContract} isloadingContract={polygonTokenProps.isLoadingTeddyContract} />} />{" "}
                 <Route path="/AITedMint" element={<AITedMint  showMismatch={showMismatch} contract={polygonTokenProps.aiTedContract} isloadingContract={polygonTokenProps.isLoadingAITedContract} />} />{" "}
                 <Route path="/Game" element={<Game showMismatch={showMismatch}/>} />{" "}
+                <Route path="/PackOpening" element={<PackOpening/>} />{" "}
+                <Route path="/MyCards" element={<MyCards/>} />{" "}
+                <Route path="/News" element={<News/>} />{" "}
+                <Route path="/Campaigns" element={<Campaigns/>} />{" "}
+
 
                 {/* <Route
                   path="/Bridge"
@@ -348,12 +366,12 @@ function App() {
                   }
                 /> */}
                 <Route
-                  path="/TheFactory"
-                  element={<TheFactory tokenProps={polygonTokenProps} leftNavOpen={leftNavOpen} rightNavOpen={rightNavOpen} showMismatch={showMismatch} isSmallScreen={isSmallScreen}/>}
+                  path="/HoneyExchange"
+                  element={<HoneyExchange tokenProps={polygonTokenProps} leftNavOpen={leftNavOpen} rightNavOpen={rightNavOpen} showMismatch={showMismatch} isSmallScreen={isSmallScreen}/>}
                 />
                 <Route path="/BuildATeddy" element={<BuildATeddy />} />
                 <Route path="/TraitSwapTeds" element={<TraitSwapTeds />} />
-                <Route path="/GraphicTemplates" element={<GraphicTemplates />} />
+                <Route path="/VisualUpgrades" element={<VisualUpgrades />} />
                 <Route path="*" element={<NotFound />} />
               </Routes>
             ) : (

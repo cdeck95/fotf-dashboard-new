@@ -11,7 +11,7 @@ import { useEffect, useState } from "react";
 import { Ethereum, Polygon, Mumbai } from "@thirdweb-dev/chains";
 import { AssetOverviewProps } from "./AssetOverviewDashboard";
 import { PolygonAccountDetails } from "../account/loadPolygonAccountDetails";
-import { IDictionary } from "../views/TheFactory";
+import { IDictionary } from "../views/HoneyExchange";
 import ErrorDialog from "./ErrorDialog";
 import SuccessDialog from "./SuccessDialog";
 

@@ -63,7 +63,7 @@ const HONEY_NOTIFICATION = {
   image:
    honeyJar,
   message: "Claim your $HNY left Behind on ETH!",
-  detailPage: "/HoneyExchange",
+  detailPage: "/HoneyStore",
   receivedTime: "12h ago",
 };
 
@@ -131,29 +131,29 @@ function PermanentDrawerRight(props: NavProps) {
     case "/":
       showAssetOverview = false;
       break;
-    case "/TheFactory":
+    case "/HoneyExchange":
       showAssetOverview = true;
-      blogTitle = "What is The Factory!?";
+      blogTitle = "What is Honey Exchange!?";
       blogContent = (
         <p className="info-card__description">
           Only the most involved members of the Fury of the Fur community have
-          access to The Factory. In order to get in, you must hold one of every
+          access to Honey Exchange. In order to get in, you must hold one of every
           base asset in the ecosystem.
           <br />
           <br />
-          The Factory allows our Holders to burn their Fury Ted, Teddies by
+          Honey Exchange allows our Holders to burn their Fury Ted, Teddies by
           FOTF, or AI Teds in exchange for $HNY. OR you are able to burn any
           combination of the three (min 1 of each) together with a determined
           amount of $HNY in exchange for an exclusively designed 1 of 1.{" "}
         </p>
       );
       break;
-    case "/HoneyExchange":
+    case "/HoneyStore":
       showAssetOverview = true;
-      blogTitle = "What is The $HNY Exchange?";
+      blogTitle = "What is The $HNY Store?";
       blogContent = (
         <p className="info-card__description">
-          The $HNY Exchange is your one stop shop for not only purchasing $HNY,
+          The $HNY Store is your one stop shop for not only purchasing $HNY,
           at a declared exchange rate, but quickly accessing how much you're
           earning every day.
           <br />
@@ -317,7 +317,7 @@ function PermanentDrawerRight(props: NavProps) {
   };
 
   const openCurrencyExchange = () => {
-    navigate("/HoneyExchange");
+    navigate("/HoneyStore");
     if (isMobile) {
       setNavOpen(false);
     }
