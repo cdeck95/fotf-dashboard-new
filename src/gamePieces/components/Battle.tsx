@@ -40,12 +40,6 @@ function Battle() {
     }
   };
 
-  // useEffect(() => {
-  //   if(turn === 1 && isPlayer1Turn && log.length === 0) {
-     
-  //   }
-  // }, [isPlayer1Turn, log, turn]);
-
   // Function to scroll to the bottom of the log
   const scrollToBottomGameOver = () => {
     if (gameOverRef.current) {

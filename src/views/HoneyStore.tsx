@@ -322,18 +322,18 @@ function HoneyStore(props: PolygonPropsNoNav) {
           </Box>
         </Box>
         <Box className={isSmallScreen? "column-center-full-container" : "row-space-around-dash"} sx={{marginTop: isSmallScreen? "20px" : "0px" }}>
-          <Box className={isSmallScreen? "column-center-full" : "col-large-dashboard"}>
+          {/* <Box className={isSmallScreen? "column-center-full" : "col-large-dashboard"}>
             <HoneyEarnings
                   totalHNYEarnings={totalHNYEarnings}
                   totalTeddiesEarnings={totalTeddiesEarnings}
                   totalFuryTedsEarnings={totalFuryTedsEarnings}
                 />
-          </Box>
+          </Box> */}
           <Box className={isSmallScreen? "column-center-full" : "col-large-dashboard"}>
             <HoneyDashboard tokenProps={props.tokenProps} isSmallScreen={isSmallScreen} />
           </Box>
         </Box>
-        <Box className={isSmallScreen? "column-center-full-container-last" : "row-space-around-dash"}>
+        {/* <Box className={isSmallScreen? "column-center-full-container-last" : "row-space-around-dash"}>
           <Box sx={{height: "100%", width: "100%"}}>
               <Box className="row-exchange" sx={{justifyContent: "flex-start"}}>
                 <Typography className="page-header-small-mobile">
@@ -401,7 +401,7 @@ function HoneyStore(props: PolygonPropsNoNav) {
               </Box>  
 
           </Box>
-        </Box>
+        </Box> */}
         <ErrorDialog
                 open={showError}
                 handleClose={handleErrorClose}
