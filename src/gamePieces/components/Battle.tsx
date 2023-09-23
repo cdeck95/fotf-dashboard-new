@@ -41,6 +41,9 @@ function Battle() {
   const [gameOverMessage, setGameOverMessage] = useState('');
 
   const delayBetweenTurns = 2000; // 2 seconds delay
+  const delayForBase = 1000; // 1-1.5 seconds delay
+  const delayForCritical = 2000; // 2-3.5seconds delay
+  const delayForTotal = 1000; // 1-1.5 seconds delay
 
   // Create a ref for the log container
   const logContainerRef = useRef<HTMLDivElement | null>(null);
@@ -84,7 +87,12 @@ function Battle() {
 
   const calculateAttack = () => {
     // Base Attack Value
-    const maxAttack = isPlayer1Turn ? player1MaxAttack : player2MaxAttack;    
+    const maxAttack = isPlayer1Turn ? player1MaxAttack : player2MaxAttack;  
+    
+     // Switch to Player 2's turn with a delay
+     setTimeout(() => {
+      console.log('Calculating Base Atk...')
+    }, delayForBase);
     
     const baseAttack = Math.floor(Math.random() * maxAttack);
     const logEntryBaseAtkCalculations = `Turn ${turn}: Calculating Base Atk... Base Atk is ${baseAttack}`;
@@ -174,7 +182,7 @@ function Battle() {
 
         setLog((prevLog) => [...prevLog, logEntryPlayer1]);
         setPlayer2Health(newPlayer2Health);
-        setTurn(turn + 1);
+        setTurn((prevTurn) => prevTurn + 1); // Update turn based on the previous state
          
         // Check if Player 2's health reached 0 (end of the game)
         if (newPlayer2Health <= 0) {
@@ -183,12 +191,7 @@ function Battle() {
             return;
         }
 
-        // Switch to Player 2's turn with a delay
-        setTimeout(() => {
-          setIsPlayer1Turn(false);
-        }, delayBetweenTurns);
-        
-  
+        setIsPlayer1Turn(false);  
         }
   };
 
@@ -212,7 +215,7 @@ function Battle() {
 
       setLog((prevLog) => [...prevLog, logEntryPlayer2]);
       setPlayer1Health(newPlayer1Health);
-      setTurn(turn + 1);
+      setTurn((prevTurn) => prevTurn + 1); // Update turn based on the previous state
 
       // Check if Player 1's health reached 0 (end of the game)
       if (newPlayer1Health <= 0) {
@@ -226,23 +229,60 @@ function Battle() {
     }
   };
 
+  const [autoSimulating, setAutoSimulating] = useState(false);
+
   // Automatically trigger Player 2's attack when it's their turn
   useEffect(() => {
-    if (!isPlayer1Turn) {
-      handlePlayer2Attack();
+    if (isPlayer1Turn && autoSimulating) {
+      setTimeout(() => {
+        handlePlayer1Attack();
+      }, delayBetweenTurns);
+    } 
+    else if (!isPlayer1Turn) {
+      setTimeout(() => {
+        handlePlayer2Attack();
+      }, delayBetweenTurns);
     }
-  }, [isPlayer1Turn]);
+  }, [autoSimulating, isPlayer1Turn]);
+
+  
+
+  const handleAutoSimulate = () => {
+    setAutoSimulating(true);
+
+    // Define a function for simulating the entire battle
+    const simulateBattle = () => {
+      if (!gameOver) {
+        if (isPlayer1Turn) {
+          handlePlayer1Attack();
+        } else {
+          handlePlayer2Attack();
+        }
+         // Use setTimeout to add a delay between turns
+         //setTimeout(simulateBattle, delayBetweenTurns);
+
+      } else {
+        // Battle is over, stop auto-simulation
+        setAutoSimulating(false);
+      }
+    };
+
+    // Start simulating the battle
+    simulateBattle();
+  };
+
 
   
   return (
     <div className={`battle-container ${isPlayer1Turn ? "green-bg" : ""}`}>
-      <div className={`health-bars ${isPlayer1Turn ? "green-bg" : ""}`}>
-        <div className={`health-bar ${isPlayer1Turn ? 'green-bg' : ''}`}>
+      <div className={`health-bars ${isPlayer1Turn ? "" : "green-bg"}`}>
+        <div className={`health-bar ${isPlayer1Turn ? '' : 'green-bg'}`}>
           <div className="health-info">
             Player 2: {player2Health.toFixed(0)} / 10000 {/* Use toFixed(0) to round to the nearest integer */}
           </div>
-          <div className={`health-inner ${isPlayer1Turn ? 'green-bg' : ''}`} style={{ width: `${Math.floor((player2Health / 10000) * 100)}%` }}></div>
+          <div className={`health-inner green-bg`} style={{ width: `${Math.floor((player2Health / 10000) * 100)}%` }}></div>
         </div>
+        {!isPlayer1Turn && <div className="arrow"></div> }
       </div>
       <div className="battle-log" >
         {log.map((message, index) => (
@@ -261,10 +301,14 @@ function Battle() {
           <div className="health-info">
             Player 1: {player1Health.toFixed(0)} / 12000 {/* Use toFixed(0) to round to the nearest integer */}
           </div>
-          <div className={`health-inner ${isPlayer1Turn ? 'green-bg' : ''}`} style={{ width: `${Math.floor((player1Health / 12000) * 100)}%` }}></div>
+          <div className={`health-inner green-bg`} style={{ width: `${Math.floor((player1Health / 12000) * 100)}%` }}></div>
         </div>
+        {isPlayer1Turn && <div className="arrow"></div> }
       </div>
-      <button onClick={handlePlayer1Attack}>Attack</button>
+      <button disabled={!isPlayer1Turn || autoSimulating} onClick={handlePlayer1Attack}>Attack</button>
+      <button onClick={handleAutoSimulate} disabled={autoSimulating}>
+        Auto-Simulate Battle
+      </button>
     </div>
   );
 }

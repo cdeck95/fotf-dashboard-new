@@ -6,6 +6,7 @@ import StatusBar from './StatusBar';
 import { Box, useMediaQuery, useTheme } from '@mui/material';
 import { useTitle } from '../../hooks/useTitle';
 import { useSDK, useAddress } from '@thirdweb-dev/react-core';
+import "../styles/game.css";
 
 function Game(props: { showMismatch: boolean }) {
   const [gameState, setGameState] = useState('battle'); // You can define different game states
@@ -30,7 +31,7 @@ function Game(props: { showMismatch: boolean }) {
   return (
     <Box
       className={
-        isSmallScreen ? "inner-container-mint-mobile" : "inner-container-mint"
+        isSmallScreen ? "inner-container-mint-mobile" : "inner-container-game"
       } sx={{ position: "relative", backgroundColor:"#000000" }}
     >
       <StatusBar />

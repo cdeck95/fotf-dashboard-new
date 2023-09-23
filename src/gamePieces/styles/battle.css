@@ -1,6 +1,7 @@
 .health-bars {
     display: flex;
-    justify-content: space-between;
+    justify-content: left;
+    margin-left: 10px;
     margin-top: 20px;
     margin-bottom: 20px;
     color: #fff; /* Green text */
@@ -10,7 +11,7 @@
   .health-bar {
     position: relative; /* Ensure the "health-bar" is a positioned container */
     width: 45%; /* Adjust as needed */
-    border: 1px solid #0f0; /* Green border */
+    border: 1px solid #0f0; 
     text-align: center;
     padding: 5px;
   }
@@ -72,3 +73,15 @@
     white-space: unset;
     white-space: pre-wrap;
   }
+
+  /* CSS for the green arrow */
+.arrow {
+  width: 0;
+  height: 0;
+  border-top: 20px solid transparent; /* Adjust the size as needed */
+  border-bottom: 20px solid transparent; /* Adjust the size as needed */
+  border-right: 30px solid #00ff00; /* Green color */
+  transform: rotate(0deg); /* Rotate the arrow to point left */
+  margin-right: 10px; /* Adjust the spacing from the health bar */
+  margin-left: 20px;
+}

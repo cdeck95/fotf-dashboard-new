@@ -178,6 +178,7 @@ function App() {
 
   const location = useLocation();  
   const [pageTitle, setPageTitle] = useState("");
+  const lowercasePath = location.pathname.toLowerCase();
 
   useEffect(() => {
     if (!isMobile && !isMediumLarge && isLarge && (pageTitle === "Dashboard")){
@@ -188,13 +189,16 @@ function App() {
       setLeftNavOpen(false);
       setRightNavOpen(false);
       setSmallScreen(true);
+    } else if (lowercasePath === "/game") {
+      setLeftNavOpen(true);
+      setRightNavOpen(false);
     } else {
       setLeftNavOpen(!isMobile);
       setRightNavOpen(!isMobile);
       setSmallScreen(isMobile);
     }
     
-  }, [isMobile, isMediumLarge, isMismatched, isSmallScreen, isLarge, location.pathname, pageTitle]);
+  }, [isMobile, isMediumLarge, isMismatched, isSmallScreen, isLarge, location.pathname, pageTitle, lowercasePath]);
 
   const navigate = useNavigate();
 
@@ -205,8 +209,6 @@ function App() {
   // }, [address, navigate]);
 
   useEffect(() => { 
-
-    const lowercasePath = location.pathname.toLowerCase();
  
     switch (lowercasePath) {
       // case "/":
@@ -257,7 +259,6 @@ function App() {
       //   break;
       case "/game":
         setPageTitle("Game - Pre-Alpha");
-        setRightNavOpen(false);
         break;
       // case "/bridge":
       //   setPageTitle("Polygon Bridge");
