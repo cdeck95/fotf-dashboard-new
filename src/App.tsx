@@ -349,14 +349,14 @@ function App() {
               <Routes>
                 {/* <Route path="/" element={<Dashboard tokenProps={polygonTokenProps} leftNavOpen={leftNavOpen} rightNavOpen={rightNavOpen} showMismatch={showMismatch} isSmallScreen={isSmallScreen} />} /> */}
                 <Route path="/" element={<HoneyStore tokenProps={polygonTokenProps} isSmallScreen={isSmallScreen} />} />
-
                 <Route path="/HoneyStore" element={<HoneyStore tokenProps={polygonTokenProps} isSmallScreen={isSmallScreen} />} />
+                <Route path="/Game" element={<Game showMismatch={showMismatch}/>} />{" "}
                 {/* <Route path="/TeddyClaims" element={<TeddyClaims tokenProps={polygonTokenProps} leftNavOpen={leftNavOpen} rightNavOpen={rightNavOpen} showMismatch={showMismatch} isSmallScreen={isSmallScreen}/>} />
                 <Route path="/TedClaims" element={<TedClaims />} />{" "} */}
                 {/* <Route path="/TedMint" element={<TedMint  showMismatch={showMismatch} contract={polygonTokenProps.tedContract} isloadingContract={polygonTokenProps.isLoadingTedContract} />} />{" "}
                 <Route path="/TeddyMint" element={<TeddyMint showMismatch={showMismatch} contract={polygonTokenProps.teddyContract} isloadingContract={polygonTokenProps.isLoadingTeddyContract} />} />{" "}
                 <Route path="/AITedMint" element={<AITedMint  showMismatch={showMismatch} contract={polygonTokenProps.aiTedContract} isloadingContract={polygonTokenProps.isLoadingAITedContract} />} />{" "}
-                <Route path="/Game" element={<Game showMismatch={showMismatch}/>} />{" "}
+                
                 <Route path="/PackOpening" element={<PackOpening/>} />{" "}
                 <Route path="/MyCards" element={<MyCards/>} />{" "}
                 <Route path="/News" element={<News/>} />{" "}

@@ -17,6 +17,8 @@ function Battle() {
   const [gameOver, setGameOver] = useState(false);
   const [gameOverMessage, setGameOverMessage] = useState('');
 
+  const delayBetweenTurns = 1500; // 1.5 seconds delay
+
   // Create a ref for the log container
   const logContainerRef = useRef<HTMLDivElement | null>(null);
 
@@ -59,8 +61,13 @@ function Battle() {
 
   const calculateAttack = () => {
     // Base Attack Value
-    const maxAttack = isPlayer1Turn ? player1MaxAttack : player2MaxAttack;
+    const maxAttack = isPlayer1Turn ? player1MaxAttack : player2MaxAttack;    
+    
     const baseAttack = Math.floor(Math.random() * maxAttack);
+    const logEntryBaseAtkCalculations = `Turn ${turn}: Calculating Base Atk... Base Atk is ${baseAttack}`;
+    console.log(logEntryBaseAtkCalculations);
+    setLog((prevLog) => [...prevLog, logEntryBaseAtkCalculations]);
+
 
     // Weighted random selection for Critical Attack Value
     const criticalOptions = [
@@ -87,6 +94,16 @@ function Battle() {
         break;
       }
     }
+    if(criticalAttack === 1) {
+      const logEntryAtkCalculations = `Turn ${turn}: Calculating Critical Strike Chance… No Critical Strike. Resuming Atk Calculations…`;
+      console.log(logEntryAtkCalculations);
+      setLog((prevLog) => [...prevLog, logEntryAtkCalculations]);
+    } else {
+      const logEntryAtkCalculations = `Turn ${turn}: Calculating Critical Strike Chance… Critical Strike is x${criticalAttack}!`;
+      console.log(logEntryAtkCalculations);
+      setLog((prevLog) => [...prevLog, logEntryAtkCalculations]);
+    }
+    
 
     const totalAttack = baseAttack * criticalAttack;
 
@@ -109,11 +126,19 @@ function Battle() {
     return Math.round(totalDefense);
   };
 
+  useEffect(() => {
+    scrollToBottom(); // Scroll to the bottom of the log when the log state changes
+  }, [log]);
+
   const handlePlayer1Attack = () => {
     if (isPlayer1Turn && !gameOver) {
         // Scroll to the bottom of the log when an attack is initiated
         scrollToBottom();  
         const player1Attack = calculateAttack();
+        const logEntryAtkCalculations = `Turn ${turn}: Calculating Total Atk... Total Atk is ${player1Attack}`;
+        console.log(logEntryAtkCalculations);
+        setLog((prevLog) => [...prevLog, logEntryAtkCalculations]);
+
         const player2Defense = calculateDefense();
 
         // Ensure a minimum damage of 1
@@ -124,7 +149,7 @@ function Battle() {
         // Log the attack and defense calculations for Player 1
         const logEntryPlayer1 = `Turn ${turn}: Player 1 attacked with ${player1Attack} damage. Player 2 defended with ${player2Defense} defense. Player 2 now has ${newPlayer2Health} health.`;
 
-        setLog([...log, logEntryPlayer1]);
+        setLog((prevLog) => [...prevLog, logEntryPlayer1]);
         setPlayer2Health(newPlayer2Health);
         setTurn(turn + 1);
          
@@ -135,8 +160,10 @@ function Battle() {
             return;
         }
 
-        // Switch to Player 2's turn
-        setIsPlayer1Turn(false);
+        // Switch to Player 2's turn with a delay
+        setTimeout(() => {
+          setIsPlayer1Turn(false);
+        }, delayBetweenTurns);
         
   
         }
@@ -146,6 +173,10 @@ function Battle() {
     if (!isPlayer1Turn && !gameOver) {
         
       const player2Attack = calculateAttack();
+      const logEntryAtkCalculations = `Turn ${turn}: Calculating Total Atk... Total Atk is ${player2Attack}`;
+      console.log(logEntryAtkCalculations);
+      setLog((prevLog) => [...prevLog, logEntryAtkCalculations]);
+
       const player1Defense = calculateDefense();
 
       // Ensure a minimum damage of 1
@@ -156,7 +187,7 @@ function Battle() {
       // Log the attack and defense calculations for Player 2
       const logEntryPlayer2 = `Turn ${turn}: Player 2 attacked with ${player2Attack} damage. Player 1 defended with ${player1Defense} defense. Player 1 now has ${newPlayer1Health} health.`;
 
-      setLog([...log, logEntryPlayer2]);
+      setLog((prevLog) => [...prevLog, logEntryPlayer2]);
       setPlayer1Health(newPlayer1Health);
       setTurn(turn + 1);
 
