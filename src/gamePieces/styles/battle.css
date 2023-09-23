@@ -42,9 +42,15 @@
     width: calc(100% - 2px); /* Adjust width accounting for border */
   }
 
+  .battle-log::-webkit-scrollbar{
+    display: none;
+  }
+
   .battle-log {
     max-height: 600px; /* Set a maximum height for the log container */
     overflow-y: auto; /* Enable vertical scrolling if content overflows */
+    -ms-overflow-style: none;
+    scrollbar-width: none;
     border: 1px solid #0f0; /* Green border (adjust as needed) */
     padding: 10px;
     padding-bottom: 0px;
