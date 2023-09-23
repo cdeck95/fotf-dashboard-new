@@ -2,10 +2,30 @@ import React, { useEffect, useRef, useState } from "react";
 import "../styles/battle.css";
 
 function Battle() {
-  const logEntryWelcome = `ASCII Fury if the Fur (text) logo.`;
-  const simulationName = `Simulation Name`;
-  const year = 'Year: 3212';
-  const [log, setLog] = useState<string[]>([logEntryWelcome, simulationName, year]);
+  const logEntryWelcome1 = ',,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,\n';
+  const logEntryWelcome2 = ',,,,,,,,,,,,,,,,,,&&&&&&&&&&&&&&&&&#,,,,,,,,,,,,,,,,,\n'
+  const logEntryWelcome3 = ',,,,,,,,&&&&,*&&&&&&&&&&&&&&&&&&&&&&&&&&/,&&&&,,,,,,,\n'
+  const logEntryWelcome4 = ',,,,,,,&,,&&&&&&&&&&,,&&&&&&&&&&,,&&&&&&&&&&,,&,,,,,,\n'
+  const logEntryWelcome5 = ',,,,,,,&&&&&&&&&&&&,,,&&&&&&&&&&,,,&&&&&&&&&&&&,,,,,,\n'
+  const logEntryWelcome6 = ',,,,,,,,,&&&&&&&&&&,,,&&&&&&&&&&,,,&&&&&&&&&&,,,,,,,,\n'
+  const logEntryWelcome7 = ',,,,,,,,,&&&&&&&&&&,,,&&&&&&&&&%,,,&&&&&&&&&&,,,,,,,,\n'
+  const logEntryWelcome8 = ',,,,,,,,,&&&&&&&&&&,,,&&&&&&&&&*,,,&&&&&&&&&&,,,,,,,,\n'
+  const logEntryWelcome9 = ',,,,,,,,,&&&&&&&&&&,,,#&&&&&&&&,,,,&&&&&&&&&&,,,,,,,,\n'
+  const logEntryWelcome10 = ',,,,,,,,,%&&&&&&&&&,,,,&&&&&&&&,,,,&&&&&&&&&&,,,,,,,,\n'
+  const logEntryWelcome11 = ',,,,,,,,,,&&&&&&&&&,,,,&&&&&&&&,,,,&&&&&&&&&,,,,,,,,,\n'
+  const logEntryWelcome12 = ',,,,,,,,,,,&&&&&&&&,,,,&&&&&&&&,,,,&&&&&&&&,,,,,,,,,,\n'
+  const logEntryWelcome13 = ',,,,,,,,,,,,,&&&&&&&&&&&,,& ,,&&,,,*&&,&&,,,,,,,,,,,,\n'
+  const logEntryWelcome14 = ',,,,,,,,        &    ,&#   &,,&      #&  &,,  &,,,,,,\n'
+  const logEntryWelcome15 = ',,,,,,,&&   ,,&&,,   ,,,   ,&*        ,%  &  &&,,,,,,\n'
+  const logEntryWelcome16 = ',,,,,,,,&   % #,,,   &,,   ,,,  %&  &,,,    &,,,,,,,,\n'
+  const logEntryWelcome17 = ',,,,,,,,,,  &,,,,,&        ,,,  &,&  ,,,   ,,,,,,,,,,\n'
+  const logEntryWelcome18 = ',,,,,,,,,,&&&,,,,,,,%,,,,,,,,,,,,,,,&,, &&,,,,,,,,,,,\n'
+  const logEntryWelcome19 = ',,,,,,,,,,,,,&&,,,,&,,,,,&,,,&##&,,,&,,,,,,,,,,,,,,,,\n'
+  const logEntryWelcome20 = ',,,,,,,,,,,,,&&&&,,&,,,,,&,,,&##&&&&&,,,,,,,,,,,,,,,,\n'
+  const logEntryWelcome21 = ',,,,,,,,,,,,,*****,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,\n';
+  const simulationName = `Simulation Name\n`;
+  const year = 'Year: 3212\n';
+  const [log, setLog] = useState<string[]>([logEntryWelcome1, logEntryWelcome2, logEntryWelcome3, logEntryWelcome4, logEntryWelcome5, logEntryWelcome6, logEntryWelcome7, logEntryWelcome8, logEntryWelcome9, logEntryWelcome10, logEntryWelcome11, logEntryWelcome12, logEntryWelcome13, logEntryWelcome14, logEntryWelcome15, logEntryWelcome16, logEntryWelcome17, logEntryWelcome18, logEntryWelcome19, logEntryWelcome20, logEntryWelcome21, simulationName, year]);
   const [player1Health, setPlayer1Health] = useState(12000); // Updated max HP
   const [player1MaxAttack] = useState(650); // Added max attack
   const [player1MaxDefense] = useState(750); // Added max defense
@@ -20,7 +40,7 @@ function Battle() {
   const [gameOver, setGameOver] = useState(false);
   const [gameOverMessage, setGameOverMessage] = useState('');
 
-  const delayBetweenTurns = 1500; // 1.5 seconds delay
+  const delayBetweenTurns = 2000; // 2 seconds delay
 
   // Create a ref for the log container
   const logContainerRef = useRef<HTMLDivElement | null>(null);
@@ -224,9 +244,16 @@ function Battle() {
           <div className={`health-inner ${isPlayer1Turn ? 'green-bg' : ''}`} style={{ width: `${Math.floor((player2Health / 10000) * 100)}%` }}></div>
         </div>
       </div>
-      <div className="battle-log" ref={logContainerRef}>
+      <div className="battle-log" >
         {log.map((message, index) => (
-          <p key={index}>{message}</p>
+          <div ref={logContainerRef}>
+            {index<21
+              ? <span key={index}>{message}</span> 
+              : <p key={index}>{message}</p> 
+            }
+          </div>
+          
+          
         ))}
       </div>
       <div className={`health-bars ${isPlayer1Turn ? "green-bg" : ""}`}>

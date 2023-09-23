@@ -31,7 +31,7 @@ function Game(props: { showMismatch: boolean }) {
     <Box
       className={
         isSmallScreen ? "inner-container-mint-mobile" : "inner-container-mint"
-      } sx={{ position: "relative" }}
+      } sx={{ position: "relative", backgroundColor:"#000000" }}
     >
       <StatusBar />
       {gameState === 'battle' && <Battle />}

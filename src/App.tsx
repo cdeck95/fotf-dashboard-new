@@ -257,6 +257,7 @@ function App() {
       //   break;
       case "/game":
         setPageTitle("Game - Pre-Alpha");
+        setRightNavOpen(false);
         break;
       // case "/bridge":
       //   setPageTitle("Polygon Bridge");
@@ -265,7 +266,7 @@ function App() {
       default:
         setPageTitle("404 - Page not found");
     }
-  }, [location.pathname]);
+  }, [location.pathname, navigate]);
 
   const handleRefresh = async () => {
     window.location.reload();

@@ -3,7 +3,7 @@
     justify-content: space-between;
     margin-top: 20px;
     margin-bottom: 20px;
-    color: #0f0; /* Green text */
+    color: #fff; /* Green text */
     font-family: 'Press Start 2P', cursive;
   }
   
@@ -34,19 +34,35 @@
   
   /* Add a class for the reversed health bar style when the background is green */
   .health-bar.green-bg {
-    border: 1px solid #000; /* Black border */
+    border: 1px solid #0f0; /* Black border */
   }
   
   .health-inner.green-bg {
-    background-color: #000; /* Black background */
+    background-color: #0f0; /* Black background */
     width: calc(100% - 2px); /* Adjust width accounting for border */
   }
 
   .battle-log {
-    max-height: 300px; /* Set a maximum height for the log container */
+    max-height: 600px; /* Set a maximum height for the log container */
     overflow-y: auto; /* Enable vertical scrolling if content overflows */
     border: 1px solid #0f0; /* Green border (adjust as needed) */
     padding: 10px;
     padding-bottom: 0px;
     margin-bottom: 10px;
+    color: #0f0; /* Green text */
+    font-family: 'Press Start 2P', cursive;
+  }
+
+  .battle-log p {
+    font-size: 14px;
+    color: #0f0; /* Green text */
+    font-family: 'Press Start 2P', cursive;
+  }
+
+  .battle-log span {
+    font-size: 14px;
+    color: #0f0; /* Green text */
+    font-family: 'Press Start 2P', cursive;
+    white-space: unset;
+    white-space: pre-wrap;
   }
