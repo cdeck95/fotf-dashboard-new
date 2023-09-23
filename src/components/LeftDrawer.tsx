@@ -303,7 +303,7 @@ function LeftDrawer(props: NavProps) {
           </Box>
         </Toolbar>
         <List>
-          <ListItem
+          {/* <ListItem
             key={"Dashboard"}
             disablePadding
             onClick={() => loadPage("Dashboard")}
@@ -350,7 +350,7 @@ function LeftDrawer(props: NavProps) {
               </ListItemIcon>
               <ListItemText primary={"Campaigns"} />
             </ListItemButton>
-          </ListItem>
+          </ListItem> */}
           {/* <ListItem
             key={"Downloads"}
             disablePadding
@@ -421,11 +421,11 @@ function LeftDrawer(props: NavProps) {
             </ListItemButton>
           </ListItem>
         </List> */}
-        <Divider />
+        {/* <Divider />
         <Typography sx={{ marginTop: "10px", paddingLeft: "18px" }}>
           Utility
         </Typography>
-        <List>
+        <List> */}
           {/* <ListItem
             key={"BuildATeddy"}
             disablePadding
@@ -450,7 +450,7 @@ function LeftDrawer(props: NavProps) {
               <ListItemText primary={"Trait Swap Teds"} />
             </ListItemButton>
           </ListItem> */}
-          <ListItem
+          {/* <ListItem
             key={"PackOpening"}
             disablePadding
             onClick={() => loadPage("PackOpening")}
@@ -477,8 +477,8 @@ function LeftDrawer(props: NavProps) {
               <ListItemText primary={"My Cards"} />
               <Chip size="small"  label={<Typography sx={{fontSize: "15px"}}> New &#x2728; </Typography>} color="primary" sx={{ justifyContent: "flex-start", textAlign: "start", alignItems: "flex-start", marginRight: "55px", marginBottom: "15px", border: "none"}} variant="outlined"/>
             </ListItemButton>
-          </ListItem>
-          <ListItem
+          </ListItem> */}
+          {/* <ListItem
             key={"HoneyExchange"}
             disablePadding
             onClick={() => loadPage("HoneyExchange")}
@@ -489,7 +489,6 @@ function LeftDrawer(props: NavProps) {
               </ListItemIcon>
               <Box className="row">
                 <ListItemText primary={"Honey Exchange"} />
-                {/* <Chip size="small"  label={<Typography sx={{fontSize: "15px"}}> New &#x2728; </Typography>} color="primary" sx={{ justifyContent: "flex-start", textAlign: "start", alignItems: "flex-start", marginRight: "45px", marginBottom: "15px", border: "none"}} variant="outlined"/> */}
               </Box>
             </ListItemButton>
           </ListItem>
@@ -504,7 +503,7 @@ function LeftDrawer(props: NavProps) {
               </ListItemIcon>
               <ListItemText primary={"Visual Upgrades"} />
             </ListItemButton>
-          </ListItem>
+          </ListItem> 
           {/* <ListItem
             key={"PolygonBridge"}
             disablePadding
@@ -516,8 +515,8 @@ function LeftDrawer(props: NavProps) {
               </ListItemIcon>
               <ListItemText primary={"Polygon Bridge"} />
             </ListItemButton>
-          </ListItem> */}
-        </List>
+          </ListItem>
+        </List> */}
         <Divider />
         <Typography sx={{ marginTop: "10px", paddingLeft: "18px" }}>
           Economy
