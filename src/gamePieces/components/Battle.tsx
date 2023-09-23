@@ -92,7 +92,6 @@ function Battle() {
   const calculateAttack = () => {
     // Base Attack Value
     const maxAttack = isPlayer1Turn ? player1MaxAttack : player2MaxAttack;  
-    setLoadingText('Calculating Base Attack...');
      // Switch to Player 2's turn with a delay
      setTimeout(() => {
       console.log('Calculating Base Atk...')
@@ -103,7 +102,6 @@ function Battle() {
     console.log(logEntryBaseAtkCalculations);
     setLog((prevLog) => [...prevLog, logEntryBaseAtkCalculations]);
 
-    setLoadingText('Calculating Critical Attack Chance...');
     // Weighted random selection for Critical Attack Value
     const criticalOptions = [
       { value: 1, weight: 60 },
@@ -137,10 +135,7 @@ function Battle() {
       const logEntryAtkCalculations = `Player ${isPlayer1Turn?"1":"2"}: Calculating Critical Strike Chance… Critical Strike is x${criticalAttack}!`;
       console.log(logEntryAtkCalculations);
       setLog((prevLog) => [...prevLog, logEntryAtkCalculations]);
-    }
-
-    setLoadingText('Calculating Total Attack...');
-    
+    }   
 
     const totalAttack = baseAttack * criticalAttack;
 
@@ -180,7 +175,7 @@ function Battle() {
         console.log(logEntryAtkCalculations);
         setLog((prevLog) => [...prevLog, logEntryAtkCalculations]);
 
-        setLoadingText('Calculating Player 2 Defense...');
+        setLoadingText('Calculating...');
         const player2Defense = calculateDefense();
 
         // Ensure a minimum damage of 1
@@ -194,7 +189,6 @@ function Battle() {
         setLog((prevLog) => [...prevLog, logEntryPlayer1]);
         setPlayer2Health(newPlayer2Health);
         setTurn((prevTurn) => prevTurn + 1); // Update turn based on the previous state
-        setLoadingText('Ending Turn...');
         // Check if Player 2's health reached 0 (end of the game)
         if (newPlayer2Health <= 0) {
             setGameOver(true);
@@ -208,7 +202,6 @@ function Battle() {
 
   const handlePlayer2Attack = () => {
     if (!isPlayer1Turn && !gameOver) {
-      setLoadingText('Calculating Player 2 Attack...');
       const player2Attack = calculateAttack();
       const logEntryAtkCalculations = `Player ${isPlayer1Turn?"1":"2"}: Calculating Total Atk... Total Atk is ${player2Attack}`;
       console.log(logEntryAtkCalculations);
@@ -227,6 +220,7 @@ function Battle() {
       setLog((prevLog) => [...prevLog, logEntryPlayer2]);
       setPlayer1Health(newPlayer1Health);
       setTurn((prevTurn) => prevTurn + 1); // Update turn based on the previous state
+      setLoadingText("Waiting for next attack...");
 
       // Check if Player 1's health reached 0 (end of the game)
       if (newPlayer1Health <= 0) {
