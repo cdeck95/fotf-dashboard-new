@@ -2,7 +2,10 @@ import React, { useEffect, useRef, useState } from "react";
 import "../styles/battle.css";
 
 function Battle() {
-  const [log, setLog] = useState<string[]>([]);
+  const logEntryWelcome = `ASCII Fury if the Fur (text) logo.`;
+  const simulationName = `Simulation Name`;
+  const year = 'Year: 3212';
+  const [log, setLog] = useState<string[]>([logEntryWelcome, simulationName, year]);
   const [player1Health, setPlayer1Health] = useState(12000); // Updated max HP
   const [player1MaxAttack] = useState(650); // Added max attack
   const [player1MaxDefense] = useState(750); // Added max defense
@@ -36,6 +39,12 @@ function Battle() {
         })
     }
   };
+
+  // useEffect(() => {
+  //   if(turn === 1 && isPlayer1Turn && log.length === 0) {
+     
+  //   }
+  // }, [isPlayer1Turn, log, turn]);
 
   // Function to scroll to the bottom of the log
   const scrollToBottomGameOver = () => {
@@ -210,32 +219,60 @@ function Battle() {
     }
   }, [isPlayer1Turn]);
 
+  
   return (
     <div className={`battle-container ${isPlayer1Turn ? "green-bg" : ""}`}>
-      <div className="battle-log" >
+      <div className={`health-bars ${isPlayer1Turn ? "green-bg" : ""}`}>
+        <div className={`health-bar ${isPlayer1Turn ? 'green-bg' : ''}`}>
+          <div className="health-info">
+            Player 2: {player2Health.toFixed(0)} / 10000 {/* Use toFixed(0) to round to the nearest integer */}
+          </div>
+          <div className={`health-inner ${isPlayer1Turn ? 'green-bg' : ''}`} style={{ width: `${Math.floor((player2Health / 10000) * 100)}%` }}></div>
+        </div>
+      </div>
+      <div className="battle-log" ref={logContainerRef}>
         {log.map((message, index) => (
-          <p key={index} ref={logContainerRef}>{message}</p>
+          <p key={index}>{message}</p>
         ))}
-        {gameOver && <p ref={gameOverRef} className="game-over-message">{gameOverMessage}</p>}
-
+      </div>
+      <div className={`health-bars ${isPlayer1Turn ? "green-bg" : ""}`}>
+        <div className={`health-bar ${isPlayer1Turn ? 'green-bg' : ''}`}>
+          <div className="health-info">
+            Player 1: {player1Health.toFixed(0)} / 12000 {/* Use toFixed(0) to round to the nearest integer */}
+          </div>
+          <div className={`health-inner ${isPlayer1Turn ? 'green-bg' : ''}`} style={{ width: `${Math.floor((player1Health / 12000) * 100)}%` }}></div>
+        </div>
       </div>
       <button onClick={handlePlayer1Attack}>Attack</button>
-      <div className={`health-bars ${isPlayer1Turn ? "green-bg" : ""}`}>
-      <div className={`health-bar ${isPlayer1Turn ? 'green-bg' : ''}`}>
-  <div className="health-info">
-    Player 1: {player1Health.toFixed(0)} / 12000 {/* Use toFixed(0) to round to the nearest integer */}
-  </div>
-  <div className={`health-inner ${isPlayer1Turn ? 'green-bg' : ''}`} style={{ width: `${Math.floor((player1Health / 12000) * 100)}%` }}></div>
-</div>
-<div className={`health-bar ${isPlayer1Turn ? 'green-bg' : ''}`}>
-  <div className="health-info">
-    Player 2: {player2Health.toFixed(0)} / 10000 {/* Use toFixed(0) to round to the nearest integer */}
-  </div>
-  <div className={`health-inner ${isPlayer1Turn ? 'green-bg' : ''}`} style={{ width: `${Math.floor((player2Health / 10000) * 100)}%` }}></div>
-</div>
-      </div>
     </div>
   );
 }
+//   return (
+//     <div className={`battle-container ${isPlayer1Turn ? "green-bg" : ""}`}>
+//       <div className="battle-log" >
+//         {log.map((message, index) => (
+//           <p key={index} ref={logContainerRef}>{message}</p>
+//         ))}
+//         {gameOver && <p ref={gameOverRef} className="game-over-message">{gameOverMessage}</p>}
+
+//       </div>
+//       <button onClick={handlePlayer1Attack}>Attack</button>
+//       <div className={`health-bars ${isPlayer1Turn ? "green-bg" : ""}`}>
+//       <div className={`health-bar ${isPlayer1Turn ? 'green-bg' : ''}`}>
+//   <div className="health-info">
+//     Player 1: {player1Health.toFixed(0)} / 12000 {/* Use toFixed(0) to round to the nearest integer */}
+//   </div>
+//   <div className={`health-inner ${isPlayer1Turn ? 'green-bg' : ''}`} style={{ width: `${Math.floor((player1Health / 12000) * 100)}%` }}></div>
+// </div>
+// <div className={`health-bar ${isPlayer1Turn ? 'green-bg' : ''}`}>
+//   <div className="health-info">
+//     Player 2: {player2Health.toFixed(0)} / 10000 {/* Use toFixed(0) to round to the nearest integer */}
+//   </div>
+//   <div className={`health-inner ${isPlayer1Turn ? 'green-bg' : ''}`} style={{ width: `${Math.floor((player2Health / 10000) * 100)}%` }}></div>
+// </div>
+//       </div>
+//     </div>
+//   );
+// }
 
 export default Battle;
