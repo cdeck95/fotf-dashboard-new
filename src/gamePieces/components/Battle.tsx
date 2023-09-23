@@ -23,9 +23,11 @@ function Battle() {
   const logEntryWelcome19 = ',,,,,,,,,,,,,&&,,,,&,,,,,&,,,&##&,,,&,,,,,,,,,,,,,,,,\n'
   const logEntryWelcome20 = ',,,,,,,,,,,,,&&&&,,&,,,,,&,,,&##&&&&&,,,,,,,,,,,,,,,,\n'
   const logEntryWelcome21 = ',,,,,,,,,,,,,*****,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,\n';
-  const simulationName = `Simulation Name\n`;
+  const simulationName = `The Merger - The First Battle - LVL 1\n`;
   const year = 'Year: 3212\n';
-  const [log, setLog] = useState<string[]>([logEntryWelcome1, logEntryWelcome2, logEntryWelcome3, logEntryWelcome4, logEntryWelcome5, logEntryWelcome6, logEntryWelcome7, logEntryWelcome8, logEntryWelcome9, logEntryWelcome10, logEntryWelcome11, logEntryWelcome12, logEntryWelcome13, logEntryWelcome14, logEntryWelcome15, logEntryWelcome16, logEntryWelcome17, logEntryWelcome18, logEntryWelcome19, logEntryWelcome20, logEntryWelcome21, simulationName, year]);
+  const faction = 'Faction: Fury Teds\n';
+  const waiting = 'Waiting for simulation to begin...\n';
+  const [log, setLog] = useState<string[]>([logEntryWelcome1, logEntryWelcome2, logEntryWelcome3, logEntryWelcome4, logEntryWelcome5, logEntryWelcome6, logEntryWelcome7, logEntryWelcome8, logEntryWelcome9, logEntryWelcome10, logEntryWelcome11, logEntryWelcome12, logEntryWelcome13, logEntryWelcome14, logEntryWelcome15, logEntryWelcome16, logEntryWelcome17, logEntryWelcome18, logEntryWelcome19, logEntryWelcome20, logEntryWelcome21, simulationName, year, faction, waiting]);
   const [player1Health, setPlayer1Health] = useState(12000); // Updated max HP
   const [player1MaxAttack] = useState(650); // Added max attack
   const [player1MaxDefense] = useState(750); // Added max defense
@@ -44,6 +46,8 @@ function Battle() {
   const delayForBase = 1000; // 1-1.5 seconds delay
   const delayForCritical = 2000; // 2-3.5seconds delay
   const delayForTotal = 1000; // 1-1.5 seconds delay
+
+  const [loadingText, setLoadingText] = useState('Ready?');
 
   // Create a ref for the log container
   const logContainerRef = useRef<HTMLDivElement | null>(null);
@@ -88,18 +92,18 @@ function Battle() {
   const calculateAttack = () => {
     // Base Attack Value
     const maxAttack = isPlayer1Turn ? player1MaxAttack : player2MaxAttack;  
-    
+    setLoadingText('Calculating Base Attack...');
      // Switch to Player 2's turn with a delay
      setTimeout(() => {
       console.log('Calculating Base Atk...')
     }, delayForBase);
     
     const baseAttack = Math.floor(Math.random() * maxAttack);
-    const logEntryBaseAtkCalculations = `Turn ${turn}: Calculating Base Atk... Base Atk is ${baseAttack}`;
+    const logEntryBaseAtkCalculations = `Player ${isPlayer1Turn?"1":"2"}: Calculating Base Atk... Base Atk is ${baseAttack}`;
     console.log(logEntryBaseAtkCalculations);
     setLog((prevLog) => [...prevLog, logEntryBaseAtkCalculations]);
 
-
+    setLoadingText('Calculating Critical Attack Chance...');
     // Weighted random selection for Critical Attack Value
     const criticalOptions = [
       { value: 1, weight: 60 },
@@ -126,14 +130,16 @@ function Battle() {
       }
     }
     if(criticalAttack === 1) {
-      const logEntryAtkCalculations = `Turn ${turn}: Calculating Critical Strike Chance… No Critical Strike. Resuming Atk Calculations…`;
+      const logEntryAtkCalculations = `Player ${isPlayer1Turn?"1":"2"}: Calculating Critical Strike Chance… No Critical Strike. Resuming Atk Calculations…`;
       console.log(logEntryAtkCalculations);
       setLog((prevLog) => [...prevLog, logEntryAtkCalculations]);
     } else {
-      const logEntryAtkCalculations = `Turn ${turn}: Calculating Critical Strike Chance… Critical Strike is x${criticalAttack}!`;
+      const logEntryAtkCalculations = `Player ${isPlayer1Turn?"1":"2"}: Calculating Critical Strike Chance… Critical Strike is x${criticalAttack}!`;
       console.log(logEntryAtkCalculations);
       setLog((prevLog) => [...prevLog, logEntryAtkCalculations]);
     }
+
+    setLoadingText('Calculating Total Attack...');
     
 
     const totalAttack = baseAttack * criticalAttack;
@@ -163,13 +169,18 @@ function Battle() {
 
   const handlePlayer1Attack = () => {
     if (isPlayer1Turn && !gameOver) {
+        if(turn === 1) {
+          const logEntryBegin = "Beginning Battle...";
+          setLog((prevLog) => [...prevLog, logEntryBegin]);
+        }
         // Scroll to the bottom of the log when an attack is initiated
         scrollToBottom();  
         const player1Attack = calculateAttack();
-        const logEntryAtkCalculations = `Turn ${turn}: Calculating Total Atk... Total Atk is ${player1Attack}`;
+        const logEntryAtkCalculations = `Player ${isPlayer1Turn?"1":"2"}: Calculating Total Atk... Total Atk is ${player1Attack}`;
         console.log(logEntryAtkCalculations);
         setLog((prevLog) => [...prevLog, logEntryAtkCalculations]);
 
+        setLoadingText('Calculating Player 2 Defense...');
         const player2Defense = calculateDefense();
 
         // Ensure a minimum damage of 1
@@ -178,12 +189,12 @@ function Battle() {
         const newPlayer2Health = Math.round(Math.max(player2Health - damage, 0));
 
         // Log the attack and defense calculations for Player 1
-        const logEntryPlayer1 = `Turn ${turn}: Player 1 attacked with ${player1Attack} damage. Player 2 defended with ${player2Defense} defense. Player 2 now has ${newPlayer2Health} health.`;
+        const logEntryPlayer1 = `Results: Player 1 attacked with ${player1Attack} damage. Player 2 defended with ${player2Defense} defense. Player 2 now has ${newPlayer2Health} health.`;
 
         setLog((prevLog) => [...prevLog, logEntryPlayer1]);
         setPlayer2Health(newPlayer2Health);
         setTurn((prevTurn) => prevTurn + 1); // Update turn based on the previous state
-         
+        setLoadingText('Ending Turn...');
         // Check if Player 2's health reached 0 (end of the game)
         if (newPlayer2Health <= 0) {
             setGameOver(true);
@@ -197,9 +208,9 @@ function Battle() {
 
   const handlePlayer2Attack = () => {
     if (!isPlayer1Turn && !gameOver) {
-        
+      setLoadingText('Calculating Player 2 Attack...');
       const player2Attack = calculateAttack();
-      const logEntryAtkCalculations = `Turn ${turn}: Calculating Total Atk... Total Atk is ${player2Attack}`;
+      const logEntryAtkCalculations = `Player ${isPlayer1Turn?"1":"2"}: Calculating Total Atk... Total Atk is ${player2Attack}`;
       console.log(logEntryAtkCalculations);
       setLog((prevLog) => [...prevLog, logEntryAtkCalculations]);
 
@@ -211,7 +222,7 @@ function Battle() {
       const newPlayer1Health = Math.round(Math.max(player1Health - damage, 0));
 
       // Log the attack and defense calculations for Player 2
-      const logEntryPlayer2 = `Turn ${turn}: Player 2 attacked with ${player2Attack} damage. Player 1 defended with ${player1Defense} defense. Player 1 now has ${newPlayer1Health} health.`;
+      const logEntryPlayer2 = `Results: Player 2 attacked with ${player2Attack} damage. Player 1 defended with ${player1Defense} defense. Player 1 now has ${newPlayer1Health} health.`;
 
       setLog((prevLog) => [...prevLog, logEntryPlayer2]);
       setPlayer1Health(newPlayer1Health);
@@ -286,8 +297,8 @@ function Battle() {
       </div>
       <div className="battle-log" >
         {log.map((message, index) => (
-          <div ref={logContainerRef}>
-            {index<21
+          <div >
+            {index<23
               ? <span key={index}>{message}</span> 
               : <p key={index}>{message}</p> 
             }
@@ -295,6 +306,7 @@ function Battle() {
           
           
         ))}
+       <p className="loading-text">{loadingText}<span className="cursor" ref={logContainerRef}></span></p>
       </div>
       <div className={`health-bars ${isPlayer1Turn ? "green-bg" : ""}`}>
         <div className={`health-bar ${isPlayer1Turn ? 'green-bg' : ''}`}>

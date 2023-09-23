@@ -85,3 +85,28 @@
   margin-right: 10px; /* Adjust the spacing from the health bar */
   margin-left: 20px;
 }
+
+/* CSS for the blinking cursor */
+@keyframes blink {
+  0% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+.loading-text {
+  animation: blink 1s infinite;
+}
+
+.cursor {
+  display: inline-block;
+  width: 2px; /* Adjust the width of the cursor */
+  height: 20px; /* Adjust the height of the cursor */
+  background-color: #00ff00; /* Green color */
+  /* animation: blink 1s infinite; Blinking animation */
+}
