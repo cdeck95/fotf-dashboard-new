@@ -51,7 +51,7 @@
     overflow-y: auto; /* Enable vertical scrolling if content overflows */
     -ms-overflow-style: none;
     scrollbar-width: none;
-    border: 1px solid #0f0; /* Green border (adjust as needed) */
+    /* border: 1px solid #0f0;  */
     padding: 10px;
     padding-bottom: 0px;
     margin-bottom: 10px;
