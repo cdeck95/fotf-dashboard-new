@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import "../styles/battle.css";
 import { Box, Button } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+import LoseProgressDialog from "./loseProgressDialog";
 
 function Battle() {
   const navigate = useNavigate();
@@ -279,9 +280,15 @@ function Battle() {
     simulateBattle();
   };
 
+  const [loseProgressOpen, setLoseProgressOpen] = useState(false);
 
   
   function endSimulation(): void {
+    setLoseProgressOpen(true);
+  }
+
+  function handleLoseProgress(): void {
+    setLoseProgressOpen(false);
     navigate("/campaign");
   }
 
@@ -343,6 +350,11 @@ function Battle() {
           </div>
         </div>
       </div>
+      <LoseProgressDialog
+      open={loseProgressOpen}
+      handleClose={handleLoseProgress}
+      setLoseProgressOpen={setLoseProgressOpen}
+    />
     </div>
   );
 }
