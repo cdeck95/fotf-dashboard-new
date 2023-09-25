@@ -1,7 +1,10 @@
 import React, { useEffect, useRef, useState } from "react";
 import "../styles/battle.css";
+import { Box, Button } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 
 function Battle() {
+  const navigate = useNavigate();
   const logEntryWelcome1 = ',,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,\n';
   const logEntryWelcome2 = ',,,,,,,,,,,,,,,,,,&&&&&&&&&&&&&&&&&#,,,,,,,,,,,,,,,,,\n'
   const logEntryWelcome3 = ',,,,,,,,&&&&,*&&&&&&&&&&&&&&&&&&&&&&&&&&/,&&&&,,,,,,,\n'
@@ -98,7 +101,7 @@ function Battle() {
     }, delayForBase);
     
     const baseAttack = Math.floor(Math.random() * maxAttack);
-    const logEntryBaseAtkCalculations = `Player ${isPlayer1Turn?"1":"2"}: Calculating Base Atk... Base Atk is ${baseAttack}`;
+    const logEntryBaseAtkCalculations = `Player ${isPlayer1Turn?"1":"2"}: Calculating Base Atk... Base Atk is <i>${baseAttack}</i>`;
     console.log(logEntryBaseAtkCalculations);
     setLog((prevLog) => [...prevLog, logEntryBaseAtkCalculations]);
 
@@ -128,11 +131,11 @@ function Battle() {
       }
     }
     if(criticalAttack === 1) {
-      const logEntryAtkCalculations = `Player ${isPlayer1Turn?"1":"2"}: Calculating Critical Strike Chance… No Critical Strike. Resuming Atk Calculations…`;
+      const logEntryAtkCalculations = `Player ${isPlayer1Turn?"1":"2"}: Calculating Critical Strike Chance… <i>No Critical Strike</i>. Resuming Atk Calculations…`;
       console.log(logEntryAtkCalculations);
       setLog((prevLog) => [...prevLog, logEntryAtkCalculations]);
     } else {
-      const logEntryAtkCalculations = `Player ${isPlayer1Turn?"1":"2"}: Calculating Critical Strike Chance… Critical Strike is x${criticalAttack}!`;
+      const logEntryAtkCalculations = `Player ${isPlayer1Turn?"1":"2"}: Calculating Critical Strike Chance… Critical Strike is <i>x${criticalAttack}!</i>`;
       console.log(logEntryAtkCalculations);
       setLog((prevLog) => [...prevLog, logEntryAtkCalculations]);
     }   
@@ -171,7 +174,7 @@ function Battle() {
         // Scroll to the bottom of the log when an attack is initiated
         scrollToBottom();  
         const player1Attack = calculateAttack();
-        const logEntryAtkCalculations = `Player ${isPlayer1Turn?"1":"2"}: Calculating Total Atk... Total Atk is ${player1Attack}`;
+        const logEntryAtkCalculations = `Player ${isPlayer1Turn?"1":"2"}: Calculating Total Atk... Total Atk is <i>${player1Attack}</i>`;
         console.log(logEntryAtkCalculations);
         setLog((prevLog) => [...prevLog, logEntryAtkCalculations]);
 
@@ -184,7 +187,7 @@ function Battle() {
         const newPlayer2Health = Math.round(Math.max(player2Health - damage, 0));
 
         // Log the attack and defense calculations for Player 1
-        const logEntryPlayer1 = `Results: Player 1 attacked with ${player1Attack} damage. Player 2 defended with ${player2Defense} defense. Player 2 now has ${newPlayer2Health} health.`;
+        const logEntryPlayer1 = `Results: Player 1 attacked with <i>${player1Attack}</i> damage. Player 2 defended with <i>${player2Defense}</i> defense. Player 2 now has <i>${newPlayer2Health}</i> health.`;
 
         setLog((prevLog) => [...prevLog, logEntryPlayer1]);
         setPlayer2Health(newPlayer2Health);
@@ -203,7 +206,7 @@ function Battle() {
   const handlePlayer2Attack = () => {
     if (!isPlayer1Turn && !gameOver) {
       const player2Attack = calculateAttack();
-      const logEntryAtkCalculations = `Player ${isPlayer1Turn?"1":"2"}: Calculating Total Atk... Total Atk is ${player2Attack}`;
+      const logEntryAtkCalculations = `Player ${isPlayer1Turn?"1":"2"}: Calculating Total Atk... Total Atk is <i>${player2Attack}</i>`;
       console.log(logEntryAtkCalculations);
       setLog((prevLog) => [...prevLog, logEntryAtkCalculations]);
 
@@ -215,7 +218,7 @@ function Battle() {
       const newPlayer1Health = Math.round(Math.max(player1Health - damage, 0));
 
       // Log the attack and defense calculations for Player 2
-      const logEntryPlayer2 = `Results: Player 2 attacked with ${player2Attack} damage. Player 1 defended with ${player1Defense} defense. Player 1 now has ${newPlayer1Health} health.`;
+      const logEntryPlayer2 = `Results: Player 2 attacked with <i>${player2Attack}</i> damage. Player 1 defended with <i>${player1Defense}</i> defense. Player 1 now has <i>${newPlayer1Health}</i> health.`;
 
       setLog((prevLog) => [...prevLog, logEntryPlayer2]);
       setPlayer1Health(newPlayer1Health);
@@ -278,23 +281,31 @@ function Battle() {
 
 
   
+  function endSimulation(): void {
+    navigate("/campaign");
+  }
+
   return (
     <div className={`battle-container ${isPlayer1Turn ? "green-bg" : ""}`}>
-      <div className={`health-bars ${isPlayer1Turn ? "" : "green-bg"}`}>
-        <div className={`health-bar ${isPlayer1Turn ? '' : 'green-bg'}`}>
-          <div className="health-info">
-            Player 2: {player2Health.toFixed(0)} / 10000 {/* Use toFixed(0) to round to the nearest integer */}
+      <div className="row-space-between">
+        <div className="row-left">
+          <div className={`health-bar ${isPlayer1Turn ? '' : 'green-bg'}`}>
+                <div className="health-info">
+                  Player 2: {player2Health.toFixed(0)} / 10000 {/* Use toFixed(0) to round to the nearest integer */}
+                </div>
+                <div className={`health-inner green-bg`} style={{ width: `${Math.floor((player2Health / 10000) * 100)}%` }}></div>
+            
           </div>
-          <div className={`health-inner green-bg`} style={{ width: `${Math.floor((player2Health / 10000) * 100)}%` }}></div>
+          {!isPlayer1Turn && <div className="arrow"></div> }
         </div>
-        {!isPlayer1Turn && <div className="arrow"></div> }
+        <button onClick={() => endSimulation()}>End the Simulation</button>
       </div>
       <div className="battle-log" >
         {log.map((message, index) => (
           <div >
             {index<23
               ? <span key={index}>{message}</span> 
-              : <p key={index}>{message}</p> 
+              : <p key={index}dangerouslySetInnerHTML={{ __html: message }}/>
             }
           </div>
           
