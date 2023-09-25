@@ -102,7 +102,7 @@ function LoseProgressDialog(props: LoseProgressDialogProps) {
     }
 
   return (
-    <Box sx={{ borderRadius: "20px" }}>
+    <Box >
       <ThemeProvider theme={theme}>
       <Dialog
         open={open}
@@ -112,21 +112,25 @@ function LoseProgressDialog(props: LoseProgressDialogProps) {
         fullScreen={fullScreen}
         PaperComponent={PaperComponent}
         aria-describedby="alert-dialog-slide-description"
-        sx={{ borderRadius: "20px" }}
+        sx={{}}
       >
         <DialogTitle sx={{
-            backgroundColor: "transparent", 
             color: "white", 
             margin: "0px",
-            borderRadius:"20px",
+            borderRadius: "0px", borderColor: "#fff", backgroundColor: "#000" ,
             position: "relative",
-            borderTopColor: accentColor,
-            borderTopWidth: "3.5px",
+            borderTopColor: "#fff",
+            borderTopWidth: "2px",
             borderTopStyle: "solid",
+            borderRightWidth: "2px", 
+            borderRightStyle: "solid", 
+            borderLeftColor: "#fff", 
+            borderLeftWidth: "2px", 
+            borderLeftStyle: "solid",
             minWidth: "400px",
             maxWidth: "810px"
           }}>
-            <Box sx={{backgroundColor: accentColor, borderRadius: "40px", height: "60px", width: "60px", marginTop: "-40px", display: "flex", marginLeft: "auto", marginRight: "auto", justifyContent: "center"}}>
+            <Box sx={{backgroundColor: "#00ff00", borderRadius: "40px", height: "60px", width: "60px", marginTop: "-40px", display: "flex", marginLeft: "auto", marginRight: "auto", justifyContent: "center"}}>
               {/* <CircularProgress color="inherit" sx={{ margin: "auto", justifyContent: "center", alignItems: "center"}} /> */}
               <PriorityHighOutlinedIcon fontSize='large' color='inherit' sx={{ margin: "auto", justifyContent: "center", alignItems: "center"}}/>
             </Box>
@@ -135,14 +139,14 @@ function LoseProgressDialog(props: LoseProgressDialogProps) {
             </Box>
           
           </DialogTitle>
-        <DialogContent>
-          <DialogContentText sx={{ textAlign: "center", marginTop: "10px", paddingTop: "10px", paddingBottom: "10px", fontSize: "24px", fontFamily: 'Press Start 2P, cursive', wordBreak: "break-word", whiteSpace: "pre-wrap", display: "flex", justifyContent: "center", alignItems: "center"}} 
+        <DialogContent sx={{backgroundColor: "#000", borderRightColor: "#fff", borderRightWidth: "2px", borderRightStyle: "solid", borderLeftColor: "#fff", borderLeftWidth: "2px", borderLeftStyle: "solid"}}>
+          <DialogContentText
             id="alert-dialog-slide-description">
-            By ending the simulation, you will forfeit your stamina & level progress and be re-directed back to the campaings screen. 
-            You will not be charged with a loss. Do you wish to proceed?
+            <p className="battle-dialog-content-text">By ending the simulation, you will forfeit your stamina & level progress and be re-directed back to the campaings screen. 
+            You will not be charged with a loss. Do you wish to proceed?</p>
           </DialogContentText>
         </DialogContent>
-        <DialogActions sx={{ display: "flex", justifyContent: "center" }}>
+        <DialogActions sx={{ display: "flex", justifyContent: "center", backgroundColor: "#000", borderBottomColor: "#fff", borderBottomWidth: "2px", borderBottomStyle: "solid", borderRightColor: "#fff", borderRightWidth: "2px", borderRightStyle: "solid", borderLeftColor: "#fff", borderLeftWidth: "2px", borderLeftStyle: "solid"}}>
           
 
           <button
