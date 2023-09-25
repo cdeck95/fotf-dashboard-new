@@ -288,17 +288,25 @@ function Battle() {
   return (
     <div className={`battle-container ${isPlayer1Turn ? "green-bg" : ""}`}>
       <div className="row-space-between">
-        <div className="row-left">
-          <div className={`health-bar ${isPlayer1Turn ? '' : 'green-bg'}`}>
-                <div className="health-info">
-                  Player 2: {player2Health.toFixed(0)} / 10000 {/* Use toFixed(0) to round to the nearest integer */}
-                </div>
-                <div className={`health-inner green-bg`} style={{ width: `${Math.floor((player2Health / 10000) * 100)}%` }}></div>
-            
+        <div className="half-col">
+          <div className="row-left">
+            <div className={`health-bar ${isPlayer1Turn ? '' : 'green-bg'}`}>
+              <div className="health-info">
+                Player 2: {player2Health.toFixed(0)} / 10000 {/* Use toFixed(0) to round to the nearest integer */}
+              </div>
+              <div className={`health-inner green-bg`} style={{ width: `${Math.floor((player2Health / 10000) * 100)}%` }}></div>
+            </div>
+            {!isPlayer1Turn
+            ? <div className="arrow"></div> 
+            : <div className="arrow-not-visible"></div> 
+            }
           </div>
-          {!isPlayer1Turn && <div className="arrow"></div> }
+          
+         
         </div>
-        <button onClick={() => endSimulation()}>End the Simulation</button>
+        <div className="half-col-right">
+          <button className="green-button-secondary" onClick={() => endSimulation()}>End the Simulation</button>
+        </div>
       </div>
       <div className="battle-log" >
         {log.map((message, index) => (
@@ -313,48 +321,30 @@ function Battle() {
         ))}
        <p className="loading-text">{loadingText}<span className="cursor" ref={logContainerRef}></span></p>
       </div>
-      <div className={`health-bars ${isPlayer1Turn ? "green-bg" : ""}`}>
-        <div className={`health-bar ${isPlayer1Turn ? 'green-bg' : ''}`}>
-          <div className="health-info">
-            Player 1: {player1Health.toFixed(0)} / 12000 {/* Use toFixed(0) to round to the nearest integer */}
+      <div className="row">
+        <div className="half-col">
+          <div className={`health-bars ${isPlayer1Turn ? "green-bg" : ""}`}>
+            <div className={`health-bar ${isPlayer1Turn ? 'green-bg' : ''}`}>
+              <div className="health-info">
+                Player 1: {player1Health.toFixed(0)} / 12000 {/* Use toFixed(0) to round to the nearest integer */}
+              </div>
+              <div className={`health-inner green-bg`} style={{ width: `${Math.floor((player1Health / 12000) * 100)}%` }}></div>
+            </div>
+            {isPlayer1Turn
+            ? <div className="arrow"></div> 
+            : <div className="arrow-not-visible"></div> 
+            }
           </div>
-          <div className={`health-inner green-bg`} style={{ width: `${Math.floor((player1Health / 12000) * 100)}%` }}></div>
         </div>
-        {isPlayer1Turn && <div className="arrow"></div> }
+        <div className="half-col">
+          <div className="row-right">
+            <button className="green-button" disabled={!isPlayer1Turn || autoSimulating} onClick={handlePlayer1Attack}>Attack</button>
+            <button className="green-button-secondary" onClick={handleAutoSimulate} disabled={autoSimulating}>Auto-Simulate Battle</button>
+          </div>
+        </div>
       </div>
-      <button disabled={!isPlayer1Turn || autoSimulating} onClick={handlePlayer1Attack}>Attack</button>
-      <button onClick={handleAutoSimulate} disabled={autoSimulating}>
-        Auto-Simulate Battle
-      </button>
     </div>
   );
 }
-//   return (
-//     <div className={`battle-container ${isPlayer1Turn ? "green-bg" : ""}`}>
-//       <div className="battle-log" >
-//         {log.map((message, index) => (
-//           <p key={index} ref={logContainerRef}>{message}</p>
-//         ))}
-//         {gameOver && <p ref={gameOverRef} className="game-over-message">{gameOverMessage}</p>}
-
-//       </div>
-//       <button onClick={handlePlayer1Attack}>Attack</button>
-//       <div className={`health-bars ${isPlayer1Turn ? "green-bg" : ""}`}>
-//       <div className={`health-bar ${isPlayer1Turn ? 'green-bg' : ''}`}>
-//   <div className="health-info">
-//     Player 1: {player1Health.toFixed(0)} / 12000 {/* Use toFixed(0) to round to the nearest integer */}
-//   </div>
-//   <div className={`health-inner ${isPlayer1Turn ? 'green-bg' : ''}`} style={{ width: `${Math.floor((player1Health / 12000) * 100)}%` }}></div>
-// </div>
-// <div className={`health-bar ${isPlayer1Turn ? 'green-bg' : ''}`}>
-//   <div className="health-info">
-//     Player 2: {player2Health.toFixed(0)} / 10000 {/* Use toFixed(0) to round to the nearest integer */}
-//   </div>
-//   <div className={`health-inner ${isPlayer1Turn ? 'green-bg' : ''}`} style={{ width: `${Math.floor((player2Health / 10000) * 100)}%` }}></div>
-// </div>
-//       </div>
-//     </div>
-//   );
-// }
 
 export default Battle;
