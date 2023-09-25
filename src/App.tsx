@@ -189,7 +189,7 @@ function App() {
       setLeftNavOpen(false);
       setRightNavOpen(false);
       setSmallScreen(true);
-    } else if (lowercasePath === "/game") {
+    } else if (lowercasePath === "/game" && address) {
       setLeftNavOpen(true);
       setRightNavOpen(false);
     } else {
@@ -198,7 +198,7 @@ function App() {
       setSmallScreen(isMobile);
     }
     
-  }, [isMobile, isMediumLarge, isMismatched, isSmallScreen, isLarge, location.pathname, pageTitle, lowercasePath]);
+  }, [isMobile, isMediumLarge, isMismatched, isSmallScreen, isLarge, location.pathname, pageTitle, lowercasePath, address]);
 
   const navigate = useNavigate();
 
