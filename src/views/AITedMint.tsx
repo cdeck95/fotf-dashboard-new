@@ -70,6 +70,12 @@ function AITedMint(props: MintProps) {
   const contract = props.contract;
   const isLoadingContract = props.isloadingContract;
 
+  const primaryColor = getComputedStyle(document.documentElement).getPropertyValue("--primary-color");
+  const secondaryColor = getComputedStyle(document.documentElement).getPropertyValue("--secondary-color");
+  const sidebarBackgroundColor = getComputedStyle(document.documentElement).getPropertyValue("--sidebar-background-color");
+  const accentColor = getComputedStyle(document.documentElement).getPropertyValue("--accent-color");
+  const errorColor = getComputedStyle(document.documentElement).getPropertyValue("--error-color");
+
   // const { contract: aiTedsPolygonContract } = useContract(
   //   AITEDS_POLYGON_CONTRACT
   // );
@@ -350,14 +356,14 @@ function AITedMint(props: MintProps) {
                 disabled={counter === 0}
                 onClick={() => mintWithHoney()}
                 sx={{
-                  backgroundColor: "#FED100", 
+                  backgroundColor: accentColor, 
                   marginTop: "10px", 
                   marginBottom: "10px",
                   color: "#000",
                   border: "1px solid #000",
                   "&:hover": {
                     backgroundColor: "green",
-                    color: "FED100",
+                    color: accentColor,
                     border: "1px solid #000",
                 }}}
               >

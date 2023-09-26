@@ -11,7 +11,7 @@ import { useEffect, useState } from "react";
 import { Ethereum, Polygon, Mumbai } from "@thirdweb-dev/chains";
 import { PolygonAccountDetails } from "../account/loadPolygonAccountDetails";
 import { Console } from "console";
-import { IDictionary } from "../views/TheFactory";
+import { IDictionary } from "../views/HoneyExchange";
 import ErrorDialog from "./ErrorDialog";
 import SuccessDialog from "./SuccessDialog";
 
@@ -91,6 +91,12 @@ function AssetOverviewDashboard(props: AssetOverviewProps) {
   const aiTedNFTs = tokens.AITeds?.tokens;
   //const traitTokens = tokens.TraitSwapTokens?.tokens;
   const traitTokens: NFT[] = [];
+
+  const primaryColor = getComputedStyle(document.documentElement).getPropertyValue("--primary-color");
+  const secondaryColor = getComputedStyle(document.documentElement).getPropertyValue("--secondary-color");
+  const sidebarBackgroundColor = getComputedStyle(document.documentElement).getPropertyValue("--sidebar-background-color");
+  const accentColor = getComputedStyle(document.documentElement).getPropertyValue("--accent-color");
+  const errorColor = getComputedStyle(document.documentElement).getPropertyValue("--error-color");
 
   const oneOfOnes = ethTokens.OneofOnes?.tokens;
   const birthCerts = ethTokens.BirthCertificates?.tokens;

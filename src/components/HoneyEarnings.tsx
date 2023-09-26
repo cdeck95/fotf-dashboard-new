@@ -44,6 +44,12 @@ function HoneyEarnings(props: HoneyEarningsProps) {
         }
       }, [isMobile, isMediumLarge, isSmallScreen]);
 
+    const primaryColor = getComputedStyle(document.documentElement).getPropertyValue("--primary-color");
+    const secondaryColor = getComputedStyle(document.documentElement).getPropertyValue("--secondary-color");
+    const sidebarBackgroundColor = getComputedStyle(document.documentElement).getPropertyValue("--sidebar-background-color");
+    const accentColor = getComputedStyle(document.documentElement).getPropertyValue("--accent-color");
+    const errorColor = getComputedStyle(document.documentElement).getPropertyValue("--error-color");
+
     const navigate = useNavigate();
 
     return (
@@ -60,8 +66,8 @@ function HoneyEarnings(props: HoneyEarningsProps) {
                         <span className="accent-text">{totalHNYEarnings}</span><br/><span className={isSmallScreen ? "perDay-mobile" : "perDay"}> Per Day</span> 
                     </Typography>
                     <Button className="dashboard-button" variant="contained" color="primary" 
-                    sx={{ marginTop: isSmallScreen? "0px": "5px", fontSize: isSmallScreen? ".80rem !important" : "1rem !important"}} onClick={() => navigate("/TheFactory")}>
-                        Visit The Factory
+                    sx={{ marginTop: isSmallScreen? "0px": "5px", fontSize: isSmallScreen? ".80rem !important" : "1rem !important"}} onClick={() => navigate("/HoneyExchange")}>
+                        Visit Honey Exchange
                     </Button>
                 </Box>
                 <Box className="column-between-dashboard">
@@ -70,7 +76,7 @@ function HoneyEarnings(props: HoneyEarningsProps) {
                     <Typography className="honey-earnings-dashboard" sx={{ paddingBottom: "15px"}}>
                         {totalTeddiesEarnings}<br/><span className={isSmallScreen ? "perDay-mobile" : "perDay"}> Per Day</span> 
                     </Typography>
-                    <Button className="dashboard-button" variant="contained" color="primary" sx={{ marginTop: isSmallScreen? "0px": "5px", fontSize: isSmallScreen? ".80rem !important" : "1rem !important"}} onClick={() => navigate("/TheFactory")}>
+                    <Button className="dashboard-button" variant="contained" color="primary" sx={{ marginTop: isSmallScreen? "0px": "5px", fontSize: isSmallScreen? ".80rem !important" : "1rem !important"}} onClick={() => navigate("/HoneyExchange")}>
                         Burn Teddies
                     </Button>
                 </Box>
@@ -80,7 +86,7 @@ function HoneyEarnings(props: HoneyEarningsProps) {
                     <Typography className="honey-earnings-dashboard" sx={{ paddingBottom: "15px"}}>
                         {totalFuryTedsEarnings}<br/><span className={isSmallScreen ? "perDay-mobile" : "perDay"}> Per Day</span> 
                     </Typography>
-                    <Button className="dashboard-button" variant="contained" color="primary" sx={{ marginTop: isSmallScreen? "0px": "5px", fontSize: isSmallScreen? ".80rem !important" : "1rem !important"}} onClick={() => navigate("/TheFactory")}>
+                    <Button className="dashboard-button" variant="contained" color="primary" sx={{ marginTop: isSmallScreen? "0px": "5px", fontSize: isSmallScreen? ".80rem !important" : "1rem !important"}} onClick={() => navigate("/HoneyExchange")}>
                         Burn Fury Teds
                     </Button>
                 </Box>

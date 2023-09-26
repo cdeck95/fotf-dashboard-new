@@ -34,6 +34,12 @@ function ErrorDialog(props: FailureDialogProps) {
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
 
+  const primaryColor = getComputedStyle(document.documentElement).getPropertyValue("--primary-color");
+  const secondaryColor = getComputedStyle(document.documentElement).getPropertyValue("--secondary-color");
+  const sidebarBackgroundColor = getComputedStyle(document.documentElement).getPropertyValue("--sidebar-background-color");
+  const accentColor = getComputedStyle(document.documentElement).getPropertyValue("--accent-color");
+  const errorColorGlobal = getComputedStyle(document.documentElement).getPropertyValue("--error-color");
+
   const openDiscord = () => {
     window.open("https://discord.gg/fotf");
   };
@@ -70,7 +76,7 @@ function ErrorDialog(props: FailureDialogProps) {
       case 14:
         return 'The amount of HNY you are trying to receive exceeeds the available supply. Please deselect some of your tokens and try again.'
       case 15:
-        return 'The amount of HNY you are trying to send exceeeds your balance. Please try to burn more tokens to reduce the amount of honey you need to send, or visit the Honey Exchange to purhcase more.'
+        return 'The amount of HNY you are trying to send exceeeds your balance. Please try to burn more tokens to reduce the amount of honey you need to send, or visit the Honey Store to purhcase more.'
       case 16:
         return 'You have already received your ETH $HNY Airdrop. If you believe this to be incorrect, please raise a ticket in the FOTF Discord.'
       case 17:
@@ -100,21 +106,17 @@ function ErrorDialog(props: FailureDialogProps) {
   const errorColor = () => {
     switch (errorCode) {
       case 1:
-        return "#c74242";
+        return errorColorGlobal;
       case 2:
-        return "#c74242";
+        return errorColorGlobal;
       case 3:
-        return "#FED100";
+        return accentColor;
       case 4:
-        return "#FED100";
+        return accentColor;
       default:
-        return "#c74242";
+        return errorColorGlobal;
     }
   };
-
-  const sidebarBackgroundColor = getComputedStyle(
-    document.documentElement
-  ).getPropertyValue("--sidebar-background-color");
 
   const theme = createTheme({
     typography: {

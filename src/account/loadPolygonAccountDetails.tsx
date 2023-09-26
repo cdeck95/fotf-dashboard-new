@@ -345,7 +345,7 @@ export function LoadPolygonAccountDetails(): PolygonAccountDetails {
   allOwnedNFTs.needsFunds = needsFunds;
   allOwnedNFTs.setNeedsFunds = setNeedsFunds;
 
-  /////////////// Load Honey Exchange ///////////////////////
+  /////////////// Load Honey Store ///////////////////////
 
   const {
     contract: honeyExchangeContract,
@@ -357,7 +357,7 @@ export function LoadPolygonAccountDetails(): PolygonAccountDetails {
   allOwnedNFTs.honeyExchangeContract = honeyExchangeContract;
   allOwnedNFTs.isLoadingHoneyExchangeContract = isLoadingHoneyExchangeContract;
 
-  /////////////// Load Honey Exchange Functions ///////////////////////
+  /////////////// Load Honey Store Functions ///////////////////////
 
   const [exchangeRate, setExchangeRate] = useState<BigNumber>(BigNumber.from(-10));
   const [honeyJarPrice, setHoneyJarPrice] = useState<BigNumber>(BigNumber.from(-10));

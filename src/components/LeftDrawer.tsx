@@ -83,7 +83,11 @@ function LeftDrawer(props: NavProps) {
     }
   };
 
-  //console.log("test")
+  const primaryColor = getComputedStyle(document.documentElement).getPropertyValue("--primary-color");
+  const secondaryColor = getComputedStyle(document.documentElement).getPropertyValue("--secondary-color");
+  const sidebarBackgroundColor = getComputedStyle(document.documentElement).getPropertyValue("--sidebar-background-color");
+  const accentColor = getComputedStyle(document.documentElement).getPropertyValue("--accent-color");
+  const errorColor = getComputedStyle(document.documentElement).getPropertyValue("--error-color");
 
 
   const [isBridgePage, setIsBridgePage] = useState(false);
@@ -97,11 +101,11 @@ function LeftDrawer(props: NavProps) {
     }
     const lowercasePath = location.pathname.toLowerCase();
     switch (lowercasePath) {
-      case "/thefactory":
-        setActivePage("TheFactory");
-        break;
-      case "/honeyexchange":
+      case "/HoneyExchange":
         setActivePage("HoneyExchange");
+        break;
+      case "/HoneyStore":
+        setActivePage("HoneyStore");
         break;
       case "/buildateddy":
         setActivePage("BuildATeddy");
@@ -115,12 +119,12 @@ function LeftDrawer(props: NavProps) {
       case "/aitedmint":
         setActivePage("AITedMint");
         break;
-      case "/teddyclaims":
-        setActivePage("TeddyClaims");
-        break;
-      case "/tedclaims":
-        setActivePage("TedClaims");
-        break;
+      // case "/teddyclaims":
+      //   setActivePage("TeddyClaims");
+      //   break;
+      // case "/tedclaims":
+      //   setActivePage("TedClaims");
+      //   break;
       case "/traitswapteds":
         setActivePage("TraitSwapTeds");
         break;
@@ -147,23 +151,39 @@ function LeftDrawer(props: NavProps) {
         setActivePage("Dashboard");
         handleMobileClick();
         break;
-      case "Documents":
+      case "HowToPlay":
         window.open("https://docs.furyofthefur.com");
         handleMobileClick();
         break;
-      case "Downloads":
-        window.open(
-          "https://drive.google.com/drive/folders/1_FHhUhooWOXxfJoNaS1YBKgvMLMjsCPN?usp=sharing"
-        );
+      case "News":
+        navigate("/News");
         handleMobileClick();
         break;
-      case "Shop":
-        window.open("https://shopfotf.com");
+      case "Campaigns":
+        navigate("/Campaigns");
         handleMobileClick();
         break;
-      case "HoneyExchange":
-        navigate("/HoneyExchange");
-        setActivePage("HoneyExchange");
+      case "PackOpening":
+        navigate("/PackOpening");
+        handleMobileClick();
+        break;
+      case "MyCards":
+        navigate("/MyCards");
+        handleMobileClick();
+        break;
+      // case "Downloads":
+      //   window.open(
+      //     "https://drive.google.com/drive/folders/1_FHhUhooWOXxfJoNaS1YBKgvMLMjsCPN?usp=sharing"
+      //   );
+      //   handleMobileClick();
+      //   break;
+      // case "Shop":
+      //   window.open("https://shopfotf.com");
+      //   handleMobileClick();
+      //   break;
+      case "HoneyStore":
+        navigate("/HoneyStore");
+        setActivePage("HoneyStore");
         handleMobileClick();
         break;
       case "TedMint":
@@ -181,16 +201,16 @@ function LeftDrawer(props: NavProps) {
         setActivePage("AITedMint");
         handleMobileClick();
         break;
-      case "TedClaims":
-        navigate("/TedClaims");
-        setActivePage("TedClaims");
-        handleMobileClick();
-        break;
-      case "TeddyClaims":
-        navigate("/TeddyClaims");
-        setActivePage("TeddyClaims");
-        handleMobileClick();
-        break;
+      // case "TedClaims":
+      //   navigate("/TedClaims");
+      //   setActivePage("TedClaims");
+      //   handleMobileClick();
+      //   break;
+      // case "TeddyClaims":
+      //   navigate("/TeddyClaims");
+      //   setActivePage("TeddyClaims");
+      //   handleMobileClick();
+      //   break;
       case "BuildATeddy":
         navigate("/BuildATeddy");
         setActivePage("BuildATeddy");
@@ -201,9 +221,9 @@ function LeftDrawer(props: NavProps) {
         setActivePage("TraitSwapTeds");
         handleMobileClick();
         break;
-      case "TheFactory":
-        navigate("/TheFactory");
-        setActivePage("TheFactory");
+      case "HoneyExchange":
+        navigate("/HoneyExchange");
+        setActivePage("HoneyExchange");
         handleMobileClick();
         break;
       case "PolygonBridge":
@@ -211,9 +231,9 @@ function LeftDrawer(props: NavProps) {
         setActivePage("PolygonBridge");
         handleMobileClick();
         break;
-      case "GraphicTemplates":
-        navigate("/GraphicTemplates");
-        setActivePage("GraphicTemplates");
+      case "VisualUpgrades":
+        navigate("/VisualUpgrades");
+        setActivePage("VisualUpgrades");
         handleMobileClick();
         break;
       case "Hub":
@@ -283,7 +303,7 @@ function LeftDrawer(props: NavProps) {
           </Box>
         </Toolbar>
         <List>
-          <ListItem
+          {/* <ListItem
             key={"Dashboard"}
             disablePadding
             onClick={() => loadPage("Dashboard")}
@@ -296,18 +316,42 @@ function LeftDrawer(props: NavProps) {
             </ListItemButton>
           </ListItem>
           <ListItem
-            key={"Documents"}
+            key={"HowToPlay"}
             disablePadding
-            onClick={() => loadPage("Documents")}
+            onClick={() => loadPage("HowToPlay")}
           >
-            <ListItemButton selected={activePage === "Documents"}>
+            <ListItemButton selected={activePage === "HowToPlay"}>
               <ListItemIcon>
                 <DescriptionOutlinedIcon fontSize="small" />
               </ListItemIcon>
-              <ListItemText primary={"Documents"} />
+              <ListItemText primary={"How To Play"} />
             </ListItemButton>
           </ListItem>
           <ListItem
+            key={"News"}
+            disablePadding
+            onClick={() => loadPage("News")}
+          >
+            <ListItemButton selected={activePage === "News"}>
+              <ListItemIcon>
+                <DescriptionOutlinedIcon fontSize="small" />
+              </ListItemIcon>
+              <ListItemText primary={"News"} />
+            </ListItemButton>
+          </ListItem>
+          <ListItem
+            key={"Campaigns"}
+            disablePadding
+            onClick={() => loadPage("Campaigns")}
+          >
+            <ListItemButton selected={activePage === "Campaigns"}>
+              <ListItemIcon>
+                <DescriptionOutlinedIcon fontSize="small" />
+              </ListItemIcon>
+              <ListItemText primary={"Campaigns"} />
+            </ListItemButton>
+          </ListItem> */}
+          {/* <ListItem
             key={"Downloads"}
             disablePadding
             onClick={() => loadPage("Downloads")}
@@ -318,8 +362,8 @@ function LeftDrawer(props: NavProps) {
               </ListItemIcon>
               <ListItemText primary={"Downloads"} />
             </ListItemButton>
-          </ListItem>
-          <ListItem
+          </ListItem> */}
+          {/* <ListItem
             key={"Shop"}
             disablePadding
             onClick={() => loadPage("Shop")}
@@ -330,7 +374,7 @@ function LeftDrawer(props: NavProps) {
               </ListItemIcon>
               <ListItemText primary={"Shop"} />
             </ListItemButton>
-          </ListItem>
+          </ListItem> */}
         </List>
         {/* <Divider />
         <Typography sx={{ marginTop: "10px", paddingLeft: "18px" }}>
@@ -377,57 +421,11 @@ function LeftDrawer(props: NavProps) {
             </ListItemButton>
           </ListItem>
         </List> */}
-        <Divider />
-        <Typography sx={{ marginTop: "10px", paddingLeft: "18px" }}>
-          Economy
-        </Typography>
-        <List>
-          <ListItem
-            key={"HoneyExchange"}
-            disablePadding
-            onClick={() => loadPage("HoneyExchange")}
-          >
-            <ListItemButton selected={activePage === "HoneyExchange"}>
-              <ListItemIcon>
-                <CurrencyExchangeOutlinedIcon fontSize="small" />
-              </ListItemIcon>
-              <Box className="row">
-                <ListItemText primary={"$HNY Exchange"} />
-                <Chip size="small"  label={<Typography sx={{fontSize: "15px"}}> New &#x2728; </Typography>} color="primary" sx={{maxHeight: "40px", maxWidth: "70px", justifyContent: "flex-start", textAlign: "start", alignItems: "flex-start", marginRight: "25px", marginBottom: "15px", border: "none"}} variant="outlined"/>
-              </Box>
-              </ListItemButton>
-          </ListItem>
-          <ListItem
-            key={"TedClaims"}
-            disablePadding
-            onClick={() => loadPage("TedClaims")}
-          >
-            <ListItemButton selected={activePage === "TedClaims"}>
-              <ListItemIcon>
-                <RequestQuoteOutlinedIcon fontSize="small" />
-              </ListItemIcon>
-              <ListItemText primary={"Ted Claims"} />
-            </ListItemButton>
-          </ListItem>
-          <ListItem
-            key={"TeddyClaims"}
-            disablePadding
-            onClick={() => loadPage("TeddyClaims")}
-          >
-            <ListItemButton selected={activePage === "TeddyClaims"}>
-              <ListItemIcon>
-                <SwapHorizOutlinedIcon fontSize="small" />
-              </ListItemIcon>
-              <ListItemText primary={"Teddy Claims"} />
-            </ListItemButton>
-          </ListItem>
-          
-        </List>
-        <Divider />
+        {/* <Divider />
         <Typography sx={{ marginTop: "10px", paddingLeft: "18px" }}>
           Utility
         </Typography>
-        <List>
+        <List> */}
           {/* <ListItem
             key={"BuildATeddy"}
             disablePadding
@@ -452,33 +450,60 @@ function LeftDrawer(props: NavProps) {
               <ListItemText primary={"Trait Swap Teds"} />
             </ListItemButton>
           </ListItem> */}
-          <ListItem
-            key={"TheFactory"}
+          {/* <ListItem
+            key={"PackOpening"}
             disablePadding
-            onClick={() => loadPage("TheFactory")}
+            onClick={() => loadPage("PackOpening")}
           >
-            <ListItemButton selected={activePage === "TheFactory"}>
+            <ListItemButton selected={activePage === "PackOpening"}>
               <ListItemIcon>
                 <PrecisionManufacturingOutlinedIcon fontSize="small" />
               </ListItemIcon>
               <Box className="row">
-                <ListItemText primary={"The Factory"} />
+                <ListItemText primary={"Pack Opening"} />
                 <Chip size="small"  label={<Typography sx={{fontSize: "15px"}}> New &#x2728; </Typography>} color="primary" sx={{ justifyContent: "flex-start", textAlign: "start", alignItems: "flex-start", marginRight: "45px", marginBottom: "15px", border: "none"}} variant="outlined"/>
               </Box>
             </ListItemButton>
           </ListItem>
           <ListItem
-            key={"GraphicTemplates"}
+            key={"MyCards"}
             disablePadding
-            onClick={() => loadPage("GraphicTemplates")}
+            onClick={() => loadPage("MyCards")}
           >
-            <ListItemButton selected={activePage === "GraphicTemplates"}>
+            <ListItemButton selected={activePage === "MyCards"}>
               <ListItemIcon>
                 <ImageOutlinedIcon fontSize="small" />
               </ListItemIcon>
-              <ListItemText primary={"Graphic Templates"} />
+              <ListItemText primary={"My Cards"} />
+              <Chip size="small"  label={<Typography sx={{fontSize: "15px"}}> New &#x2728; </Typography>} color="primary" sx={{ justifyContent: "flex-start", textAlign: "start", alignItems: "flex-start", marginRight: "55px", marginBottom: "15px", border: "none"}} variant="outlined"/>
+            </ListItemButton>
+          </ListItem> */}
+          {/* <ListItem
+            key={"HoneyExchange"}
+            disablePadding
+            onClick={() => loadPage("HoneyExchange")}
+          >
+            <ListItemButton selected={activePage === "HoneyExchange"}>
+              <ListItemIcon>
+                <PrecisionManufacturingOutlinedIcon fontSize="small" />
+              </ListItemIcon>
+              <Box className="row">
+                <ListItemText primary={"Honey Exchange"} />
+              </Box>
             </ListItemButton>
           </ListItem>
+          <ListItem
+            key={"VisualUpgrades"}
+            disablePadding
+            onClick={() => loadPage("VisualUpgrades")}
+          >
+            <ListItemButton selected={activePage === "VisualUpgrades"}>
+              <ListItemIcon>
+                <ImageOutlinedIcon fontSize="small" />
+              </ListItemIcon>
+              <ListItemText primary={"Visual Upgrades"} />
+            </ListItemButton>
+          </ListItem> 
           {/* <ListItem
             key={"PolygonBridge"}
             disablePadding
@@ -490,8 +515,55 @@ function LeftDrawer(props: NavProps) {
               </ListItemIcon>
               <ListItemText primary={"Polygon Bridge"} />
             </ListItemButton>
-          </ListItem> */}
+          </ListItem>
+        </List> */}
+        <Divider />
+        <Typography sx={{ marginTop: "10px", paddingLeft: "18px" }}>
+          Economy
+        </Typography>
+        <List>
+          <ListItem
+            key={"HoneyStore"}
+            disablePadding
+            onClick={() => loadPage("HoneyStore")}
+          >
+            <ListItemButton selected={activePage === "HoneyStore"}>
+              <ListItemIcon>
+                <CurrencyExchangeOutlinedIcon fontSize="small" />
+              </ListItemIcon>
+              <Box className="row">
+                <ListItemText primary={"$HNY Store"} />
+                {/* <Chip size="small"  label={<Typography sx={{fontSize: "15px"}}> New &#x2728; </Typography>} color="primary" sx={{maxHeight: "40px", maxWidth: "70px", justifyContent: "flex-start", textAlign: "start", alignItems: "flex-start", marginRight: "25px", marginBottom: "15px", border: "none"}} variant="outlined"/> */}
+              </Box>
+              </ListItemButton>
+          </ListItem>
+          {/* <ListItem
+            key={"TedClaims"}
+            disablePadding
+            onClick={() => loadPage("TedClaims")}
+          >
+            <ListItemButton selected={activePage === "TedClaims"}>
+              <ListItemIcon>
+                <RequestQuoteOutlinedIcon fontSize="small" />
+              </ListItemIcon>
+              <ListItemText primary={"Ted Claims"} />
+            </ListItemButton>
+          </ListItem>
+          <ListItem
+            key={"TeddyClaims"}
+            disablePadding
+            onClick={() => loadPage("TeddyClaims")}
+          >
+            <ListItemButton selected={activePage === "TeddyClaims"}>
+              <ListItemIcon>
+                <SwapHorizOutlinedIcon fontSize="small" />
+              </ListItemIcon>
+              <ListItemText primary={"Teddy Claims"} />
+            </ListItemButton>
+          </ListItem>
+           */}
         </List>
+        
         <Box
           sx={{
             cursor: "pointer",

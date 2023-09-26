@@ -16,7 +16,7 @@ import "../styles/Dashboard.css";
 import "../styles/Bridge.css";
 import { LoadStakedTeddy } from "../account/loadStakedTeddy";
 import { SetStateAction, useEffect, useState } from "react";
-import "../styles/TheFactory.css";
+import "../styles/HoneyExchange.css";
 
 interface NFTListProps {
   tokens: NFT[];
@@ -45,6 +45,12 @@ function NFTList(props: NFTListProps) {
   // console.log(`Large:  ${isLarge}`);
   // console.log(`XL:  ${isXL}`);
   console.log(`Is 1920:  ${isFullScreen}`);
+
+  const primaryColor = getComputedStyle(document.documentElement).getPropertyValue("--primary-color");
+  const secondaryColor = getComputedStyle(document.documentElement).getPropertyValue("--secondary-color");
+  const sidebarBackgroundColor = getComputedStyle(document.documentElement).getPropertyValue("--sidebar-background-color");
+  const accentColor = getComputedStyle(document.documentElement).getPropertyValue("--accent-color");
+  const errorColor = getComputedStyle(document.documentElement).getPropertyValue("--error-color");
 
   const isSmallScreen = props.isSmallScreen;
 

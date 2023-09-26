@@ -11,7 +11,7 @@ import { useEffect, useState } from "react";
 import { Ethereum, Polygon, Mumbai } from "@thirdweb-dev/chains";
 import { AssetOverviewProps } from "./AssetOverviewDashboard";
 import { PolygonAccountDetails } from "../account/loadPolygonAccountDetails";
-import { IDictionary } from "../views/TheFactory";
+import { IDictionary } from "../views/HoneyExchange";
 import ErrorDialog from "./ErrorDialog";
 import SuccessDialog from "./SuccessDialog";
 
@@ -84,6 +84,12 @@ function AssetOverviewSidebar(props: AssetOverviewProps) {
   const [allOwnedNFTs, setAllOwnedNFTs] = useState<NFT[]>([]);
   // const [teddyCount, setTeddyCount] = useState(0);
   const [tokenCount, setTokenCount] = useState(0);
+
+  const primaryColor = getComputedStyle(document.documentElement).getPropertyValue("--primary-color");
+  const secondaryColor = getComputedStyle(document.documentElement).getPropertyValue("--secondary-color");
+  const sidebarBackgroundColor = getComputedStyle(document.documentElement).getPropertyValue("--sidebar-background-color");
+  const accentColor = getComputedStyle(document.documentElement).getPropertyValue("--accent-color");
+  const errorColor = getComputedStyle(document.documentElement).getPropertyValue("--error-color");
 
   useEffect(() => {
 

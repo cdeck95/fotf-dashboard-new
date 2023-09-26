@@ -11,10 +11,17 @@ export const MainnetNetwork = () => {
     switchNetwork!(ChainId.Mainnet);
   };
 
+  const primaryColor = getComputedStyle(document.documentElement).getPropertyValue("--primary-color");
+  const secondaryColor = getComputedStyle(document.documentElement).getPropertyValue("--secondary-color");
+  const sidebarBackgroundColor = getComputedStyle(document.documentElement).getPropertyValue("--sidebar-background-color");
+  const accentColor = getComputedStyle(document.documentElement).getPropertyValue("--accent-color");
+  const errorColor = getComputedStyle(document.documentElement).getPropertyValue("--error-color");
+
+
   return (
     <Box sx={{zIndex: "1 !important", display: "flex", justifyContent: "center", textAlign: "center", alignItems: "center"}}>
       <p>{isMismatched}</p>
-      {isMismatched && (  <Alert severity="error" sx={{backgroundColor: "#FED100"}}
+      {isMismatched && (  <Alert severity="error" sx={{backgroundColor: accentColor}}
         action={
             <Button color="inherit" size="small" onClick={() => switchNetworkToMainnet()}>
             Switch Network

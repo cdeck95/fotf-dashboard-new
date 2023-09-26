@@ -29,6 +29,12 @@ function Plushy(props: PlushyProps) {
     const isSmallScreen = props.isSmallScreen;
     console.log(`Is 1920:  ${isFullScreen}`);
 
+    const primaryColor = getComputedStyle(document.documentElement).getPropertyValue("--primary-color");
+    const secondaryColor = getComputedStyle(document.documentElement).getPropertyValue("--secondary-color");
+    const sidebarBackgroundColor = getComputedStyle(document.documentElement).getPropertyValue("--sidebar-background-color");
+    const accentColor = getComputedStyle(document.documentElement).getPropertyValue("--accent-color");
+    const errorColor = getComputedStyle(document.documentElement).getPropertyValue("--error-color");
+
 
     return (
         <Box className={isSmallScreen ? "row-between-mobile" : "row-between"} sx={{height: "100%", width: "100%", marginBottom: isSmallScreen? "0px": "0px", 

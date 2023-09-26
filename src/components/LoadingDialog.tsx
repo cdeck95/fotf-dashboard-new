@@ -34,6 +34,12 @@ function LoadingDialog(props: LoadingDialogProps) {
   const [isDoneLoading, setIsDoneLoading] = useState(false);
   const navigate = useNavigate();
 
+  const primaryColor = getComputedStyle(document.documentElement).getPropertyValue("--primary-color");
+  const secondaryColor = getComputedStyle(document.documentElement).getPropertyValue("--secondary-color");
+  const sidebarBackgroundColor = getComputedStyle(document.documentElement).getPropertyValue("--sidebar-background-color");
+  const accentColor = getComputedStyle(document.documentElement).getPropertyValue("--accent-color");
+  const errorColor = getComputedStyle(document.documentElement).getPropertyValue("--error-color");
+
   const handleClose = () => {
     console.log("closing...")
     onClose();
@@ -55,10 +61,6 @@ function LoadingDialog(props: LoadingDialogProps) {
         return "Loading... hang tight!";
     }
   }; 
-
-  const sidebarBackgroundColor = getComputedStyle(
-    document.documentElement
-  ).getPropertyValue("--sidebar-background-color");
 
   const theme = createTheme({
     typography: {

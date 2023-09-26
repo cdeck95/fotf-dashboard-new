@@ -3,9 +3,16 @@ import { useTitle } from "../hooks/useTitle";
 import "../styles/Dashboard.css";
 import { useAddress } from "@thirdweb-dev/react";
 import { useSDK } from "@thirdweb-dev/react";
+import ComingSoon from "./ComingSoon";
+import { Campaign } from "@mui/icons-material";
 
-function ComingSoon() {
-  useTitle("FOTF | Coming Soon");
+function Campaigns() {
+  useTitle("FOTF | Campaigns");
+  //const theme = useTheme();
+  //const isMobile = !useMediaQuery(theme.breakpoints.up("md"));
+  const sdk = useSDK();
+  const provider = sdk?.getProvider();
+  const address = useAddress();
 
   const primaryColor = getComputedStyle(document.documentElement).getPropertyValue("--primary-color");
   const secondaryColor = getComputedStyle(document.documentElement).getPropertyValue("--secondary-color");
@@ -13,21 +20,7 @@ function ComingSoon() {
   const accentColor = getComputedStyle(document.documentElement).getPropertyValue("--accent-color");
   const errorColor = getComputedStyle(document.documentElement).getPropertyValue("--error-color");
 
-  return (
-    <Box
-      sx={{
-        height: "100%",
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        width: "100%",
-      }}
-    >
-      <h1 className="comingSoon">
-        <span className="comingSoonBlack">Coming</span> Soon
-      </h1>
-    </Box>
-  );
+  return <ComingSoon />;
 }
 
-export default ComingSoon;
+export default Campaigns;

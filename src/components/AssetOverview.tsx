@@ -29,6 +29,12 @@ function AssetOverview(props: AssetOverviewPropsTop) {
   const ethTokenProps = LoadETHAccountDetails(); 
   console.log(ethTokenProps);
 
+  const primaryColor = getComputedStyle(document.documentElement).getPropertyValue("--primary-color");
+  const secondaryColor = getComputedStyle(document.documentElement).getPropertyValue("--secondary-color");
+  const sidebarBackgroundColor = getComputedStyle(document.documentElement).getPropertyValue("--sidebar-background-color");
+  const accentColor = getComputedStyle(document.documentElement).getPropertyValue("--accent-color");
+  const errorColor = getComputedStyle(document.documentElement).getPropertyValue("--error-color");
+
   return (
     <Box  sx={{height: "auto", width: "100%" , justifyContent: "center", padding: "5px", backgroundColor: "#fff", borderRadius: "10px"}}>
       {forSidebar ? (

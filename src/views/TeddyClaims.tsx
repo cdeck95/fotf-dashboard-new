@@ -44,7 +44,7 @@ import { BaseContract, BigNumber, ethers } from "ethers";
 import { NumericFormat } from "react-number-format";
 import NFTList from "../components/NFTList";
 import "../styles/Dashboard.css";
-import "../styles/TheFactory.css";
+import "../styles/HoneyExchange.css";
 import StarBorderIcon from "@mui/icons-material/StarBorder";
 import StarIcon from "@mui/icons-material/Star";
 import ControlPointIcon from "@mui/icons-material/ControlPoint";
@@ -100,6 +100,12 @@ function TeddyClaims(props: PolygonProps) {
   // const [, switchNetwork] = useNetwork(); // Switch to desired chain
   // const isMismatched = useNetworkMismatch(); // Detect if user is connected to the wrong network
   // const [showMismatch, setShowMismatch] = useState(false);
+
+  const primaryColor = getComputedStyle(document.documentElement).getPropertyValue("--primary-color");
+  const secondaryColor = getComputedStyle(document.documentElement).getPropertyValue("--secondary-color");
+  const sidebarBackgroundColor = getComputedStyle(document.documentElement).getPropertyValue("--sidebar-background-color");
+  const accentColor = getComputedStyle(document.documentElement).getPropertyValue("--accent-color");
+  const errorColor = getComputedStyle(document.documentElement).getPropertyValue("--error-color");
 
   const [isSheetOpen, setSheetOpen] = useState(false);
   console.log(`Mobile:  ${isMobile}`);
@@ -339,11 +345,6 @@ function TeddyClaims(props: PolygonProps) {
 
   }, [tokens,tokens.Teddies, tokens.Teddies?.tokens]);
 
-
-  const sidebarBackgroundColor = getComputedStyle(
-    document.documentElement
-  ).getPropertyValue("--sidebar-background-color");
-
   const themeMenu = createTheme({
     typography: {
       fontFamily: ["Bebas Neue", "Roboto", "Helvetica", "Arial"].join(","),
@@ -446,7 +447,7 @@ function TeddyClaims(props: PolygonProps) {
 //         open={showError}
 //         handleClose={handleErrorClose}
 //         errorCode={errorCode}
-//         collection={"The Factory"}
+//         collection={"Honey Exchange"}
 //       />
 
 //       <Box className={isSmallScreen ? "header-mobile" : "header"} sx={{marginBottom: "20px"}}>
@@ -694,7 +695,7 @@ function TeddyClaims(props: PolygonProps) {
 //           height: "70px",
 //           zIndex: (theme: { zIndex: { drawer: number } }) =>
 //             theme.zIndex.drawer - 1,
-//           backgroundColor: "#FED100",
+//           backgroundColor: accentColor,
 //         }}
 //       >
 //         <Box className="row-space-between">
@@ -741,7 +742,7 @@ function TeddyClaims(props: PolygonProps) {
 //           left: "0px",
 //           height: "70px",
 //           width: "100dvw",
-//           backgroundColor: "#FED100",
+//           backgroundColor: accentColor,
 //           // zIndex: "1",
 //           display: "flex",
 //           flexDirection: "row",

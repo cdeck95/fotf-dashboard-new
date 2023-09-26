@@ -42,6 +42,12 @@ function SuccessDialog(props: SuccessDialogProps) {
 
   const [copyText, setCopyText] = useState("Copy Message Contents");
 
+  const primaryColor = getComputedStyle(document.documentElement).getPropertyValue("--primary-color");
+  const secondaryColor = getComputedStyle(document.documentElement).getPropertyValue("--secondary-color");
+  const sidebarBackgroundColor = getComputedStyle(document.documentElement).getPropertyValue("--sidebar-background-color");
+  const accentColor = getComputedStyle(document.documentElement).getPropertyValue("--accent-color");
+  const errorColor = getComputedStyle(document.documentElement).getPropertyValue("--error-color");
+
   const handleClose = () => {
     setOpen(false);
   };
@@ -73,11 +79,6 @@ function SuccessDialog(props: SuccessDialogProps) {
         return "Please refresh the page to see your results.";
     }
   };
-
-  
-  const sidebarBackgroundColor = getComputedStyle(
-    document.documentElement
-  ).getPropertyValue("--sidebar-background-color");
 
   const theme = createTheme({
     typography: {
@@ -156,11 +157,11 @@ function SuccessDialog(props: SuccessDialogProps) {
               fontFamily: "Bebas Neue",
               fontSize: "24px",
               marginBottom: "5px",
-              backgroundColor: "#FED100",
+              backgroundColor: accentColor,
               color: "black",
               "&:hover": {
                 backgroundColor: "white",
-                color: "#FED100",
+                color: accentColor,
                 borderColor: "black",
                 borderWidth: "1px",
                 borderStyle: "solid"

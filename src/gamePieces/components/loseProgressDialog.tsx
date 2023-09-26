@@ -15,6 +15,7 @@ import Paper, { PaperProps } from '@mui/material/Paper';
 import Draggable from 'react-draggable';
 import HighlightOffOutlinedIcon from '@mui/icons-material/HighlightOffOutlined';
 import PriorityHighOutlinedIcon from '@mui/icons-material/PriorityHighOutlined';
+import '../styles/battle.css';
 
 const Transition = React.forwardRef(function Transition(
   props: TransitionProps & {
@@ -42,13 +43,14 @@ function PaperComponent(props: PaperProps) {
     );
   }
 
-export interface DialogProps {
+export interface LoseProgressDialogProps {
   open: boolean;
   handleClose: () => void;
+  setLoseProgressOpen: (value: boolean) => void;
 }
 
-function MaticDialog(props: DialogProps) {
-  const { open, handleClose } = props;
+function LoseProgressDialog(props: LoseProgressDialogProps) {
+  const { open, handleClose, setLoseProgressOpen } = props;
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
   const themeMui = useTheme();
@@ -94,21 +96,13 @@ function MaticDialog(props: DialogProps) {
     },
   });
 
-  
-    function openCoinbase(): void {
-        window.open("https://www.coinbase.com/price/polygon");
-    }
 
-    function bridgeETH(): void {
-        window.open("https://wallet.polygon.technology/polygon/bridge/deposit");
-    }
-
-    function openDiscord(): void {
-        window.open("https://discord.gg/fotf")
+    function continueSimulation(): void {
+        setLoseProgressOpen(false);
     }
 
   return (
-    <Box sx={{ borderRadius: "20px" }}>
+    <Box >
       <ThemeProvider theme={theme}>
       <Dialog
         open={open}
@@ -118,110 +112,56 @@ function MaticDialog(props: DialogProps) {
         fullScreen={fullScreen}
         PaperComponent={PaperComponent}
         aria-describedby="alert-dialog-slide-description"
-        sx={{ borderRadius: "20px" }}
+        sx={{}}
       >
         <DialogTitle sx={{
-            backgroundColor: "transparent", 
             color: "white", 
             margin: "0px",
-            borderRadius:"20px",
+            borderRadius: "0px", borderColor: "#fff", backgroundColor: "#000" ,
             position: "relative",
-            borderTopColor: accentColor,
-            borderTopWidth: "3.5px",
+            borderTopColor: "#fff",
+            borderTopWidth: "2px",
             borderTopStyle: "solid",
+            borderRightWidth: "2px", 
+            borderRightStyle: "solid", 
+            borderLeftColor: "#fff", 
+            borderLeftWidth: "2px", 
+            borderLeftStyle: "solid",
             minWidth: "400px",
             maxWidth: "810px"
           }}>
-            <Box sx={{backgroundColor: accentColor, borderRadius: "40px", height: "60px", width: "60px", marginTop: "-40px", display: "flex", marginLeft: "auto", marginRight: "auto", justifyContent: "center"}}>
+            <Box sx={{backgroundColor: "#00ff00", borderRadius: "40px", height: "60px", width: "60px", marginTop: "-40px", display: "flex", marginLeft: "auto", marginRight: "auto", justifyContent: "center"}}>
               {/* <CircularProgress color="inherit" sx={{ margin: "auto", justifyContent: "center", alignItems: "center"}} /> */}
               <PriorityHighOutlinedIcon fontSize='large' color='inherit' sx={{ margin: "auto", justifyContent: "center", alignItems: "center"}}/>
             </Box>
             <Box sx={{position: "absolute", right: "10px", top: "10px" }}>
-              <HighlightOffOutlinedIcon fontSize='medium' color='action' onClick={handleClose}  sx={{ ":hover": { cursor: "pointer", width: "25px", height: "25px" }}}/>
+              <HighlightOffOutlinedIcon fontSize='medium' color='action' onClick={() => setLoseProgressOpen(false)}  sx={{ ":hover": { cursor: "pointer", width: "25px", height: "25px" }}}/>
             </Box>
           
           </DialogTitle>
-        <DialogContent>
-          <DialogContentText sx={{ textAlign: "center", marginTop: "10px", paddingTop: "10px", paddingBottom: "10px", fontSize: "24px", fontFamily: "Helvetica Neue", wordBreak: "break-word", whiteSpace: "pre-wrap", display: "flex", justifyContent: "center", alignItems: "center"}} 
+        <DialogContent sx={{backgroundColor: "#000", borderRightColor: "#fff", borderRightWidth: "2px", borderRightStyle: "solid", borderLeftColor: "#fff", borderLeftWidth: "2px", borderLeftStyle: "solid"}}>
+          <DialogContentText
             id="alert-dialog-slide-description">
-            It looks like you are low on MATIC. We suggest having at least $5
-            of MATIC to be safe. Getting MATIC is relatively easy and you can
-            bridge your current ETH up using the Polygon Wallet for the best
-            pricing. Click "Bridge ETH &rarr; Matic" below to start.
-            <br />
-            <br />
-            Adversely though, it does have gas fees associated with it. Our
-            primary recommendation is to use a FIAT onramp. We recommend
-            Coinbase & you can buy MATIC there on the Polygon Network and send
-            it to your Polygon Wallet all for less $ than you'd pay in gas on
-            the main bridge. Click "Buy on Coinbase" to get started.
-            <br />
-            <br />
-            For anyone that is struggling, or needs some help, we're happy to
-            handle the bridging for you. Simply open a ticket in the FOTF
-            Discord and we'll walk you through the steps of sending us the ETH
-            and we'll send you back some MATIC.
+            <p className="battle-dialog-content-text">By ending the simulation, you will forfeit your stamina & level progress and be re-directed back to the campaings screen. 
+            You will not be charged with a loss. Do you wish to proceed?</p>
           </DialogContentText>
         </DialogContent>
-        <DialogActions sx={{ display: "flex", justifyContent: "center" }}>
-          <Button
-            variant="contained"
-            color="primary"
-            sx={{
-              fontFamily: "Bebas Neue",
-              fontSize: "24px",
-              marginBottom: "5px",
-              backgroundColor: "purple",
-              color: "white",
-              border: "2px transparent",
-              borderColor: "transparent",
-              "&:hover": {
-                backgroundColor: "white",
-                color: "purple",
-                borderColor: "purple",
-                border: "2px solid",
-              },
-            }}
-            onClick={() => bridgeETH()}
-          >
-            Bridge ETH &rarr; Matic
-          </Button>
+        <DialogActions sx={{ display: "flex", justifyContent: "center", backgroundColor: "#000", borderBottomColor: "#fff", borderBottomWidth: "2px", borderBottomStyle: "solid", borderRightColor: "#fff", borderRightWidth: "2px", borderRightStyle: "solid", borderLeftColor: "#fff", borderLeftWidth: "2px", borderLeftStyle: "solid"}}>
+          
 
-          <Button
-            variant="contained"
-            color="primary"
-            sx={{
-              fontFamily: "Bebas Neue",
-              fontSize: "24px",
-              marginBottom: "5px",
-              backgroundColor: "Blue",
-              color: "white",
-              border: "2px transparent",
-              borderColor: "transparent",
-              "&:hover": {
-                backgroundColor: "white",
-                color: "Blue",
-                borderColor: "Blue",
-                border: "2px solid",
-              },
-            }}
-            onClick={() => openCoinbase()}
+          <button
+            className={"green-button-secondary"}
+            onClick={() => handleClose()}
           >
-            Buy on Coinbase
-          </Button>
+            Back to Campaigns
+          </button>
 
-          <Button
-            variant="contained"
-            color="primary"
-            sx={{
-              fontFamily: "Bebas Neue",
-              fontSize: "24px",
-              marginBottom: "5px",
-            }}
-            onClick={() => openDiscord()}
+          <button
+            className="green-button"
+            onClick={() => continueSimulation()}
           >
-            Go to FOTF Discord
-          </Button>
+            Continue Simulation
+          </button>
         </DialogActions>
       </Dialog>
       </ThemeProvider>
@@ -229,4 +169,4 @@ function MaticDialog(props: DialogProps) {
   );
 }
 
-export default MaticDialog;
+export default LoseProgressDialog;
