@@ -178,6 +178,7 @@ function App() {
 
   const location = useLocation();  
   const [pageTitle, setPageTitle] = useState("");
+  const lowercasePath = location.pathname.toLowerCase();
 
   useEffect(() => {
     if (!isMobile && !isMediumLarge && isLarge && (pageTitle === "Dashboard")){
@@ -188,13 +189,16 @@ function App() {
       setLeftNavOpen(false);
       setRightNavOpen(false);
       setSmallScreen(true);
+    } else if (lowercasePath === "/game" && address) {
+      setLeftNavOpen(true);
+      setRightNavOpen(false);
     } else {
       setLeftNavOpen(!isMobile);
       setRightNavOpen(!isMobile);
       setSmallScreen(isMobile);
     }
     
-  }, [isMobile, isMediumLarge, isMismatched, isSmallScreen, isLarge, location.pathname, pageTitle]);
+  }, [isMobile, isMediumLarge, isMismatched, isSmallScreen, isLarge, location.pathname, pageTitle, lowercasePath, address]);
 
   const navigate = useNavigate();
 
@@ -205,52 +209,54 @@ function App() {
   // }, [address, navigate]);
 
   useEffect(() => { 
-
-    const lowercasePath = location.pathname.toLowerCase();
  
     switch (lowercasePath) {
+      // case "/":
+      //   setPageTitle("Dashboard");
+      //   break;
       case "/":
-        setPageTitle("Dashboard");
+        setPageTitle("Honey Store");
+        navigate("/HoneyStore");
         break;
-      case "/HoneyExchange":
-        setPageTitle("Honey Exchange");
-        break;
-      case "/buildateddy":
-        setPageTitle("Build A Teddy");
-        break;
-      case "/traitswapteds":
-        setPageTitle("Trait Swap Teds");
-        break;
-      case "/VisualUpgrades":
-        setPageTitle("Visual Upgrades");
-        break;
+      // case "/HoneyExchange":
+      //   setPageTitle("Honey Exchange");
+      //   break;
+      // case "/buildateddy":
+      //   setPageTitle("Build A Teddy");
+      //   break;
+      // case "/traitswapteds":
+      //   setPageTitle("Trait Swap Teds");
+      //   break;
+      // case "/VisualUpgrades":
+      //   setPageTitle("Visual Upgrades");
+      //   break;
       case "/HoneyStore":
         setPageTitle("Honey Store");
         break;
-      case "/tedmint":
-        setPageTitle("Ted Mint");
-        break;
-      case "/teddymint":
-        setPageTitle("Teddy Mint");
-        break;
-      case "/aitedmint":
-        setPageTitle("AI Ted Mint");
-        break;
-      case "/packopening":
-        setPageTitle("Pack Opening");
-        break;
-      case "/mycards":
-        setPageTitle("My Cards");
-        break;
-      case "/news":
-        setPageTitle("News");
-        break;
-      case "/teddyclaims":
-        setPageTitle("Teddy Claims");
-        break;
-      case "/tedclaims":
-        setPageTitle("Ted Claims");
-        break;
+      // case "/tedmint":
+      //   setPageTitle("Ted Mint");
+      //   break;
+      // case "/teddymint":
+      //   setPageTitle("Teddy Mint");
+      //   break;
+      // case "/aitedmint":
+      //   setPageTitle("AI Ted Mint");
+      //   break;
+      // case "/packopening":
+      //   setPageTitle("Pack Opening");
+      //   break;
+      // case "/mycards":
+      //   setPageTitle("My Cards");
+      //   break;
+      // case "/news":
+      //   setPageTitle("News");
+      //   break;
+      // case "/teddyclaims":
+      //   setPageTitle("Teddy Claims");
+      //   break;
+      // case "/tedclaims":
+      //   setPageTitle("Ted Claims");
+      //   break;
       case "/game":
         setPageTitle("Game - Pre-Alpha");
         break;
@@ -261,7 +267,7 @@ function App() {
       default:
         setPageTitle("404 - Page not found");
     }
-  }, [location.pathname]);
+  }, [location.pathname, navigate]);
 
   const handleRefresh = async () => {
     window.location.reload();
@@ -343,18 +349,20 @@ function App() {
           <PullToRefresh className="ptr-override" onRefresh={handleRefresh}>
             {address ? (
               <Routes>
-                <Route path="/" element={<Dashboard tokenProps={polygonTokenProps} leftNavOpen={leftNavOpen} rightNavOpen={rightNavOpen} showMismatch={showMismatch} isSmallScreen={isSmallScreen} />} />
+                {/* <Route path="/" element={<Dashboard tokenProps={polygonTokenProps} leftNavOpen={leftNavOpen} rightNavOpen={rightNavOpen} showMismatch={showMismatch} isSmallScreen={isSmallScreen} />} /> */}
+                <Route path="/" element={<HoneyStore tokenProps={polygonTokenProps} isSmallScreen={isSmallScreen} />} />
                 <Route path="/HoneyStore" element={<HoneyStore tokenProps={polygonTokenProps} isSmallScreen={isSmallScreen} />} />
+                <Route path="/Game" element={<Game showMismatch={showMismatch}/>} />{" "}
                 {/* <Route path="/TeddyClaims" element={<TeddyClaims tokenProps={polygonTokenProps} leftNavOpen={leftNavOpen} rightNavOpen={rightNavOpen} showMismatch={showMismatch} isSmallScreen={isSmallScreen}/>} />
                 <Route path="/TedClaims" element={<TedClaims />} />{" "} */}
-                <Route path="/TedMint" element={<TedMint  showMismatch={showMismatch} contract={polygonTokenProps.tedContract} isloadingContract={polygonTokenProps.isLoadingTedContract} />} />{" "}
+                {/* <Route path="/TedMint" element={<TedMint  showMismatch={showMismatch} contract={polygonTokenProps.tedContract} isloadingContract={polygonTokenProps.isLoadingTedContract} />} />{" "}
                 <Route path="/TeddyMint" element={<TeddyMint showMismatch={showMismatch} contract={polygonTokenProps.teddyContract} isloadingContract={polygonTokenProps.isLoadingTeddyContract} />} />{" "}
                 <Route path="/AITedMint" element={<AITedMint  showMismatch={showMismatch} contract={polygonTokenProps.aiTedContract} isloadingContract={polygonTokenProps.isLoadingAITedContract} />} />{" "}
-                <Route path="/Game" element={<Game showMismatch={showMismatch}/>} />{" "}
+                
                 <Route path="/PackOpening" element={<PackOpening/>} />{" "}
                 <Route path="/MyCards" element={<MyCards/>} />{" "}
                 <Route path="/News" element={<News/>} />{" "}
-                <Route path="/Campaigns" element={<Campaigns/>} />{" "}
+                <Route path="/Campaigns" element={<Campaigns/>} />{" "} */}
 
 
                 {/* <Route
@@ -365,13 +373,13 @@ function App() {
                     />
                   }
                 /> */}
-                <Route
+                {/* <Route
                   path="/HoneyExchange"
                   element={<HoneyExchange tokenProps={polygonTokenProps} leftNavOpen={leftNavOpen} rightNavOpen={rightNavOpen} showMismatch={showMismatch} isSmallScreen={isSmallScreen}/>}
                 />
                 <Route path="/BuildATeddy" element={<BuildATeddy />} />
                 <Route path="/TraitSwapTeds" element={<TraitSwapTeds />} />
-                <Route path="/VisualUpgrades" element={<VisualUpgrades />} />
+                <Route path="/VisualUpgrades" element={<VisualUpgrades />} /> */}
                 <Route path="*" element={<NotFound />} />
               </Routes>
             ) : (

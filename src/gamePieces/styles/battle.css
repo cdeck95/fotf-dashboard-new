@@ -1,17 +1,21 @@
 .health-bars {
     display: flex;
-    justify-content: space-between;
+    justify-content: left;
+    margin-left: 10px;
     margin-top: 20px;
-    color: #0f0; /* Green text */
+    margin-bottom: 20px;
+    color: #fff; /* Green text */
     font-family: 'Press Start 2P', cursive;
+    width: 100%;
   }
   
   .health-bar {
     position: relative; /* Ensure the "health-bar" is a positioned container */
     width: 45%; /* Adjust as needed */
-    border: 1px solid #0f0; /* Green border */
+    border: 1px solid #0f0; 
     text-align: center;
     padding: 5px;
+    width: 100%;
   }
   
   .health-info {
@@ -33,19 +37,191 @@
   
   /* Add a class for the reversed health bar style when the background is green */
   .health-bar.green-bg {
-    border: 1px solid #000; /* Black border */
+    border: 1px solid #0f0; /* Black border */
   }
   
   .health-inner.green-bg {
-    background-color: #000; /* Black background */
+    background-color: #0f0; /* Black background */
     width: calc(100% - 2px); /* Adjust width accounting for border */
   }
 
+  .battle-log::-webkit-scrollbar{
+    display: none;
+  }
+
   .battle-log {
-    max-height: 300px; /* Set a maximum height for the log container */
+    max-height: 600px; /* Set a maximum height for the log container */
     overflow-y: auto; /* Enable vertical scrolling if content overflows */
-    border: 1px solid #0f0; /* Green border (adjust as needed) */
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+    /* border: 1px solid #0f0;  */
     padding: 10px;
     padding-bottom: 0px;
     margin-bottom: 10px;
+    color: #0f0; /* Green text */
+    font-family: 'Press Start 2P', cursive;
   }
+
+  .battle-log p {
+    font-size: 14px;
+    color: #0f0; /* Green text */
+    font-family: 'Press Start 2P', cursive;
+  }
+
+  .battle-log span {
+    font-size: 14px;
+    color: #0f0; /* Green text */
+    font-family: 'Press Start 2P', cursive;
+    white-space: unset;
+    white-space: pre-wrap;
+  }
+
+  /* CSS for the green arrow */
+.arrow {
+  width: 0;
+  height: 0;
+  border-top: 20px solid transparent; /* Adjust the size as needed */
+  border-bottom: 20px solid transparent; /* Adjust the size as needed */
+  border-right: 30px solid #00ff00; /* Green color */
+  transform: rotate(0deg); /* Rotate the arrow to point left */
+  margin-right: 10px; /* Adjust the spacing from the health bar */
+  margin-left: 20px;
+}
+
+.arrow-not-visible {
+  width: 0;
+  height: 0;
+  border-top: 20px solid transparent; /* Adjust the size as needed */
+  border-bottom: 20px solid transparent; /* Adjust the size as needed */
+  border-right: 30px solid transparent; /* Green color */
+  transform: rotate(0deg); /* Rotate the arrow to point left */
+  margin-right: 10px; /* Adjust the spacing from the health bar */
+  margin-left: 20px;
+}
+
+/* CSS for the blinking cursor */
+@keyframes blink {
+  0% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+.loading-text {
+  animation: blink 1s infinite;
+}
+
+.cursor {
+  display: inline-block;
+  width: 2px; /* Adjust the width of the cursor */
+  height: 20px; /* Adjust the height of the cursor */
+  background-color: #00ff00; /* Green color */
+  /* animation: blink 1s infinite; Blinking animation */
+}
+.row-space-between {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.row-left {
+  display: flex;
+  flex-direction: row;
+  justify-content: left;
+  align-items: center;
+  margin-left: 10px;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  color: #fff; /* Green text */
+  font-family: 'Press Start 2P', cursive;
+}
+
+.green-button {
+  background-color: #00ff00;
+  border: none;
+  color: #000;
+  padding: 10px 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  font-family: 'Press Start 2P', cursive;
+  margin: 4px 2px;
+  cursor: pointer;
+  border-radius: 5px;
+  text-transform: uppercase;
+  font-weight: 600;
+}
+
+.green-button-secondary{
+  background-color: #000;
+  border: #00ff00 1px solid;
+  color: #00ff00;
+  text-transform: uppercase;
+  padding: 10px 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  font-family: 'Press Start 2P', cursive;
+  margin: 4px 2px;
+  cursor: pointer;
+  border-radius: 5px;
+  font-weight: 600;
+  max-width: 500px;
+}
+
+.row {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  /* width: 100%; */
+}
+
+.row-even {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  align-items: center;
+  /* width: 100%; */
+}
+
+.half-col { 
+  flex: 1;
+  padding: 10px;
+  margin: 10px;
+  /* border: 1px solid #0f0; */
+  border-radius: 5px;
+}
+
+.row-right {
+  display: flex;
+  flex-direction: row;
+  justify-content: right;
+  align-items: center;
+  /* width: 100%; */
+}
+
+.half-col-right {
+  display: flex; 
+  flex: 1;
+  padding: 10px;
+  margin: 10px;
+  /* border: 1px solid #0f0; */
+  border-radius: 5px;
+  justify-content: end;
+}
+
+.battle-dialog-content-text{
+  color: #0f0; /* Green text */
+  font-family: 'Press Start 2P', cursive;
+  font-size: 16px;
+  margin: 10px;
+}
