@@ -101,33 +101,37 @@ function LeftDrawer(props: NavProps) {
     }
     const lowercasePath = location.pathname.toLowerCase();
     switch (lowercasePath) {
-      case "/HoneyExchange":
-        setActivePage("HoneyExchange");
-        break;
+      // case "/HoneyExchange":
+      //   setActivePage("HoneyExchange");
+      //   break;
       case "/HoneyStore":
         setActivePage("HoneyStore");
         break;
-      case "/buildateddy":
-        setActivePage("BuildATeddy");
+      case "/campaigntrail":
+        setActivePage("CampaignTrail");
         break;
-      case "/tedmint":
-        setActivePage("TedMint");
-        break;
-      case "/teddymint":
-        setActivePage("TeddyMint");
-        break;
-      case "/aitedmint":
-        setActivePage("AITedMint");
-        break;
+      // case "/buildateddy":
+      //   setActivePage("BuildATeddy");
+      //   break;
+      // case "/tedmint":
+      //   setActivePage("TedMint");
+      //   break;
+      // case "/teddymint":
+      //   setActivePage("TeddyMint");
+      //   break;
+      // case "/aitedmint":
+      //   setActivePage("AITedMint");
+      //   break;
+      
       // case "/teddyclaims":
       //   setActivePage("TeddyClaims");
       //   break;
       // case "/tedclaims":
       //   setActivePage("TedClaims");
       //   break;
-      case "/traitswapteds":
-        setActivePage("TraitSwapTeds");
-        break;
+      // case "/traitswapteds":
+      //   setActivePage("TraitSwapTeds");
+      //   break;
       // case "/Bridge":
       //   setActivePage("PolygonBridge");
       //   setIsBridgePage(true);
@@ -159,8 +163,8 @@ function LeftDrawer(props: NavProps) {
         navigate("/News");
         handleMobileClick();
         break;
-      case "Campaigns":
-        navigate("/Campaigns");
+      case "CampaignTrail":
+        navigate("/CampaignTrail");
         handleMobileClick();
         break;
       case "PackOpening":
@@ -339,18 +343,7 @@ function LeftDrawer(props: NavProps) {
               <ListItemText primary={"News"} />
             </ListItemButton>
           </ListItem>
-          <ListItem
-            key={"Campaigns"}
-            disablePadding
-            onClick={() => loadPage("Campaigns")}
-          >
-            <ListItemButton selected={activePage === "Campaigns"}>
-              <ListItemIcon>
-                <DescriptionOutlinedIcon fontSize="small" />
-              </ListItemIcon>
-              <ListItemText primary={"Campaigns"} />
-            </ListItemButton>
-          </ListItem> */}
+           */}
           {/* <ListItem
             key={"Downloads"}
             disablePadding
@@ -536,6 +529,18 @@ function LeftDrawer(props: NavProps) {
                 {/* <Chip size="small"  label={<Typography sx={{fontSize: "15px"}}> New &#x2728; </Typography>} color="primary" sx={{maxHeight: "40px", maxWidth: "70px", justifyContent: "flex-start", textAlign: "start", alignItems: "flex-start", marginRight: "25px", marginBottom: "15px", border: "none"}} variant="outlined"/> */}
               </Box>
               </ListItemButton>
+          </ListItem>
+          <ListItem
+            key={"CampaignTrail"}
+            disablePadding
+            onClick={() => loadPage("CampaignTrail")}
+          >
+            <ListItemButton selected={activePage === "CampaignTrail"}>
+              <ListItemIcon>
+                <DescriptionOutlinedIcon fontSize="small" />
+              </ListItemIcon>
+              <ListItemText primary={"Campaign Trail"} />
+            </ListItemButton>
           </ListItem>
           {/* <ListItem
             key={"TedClaims"}

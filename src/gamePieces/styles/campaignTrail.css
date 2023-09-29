@@ -1,0 +1,82 @@
+.App {
+    text-align: center;
+    /* padding: 20px; */
+  }
+  
+  .Header {
+    position: absolute;
+    top: 50px;
+    width: 100%;
+  }
+  
+  .Columns {
+    display: flex;
+    justify-content: space-between;
+    position: absolute;
+    bottom: 0;
+  }
+  
+  .Column {
+    flex: 1;
+    /* margin: 0 10px; */
+    text-align: center;
+    position: relative;
+    cursor: pointer;
+    margin-left: 20px;
+    margin-right: 20px;
+  }
+
+    /* Apply a hover effect */
+    .Column:hover .text-override {
+        font-size: 1.2em; /* Increase the font size on hover */
+    }
+  
+  .Image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    
+  }
+  
+  .Text {
+    padding: 10px;
+    position: absolute;
+    top: 60%;
+    left: 50%;
+    transform: translate(-50%, -50%);   
+  }
+
+  .text-override {
+    font-family: 'Press Start 2P', cursive !important;
+    color: #00ff00;
+    white-space: nowrap; /* Prevent text from wrapping */
+    overflow: hidden; /* Hide overflow text */
+    animation: typing 3s steps(40, end); /* Adjust the duration and steps as needed */
+    border-right: 2px solid #000; /* Add a cursor-like border */
+    padding-right: 5px; /* Add padding for cursor-like appearance */
+  }
+  
+  .green-header {
+    font-family: 'Press Start 2P', cursive;
+    color: #00ff00;
+  }
+
+  .green-subheader {
+    font-family: 'Press Start 2P', cursive;
+    color: #00ff00;
+  }
+
+  /* Define the animation keyframes */
+@keyframes typing {
+    from {
+      width: 0; /* Start with no text */
+    }
+    to {
+      width: 100%; /* Fully reveal the text */
+    }
+  }
+  
+  /* Apply the animation to the text element */
+  /* .typewriter-text {
+    
+  } */

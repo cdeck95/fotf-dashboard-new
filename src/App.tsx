@@ -60,6 +60,7 @@ import News from "./views/News";
 import Campaigns from "./views/Campaigns";
 import MyCards from "./views/MyCards";
 import PackOpening from "./views/PackOpening";
+import CampaignTrail from "./gamePieces/components/CampaignTrail";
 
 export const LeftDrawerWidthPX = "260px";
 export const LeftDrawerWidth = 260;
@@ -189,7 +190,7 @@ function App() {
       setLeftNavOpen(false);
       setRightNavOpen(false);
       setSmallScreen(true);
-    } else if (lowercasePath === "/game" && address) {
+    } else if ((lowercasePath === "/game" || lowercasePath === "/campaigntrail")  && address) {
       setLeftNavOpen(true);
       setRightNavOpen(false);
     } else {
@@ -218,21 +219,19 @@ function App() {
         setPageTitle("Honey Store");
         navigate("/HoneyStore");
         break;
-      // case "/HoneyExchange":
-      //   setPageTitle("Honey Exchange");
-      //   break;
-      // case "/buildateddy":
-      //   setPageTitle("Build A Teddy");
-      //   break;
-      // case "/traitswapteds":
-      //   setPageTitle("Trait Swap Teds");
-      //   break;
-      // case "/VisualUpgrades":
-      //   setPageTitle("Visual Upgrades");
-      //   break;
       case "/HoneyStore":
         setPageTitle("Honey Store");
         break;
+      case "/game":
+        setPageTitle("Game - Pre-Alpha");
+        break;
+      case "/campaigntrail":
+        setPageTitle("Campaign Trail - Pre-Alpha");
+        break;
+      // case "/bridge":
+      //   setPageTitle("Polygon Bridge");
+      //   setIsBridgePage(true);
+      //   break;
       // case "/tedmint":
       //   setPageTitle("Ted Mint");
       //   break;
@@ -257,12 +256,17 @@ function App() {
       // case "/tedclaims":
       //   setPageTitle("Ted Claims");
       //   break;
-      case "/game":
-        setPageTitle("Game - Pre-Alpha");
-        break;
-      // case "/bridge":
-      //   setPageTitle("Polygon Bridge");
-      //   setIsBridgePage(true);
+      // case "/HoneyExchange":
+      //   setPageTitle("Honey Exchange");
+      //   break;
+      // case "/buildateddy":
+      //   setPageTitle("Build A Teddy");
+      //   break;
+      // case "/traitswapteds":
+      //   setPageTitle("Trait Swap Teds");
+      //   break;
+      // case "/VisualUpgrades":
+      //   setPageTitle("Visual Upgrades");
       //   break;
       default:
         setPageTitle("404 - Page not found");
@@ -346,13 +350,15 @@ function App() {
           >     
           
  
-          <PullToRefresh className="ptr-override" onRefresh={handleRefresh}>
+          {/* <PullToRefresh className="ptr-override" onRefresh={handleRefresh}> */}
             {address ? (
               <Routes>
                 {/* <Route path="/" element={<Dashboard tokenProps={polygonTokenProps} leftNavOpen={leftNavOpen} rightNavOpen={rightNavOpen} showMismatch={showMismatch} isSmallScreen={isSmallScreen} />} /> */}
                 <Route path="/" element={<HoneyStore tokenProps={polygonTokenProps} isSmallScreen={isSmallScreen} />} />
                 <Route path="/HoneyStore" element={<HoneyStore tokenProps={polygonTokenProps} isSmallScreen={isSmallScreen} />} />
                 <Route path="/Game" element={<Game showMismatch={showMismatch}/>} />{" "}
+                <Route path="/CampaignTrail" element={<CampaignTrail showMismatch={showMismatch}/>} />{" "}
+
                 {/* <Route path="/TeddyClaims" element={<TeddyClaims tokenProps={polygonTokenProps} leftNavOpen={leftNavOpen} rightNavOpen={rightNavOpen} showMismatch={showMismatch} isSmallScreen={isSmallScreen}/>} />
                 <Route path="/TedClaims" element={<TedClaims />} />{" "} */}
                 {/* <Route path="/TedMint" element={<TedMint  showMismatch={showMismatch} contract={polygonTokenProps.tedContract} isloadingContract={polygonTokenProps.isLoadingTedContract} />} />{" "}
@@ -387,7 +393,7 @@ function App() {
             )}  
 
             
-            </PullToRefresh>
+            {/* </PullToRefresh> */}
           </Box>
           {leftNavOpen ? (
               <LeftDrawer navOpen={leftNavOpen} setNavOpen={setLeftNavOpen} />
