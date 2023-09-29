@@ -1,5 +1,3 @@
-// src/components/Game.tsx
-
 import React, { useState, useEffect } from 'react';
 import { Box, useMediaQuery, useTheme } from '@mui/material';
 import { useTitle } from '../../hooks/useTitle';
@@ -9,9 +7,9 @@ import chapterOne from '../assets/images/ChapterOne_Select.png';
 import chapterTwo from '../assets/images/ChapterTwo_Select.png';
 import chapterThree from '../assets/images/ChapterThree_Select.png';
 
-
 function CampaignTrail(props: { showMismatch: boolean }) {
   const [gameState, setGameState] = useState('battle'); // You can define different game states
+  const [isPasswordEntered, setIsPasswordEntered] = useState(false); // Track whether the password is entered
 
   useTitle("TBD");
   const theme = useTheme();
@@ -25,30 +23,42 @@ function CampaignTrail(props: { showMismatch: boolean }) {
   const address = useAddress();
   const showMismatch = props.showMismatch;
 
-
   useEffect(() => {
     // Add logic to handle game states and transitions
   }, [gameState]);
 
+  // Function to handle password submission
+  const handlePasswordSubmit = () => {
+    const enteredPassword = prompt("Please enter the password:"); // Prompt for the password
+
+    if (enteredPassword === "FOTF") {
+      setIsPasswordEntered(true); // Set the flag to true if the password is correct
+    } else {
+      alert("Incorrect password. Please try again.");
+    }
+  };
+
+  // Render the password form or the secret content based on the password flag
   return (
     <Box
       className={
         isSmallScreen ? "inner-container-mint-mobile" : "inner-container-game"
-      } sx={{ position: "relative", backgroundColor:"#000000" }}
+      } sx={{ position: "relative", backgroundColor:  "#000000" }}
     >
-      <div className="App">
-      <header className="Header">
-        <h1 className="green-header">Planetary War Simulation</h1>
-        <h2 className="green-subheader">Choose Your Battle</h2>
-      </header>
-      <div className="Columns">
+      {isPasswordEntered ? ( // Render secret content if the password is entered
+        <div className="App">
+          <header className="Header">
+            <h1 className="green-header">Planetary War Simulation</h1>
+            <h2 className="green-subheader">Choose Your Battle</h2>
+          </header>
+          <div className="Columns">
         <div className="Column">
           <div className="Image">
             <img src={chapterOne} alt="Chapter 1 - Sgt. Nihil" />
           </div>
           <div className="Text">
             <p className="text-override">CHAPTER 1</p>
-            <p className="text-override">SGT. NIHIL</p>
+            <p className="sub-text-override">SGT. NIHIL</p>
           </div>
         </div>
         <div className="Column">
@@ -56,8 +66,8 @@ function CampaignTrail(props: { showMismatch: boolean }) {
           <img src={chapterTwo} alt="Chapter 2 - LOCKED" />
           </div>
           <div className="Text">
-            <p className="text-override">CHAPTER 2</p>
-            <p className="text-override">LOCKED</p>
+            <p className="text-override-locked">CHAPTER 2</p>
+            <p className="sub-text-override-locked">LOCKED</p>
           </div>
         </div>
         <div className="Column">
@@ -65,12 +75,18 @@ function CampaignTrail(props: { showMismatch: boolean }) {
             <img src={chapterThree} alt="Chapter 3 - LOCKED" />
           </div>
           <div className="Text">
-            <p className="text-override">CHAPTER 3</p>
-            <p className="text-override">LOCKED</p>
+            <p className="text-override-locked">CHAPTER 3</p>
+            <p className="sub-text-override-locked">LOCKED</p>
           </div>
         </div>
       </div>
-    </div>
+        </div>
+      ) : ( // Render password form if the password is not entered
+        <div id="password-form">
+          <p className="password-text">This content is only available to a select few in the Pre-Alpha stage. If you have the password, please click the button below.</p>
+          <button onClick={handlePasswordSubmit} className="green-button">Enter Password</button>
+        </div>
+      )}
     </Box>
   );
 };
