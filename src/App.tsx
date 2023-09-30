@@ -191,7 +191,7 @@ function App() {
       setRightNavOpen(false);
       setSmallScreen(true);
     } else if ((lowercasePath === "/game" || lowercasePath === "/campaigntrail")  && address) {
-      setLeftNavOpen(true);
+      setLeftNavOpen(false);
       setRightNavOpen(false);
     } else {
       setLeftNavOpen(!isMobile);
@@ -216,8 +216,8 @@ function App() {
       //   setPageTitle("Dashboard");
       //   break;
       case "/":
-        setPageTitle("Honey Store");
-        navigate("/HoneyStore");
+        setPageTitle("Campaign Trail - Pre-Alpha");
+        navigate("/campaigntrail");
         break;
       case "/HoneyStore":
         setPageTitle("Honey Store");
@@ -395,7 +395,7 @@ function App() {
             
             {/* </PullToRefresh> */}
           </Box>
-          {leftNavOpen ? (
+          {/* {leftNavOpen ? (
               <LeftDrawer navOpen={leftNavOpen} setNavOpen={setLeftNavOpen} />
             ) : (
               <Box
@@ -418,7 +418,7 @@ function App() {
                   </IconButton>
                 )}
               </Box>
-            )}
+            )} */}
             {rightNavOpen ? (
               <RightDrawer
                 tokenProps={polygonTokenProps}
@@ -444,7 +444,7 @@ function App() {
                   zIndex: "2 !important",
                 }}
               >
-                {!leftNavOpen && (
+                {/* {!leftNavOpen && (
                   <IconButton
                     color="inherit"
                     aria-label="open right drawer"
@@ -454,7 +454,7 @@ function App() {
                   >
                     <MenuIcon sx={{ color: "White" }} />
                   </IconButton>
-                )}
+                )} */}
               </Box>
             )} 
         </ThemeProvider>
