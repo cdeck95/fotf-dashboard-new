@@ -60,6 +60,8 @@ import News from "./views/News";
 import Campaigns from "./views/Campaigns";
 import MyCards from "./views/MyCards";
 import PackOpening from "./views/PackOpening";
+import CampaignTrail from "./gamePieces/components/CampaignTrail";
+import ChapterOne from "./gamePieces/components/ChapterOne";
 
 export const LeftDrawerWidthPX = "260px";
 export const LeftDrawerWidth = 260;
@@ -189,8 +191,8 @@ function App() {
       setLeftNavOpen(false);
       setRightNavOpen(false);
       setSmallScreen(true);
-    } else if (lowercasePath === "/game" && address) {
-      setLeftNavOpen(true);
+    } else if ((lowercasePath === "/game" || lowercasePath === "/campaigntrail" || lowercasePath === "/chapterone")  && address) {
+      setLeftNavOpen(false);
       setRightNavOpen(false);
     } else {
       setLeftNavOpen(!isMobile);
@@ -215,24 +217,26 @@ function App() {
       //   setPageTitle("Dashboard");
       //   break;
       case "/":
-        setPageTitle("Honey Store");
-        navigate("/HoneyStore");
+        setPageTitle("Campaign Trail - Pre-Alpha");
+        navigate("/campaigntrail");
         break;
-      // case "/HoneyExchange":
-      //   setPageTitle("Honey Exchange");
-      //   break;
-      // case "/buildateddy":
-      //   setPageTitle("Build A Teddy");
-      //   break;
-      // case "/traitswapteds":
-      //   setPageTitle("Trait Swap Teds");
-      //   break;
-      // case "/VisualUpgrades":
-      //   setPageTitle("Visual Upgrades");
-      //   break;
+      case "/ChapterOne":
+        setPageTitle("Chapter One - Sgt Nihil");
+        navigate("/ChapterOne");
+        break;
       case "/HoneyStore":
         setPageTitle("Honey Store");
         break;
+      case "/game":
+        setPageTitle("Game - Pre-Alpha");
+        break;
+      case "/campaigntrail":
+        setPageTitle("Campaign Trail - Pre-Alpha");
+        break;
+      // case "/bridge":
+      //   setPageTitle("Polygon Bridge");
+      //   setIsBridgePage(true);
+      //   break;
       // case "/tedmint":
       //   setPageTitle("Ted Mint");
       //   break;
@@ -257,17 +261,22 @@ function App() {
       // case "/tedclaims":
       //   setPageTitle("Ted Claims");
       //   break;
-      case "/game":
-        setPageTitle("Game - Pre-Alpha");
-        break;
-      // case "/bridge":
-      //   setPageTitle("Polygon Bridge");
-      //   setIsBridgePage(true);
+      // case "/HoneyExchange":
+      //   setPageTitle("Honey Exchange");
+      //   break;
+      // case "/buildateddy":
+      //   setPageTitle("Build A Teddy");
+      //   break;
+      // case "/traitswapteds":
+      //   setPageTitle("Trait Swap Teds");
+      //   break;
+      // case "/VisualUpgrades":
+      //   setPageTitle("Visual Upgrades");
       //   break;
       default:
         setPageTitle("404 - Page not found");
     }
-  }, [location.pathname, navigate]);
+  }, [location.pathname, lowercasePath, navigate]);
 
   const handleRefresh = async () => {
     window.location.reload();
@@ -346,13 +355,15 @@ function App() {
           >     
           
  
-          <PullToRefresh className="ptr-override" onRefresh={handleRefresh}>
+          {/* <PullToRefresh className="ptr-override" onRefresh={handleRefresh}> */}
             {address ? (
               <Routes>
                 {/* <Route path="/" element={<Dashboard tokenProps={polygonTokenProps} leftNavOpen={leftNavOpen} rightNavOpen={rightNavOpen} showMismatch={showMismatch} isSmallScreen={isSmallScreen} />} /> */}
                 <Route path="/" element={<HoneyStore tokenProps={polygonTokenProps} isSmallScreen={isSmallScreen} />} />
                 <Route path="/HoneyStore" element={<HoneyStore tokenProps={polygonTokenProps} isSmallScreen={isSmallScreen} />} />
                 <Route path="/Game" element={<Game showMismatch={showMismatch}/>} />{" "}
+                <Route path="/CampaignTrail" element={<CampaignTrail showMismatch={showMismatch}/>} />{" "}
+                <Route path="/ChapterOne" element={<ChapterOne showMismatch={showMismatch}/>} />{" "}
                 {/* <Route path="/TeddyClaims" element={<TeddyClaims tokenProps={polygonTokenProps} leftNavOpen={leftNavOpen} rightNavOpen={rightNavOpen} showMismatch={showMismatch} isSmallScreen={isSmallScreen}/>} />
                 <Route path="/TedClaims" element={<TedClaims />} />{" "} */}
                 {/* <Route path="/TedMint" element={<TedMint  showMismatch={showMismatch} contract={polygonTokenProps.tedContract} isloadingContract={polygonTokenProps.isLoadingTedContract} />} />{" "}
@@ -387,9 +398,9 @@ function App() {
             )}  
 
             
-            </PullToRefresh>
+            {/* </PullToRefresh> */}
           </Box>
-          {leftNavOpen ? (
+          {/* {leftNavOpen ? (
               <LeftDrawer navOpen={leftNavOpen} setNavOpen={setLeftNavOpen} />
             ) : (
               <Box
@@ -412,7 +423,7 @@ function App() {
                   </IconButton>
                 )}
               </Box>
-            )}
+            )} */}
             {rightNavOpen ? (
               <RightDrawer
                 tokenProps={polygonTokenProps}
@@ -438,7 +449,7 @@ function App() {
                   zIndex: "2 !important",
                 }}
               >
-                {!leftNavOpen && (
+                {/* {!leftNavOpen && (
                   <IconButton
                     color="inherit"
                     aria-label="open right drawer"
@@ -448,7 +459,7 @@ function App() {
                   >
                     <MenuIcon sx={{ color: "White" }} />
                   </IconButton>
-                )}
+                )} */}
               </Box>
             )} 
         </ThemeProvider>

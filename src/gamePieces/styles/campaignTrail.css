@@ -1,0 +1,185 @@
+.App {
+    text-align: center;
+    /* padding: 20px; */
+  }
+  
+  .Header {
+    position: absolute;
+    top: 50px;
+    width: 100%;
+  }
+  
+  .Columns {
+    display: flex;
+    justify-content: space-between;
+    position: absolute;
+    bottom: 0;
+  }
+  
+  .Column {
+    flex: 1;
+    /* margin: 0 10px; */
+    text-align: center;
+    position: relative;
+    cursor: pointer;
+    margin-left: 20px;
+    margin-right: 20px;
+  }
+
+    /* Apply a hover effect */
+    .Column:hover .text-override {
+        font-size: 1.2em; /* Increase the font size on hover */
+    }
+
+     /* Apply a hover effect */
+     .Column:hover .text-override-locked {
+        font-size: 1.2em; /* Increase the font size on hover */
+        color: red;
+    }
+
+     /* Apply a hover effect */
+     .Column:hover .sub-text-override {
+        font-size: 1.2em; /* Increase the font size on hover */
+    }
+
+     /* Apply a hover effect */
+     .Column:hover .sub-text-override-locked {
+        font-size: 1.2em; /* Increase the font size on hover */
+        color: red;
+    }
+  
+  .Image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    
+  }
+
+  .green-button {
+    background-color: #00ff00;
+    border: none;
+    color: #000;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    font-family: 'Press Start 2P', cursive;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 5px;
+    text-transform: uppercase;
+    font-weight: 600;
+  }
+  
+  .Text {
+    padding: 10px;
+    position: absolute;
+    top: 60%;
+    left: 50%;
+    transform: translate(-50%, -50%);   
+  }
+
+  .text-override {
+    font-family: 'Press Start 2P', cursive !important;
+    color: #00ff00;
+    white-space: nowrap; /* Prevent text from wrapping */
+    overflow: hidden; /* Hide overflow text */
+    animation: typing 3s steps(40, end); /* Adjust the duration and steps as needed */
+    padding-right: 5px; /* Add padding for cursor-like appearance */
+    border-right: none; /* Remove the cursor-like border */
+  }
+
+  .text-override-locked {
+    font-family: 'Press Start 2P', cursive !important;
+    color: #00ff00;
+    white-space: nowrap; /* Prevent text from wrapping */
+    overflow: hidden; /* Hide overflow text */
+    animation: typing 3s steps(40, end); /* Adjust the duration and steps as needed */
+    padding-right: 5px; /* Add padding for cursor-like appearance */
+    border-right: none; /* Remove the cursor-like border */
+  }
+
+  /* Define a separate animation for the sub-text-override */
+.sub-text-override {
+    font-family: 'Press Start 2P', cursive !important;
+    color: #00ff00;
+    white-space: nowrap; /* Prevent text from wrapping */
+    overflow: hidden; /* Hide overflow text */
+    animation: typing-subtext 3s steps(40, end) 3s; /* Start after 3 seconds (adjust as needed) */
+    padding-right: 5px; /* Add padding for cursor-like appearance */
+    border-right: none; /* Remove the cursor-like border */
+}
+
+  /* Define a separate animation for the sub-text-override */
+  .sub-text-override-locked {
+    font-family: 'Press Start 2P', cursive !important;
+    color: #00ff00;
+    white-space: nowrap; /* Prevent text from wrapping */
+    overflow: hidden; /* Hide overflow text */
+    animation: typing-subtext 3s steps(40, end) 3s; /* Start after 3 seconds (adjust as needed) */
+    padding-right: 5px; /* Add padding for cursor-like appearance */
+    border-right: none; /* Remove the cursor-like border */
+   }
+
+  .password-text {
+    font-family: 'Press Start 2P', cursive !important;
+    color: #00ff00;
+    border-right: 2px solid #000; /* Add a cursor-like border */
+    padding-right: 5px; /* Add padding for cursor-like appearance */
+    white-space: pre-line; /* Allow text to wrap */
+    overflow: hidden; /* Hide overflow text */
+    font-size: 16px;
+    margin-bottom: 20px;
+  }
+  
+  .green-header {
+    font-family: 'Press Start 2P', cursive;
+    color: #00ff00;
+  }
+
+  .green-subheader {
+    font-family: 'Press Start 2P', cursive;
+    color: #00ff00;
+  }
+
+  /* Define the animation keyframes */
+@keyframes typing {
+    from {
+      width: 0; /* Start with no text */
+    }
+    to {
+      width: 100%; /* Fully reveal the text */
+    }
+  }
+
+/* Define the animation keyframes for sub-text-override */
+@keyframes typing-subtext {
+    from {
+        width: 0; /* Start with no text */
+        opacity: 0; /* Initially invisible */
+    }
+    to {
+        width: 100%; /* Fully reveal the text */
+        opacity: 1; /* Gradually become visible */
+    }
+}
+
+  #password-form {
+    text-align: center;
+    padding: 20px;
+    border: 1px solid #ccc; /* Border for the form */
+    border-radius: 5px; /* Rounded corners */
+    max-width: 800px; /* Maximum width of the form */
+    margin: 0 auto; /* Center the form horizontally */
+  }
+
+  .logo {
+    width: 100%;
+    max-width: 500px;
+    height: 100%;
+    max-height: 500px;
+    object-fit: cover;
+  }
+
+  
