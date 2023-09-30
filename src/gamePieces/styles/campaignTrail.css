@@ -174,6 +174,12 @@
     margin: 0 auto; /* Center the form horizontally */
   }
 
-  
+  .logo {
+    width: 100%;
+    max-width: 500px;
+    height: 100%;
+    max-height: 500px;
+    object-fit: cover;
+  }
 
   

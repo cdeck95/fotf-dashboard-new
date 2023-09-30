@@ -6,6 +6,7 @@ import "../styles/campaignTrail.css";
 import chapterOne from '../assets/images/ChapterOne_Select.png';
 import chapterTwo from '../assets/images/ChapterTwo_Select.png';
 import chapterThree from '../assets/images/ChapterThree_Select.png';
+import newlogo from '../assets/images/newlogo.png';
 
 function CampaignTrail(props: { showMismatch: boolean }) {
   const [gameState, setGameState] = useState('battle'); // You can define different game states
@@ -50,6 +51,7 @@ function CampaignTrail(props: { showMismatch: boolean }) {
           <header className="Header">
             <h1 className="green-header">Planetary War Simulation</h1>
             <h2 className="green-subheader">Choose Your Battle</h2>
+            <img src={newlogo} alt="Fury of The Fury: The Simulation Logo" className="logo" />
           </header>
           <div className="Columns">
         <div className="Column">
