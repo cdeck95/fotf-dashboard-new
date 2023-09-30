@@ -61,6 +61,7 @@ import Campaigns from "./views/Campaigns";
 import MyCards from "./views/MyCards";
 import PackOpening from "./views/PackOpening";
 import CampaignTrail from "./gamePieces/components/CampaignTrail";
+import ChapterOne from "./gamePieces/components/ChapterOne";
 
 export const LeftDrawerWidthPX = "260px";
 export const LeftDrawerWidth = 260;
@@ -190,7 +191,7 @@ function App() {
       setLeftNavOpen(false);
       setRightNavOpen(false);
       setSmallScreen(true);
-    } else if ((lowercasePath === "/game" || lowercasePath === "/campaigntrail")  && address) {
+    } else if ((lowercasePath === "/game" || lowercasePath === "/campaigntrail" || lowercasePath === "/chapterone")  && address) {
       setLeftNavOpen(false);
       setRightNavOpen(false);
     } else {
@@ -218,6 +219,10 @@ function App() {
       case "/":
         setPageTitle("Campaign Trail - Pre-Alpha");
         navigate("/campaigntrail");
+        break;
+      case "/ChapterOne":
+        setPageTitle("Chapter One - Sgt Nihil");
+        navigate("/ChapterOne");
         break;
       case "/HoneyStore":
         setPageTitle("Honey Store");
@@ -271,7 +276,7 @@ function App() {
       default:
         setPageTitle("404 - Page not found");
     }
-  }, [location.pathname, navigate]);
+  }, [location.pathname, lowercasePath, navigate]);
 
   const handleRefresh = async () => {
     window.location.reload();
@@ -358,7 +363,7 @@ function App() {
                 <Route path="/HoneyStore" element={<HoneyStore tokenProps={polygonTokenProps} isSmallScreen={isSmallScreen} />} />
                 <Route path="/Game" element={<Game showMismatch={showMismatch}/>} />{" "}
                 <Route path="/CampaignTrail" element={<CampaignTrail showMismatch={showMismatch}/>} />{" "}
-
+                <Route path="/ChapterOne" element={<ChapterOne showMismatch={showMismatch}/>} />{" "}
                 {/* <Route path="/TeddyClaims" element={<TeddyClaims tokenProps={polygonTokenProps} leftNavOpen={leftNavOpen} rightNavOpen={rightNavOpen} showMismatch={showMismatch} isSmallScreen={isSmallScreen}/>} />
                 <Route path="/TedClaims" element={<TedClaims />} />{" "} */}
                 {/* <Route path="/TedMint" element={<TedMint  showMismatch={showMismatch} contract={polygonTokenProps.tedContract} isloadingContract={polygonTokenProps.isLoadingTedContract} />} />{" "}
