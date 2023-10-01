@@ -55,9 +55,9 @@ function CampaignTrail(props: { showMismatch: boolean }) {
       {isPasswordEntered ? ( // Render secret content if the password is entered
         <div className="App">
           <header className="Header">
-            <h1 className="green-header">Planetary War Simulation</h1>
-            <h2 className="green-subheader">Choose Your Battle</h2>
             <img src={newlogo} alt="Fury of The Fury: The Simulation Logo" className="logo" />
+            <h1 className="green-header">Planetary War Simulation</h1>
+            <h2 className="green-subheader">*** Choose Your Battle ***</h2>
           </header>
           <div className="Columns">
         <div className="Column" onClick={() => goToChapterOne()}>

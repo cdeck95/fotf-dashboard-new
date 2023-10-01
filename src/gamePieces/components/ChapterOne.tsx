@@ -38,13 +38,13 @@ function ChapterOne(props: { showMismatch: boolean }) {
     >
         <div className="App">
           <header className="Header">
-            <h1 className="green-header">Planetary War Simulation</h1>
-            <h2 className="green-subheader">Choose Your Battle</h2>
             <img src={newlogo} alt="Fury of The Fury: The Simulation Logo" className="logo" />
+            <h1 className="green-header">Planetary War Simulation</h1>
+            <h2 className="green-subheader">*** Choose Your Battle ***</h2>
           </header>
           <div className="Columns">
         <div className="Column">
-          <div className="Image">
+          <div className="Image-NoPointer">
             <img src={chapterOne} alt="Chapter 1 - Sgt. Nihil" />
           </div>
           <div className="Text">
@@ -52,14 +52,17 @@ function ChapterOne(props: { showMismatch: boolean }) {
             <p className="sub-text-override">SGT. NIHIL</p>
           </div>
         </div>
-        <div className="Column">
-            <div className="Image">
-                <img src={chapterOne} alt="Chapter 1 - Sgt. Nihil" />
+        <div className="chapter-desc-column">
+          <div className="chapter-one-box">
+            <p className="chapter-text">Sgt. Nihil is a tyrant. Having led the charge against the experience on their homeworld, he took many lives.<br/><br/> Now, with the merger threatening everything, he leads the Ape Army in their conquest of the 3 planets.</p>
+            <div className="row-between">
+              <p className="chapter-text">Difficulty: Medium</p>
+              <p className="chapter-text">HP: 13,500</p>
             </div>
-            <div className="Text">
-                <p className="text-override">CHAPTER 1</p>
-                <p className="sub-text-override">SGT. NIHIL</p>
-            </div>
+          </div>
+          <div className="row-end">
+            <button className="green-button">Start Level</button>
+          </div>
         </div>
       </div>
         </div>
