@@ -2,12 +2,16 @@
 
 import React from 'react';
 import '../styles/statusbar.css'
+import { BattleProps } from './Battle';
 
-const StatusBar: React.FC = () => {
+function StatusBar (props: BattleProps) {
+
+  const leader = props.leader;
+
   return (
     <div className="status-bar">
       <div className="status-item">
-        <span>Player Name: John Doe</span>
+        <span>Leader: {leader.name}</span>
       </div>
       <div className="status-item">
         <span>Level: 3</span>

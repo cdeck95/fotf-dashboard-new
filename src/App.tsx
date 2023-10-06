@@ -62,6 +62,7 @@ import MyCards from "./views/MyCards";
 import PackOpening from "./views/PackOpening";
 import CampaignTrail from "./gamePieces/components/CampaignTrail";
 import ChapterOne from "./gamePieces/components/ChapterOne";
+import ChapterOneLeaderSelection from "./gamePieces/components/ChapterOneLeaderSelection";
 
 export const LeftDrawerWidthPX = "260px";
 export const LeftDrawerWidth = 260;
@@ -184,23 +185,40 @@ function App() {
 
   useEffect(() => {
     if (!isMobile && !isMediumLarge && isLarge && (pageTitle === "Dashboard")){
-      setLeftNavOpen(false);
       setRightNavOpen(false);
       setSmallScreen(true);
     } else if (!isMobile && isMediumLarge) {
-      setLeftNavOpen(false);
       setRightNavOpen(false);
       setSmallScreen(true);
-    } else if ((lowercasePath === "/game" || lowercasePath === "/campaigntrail" || lowercasePath === "/chapterone")  && address) {
-      setLeftNavOpen(false);
-      setRightNavOpen(false);
+    } else if (!address) {
+      setRightNavOpen(true);
     } else {
-      setLeftNavOpen(!isMobile);
-      setRightNavOpen(!isMobile);
+      setRightNavOpen(false);
       setSmallScreen(isMobile);
     }
+    setLeftNavOpen(false);
     
   }, [isMobile, isMediumLarge, isMismatched, isSmallScreen, isLarge, location.pathname, pageTitle, lowercasePath, address]);
+
+  // useEffect(() => {
+  //   if (!isMobile && !isMediumLarge && isLarge && (pageTitle === "Dashboard")){
+  //     setLeftNavOpen(false);
+  //     setRightNavOpen(false);
+  //     setSmallScreen(true);
+  //   } else if (!isMobile && isMediumLarge) {
+  //     setLeftNavOpen(false);
+  //     setRightNavOpen(false);
+  //     setSmallScreen(true);
+  //   } else if ((lowercasePath === "/game" || lowercasePath === "/campaigntrail" || lowercasePath === "/chapterone")  && address) {
+  //     setLeftNavOpen(false);
+  //     setRightNavOpen(false);
+  //   } else {
+  //     setLeftNavOpen(!isMobile);
+  //     setRightNavOpen(!isMobile);
+  //     setSmallScreen(isMobile);
+  //   }
+    
+  // }, [isMobile, isMediumLarge, isMismatched, isSmallScreen, isLarge, location.pathname, pageTitle, lowercasePath, address]);
 
   const navigate = useNavigate();
 
@@ -361,9 +379,12 @@ function App() {
                 {/* <Route path="/" element={<Dashboard tokenProps={polygonTokenProps} leftNavOpen={leftNavOpen} rightNavOpen={rightNavOpen} showMismatch={showMismatch} isSmallScreen={isSmallScreen} />} /> */}
                 <Route path="/" element={<HoneyStore tokenProps={polygonTokenProps} isSmallScreen={isSmallScreen} />} />
                 <Route path="/HoneyStore" element={<HoneyStore tokenProps={polygonTokenProps} isSmallScreen={isSmallScreen} />} />
-                <Route path="/Game" element={<Game showMismatch={showMismatch}/>} />{" "}
+                {/* <Route path="/Game" element={<Game showMismatch={showMismatch}/>} />{" "} */}
                 <Route path="/CampaignTrail" element={<CampaignTrail showMismatch={showMismatch}/>} />{" "}
                 <Route path="/ChapterOne" element={<ChapterOne showMismatch={showMismatch}/>} />{" "}
+                <Route path="/ChapterOne/LeaderSelection" element={<ChapterOneLeaderSelection showMismatch={showMismatch}/>} />{" "}
+                <Route path="/ChapterOne/Battle" element={<Game showMismatch={showMismatch}/>} />{" "}
+
                 {/* <Route path="/TeddyClaims" element={<TeddyClaims tokenProps={polygonTokenProps} leftNavOpen={leftNavOpen} rightNavOpen={rightNavOpen} showMismatch={showMismatch} isSmallScreen={isSmallScreen}/>} />
                 <Route path="/TedClaims" element={<TedClaims />} />{" "} */}
                 {/* <Route path="/TedMint" element={<TedMint  showMismatch={showMismatch} contract={polygonTokenProps.tedContract} isloadingContract={polygonTokenProps.isLoadingTedContract} />} />{" "}

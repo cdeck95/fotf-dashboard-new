@@ -7,12 +7,19 @@ import { Box, useMediaQuery, useTheme } from '@mui/material';
 import { useTitle } from '../../hooks/useTitle';
 import { useSDK, useAddress } from '@thirdweb-dev/react-core';
 import "../styles/game.css";
+import { useLocation } from "react-router-dom";
 
 function Game(props: { showMismatch: boolean }) {
   const [gameState, setGameState] = useState('battle'); // You can define different game states
-
-  useTitle("TBD");
+  
+  
   const theme = useTheme();
+  const location = useLocation();
+  const data = location.state;
+  const level = data.level;
+  const leader = data.leader;
+  console.log(leader);
+  useTitle(`Level ${level} - Battle`);
   const isMobile = !useMediaQuery(theme.breakpoints.up("md"));
   const isMediumLarge = useMediaQuery(theme.breakpoints.down("lg"));
   const [isSmallScreen, setSmallScreen] = useState(false);
@@ -34,8 +41,8 @@ function Game(props: { showMismatch: boolean }) {
         isSmallScreen ? "inner-container-mint-mobile" : "inner-container-game"
       } sx={{ position: "relative", backgroundColor:"#000000" }}
     >
-      <StatusBar />
-      {gameState === 'battle' && <Battle />}
+      <StatusBar leader={leader}/>
+      {gameState === 'battle' && <Battle leader={leader} />}
       {/* Add other game states/components here */}
     </Box>
   );

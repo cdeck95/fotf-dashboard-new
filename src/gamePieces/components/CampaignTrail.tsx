@@ -13,7 +13,7 @@ function CampaignTrail(props: { showMismatch: boolean }) {
   const [gameState, setGameState] = useState('battle'); // You can define different game states
   const [isPasswordEntered, setIsPasswordEntered] = useState(false); // Track whether the password is entered
 
-  useTitle("TBD");
+  useTitle("Campaign Trail");
   const theme = useTheme();
   const isMobile = !useMediaQuery(theme.breakpoints.up("md"));
   const isMediumLarge = useMediaQuery(theme.breakpoints.down("lg"));
@@ -48,45 +48,43 @@ function CampaignTrail(props: { showMismatch: boolean }) {
   // Render the password form or the secret content based on the password flag
   return (
     <Box
-      className={
-        isSmallScreen ? "inner-container-mint-mobile" : "inner-container-game"
-      } sx={{ position: "relative", backgroundColor:  "#000000" }}
+      className={"inner-container-game"} sx={{ position: "relative", backgroundColor:  "#000000" }}
     >
       {isPasswordEntered ? ( // Render secret content if the password is entered
-        <div className="App">
-          <header className="Header">
+        <div className="Chapter-Selection-Container">
+          <div className="Header">
             <img src={newlogo} alt="Fury of The Fury: The Simulation Logo" className="logo" />
             <h1 className="green-header">Planetary War Simulation</h1>
             <h2 className="green-subheader">*** Choose Your Battle ***</h2>
-          </header>
-          <div className="Columns">
-        <div className="Column" onClick={() => goToChapterOne()}>
-          <div className="Image">
-            <img src={chapterOne} alt="Chapter 1 - Sgt. Nihil" />
           </div>
-          <div className="Text">
-            <p className="text-override">CHAPTER 1</p>
-            <p className="sub-text-override">SGT. NIHIL</p>
+        <div className="Columns">
+          <div className="Column" onClick={() => goToChapterOne()}>
+            <div className="Image">
+              <img src={chapterOne} alt="Chapter 1 - Sgt. Nihil" />
+            </div>
+            <div className="Text">
+              <p className="text-override">CHAPTER 1</p>
+              <p className="sub-text-override">SGT. NIHIL</p>
+            </div>
           </div>
-        </div>
-        <div className="Column">
-          <div className="Image">
-          <img src={chapterTwo} alt="Chapter 2 - LOCKED" />
+          <div className="Column-Locked">
+            <div className="Image">
+            <img src={chapterTwo} alt="Chapter 2 - LOCKED" />
+            </div>
+            <div className="Text">
+              <p className="text-override-locked">CHAPTER 2</p>
+              <p className="sub-text-override-locked">LOCKED</p>
+            </div>
           </div>
-          <div className="Text">
-            <p className="text-override-locked">CHAPTER 2</p>
-            <p className="sub-text-override-locked">LOCKED</p>
+          <div className="Column-Locked">
+            <div className="Image">
+              <img src={chapterThree} alt="Chapter 3 - LOCKED" />
+            </div>
+            <div className="Text">
+              <p className="text-override-locked">CHAPTER 3</p>
+              <p className="sub-text-override-locked">LOCKED</p>
+            </div>
           </div>
-        </div>
-        <div className="Column">
-          <div className="Image">
-            <img src={chapterThree} alt="Chapter 3 - LOCKED" />
-          </div>
-          <div className="Text">
-            <p className="text-override-locked">CHAPTER 3</p>
-            <p className="sub-text-override-locked">LOCKED</p>
-          </div>
-        </div>
       </div>
         </div>
       ) : ( // Render password form if the password is not entered

@@ -3,8 +3,15 @@ import "../styles/battle.css";
 import { Box, Button } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import LoseProgressDialog from "./loseProgressDialog";
+import { Leader } from "./ChapterOneLeaderSelection";
 
-function Battle() {
+
+
+export interface BattleProps {
+  leader: Leader;
+}
+
+function Battle(props: BattleProps) {
   const navigate = useNavigate();
   const logEntryWelcome1 = ',,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,\n';
   const logEntryWelcome2 = ',,,,,,,,,,,,,,,,,,&&&&&&&&&&&&&&&&&#,,,,,,,,,,,,,,,,,\n'

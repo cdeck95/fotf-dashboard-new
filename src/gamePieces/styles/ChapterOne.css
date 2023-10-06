@@ -1,0 +1,72 @@
+.Leader-Selection-Container {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+
+}
+
+/* .Header-Leader-Selection {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  width: 100%;
+} */
+
+/* Style the leader carousel container */
+.Columns-Leaders {
+    display: flex;
+    justify-content: center;
+    max-width: 1920px; /* Adjust the maximum width as needed */
+    margin: 0 auto;
+    /* margin-top: 100px; */
+  }
+  
+  /* Style each leader container */
+  .Leader {
+    cursor: pointer;
+    transition: transform 0.3s; /* Add a smooth transition effect */
+    margin: 20px;
+  }
+  
+  .Leader img {
+    border: 2px solid transparent; /* Add a border for better click feedback */
+    object-fit: contain;
+  }
+  
+  /* Style the focused leader (in the center) */
+  .Leader.focused {
+    transform: scale(1.2); /* Increase the size of the focused leader */
+    border-color: #00ff00; /* Add a border color to indicate focus */
+    z-index: 100;
+  }
+
+  /* Use media queries to adjust maxWidth */
+  @media screen and (max-width: 1920px) {
+    .Leader img {
+      max-width: 500px; /* Adjust as needed for your design */
+      max-height: 300px;
+    }
+  }
+
+  /* Use media queries to adjust maxWidth */
+@media screen and (max-width: 1200px) {
+  .Leader img {
+    max-width: 20%; /* Adjust as needed for your design */
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .Leader img {
+    max-width: 30%; /* Adjust as needed for your design */
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .Leader img {
+    max-width: 40%; /* Adjust as needed for your design */
+  }
+}
